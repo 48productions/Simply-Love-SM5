@@ -15,49 +15,10 @@ local speedmod_def = {
 	M = { upper=2000, increment=5 }
 }
 
-local song = GAMESTATE:GetCurrentSong()
-
--- player_bpms will be a table of {lower_display_bpm, high_display_bpm}
--- if the simile does not explicitly specify DISPLAYBPM value(s),
--- the low and high values from #BPMS will be used
-local player_bpms = {}
-for player in ivalues(GAMESTATE:GetHumanPlayers()) do
-	player_bpms[player] = GetDisplayBPMs(player)
-end
+local currentmods_frames = {}
 
 ------------------------------------------------------------
 -- functions local to this file
-
--- this prepares and returns a string to be used by the helper BitmapText
--- at the top of the screen (one for each player)
-local GetSpeedModHelperText = function(player)
-	local bpms = player_bpms[player]
-	if not bpms then return "" end
-
-	local text = ""
-	local mods = SL[ToEnumShortString(player)].ActiveModifiers
-	local speed = mods.SpeedMod
-
-	-- if using an xmod
-	if mods.SpeedModType == "x" then
-		local musicrate = SL.Global.ActiveModifiers.MusicRate
-
-		--if a single bpm suffices
-		if bpms[1] == bpms[2] then
-			text = string.format("%.2f", speed) .. "x (" .. round(speed * bpms[1] * musicrate) .. ")"
-
-		-- if we have a range of bpms
-		else
-			text = string.format("%.2f", speed) .. "x (" .. round(speed * bpms[1] * musicrate) .. " - " .. round(speed * bpms[2] * musicrate) .. ")"
-		end
-
-	-- otherwise, the player is using a Cmod or an Mmod
-	else
-		text = mods.SpeedModType .. tostring(speed)
-	end
-
-	return text
-end
 
 -- use this to directly manipulate the SpeedMod numbers in the global SL table
 --    first argument is either "P1" or "P2"
@@ -102,7 +63,6 @@ end
 local SpeedModBMTs = {}
 
 local t = Def.ActorFrame{
-	InitCommand=function(self) self:xy(_screen.cx,0) end,
 	OnCommand=function(self) self:queuecommand("Capture") end,
 	OffCommand=function(self) self:linear(0.2):diffusealpha(0) end,
 	CaptureCommand=function(self)
@@ -117,6 +77,8 @@ local t = Def.ActorFrame{
 				SpeedModBMTs[pn] = ScreenOptions:GetOptionRow(SpeedModRowIndex):GetChild(""):GetChild("Item")[ PlayerNumber:Reverse()[player]+1 ]
 				self:playcommand("Set"..pn)
 			end
+
+			currentmods_frames[pn] = self:GetChild("CommonOverlay"):GetChild("ActiveMods"..pn)
 		end
 	end,
 	MusicRateChangedMessageCommand=function(self)
@@ -129,7 +91,9 @@ local t = Def.ActorFrame{
 
 		-- update SpeedModHelper text to reflect the new music rate
 		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
-			self:GetChild(ToEnumShortString(player) .. "SpeedModHelper"):settext( GetSpeedModHelperText(player) )
+			if currentmods_frames[ToEnumShortString(player)] then
+				currentmods_frames[ToEnumShortString(player)]:queuecommand("Refresh")
+			end
 		end
 
 		-- find the index of the OptionRow for MusicRate so we can update
@@ -154,15 +118,20 @@ LoadActor("./JudgmentGraphicPreviews.lua", t)
 LoadActor("./ComboFontPreviews.lua", t)
 
 -- some functionality needed in both PlayerOptions, PlayerOptions2, and PlayerOptions3
-t[#t+1] = LoadActor(THEME:GetPathB("ScreenPlayerOptions", "common"))
+t[#t+1] = LoadActor(THEME:GetPathB("ScreenPlayerOptions", "CommonOverlay"))
 
 
 for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 	local pn = ToEnumShortString(player)
-	local song = GAMESTATE:GetCurrentSong()
-	local bpms = player_bpms[player]
+	local bpms = GetDisplayBPMs(player)
 
 	t[#t+1] = Def.Actor{
+
+		["CurrentSteps" .. pn .. "ChangedMessageCommand"]=function(self) self:queuecommand("RefreshBPMs") end,
+		["CurrentTrail" .. pn .. "ChangedMessageCommand"]=function(self)  self:queuecommand("RefreshBPMs") end,
+		RefreshBPMsCommand=function(self)
+			bpms = GetDisplayBPMs(player)
+		end,
 
 		-- the player wants to change their SpeedModType (x, M, C)
 		["SpeedModType" .. pn .. "SetMessageCommand"]=function(self,params)
@@ -215,7 +184,9 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			end
 
 			SpeedModBMTs[pn]:settext( text )
-			self:GetParent():GetChild(pn .. "SpeedModHelper"):settext( GetSpeedModHelperText(player) )
+			if currentmods_frames[pn] then
+				currentmods_frames[pn]:queuecommand("Refresh")
+			end
 		end,
 
 		["MenuLeft" .. pn .. "MessageCommand"]=function(self)
@@ -236,19 +207,6 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 				self:queuecommand("Set"..pn)
 			end
 		end
-	}
-
-	-- the large block text at the top that shows each player their current scroll speed
-	t[#t+1] = LoadFont("_wendy small")..{
-		Name=pn.."SpeedModHelper",
-		Text="",
-		InitCommand=function(self)
-			self:diffuse(PlayerColor(player)):diffusealpha(0)
-			self:zoom(0.5):y(48)
-			self:x(player==PLAYER_1 and -100 or 150)
-			self:shadowlength(0.55)
-		end,
-		OnCommand=function(self) self:linear(0.4):diffusealpha(1) end
 	}
 end
 

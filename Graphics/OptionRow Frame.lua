@@ -19,10 +19,10 @@ t[#t+1] = Def.Quad {
 	Name="TitleBackgroundQuad",
 	OnCommand=function(self)
 		self:horizalign(left)
-		:x(WideScale(-271.5, -360))
-		:setsize(115, 30)
-		:diffuse(Color.Black)
-		:diffusealpha(BrighterOptionRows() and 0.8 or 0.25)
+		    :x(WideScale(-271.5, -360))
+		    :setsize(115, 30)
+		    :diffuse(Color.Black)
+		    :diffusealpha(BrighterOptionRows() and 0.8 or 0.25)
 	end
 }
 

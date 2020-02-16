@@ -108,14 +108,17 @@ end
 -- If arguments are not provided, the current song/stepchart will be used
 -- (like on SelectMusic and PlayerOptions).
 
-StringifyDisplayBPMs = function(player, StepsOrTrail, MusicRate)
+StringifyDisplayBPMs = function(player, StepsOrTrail, MusicRate, xmod)
 	player       = player       or GAMESTATE:GetMasterPlayerNumber()
 	StepsOrTrail = StepsOrTrail or (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player)) or GAMESTATE:GetCurrentSteps(player)
 	MusicRate    = MusicRate    or SL.Global.ActiveModifiers.MusicRate
+	xmod         = xmod or 1
 
 	local bpms = GetDisplayBPMs(player, StepsOrTrail, MusicRate)
 
 	if not (bpms and bpms[1] and bpms[2]) then return "" end
+	bpms[1] = bpms[1] * xmod
+	bpms[2] = bpms[2] * xmod
 
 	-- format DisplayBPMs to not show decimals unless a musicrate
 	-- modifier is in effect, in which case show 1 decimal of precision
