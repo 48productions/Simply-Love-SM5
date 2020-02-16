@@ -173,6 +173,12 @@ OperatorMenuOptionRows.VideoRendererWindows = function()
 		values = { "opengl,d3d", "d3d,opengl" }
 	end
 
+    -- SM5.3 alpha uses "glad" as its renderer, so throw out all of the above
+	if ProductVersion():match("5.3") then
+		choices = { "glad" }
+		values  = { "glad" }
+	end
+
 	return {
 		Name = "VideoRenderer",
 		Choices = choices,
