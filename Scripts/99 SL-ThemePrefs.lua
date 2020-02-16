@@ -55,10 +55,10 @@ local SL_CustomPrefs =
 	},
 	VisualTheme =
 	{
-		Default = "Hearts",
+		Default = "Potato",
 		 -- emojis are our lingua franca for the 21st century
-		Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔" },
-		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk" },
+		Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔", "🥔" },
+		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato" },
 	},
 	RainbowMode = {
 		Default = false,
@@ -73,8 +73,8 @@ local SL_CustomPrefs =
 	-- the StepMania application is started.
 	SimplyLoveColor =
 	{
-		-- a nice pinkish-purple, by default
-		Default = 3,
+		-- a nice potato-orange, by default
+		Default = 10,
 		Choices = { 1,2,3,4,5,6,7,8,9,10,11,12 },
 		Values = { 1,2,3,4,5,6,7,8,9,10,11,12 }
 	},
