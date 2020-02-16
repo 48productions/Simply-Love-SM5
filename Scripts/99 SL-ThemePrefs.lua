@@ -70,7 +70,7 @@ local SL_CustomPrefs =
 	},
 	MenuSong = {
 		Default = "Potato",
-		Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔", "🥔", "🎄", "💜", "🤫" },
+		Choices = { "♡ | feel", "↖ | cloud break", "🐻 | crystalis", "🦆 | Xuxa VRC6 cover", "😺 | Cosmic Cat (bounced mix)", "🎃 | Spooky Scary Chiptunes", "🌈 | Mystical Wheelbarrow Journey", "⭐| Shooting Star faux-VRC6 cover", "🤔 | Brain Power", "🥔 | tbd", "🎄 | holiday cheer", "💜 | 20, November (vrc6)", "🤫 | Silent (No Music)" },
 		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato", "Christmas", "Nov20", "Silent" },
 	},
 	-- - - - - - - - - - - - - - - - - - - -
