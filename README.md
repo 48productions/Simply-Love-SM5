@@ -1,15 +1,19 @@
 # Simply Potato (StepMania 5)
 
-![Arrow Logo](https://i.imgur.com/oZmxyGo.png)
+🥔🥔🥔🥔🥔🥔🥔🥔
 ======================
 
 ## About
 
-Simply Potato is a StepMania 5 theme for the post-SimplyLove community.
+Simply Potato is a StepMania 5 theme for the post-Simply Love community.
 
-It features a clean and simple design, offers numerous potato-driven features not implemented by the StepMania 5 engine, and allows the current generation of PIU fans to breathe new life into the game they've never played in years because we don't have crap for DDR cabs ;_;
+It features a clean and simple design, offers numerous potato-driven features not implemented by the StepMania 5 engine, and allows the current generation of PIU fans to breathe new life into the game they've never played in years because we don't have crap for DDR/ITG cabs ;_;
 
-Thanks to quietly-turning and hurtpiggypig for the original versions of Simply Love for SM5 and SM3.95, respectively.
+Simply Potato is a fork of the original Simply Love SM5 theme that adds a few minor touches:
+  * An option for a potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
+  * Minor visual changes and tweaks
+
+Thanks to quietly-turning, hurtpiggypig, and everyone else who helped with the original SimplyLove themes for SM5 and SM3.95, directly or indirectly. Your help helped create the *de facto* Stepmania theme for multiple generations of dance game players, and no other theme I've seen has compared to the amount of polish and *love* that was put into the original themes.
 
 
 
