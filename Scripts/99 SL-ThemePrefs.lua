@@ -68,6 +68,11 @@ local SL_CustomPrefs =
 		},
 		Values 	= { true , false }
 	},
+	MenuSong = {
+		Default = "Potato",
+		Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔", "🥔" },
+		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato" },
+	},
 	-- - - - - - - - - - - - - - - - - - - -
 	-- SimplyLoveColor saves the theme color for the next time
 	-- the StepMania application is started.

@@ -8,10 +8,11 @@ local songs = {
 	Gay    = "Mystical Wheelbarrow Journey",
 	Stars  = "Shooting Star - faux VRC6 remix",
 	Thonk  = "Da Box of Kardboard Too (feat Naoki vs ZigZag) - TaroNuke Remix",
+	Potato = "Da Box of Kardboard Too (feat Naoki vs ZigZag) - TaroNuke Remix",
 }
 
 -- retrieve the current VisualTheme from the ThemePrefs system
-local style = ThemePrefs.Get("VisualTheme")
+local style = ThemePrefs.Get("MenuSong")
 
 -- use the style to index the songs table (above)
 -- and get the song associated with this VisualTheme
@@ -21,6 +22,9 @@ local file = songs[ style ]
 -- fall back on the song for Hearts as default music
 -- (this sometimes happens when people are experimenting
 -- with making their own custom VisualThemes)
+
+if ThemePrefs.Get("VisualTheme") == "Thonk" then file = songs.Thonk end
+
 if not file then file = songs.Hearts end
 
 -- annnnnd some EasterEggs
