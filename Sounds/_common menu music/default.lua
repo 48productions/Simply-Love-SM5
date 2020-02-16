@@ -9,6 +9,9 @@ local songs = {
 	Stars  = "Shooting Star - faux VRC6 remix",
 	Thonk  = "Da Box of Kardboard Too (feat Naoki vs ZigZag) - TaroNuke Remix",
 	Potato = "Da Box of Kardboard Too (feat Naoki vs ZigZag) - TaroNuke Remix",
+	Christmas = "HolidayCheer",
+	Nov20 = "20",
+	Silent = "Silent",
 }
 
 -- retrieve the current VisualTheme from the ThemePrefs system
@@ -31,6 +34,8 @@ if not file then file = songs.Hearts end
 if PREFSMAN:GetPreference("EasterEggs") and style ~= "Thonk" then
 	--  41 days remain until the end of the year.
 	if MonthOfYear()==10 and DayOfMonth()==20 then file = "20" end
+	-- Halloween is a holiday too - 48
+	if MonthOfYear()==9 then file = "Spooky Scary Chiptunes" end
 	-- the best way to spread holiday cheer is singing loud for all to hear
 	if MonthOfYear()==11 then file = "HolidayCheer" end
 end
