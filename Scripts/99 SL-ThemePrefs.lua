@@ -179,6 +179,13 @@ local SL_CustomPrefs =
 		Choices = { THEME:GetString("ThemePrefs","Off"), THEME:GetString("ThemePrefs","On"), THEME:GetString("ThemePrefs","OnWithSound") },
 		Values  = { 0, 1, 2 }
 	},
+	-- - - - - - - - - - - - - - - - - - - -
+	--- ???
+	RabbitHole = {
+		Default = 0,
+		Choices = range(0, 22, 1),
+		Values = range(0, 22, 1),
+	},
 }
 
 -- We need to InitAll() now so that ./Scripts/SL_Init.lua can use
