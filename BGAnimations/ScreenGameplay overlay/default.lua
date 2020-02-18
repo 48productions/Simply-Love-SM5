@@ -39,4 +39,10 @@ for player in ivalues( GAMESTATE:GetHumanPlayers() ) do
 	af[#af+1] = LoadActor("./PerColumnJudgmentTracking.lua", player)
 end
 
+-- Load the Mods Machine if the ThemePref says to.
+-- If its README brought you here, you don't have to do anything! If you copied the folder to the right place, you can enable the Mods Machine in Simply Potato Options.
+if ThemePrefs.Get("ModsMachine") and FILEMAN:DoesFileExist("/modsmachine") then
+	af[#af+1] = LoadActor("/modsmachine")
+end
+
 return af

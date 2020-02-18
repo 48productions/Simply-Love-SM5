@@ -60,6 +60,11 @@ local SL_CustomPrefs =
 		Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔", "🥔" },
 		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato" },
 	},
+	MenuSong = {
+		Default = "Potato",
+		Choices = { "♡ | feel", "↖ | cloud break", "🐻 | crystalis", "🦆 | Xuxa VRC6 cover", "😺 | Cosmic Cat (bounced mix)", "🎃 | Spooky Scary Chiptunes", "🌈 | Mystical Wheelbarrow Journey", "⭐| Shooting Star faux-VRC6 cover", "🤔 | Brain Power", "🥔 | tbd", "🎄 | holiday cheer", "💜 | 20, November (vrc6)", "🤫 | Silent (No Music)" },
+		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato", "Christmas", "Nov20", "Silent" },
+	},
 	RainbowMode = {
 		Default = false,
 		Choices = {
@@ -68,10 +73,15 @@ local SL_CustomPrefs =
 		},
 		Values 	= { true , false }
 	},
-	MenuSong = {
-		Default = "Potato",
-		Choices = { "♡ | feel", "↖ | cloud break", "🐻 | crystalis", "🦆 | Xuxa VRC6 cover", "😺 | Cosmic Cat (bounced mix)", "🎃 | Spooky Scary Chiptunes", "🌈 | Mystical Wheelbarrow Journey", "⭐| Shooting Star faux-VRC6 cover", "🤔 | Brain Power", "🥔 | tbd", "🎄 | holiday cheer", "💜 | 20, November (vrc6)", "🤫 | Silent (No Music)" },
-		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato", "Christmas", "Nov20", "Silent" },
+	-- - - - - - - - - - - - - - - - - - - -
+	-- Load the Mods Machine?
+	ModsMachine = {
+		Default = false,
+		Choices = {
+			THEME:GetString("ThemePrefs", "On"),
+			THEME:GetString("ThemePrefs", "Off")
+		},
+		Values 	= { true , false }
 	},
 	-- - - - - - - - - - - - - - - - - - - -
 	-- SimplyLoveColor saves the theme color for the next time
