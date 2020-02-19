@@ -33,7 +33,7 @@ local GetSpeedModHelperText = function(player)
 		end
 
 	-- elseif using a CMod or an MMod
-	elseif mods.SpeedModType == "C" or mods.SpeedModType == "M" then
+	elseif mods.SpeedModType == "C" or mods.SpeedModType == "M" or mods.SpeedModType == "A" then
 		text = mods.SpeedModType .. tostring(speed)
 	end
 
@@ -54,7 +54,8 @@ end
 local speedmod_def = {
 	x = { upper=20,   lower=0.05, increment=0.05 },
 	C = { upper=2000, lower=5,    increment=5 },
-	M = { upper=2000, lower=5,    increment=5 }
+	M = { upper=2000, lower=5,    increment=5 },
+	A = { upper=2000, lower=5,    increment=5 }
 }
 
 -- use this to directly manipulate the SpeedMod numbers in the global SL table
@@ -194,7 +195,7 @@ for player in ivalues(Players) do
 				-- if we have an active rate mod, then we have to undo/redo
 				-- our automatic rate mod compensation
 
-				if oldtype == "x" and (newtype == "C" or newtype == "M") then
+				if oldtype == "x" and (newtype == "C" or newtype == "M" or newtype == "A") then
 					-- apply rate compensation now
 					oldspeed = oldspeed * SL.Global.ActiveModifiers.MusicRate
 
@@ -223,6 +224,8 @@ for player in ivalues(Players) do
 
 			elseif  SL[pn].ActiveModifiers.SpeedModType == "M" then
 				text = "M" .. tostring(SL[pn].ActiveModifiers.SpeedMod)
+			elseif  SL[pn].ActiveModifiers.SpeedModType == "A" then
+				text = "A" .. tostring(SL[pn].ActiveModifiers.SpeedMod)
 			end
 
 			SpeedModItems[pn]:settext( text )

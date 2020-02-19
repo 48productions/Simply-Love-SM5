@@ -59,11 +59,17 @@ end
 -- It's not necessary to define each possible key for each OptionRow.  Anything you don't specify
 -- will use fallback values in OptionRowDefault (defined later, below).
 
+-- Jank way of limiting speedmod choices (AMod is only a thing in SM5.3, so it shouldn't be selectable if we're not running on 5.3) -- 48
+local CurSpeedmodTypes = {"x", "C", "M"}
+if string.find(ProductVersion(), "5.3") then
+	CurSpeedmodTypes = {"x", "C", "M", "A"}
+end
+
 local Overrides = {
 
 	-------------------------------------------------------------------------
 	SpeedModType = {
-		Choices = { "x", "C", "M" },
+		Choices = CurSpeedmodTypes,
 		ExportOnChange = true,
 		LayoutType = "ShowOneInRow",
 		SaveSelections = function(self, list, pn)
@@ -98,6 +104,8 @@ local Overrides = {
 				playeroptions:CMod(speed)
 			elseif type == "M" then
 				playeroptions:MMod(speed)
+			elseif type == "A" then
+				playeroptions:AMod(speed)
 			end
 
 		end
