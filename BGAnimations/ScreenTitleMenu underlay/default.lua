@@ -48,7 +48,7 @@ local image = "TitleMenu"
 
 -- see: watch?v=wxBO6KX9qTA etc.
 if FILEMAN:DoesFileExist("/Themes/"..sl_name.."/Graphics/_VisualStyles/"..ThemePrefs.Get("VisualTheme").."/TitleMenuAlt (doubleres).png") then
-	if math.random(1,100) <= 10 then image="TitleMenuAlt" end
+	if math.random(1,100) <= 5 then image="TitleMenuAlt" end
 end
 
 local af = Def.ActorFrame{
@@ -88,6 +88,8 @@ af[#af+1] = Def.ActorFrame{
 		InitCommand=function(self) self:diffuse(TextColor) end,
 	}
 }
+
+--af[#af+1] = LoadActor("../SplashText.lua") Doesn't work for some reason, added it to ScreenTitleJoin overlay instead - 48
 
 -- the best way to spread holiday cheer is singing loud for all to hear
 if HolidayCheer() then

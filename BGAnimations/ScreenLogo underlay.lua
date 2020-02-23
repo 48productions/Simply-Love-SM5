@@ -21,4 +21,6 @@ t[#t+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/".. image .."/TitleMenu (d
 	OnCommand=function(self) self:linear(0.5):diffusealpha(1) end
 }
 
+t[#t+1] = LoadActor("./SplashText.lua")
+
 return t

@@ -1,4 +1,6 @@
-return LoadFont("_wendy small")..{
+local t = Def.ActorFrame{}
+
+t[#t+1] = LoadFont("_wendy small")..{
 	InitCommand=function(self)
 		self:xy(_screen.cx,_screen.h-80):zoom(0.7):shadowlength(0.75)
 		self:visible(false):queuecommand("Refresh")
@@ -27,3 +29,7 @@ return LoadFont("_wendy small")..{
 		end
 	end
 }
+
+t[#t+1] = LoadActor("./SplashText.lua")
+
+return t
