@@ -64,19 +64,19 @@ local af = Def.ActorFrame{
 -- decorative arrows
 af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
 	InitCommand=function(self)
-		self:y(-80):zoom( game=="pump" and 0.2 or 0.205 )
+		self:y(-16):zoom( game=="pump" and 0.2 or 0.205 )
 	end
 }
 
 -- SIMPLY [something]
 af[#af+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
-	InitCommand=function(self) self:x(2):y(-64):zoom(0.7):shadowlength(0.75) end,
+	InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(0.75) end,
 	OffCommand=function(self) self:linear(0.5):shadowlength(0) end
 }
 
 -- SM version, SL version, song stats
 af[#af+1] = Def.ActorFrame{
-	InitCommand=function(self) self:zoom(0.8):y(-184):diffusealpha(0) end,
+	InitCommand=function(self) self:zoom(0.8):y(-120):diffusealpha(0) end,
 	OnCommand=function(self) self:sleep(0.2):linear(0.4):diffusealpha(1) end,
 
 	LoadFont("Common Normal")..{
@@ -96,7 +96,7 @@ if HolidayCheer() then
 	af[#af+1] = Def.Sprite{
 		Texture=THEME:GetPathB("ScreenTitleMenu", "underlay/hat.png"),
 		InitCommand=function(self) self:zoom(0.225):xy( 130, -self:GetHeight()/2 ):rotationz(15):queuecommand("Drop") end,
-		DropCommand=function(self) self:decelerate(1.333):y(-174) end,
+		DropCommand=function(self) self:decelerate(1.333):y(-110) end,
 	}
 end
 
