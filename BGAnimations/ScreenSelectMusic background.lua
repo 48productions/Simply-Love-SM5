@@ -1,11 +1,15 @@
-if not ThemePrefs.Get("RainbowMode") then return Def.Actor{ InitCommand=function(self) self:visible(false) end } end
+if not ThemePrefs.Get("RainbowMode") then
+	return LoadActor( THEME:GetPathB("", "_shared background") )
+end
 
+-- else (rainbow mode):
 return Def.ActorFrame{
 	Def.Quad{
 		InitCommand=function(self) self:FullScreen():Center():diffuse( Color.White ) end
 	},
 
 	LoadActor( THEME:GetPathB("", "_shared background") ),
+	
 
 	Def.Quad{
 		InitCommand=function(self)
