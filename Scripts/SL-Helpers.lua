@@ -14,10 +14,13 @@ end
 -- SM5's d3d implementation does not support render to texture. The DISPLAY
 -- singleton has a method to check this but it doesn't seem to be implemented
 -- in RageDisplay_D3D which is, ironically, where it's most needed.  So, this.
--- SM5.3 alpha uses "glad" as the name for its OpenGL renderer, so here's a lazy hack
+
+-- SM5.3 alpha uses "glad" as the name of its OpenGL renderer.
+-- Returns true if the first (6/4) characters of prefstring are "opengl" or "glad".
 
 SupportsRenderToTexture = function()
-	return (PREFSMAN:GetPreference("VideoRenderers"):sub(1,6):lower() == "opengl") or (PREFSMAN:GetPreference("VideoRenderers"):sub(1,6):lower() == "glad")
+	local prefstring = PREFSMAN:GetPreference("VideoRenderers"):lower()
+	return (prefstring:sub(1,6) == "opengl") or (prefstring:sub(1,4) == "glad")
 end
 
 -- -----------------------------------------------------------------------
