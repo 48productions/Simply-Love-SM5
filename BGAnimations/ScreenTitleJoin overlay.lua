@@ -1,8 +1,8 @@
 local t = Def.ActorFrame{}
 
-t[#t+1] = LoadFont("_wendy small")..{
+t[#t+1] = LoadFont("_upheaval 80px")..{
 	InitCommand=function(self)
-		self:xy(_screen.cx,_screen.h-80):zoom(0.7):shadowlength(0.75)
+		self:xy(_screen.cx,_screen.h-80):zoom(0.35):shadowlength(0.75)
 		self:visible(false):queuecommand("Refresh")
 	end,
 	OnCommand=function(self)

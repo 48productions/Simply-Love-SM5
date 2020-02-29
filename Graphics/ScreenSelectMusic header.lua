@@ -39,12 +39,12 @@ local t = Def.ActorFrame{
 	LoadActor( THEME:GetPathG("", "_header.lua") ),
 
 	Def.BitmapText{
-		Font=PREFSMAN:GetPreference("EventMode") and "_wendy monospace numbers" or "_wendy small",
+		Font=PREFSMAN:GetPreference("EventMode") and "_upheaval_underline 80px",
 		Name="Stage Number",
 		InitCommand=function(self)
 			bmt_actor = self
 			if PREFSMAN:GetPreference("EventMode") then
-				self:diffusealpha(0):zoom( WideScale(0.305,0.365) ):xy(_screen.cx, WideScale(10,9))
+				self:diffusealpha(0):zoom( WideScale(0.305,0.365) ):xy(_screen.cx, WideScale(10,12))
 			else
 				self:diffusealpha(0):zoom( WideScale(0.5,0.6) ):xy(_screen.cx, 15)
 			end
@@ -58,10 +58,10 @@ local t = Def.ActorFrame{
 		end,
 	},
 
-	LoadFont("_wendy small")..{
+	LoadFont("_upheaval_underline 80px")..{
 		Name="GameModeText",
 		InitCommand=function(self)
-			self:diffusealpha(0):zoom( WideScale(0.5,0.6)):xy(_screen.w-70, 15):halign(1)
+			self:diffusealpha(0):zoom(0.35):xy(_screen.w-70, 12):halign(1)
 			if not PREFSMAN:GetPreference("MenuTimer") then
 				self:x(_screen.w-10)
 			end

@@ -1,5 +1,5 @@
 local dark = {0,0,0,0.9}
-local light = {0.65,0.65,0.65,1}
+local light = {0.65,0.65,0.65,0.9}
 
 return Def.Quad{
 	Name="Footer",
