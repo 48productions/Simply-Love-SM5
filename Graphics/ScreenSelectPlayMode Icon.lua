@@ -7,7 +7,7 @@ return LoadFont("_upheaval_underline 80px")..{
 	Name="ModeName"..index,
 	Text=ScreenString(text),
 
-	InitCommand=function(self) self:halign(0.95):valign(0.65)maxwidth(256) end,
+	InitCommand=function(self) self:halign(0.95):valign(0.65):maxwidth(256) end,
 	GainFocusCommand=function(self) self:stoptweening():linear(0.1):zoom(0.5):diffuse(PlayerColor(PLAYER_1)) end,
 	LoseFocusCommand=function(self) self:stoptweening():linear(0.1):zoom(0.3):diffuse(color("#888888")) end,
 	OffCommand=function(self) self:linear(0.2):diffusealpha(0) end
