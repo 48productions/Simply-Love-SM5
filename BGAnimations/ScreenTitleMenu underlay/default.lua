@@ -61,12 +61,20 @@ local af = Def.ActorFrame{
 	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
 }
 
--- decorative arrows
-af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
-	InitCommand=function(self)
-		self:y(-16):zoom( game=="pump" and 0.2 or 0.205 )
-	end
+-- decorative arrows, now using the editor noteskin!
+af[#af+1] = LoadActor(THEME:GetPathG("", "_logos"))..{
+	OnCommand=function(self)
+		self:y(-16):zoom(0.55)
+	end,
 }
+
+-- old
+--af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
+--	InitCommand=function(self)
+--		self:y(-16):zoom( game=="pump" and 0.2 or 0.205 )
+--	end
+--}
+--end
 
 -- SIMPLY [something]
 af[#af+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
