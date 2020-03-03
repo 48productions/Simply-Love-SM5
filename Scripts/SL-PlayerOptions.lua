@@ -105,7 +105,7 @@ local Overrides = {
 			elseif type == "M" then
 				playeroptions:MMod(speed)
 			elseif type == "A" then
-				playeroptions:AMod(speed)
+				playeroptions:MMod(speed) --Trying to apply an AMod here crashes the game, use an MMod for now - 48
 			end
 
 		end
