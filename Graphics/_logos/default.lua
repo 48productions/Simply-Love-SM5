@@ -4,15 +4,16 @@ local noteskin = PREFSMAN:GetPreference("EditorNoteSkinP1") -- uses the editor n
 local game = GAMESTATE:GetCurrentGame():GetName()
 local directions
 
-local af = Def.ActorFrame{
-	InitCommand=function(self)
-		self:visible(true)
-	end,
-}
+local af = Def.ActorFrame{}
 
 if game == "dance" then directions =      {"Left", "Down", "Up", "Right", "Left", "Down", "Up", "Right"}
 elseif game == "pump" then directions =   {"DownLeft", "UpLeft", "Center", "UpRight", "DownRight", "DownLeft", "UpLeft", "Center", "UpRight", "DownRight"}
 elseif game == "techno" then directions = {"DownLeft", "Left", "UpLeft", "Down", "Up", "UpRight", "Right", "DownRight"}
+end
+
+-- I LOVE VIDEO GAMES
+if game == "dance" and PREFSMAN:GetPreference("EasterEggs") and math.random(1,100) <= 5 then
+	directions = {"Left", "Up", "Down", "Right", "Left", "Up", "Down", "Right"}
 end
 
 if game ~= "pump" then
