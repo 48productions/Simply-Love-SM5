@@ -258,3 +258,11 @@ Branch.AfterProfileSaveSummary = function()
 		return Branch.AfterInit()
 	end
 end
+
+Branch.DefaultGameMode = function()
+	if GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then --Switch the default mode based on whether anyone has a memory card (they both read from an setting in the Simply Love Options menu) - 48
+		return ThemePrefs.Get("DefaultGameModeMemoryCard") or "ITG"
+	else
+		return ThemePrefs.Get("DefaultGameMode") or "ITG"
+	end
+end

@@ -8,7 +8,8 @@ local SplashList = {
 	"No need for a revolution,\nwe Ashura better solution!",
 	"Join the party and\nclap your hands!",
 	"Slam it, Jam it,\nPump it Up!",
-	"Rave 'til The Nights Over!",
+	"Rave Until The Night Is Over!",
+	"Dance the night away!",
 	"Dive down the rabbit hole!",
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
@@ -17,6 +18,18 @@ local SplashList = {
 	"Fork me on Github!",
 	"Potato Revolution!",
 	"ft. Terrible Jokes",
+	"What do you mean this splash text\n reminds you of something?",
+	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
+	"Left go right go right\ngo pick up the step go",
+	"Green black and blue make the colors\nin the sky!",
+	"Use your feet and\ndance to the beat!",
+	"Feel the rhythm in your soul!",
+	"Come on, let me hear\nyou say RIGHT!",
+	"Ducking Hardcore Edition!",
+	"Half-baked!",
+	"Potato EVOLVED!",
+	"Now with extra\nR A I N B O W S !",
+	"Kerning!",
 }
 
 return Def.BitmapText{
@@ -26,7 +39,12 @@ return Def.BitmapText{
 		InitCommand=function(self)
 			local x = _screen.cx + _screen.cx / 2
 			local y = _screen.cy / 2
-			self:Center():rotationz(25):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):zoom(0.5):diffusealpha(0) --Set rotation, position, and (diffuse) color
+			self:Center():rotationz(20):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):zoom(0.5):diffusealpha(0) --Set rotation, position, and (diffuse) color
+			if self:GetText() == "Now with extra\nR A I N B O W S !" then --Add some RAINBOWS!
+				self:rainbowscroll(true)
+			elseif self:GetText() == "Kerning!" then
+				self:jitter(true)
+			end
 		end,
 		OnCommand=function(self) --When the screen is ready, queue the zoom command
 			self:queuecommand("Zoom"):linear(0.5):diffusealpha(1)
