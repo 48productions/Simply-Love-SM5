@@ -42,8 +42,10 @@ local profile_whitelist = {
 
 	Vocalization = "string",
 	ReceptorArrowsPosition = "string",
-    
-    PlayerSeenModfileWarning = "boolean",
+	
+	PlayerSeenModfileWarning = "boolean",
+	
+	PlayerOptionsString = "string"
 }
 
 -- ------------------------------------------
@@ -55,13 +57,14 @@ local filename =  theme_name .. " UserPrefs.ini"
 function LoadProfileCustom(profile, dir)
 
 	local path =  dir .. filename
-	local pn, filecontents
+	local player, pn, filecontents
 
 	-- we've been passed a profile object as the variable "profile"
 	-- see if it matches against anything returned by PROFILEMAN:GetProfile(player)
-	for player in ivalues( GAMESTATE:GetHumanPlayers() ) do
-		if profile == PROFILEMAN:GetProfile(player) then
-			pn = ToEnumShortString(player)
+	for p in ivalues( GAMESTATE:GetHumanPlayers() ) do
+		if profile == PROFILEMAN:GetProfile(p) then
+			player = p
+			pn = ToEnumShortString(p)
 			break
 		end
 	end
@@ -70,9 +73,26 @@ function LoadProfileCustom(profile, dir)
 		filecontents = IniFile.ReadFile(path)[theme_name]
 
 		for k,v in pairs(filecontents) do
-			-- ensure that the setting read in from profile exists and type check if so
-			if profile_whitelist[k] and type(v)==profile_whitelist[k] then
-				SL[pn].ActiveModifiers[k] = v
+			-- ensure that the key has a corresponding key in profile_whitelist
+			if profile_whitelist[k]
+			--  ensure that the datatype of the value matches the datatype specified in profile_whitelist
+			and type(v)==profile_whitelist[k] then
+				-- if the datatype is string and this key corresponds with an OptionRow in ScreenPlayerOptions
+				-- ensure that the string read in from the player's profile
+				-- is a valid value (or choice) for the corresponding OptionRow
+				if type(v) == "string" and CustomOptionRow(k) and FindInTable(v, CustomOptionRow(k).Values or CustomOptionRow(k).Choices)
+				or type(v) ~= "string" then
+					SL[pn].ActiveModifiers[k] = v
+				end
+
+				-- special-case PlayerOptionsString for now
+				-- it is saved to and read from profile as a string, but doesn't have a corresponding
+				-- OptionRow in ScreenPlayerOptions, so it will fail validation above
+				-- we want engine-defined mods (e.g. dizzy) to be applied as well, not just SL-defined mods
+				if k=="PlayerOptionsString" and type(v)=="string" then
+					SL[pn].PlayerOptionsString = v
+					GAMESTATE:GetPlayerState(player):SetPlayerOptions("ModsLevel_Preferred", v)
+				end
 			end
 		end
 	end
@@ -94,6 +114,11 @@ function SaveProfileCustom(profile, dir)
 					output[k] = v
 				end
 			end
+
+			-- PlayerOptionsString is saved outside the SL[pn].ActiveModifiers tables
+			-- and thus won't be handled in the loop above
+			output.PlayerOptionsString = SL[pn].PlayerOptionsString
+
 			IniFile.WriteFile( path, {[theme_name]=output} )
 			break
 		end
