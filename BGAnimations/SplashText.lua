@@ -2,7 +2,7 @@
 
 --Add/remove lines of text from this list - it will randomly pick one to display when loaded
 local SplashList = {
-	"Get up and dance, man!",
+	"Get up and dance, man!", --Pump references
 	"Stay in the groove!",
 	"Party all day,\nparty all night!",
 	"No need for a revolution,\nwe Ashura better solution!",
@@ -10,7 +10,7 @@ local SplashList = {
 	"Slam it, Jam it,\nPump it Up!",
 	"Rave Until The Night Is Over!",
 	"Dance the night away!",
-	"Dive down the rabbit hole!",
+	"Dive down the rabbit hole!", --Etc
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
 	"Now sans-free!",
@@ -18,15 +18,16 @@ local SplashList = {
 	"Fork me on Github!",
 	"Potato Revolution!",
 	"ft. Terrible Jokes",
+	"HEY GORGE",
 	"What do you mean this splash text\n reminds you of something?",
 	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
-	"Left go right go right\ngo pick up the step go",
+	"Left go right go right\ngo pick up the step go", --DDR references
 	"Green black and blue make the colors\nin the sky!",
 	"Use your feet and\ndance to the beat!",
 	"Feel the rhythm in your soul!",
 	"Come on, let me hear\nyou say RIGHT!",
 	"Ducking Hardcore Edition!",
-	"Half-baked!",
+	"Half-baked!", --Other etc
 	"Potato EVOLVED!",
 	"Now with extra\nR A I N B O W S !",
 	"Kerning!",
