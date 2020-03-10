@@ -124,8 +124,16 @@ local t = Def.ActorFrame{
 			-- for ScreenSelectPlayMode (see: Simply Love Options in the Operator Menu)
 			-- account for that here, in the OnCommand of the cursor ActorFrame, by updating cursor.index
 			-- to match the value of ThemePrefs.Get("DefaultGameMode") in the choices table
+			
+			-- There are now two default game modes - One if any player has a memory card, and one where nobody has one
+			-- This is useful in an arcade setting where you want the default, cardless mode to be Casual for novice players
+			-- And you want the default mode to be different for more advanced players with a memory card
 			if ScreenName == "ScreenSelectPlayMode" then
-				cursor.index = (FindInTable(ThemePrefs.Get("DefaultGameMode"), choices) or 1) - 1
+				if GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then --Switch the default mode based on whether anyone has a memory card (they both read from an setting in the Simply Love Options menu) - 48
+					cursor.index = (FindInTable(ThemePrefs.Get("DefaultGameModeMemoryCard"), choices) or 1) - 1
+				else
+					cursor.index = (FindInTable(ThemePrefs.Get("DefaultGameMode"), choices) or 1) - 1
+				end
 			end
 			self:x(-150):y( -60 + (cursor.h * cursor.index) )
 		end,
