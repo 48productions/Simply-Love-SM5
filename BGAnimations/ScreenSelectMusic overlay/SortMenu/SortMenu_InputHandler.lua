@@ -70,10 +70,10 @@ local function input(event)
 					sortmenu:queuecommand("DirectInputToTestInput")
 				end
 			end
-
-		elseif event.GameButton == "Back" or event.GameButton == "Select" then
-			overlay:queuecommand("DirectInputToEngine")
 		end
+	end
+	if (event.GameButton == "Back" or event.GameButton == "Select") and event.type == "InputEventType_Release" then
+		overlay:queuecommand("DirectInputToEngine")
 	end
 
 	return false
