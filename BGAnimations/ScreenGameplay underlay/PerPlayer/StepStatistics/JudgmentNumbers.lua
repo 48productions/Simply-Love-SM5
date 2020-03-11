@@ -1,3 +1,5 @@
+-- math.log10() replaced with log10Hack() from SP-Compatibility.lua  - slaugaus
+
 local player = ...
 
 local possible, rv, pss
@@ -5,7 +7,7 @@ local StepsOrTrail = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(pla
 local total_tapnotes = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Notes" )
 
 -- determine how many digits are needed to express the number of notes in base-10
-local digits = (math.floor(math.log10(total_tapnotes)) + 1)
+local digits = (math.floor(log10Hack(total_tapnotes)) + 1)
 -- display a minimum 4 digits for aesthetic reasons
 digits = math.max(4, digits)
 
@@ -62,7 +64,7 @@ for index, window in ipairs(TapNoteScores) do
 				self:settext( (pattern):format(TapNoteJudgments[window]) )
 
 				leadingZeroAttr = {
-					Length=(digits - (math.floor(math.log10(TapNoteJudgments[window]))+1)),
+					Length=(digits - (math.floor(log10Hack(TapNoteJudgments[window]))+1)),
 					Diffuse=Brightness(SL.JudgmentColors[SL.Global.GameMode][index], 0.35)
 				}
 				self:AddAttribute(0, leadingZeroAttr )
