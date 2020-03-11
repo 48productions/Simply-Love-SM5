@@ -87,4 +87,8 @@ for player in ivalues(Players) do
 	t[#t+1] = PlayerStatsAF
 end
 
+if GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then --If any player is using a memory card, remind them to take it with them!
+	t[#t+1] = LoadActor("usb-reminder")
+end
+
 return t
