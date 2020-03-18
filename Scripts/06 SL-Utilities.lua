@@ -205,3 +205,8 @@ function map(func, array)
 	end
 	return new_array
 end
+
+-- Scare the thonk out of anyone who dares enable Easter Eggs on April 1st - 48
+function AllowThonk()
+ return ThemePrefs.Get("VisualTheme") == "Thonk" or (MonthOfYear()==3 and DayOfMonth()==1 and PREFSMAN:GetPreference("EasterEggs"))
+end

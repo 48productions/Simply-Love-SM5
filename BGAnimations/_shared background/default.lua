@@ -13,6 +13,9 @@ local af = Def.ActorFrame{}
 -- "BackgroundImageChanged" which we can use in Normal.lua and RainbowMode.lua to Load() the
 -- newly-appropriate texture from disk into each Sprite; see also: ./BGAnimations/ScreenOptionsService overlay.lua
 local file = THEME:GetPathG("", "_VisualStyles/" .. ThemePrefs.Get("VisualTheme") .. "/SharedBackground.png")
+if AllowThonk() then
+	file = THEME:GetPathG("", "_VisualStyles/Thonk/SharedBackground.png")
+end
 
 -- a simple Quad to serve as the backdrop
 af[#af+1] = Def.Quad{

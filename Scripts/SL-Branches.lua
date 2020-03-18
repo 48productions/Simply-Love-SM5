@@ -22,7 +22,7 @@ end
 
 Branch.AllowScreenSelectColor = function()
 	if ThemePrefs.Get("AllowScreenSelectColor") and not ThemePrefs.Get("RainbowMode") then
-		if ThemePrefs.Get("VisualTheme") == "Thonk" then return "ScreenSelectColorThonk" end
+		if AllowThonk() then return "ScreenSelectColorThonk" end
 		return "ScreenSelectColor"
 	else
 		return Branch.AfterScreenSelectColor()
@@ -54,11 +54,11 @@ Branch.AfterScreenSelectColor = function()
 		-- the engine, but I guess we're doing it here, in SL-Branches.lua, for now.
 		GAMESTATE:SetCurrentStyle( preferred_style )
 
-		if ThemePrefs.Get("VisualTheme") == "Thonk" then return "ScreenSelectPlayModeThonk" end
+		if AllowThonk() then return "ScreenSelectPlayModeThonk" end
 		return "ScreenSelectPlayMode"
 	end
 
-	if ThemePrefs.Get("VisualTheme") == "Thonk" then return "ScreenSelectStyleThonk" end
+	if AllowThonk() then return "ScreenSelectStyleThonk" end
 	return "ScreenSelectStyle"
 end
 

@@ -26,12 +26,12 @@ local file = songs[ style ]
 -- (this sometimes happens when people are experimenting
 -- with making their own custom VisualThemes)
 
-if ThemePrefs.Get("VisualTheme") == "Thonk" then file = songs.Thonk end
+if AllowThonk() then file = songs.Thonk end
 
 if not file then file = songs.Hearts end
 
 -- annnnnd some EasterEggs
-if PREFSMAN:GetPreference("EasterEggs") and style ~= "Thonk" then
+if PREFSMAN:GetPreference("EasterEggs") and file ~= songs.Thonk then
 	--  41 days remain until the end of the year.
 	if MonthOfYear()==10 and DayOfMonth()==20 then file = "20" end
 	-- Halloween is a holiday too - 48

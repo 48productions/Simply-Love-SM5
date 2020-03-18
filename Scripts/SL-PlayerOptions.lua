@@ -61,9 +61,9 @@ end
 
 -- Jank way of limiting speedmod choices (AMod is only a thing in SM5.3, so it shouldn't be selectable if we're not running on 5.3) -- 48
 local CurSpeedmodTypes = {"x", "C", "M"}
-if string.find(ProductVersion(), "5.3") then
-	CurSpeedmodTypes = {"x", "C", "M", "A"}
-end
+--if string.find(ProductVersion(), "5.3") then
+	--CurSpeedmodTypes = {"x", "C", "M", "A"} - Disabled for now since AMod crashes 5.3 when loading profiles, I swear to the sun I'll fix it eventually - 48 (3/16/2020)
+--end
 
 local Overrides = {
 
