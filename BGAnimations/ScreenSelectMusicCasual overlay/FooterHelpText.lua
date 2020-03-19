@@ -1,5 +1,5 @@
 local cancel = THEME:GetString("ScreenSelectMusicCasual", "FooterTextSingleSong")
-if PREFSMAN:GetPreference("ThreeKeyNavigation") then cancel = THEME:GetString("ScreenSelectMusicCasual", "FooterTextSingleSong3Key") end
+--if PREFSMAN:GetPreference("ThreeKeyNavigation") then cancel = THEME:GetString("ScreenSelectMusicCasual", "FooterTextSingleSong3Key") end
 
 return LoadFont("Common Normal")..{
 	InitCommand=function(self) self:xy(_screen.cx, _screen.h - 16):zoom(0.7):diffusealpha(0) end,

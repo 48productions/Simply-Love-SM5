@@ -6,9 +6,9 @@ end
 
 local t = Def.ActorFrame{}
 
-t[#t+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
+t[#t+1] = LoadActor(THEME:GetPathG("", "_logos"))..{
 	InitCommand=function(self)
-		self:xy(_screen.cx, _screen.cy-16):zoom( game=="pump" and 0.2 or 0.205 ):cropright(1)
+		self:xy(_screen.cx, _screen.cy-16):zoom(0.55):cropright(1)
 	end,
 	OnCommand=function(self) self:linear(0.33):cropright(0) end
 }

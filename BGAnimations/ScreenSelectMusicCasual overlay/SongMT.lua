@@ -56,8 +56,8 @@ local song_mt = {
 
 					subself:visible(true):sleep(0.3):linear(0.2):diffusealpha(1)
 				end,
-				SlideToTopCommand=function(subself) subself:linear(0.2):xy(WideScale(col.w*0.7, col.w), _screen.cy-67) end,
-				SlideBackIntoGridCommand=function(subself) subself:linear(0.2):xy( col.w, row.h * 2 ) end,
+				SlideToTopCommand=function(subself) subself:linear(0.2):xy(WideScale(col.w*0.7, col.w * 2.75), _screen.cy-67) end,
+				SlideBackIntoGridCommand=function(subself) subself:linear(0.2):xy( col.w * (6 - 2.25), row.h * 2 ) end,
 
 				-- wrap the function that plays the preview music in its own Actor so that we can
 				-- call sleep() and queuecommand() and stoptweening() on it and not mess up other Actors
@@ -174,30 +174,31 @@ local song_mt = {
 			self.container:linear(0.2)
 
 			local middle_index = math.floor(num_items/2)
+			--local middle_index = 6
 
 			-- top row
-			if item_index < middle_index  then
+			if item_index ~= middle_index  then
 				-- if we need to tween this song jacket off the right edge of the screen
-				if item_index < middle_index - col.how_many then
-					self.container:y( row.h ):x( _screen.w + col.w )
-				-- otherwise, it is somewhere in the top row
-				else
-					self.container:y( row.h ):x( col.w * (middle_index-item_index) )
-				end
+			--	if item_index < middle_index - col.how_many then
+			--		self.container:y( row.h ):x( _screen.w + col.w )
+			--	-- otherwise, it is somewhere in the top row
+			--	else
+			--		self.container:y( row.h ):x( col.w * (middle_index-item_index) )
+			--	end
 
 			-- bottom row
-			elseif item_index > middle_index then
+			--elseif item_index > middle_index then
 				-- if we need to tween this song jacket off the right edge of the screen
-				if item_index > middle_index + col.how_many then
-					self.container:y( row.h * 3 ):x(_screen.w + col.w)
+				--if item_index > middle_index + col.how_many then
+				--	self.container:y( row.h * 3 ):x(_screen.w + col.w)
 				-- otherwise, it is somewhere in the bottom row
-				else
-					self.container:y( row.h * 3 ):x( col.w * math.abs(middle_index-item_index))
-				end
+				--else
+					self.container:y( row.h * 3 ):x( col.w * (item_index - 2.25))
+				--end
 
 			-- center row
 			elseif item_index == middle_index then
-				self.container:y( row.h * 2 ):x( col.w )
+				self.container:y( row.h * 2 ):x( col.w * (6 - 2.25))
 
 			end
 		end,

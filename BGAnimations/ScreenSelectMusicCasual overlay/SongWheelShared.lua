@@ -92,7 +92,7 @@ af[#af+1] = Def.ActorFrame{
 
 af[#af+1] = Def.ActorFrame{
 	Name="CurrentSongInfoAF",
-	InitCommand=function(self) self:y( row.h * 2 + 10 ):x( col.w + 80):diffusealpha(0) end,
+	InitCommand=function(self) self:y( row.h * 2 + 10 ):x( col.w * (6 - 2.25) + 80):diffusealpha(0) end,
 	OnCommand=function(self) self:sleep(0.15):linear(0.15):diffusealpha(1) end,
 
 	SwitchFocusToGroupsMessageCommand=function(self)
@@ -102,11 +102,11 @@ af[#af+1] = Def.ActorFrame{
 		self:runcommandsonleaves(function(leaf) if leaf.settext then leaf:settext("") end end)
 	end,
 	SwitchFocusToSongsMessageCommand=function(self)
-		self:visible(true):linear(0.2):zoom(1):y(row.h*2+10):x(col.w+80)
+		self:visible(true):linear(0.2):zoom(1):y(row.h*2+10):x( col.w * (6 - 2.25) + 80)
 		self:runcommandsonleaves(function(leaf) leaf:diffuse(1,1,1,1) end)
 	end,
 	SwitchFocusToSingleSongMessageCommand=function(self)
-		self:linear(0.2):zoom(0.9):xy(col.w+WideScale(20,65), row.h+43)
+		self:linear(0.2):zoom(0.9):xy(col.w * (2.25)+WideScale(20,65), row.h+43)
 		self:runcommandsonleaves(function(leaf) leaf:diffuse(1,1,1,1) end)
 	end,
 
@@ -168,7 +168,9 @@ af[#af+1] = Def.ActorFrame{
 			end,
 			CurrentSongChangedMessageCommand=function(self, params)
 				if params.song then
-					self:settext( THEME:GetString("ScreenSelectMusic", "Genre") .. ": " .. params.song:GetGenre() )
+					local genre = params.song:GetGenre()
+					if genre == "" then genre = THEME:GetString("ScreenSelectMusic", "NoGenre") end
+					self:settext( THEME:GetString("ScreenSelectMusic", "Genre") .. ": " .. genre )
 				end
 			end,
 		},
