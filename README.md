@@ -5,7 +5,7 @@
 
 ## About
 
-Simply Potato is a StepMania 5 theme for the post-Simply Love community.
+Simply Potato is a StepMania 5 theme for the part of the post-ITG community that also happens to love potatoes.
 
 It features a clean and simple design, offers numerous potato-driven features not implemented by the StepMania 5 engine, and allows the current generation of PIU fans to breathe new life into the game they've never played in years because we haven't had crap for DDR/ITG cabs up until now ;_;
 
@@ -39,7 +39,7 @@ If you are having trouble installing StepMania or getting it to run on your comp
 
 ## Installation
 
-Head to the [Releases Page](https://github.com/dguzek/Simply-Love-SM5/releases) to download the most recent formal release of Simply Potato.  If you opt to download directly from the *master* branch instead, you may get new features but also newer bugs.
+Head to the [Releases Page](https://github.com/48productions/Simply-Potato-SM5/releases) to download the most recent formal release of Simply Potato. But not really. We haven't bothered to make one of those yet. Downloading directly from the *master* branch is the way to go for now.
 
 To install this theme, unzip it and move the resulting directory inside the *Themes* folder in your [StepMania user data directory](https://github.com/stepmania/stepmania/wiki/User-Data-Locations). Note that the *Themes* folder has been moved into the *Appearance* folder in StepMania 5.3.
 
@@ -79,16 +79,18 @@ Or, *things quietly-turning has added that were not present in the original Simp
 
 #### Language Support
 
-Simply Love has support for:
+Simply Potato has support for:
 
   * English
-  * Español
-  * Français
-  * Português Brasileiro
-  * 日本語
-  * Deutsch
+  * ~~Español~~
+  * ~~Français~~
+  * ~~Português Brasileiro~~
+  * ~~日本語~~
+  * ~~Deutsch~~
 
-The current language can be changed in Simply Love under *System Options*.  You may need to restart StepMania immediately after changing the language for all in-game text to be properly translated.
+If, for some reason, you want to help translate Simply Potato's additional menu options, leave a comment in [this issue](https://github.com/48productions/Simply-Potato-SM5/issues/3) or submit a pull request.
+
+The current language can be changed in Simply Potato under *System Options*.  You may need to restart StepMania immediately after changing the language for all in-game text to be properly translated.
 
 
 ---
@@ -105,4 +107,7 @@ See the [Manually Changing Preferences](https://github.com/stepmania/stepmania/w
 
 #### How can I get more songs to show up in Casual Mode?
 Please refer to the [Casual Mode README](./Other/CasualMode-README.md).
+
+#### Why potatoes?
+Why not? 🥔
 
