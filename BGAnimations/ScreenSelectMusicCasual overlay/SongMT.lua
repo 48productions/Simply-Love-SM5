@@ -56,8 +56,8 @@ local song_mt = {
 
 					subself:visible(true):sleep(0.3):linear(0.2):diffusealpha(1)
 				end,
-				SlideToTopCommand=function(subself) subself:linear(0.2):xy(WideScale(col.w*0.7, col.w * 2.75), _screen.cy-67) end,
-				SlideBackIntoGridCommand=function(subself) subself:linear(0.2):xy( col.w * (6 - 2.25), row.h * 2 ) end,
+				SlideToTopCommand=function(subself) subself:linear(0.2):xy(col.w * WideScale(1.5, 2.25), _screen.cy-67) end,
+				SlideBackIntoGridCommand=function(subself) subself:linear(0.2):xy( col.w * (6 - 1.75), row.h * 2 ) end,
 
 				-- wrap the function that plays the preview music in its own Actor so that we can
 				-- call sleep() and queuecommand() and stoptweening() on it and not mess up other Actors
@@ -95,7 +95,7 @@ local song_mt = {
 						InitCommand=function(subself) self.banner = subself; subself:diffusealpha(0) end,
 						OnCommand=function(subself) subself:queuecommand("Refresh") end,
 						RefreshCommand=function(subself)
-							subself:scaletoclipped(110,110)
+							subself:scaletoclipped(45,45)
 							if self.index ~= SongWheel:get_actor_item_at_focus_pos().index then
 								subself:zoomto(55,55)
 							else
@@ -163,43 +163,28 @@ local song_mt = {
 				self.container:playcommand("LoseFocus")
 			end
 
-			-- handle row hiding
-			if item_index == 1 or item_index > num_items-1 then
-				self.container:visible(false)
-			else
-				self.container:visible(true)
-			end
-
-			-- handle row shifting
-			self.container:linear(0.2)
+			-- Chain all below commands to happen over this period of time:
+			self.container:decelerate(0.2)
 
 			local middle_index = math.floor(num_items/2)
 			--local middle_index = 6
 
-			-- top row
+						
+			--Song icons loop around to the opposite side of the screen if they go off one edge, so fade out banners that leave the screen
+			if item_index == 1 or item_index > num_items-2 then
+				self.container:diffusealpha(0)
+			else
+				self.container:diffusealpha(1)
+			end
+			
+
+			-- Position icons in the bottom row
 			if item_index ~= middle_index  then
-				-- if we need to tween this song jacket off the right edge of the screen
-			--	if item_index < middle_index - col.how_many then
-			--		self.container:y( row.h ):x( _screen.w + col.w )
-			--	-- otherwise, it is somewhere in the top row
-			--	else
-			--		self.container:y( row.h ):x( col.w * (middle_index-item_index) )
-			--	end
+				self.container:y( row.h * 3 ):x( col.w * (item_index - 1.75))
 
-			-- bottom row
-			--elseif item_index > middle_index then
-				-- if we need to tween this song jacket off the right edge of the screen
-				--if item_index > middle_index + col.how_many then
-				--	self.container:y( row.h * 3 ):x(_screen.w + col.w)
-				-- otherwise, it is somewhere in the bottom row
-				--else
-					self.container:y( row.h * 3 ):x( col.w * (item_index - 2.25))
-				--end
-
-			-- center row
+			-- Now position the center row icon
 			elseif item_index == middle_index then
-				self.container:y( row.h * 2 ):x( col.w * (6 - 2.25))
-
+				self.container:y( row.h * 2 ):x( col.w * (6 - 1.75))
 			end
 		end,
 

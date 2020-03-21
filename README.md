@@ -14,6 +14,8 @@ Simply Potato is a fork of the original Simply Love SM5 theme that adds some vis
   * An option for a potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
   * New menu music options, independent of the visual style in use
   * Improvements to to memory card appearance and features, like different game style choice defaults for memory card and non-memory card users, among other minor visual tweaks
+  * Tweaks to Casual Mode's music wheel (it now has a more standard cover flow-style look)
+  * Tweaks to menu element positioning on the regular music wheel as well
   * Other visual changes and tweaks
   
 Do note that while the original Simply Love theme was translated into several languages, Simply Potato (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!

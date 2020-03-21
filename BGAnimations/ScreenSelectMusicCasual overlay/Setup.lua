@@ -10,7 +10,7 @@ GAMESTATE:SetCurrentPlayMode(0)
 ---------------------------------------------------------------------------
 -- local junk
 local margin = {
-	w = WideScale(54,72),
+	w = WideScale(54,70),
 	h = 30
 }
 

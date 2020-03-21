@@ -102,7 +102,7 @@ af[#af+1] = Def.ActorFrame{
 		self:runcommandsonleaves(function(leaf) if leaf.settext then leaf:settext("") end end)
 	end,
 	SwitchFocusToSongsMessageCommand=function(self)
-		self:visible(true):linear(0.2):zoom(1):y(row.h*2+10):x( col.w * (6 - 2.25) + 80)
+		self:visible(true):linear(0.2):zoom(1):y(row.h*2+10):x( col.w * (6 - 1.75) + 80)
 		self:runcommandsonleaves(function(leaf) leaf:diffuse(1,1,1,1) end)
 	end,
 	SwitchFocusToSingleSongMessageCommand=function(self)
