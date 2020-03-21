@@ -105,6 +105,8 @@ local t = Def.ActorFrame {
 					SetGameModePreferences()
 					THEME:ReloadMetrics()
 					SCREENMAN:GetTopScreen():SetNextScreenName("ScreenReloadSSM"):StartTransitioningScreen("SM_GoToNextScreen")
+				else --Play an error sound instead of making the player wonder why they can't transition to ITG mode
+					self:GetChild("invalid_sound"):play()
 				end
 			end
 		end
@@ -166,5 +168,7 @@ end
 -- FIXME: This is dumb.  Add the player option StartButton visual last so it
 --  draws over everything else and we can hide cusors behind it when needed...
 t[#t+1] = LoadActor("./StartButton.lua")
+
+t[#t+1] = LoadActor( THEME:GetPathS("common", "invalid") )..{ Name="invalid_sound", SupportPan = false }
 
 return t
