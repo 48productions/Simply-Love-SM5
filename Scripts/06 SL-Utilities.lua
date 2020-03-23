@@ -210,3 +210,8 @@ end
 function AllowThonk()
  return ThemePrefs.Get("VisualTheme") == "Thonk" or (MonthOfYear()==3 and DayOfMonth()==1 and PREFSMAN:GetPreference("EasterEggs"))
 end
+
+--I LOVE VIDEO GAMES (changes splash text and title screen arrow positions on ScreenTitleMenu/TitleJoin and ScreenLogo)
+function SPLovesVideoGames()
+	return (GAMESTATE:GetCurrentGame():GetName() == "dance" and PREFSMAN:GetPreference("EasterEggs") and math.random(1,100) <= 5 )
+end

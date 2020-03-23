@@ -30,6 +30,4 @@ t[#t+1] = LoadFont("_wendy small")..{
 	end
 }
 
-t[#t+1] = LoadActor("./SplashText.lua")
-
 return t

@@ -10,6 +10,10 @@ if game ~= "dance" and game ~= "pump" then
 	game = "techno"
 end
 
+--Do you like video games?
+local video_games = 0
+if SPLovesVideoGames() then video_games = 1 end
+
 -- - - - - - - - - - - - - - - - - - - - -
 -- People commonly have multiple copies of SL installed – sometimes different forks with unique features
 -- sometimes due to concern that an update will cause them to lose data, sometimes accidentally, etc.
@@ -62,7 +66,7 @@ local af = Def.ActorFrame{
 }
 
 -- decorative arrows, now using the editor noteskin!
-af[#af+1] = LoadActor(THEME:GetPathG("", "_logos"))..{
+af[#af+1] = LoadActor(THEME:GetPathG("", "_logos"), video_games)..{
 	OnCommand=function(self)
 		self:y(-16):zoom(0.55)
 	end,
@@ -97,8 +101,6 @@ af[#af+1] = Def.ActorFrame{
 	}
 }
 
---af[#af+1] = LoadActor("../SplashText.lua") Doesn't work for some reason, added it to ScreenTitleJoin overlay instead - 48
-
 -- the best way to spread holiday cheer is singing loud for all to hear
 if HolidayCheer() then
 	af[#af+1] = Def.Sprite{
@@ -107,5 +109,7 @@ if HolidayCheer() then
 		DropCommand=function(self) self:decelerate(1.333):y(-110) end,
 	}
 end
+
+af[#af+1] = LoadActor("../SplashText.lua", video_games)
 
 return af

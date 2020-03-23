@@ -12,18 +12,19 @@ local SplashList = {
 	"Dance the night away!",
 	"Can your legs keep Up & Up?",
 	"Left go right go right\ngo pick up the step!", --DDR/BEMANI references
-	"Green black and blue make the colors\nin the sky!",
+	"Green black and blue make\nthe colors in the sky!",
 	"Use your feet and\ndance to the beat!",
 	"Feel the rhythm in your soul!",
 	"Come on, let me hear\nyou say RIGHT!",
 	"Ducking Hardcore Edition!",
 	"We're going to have a party,\nhave a really great time!",
 	"[Tribal chants]",
-	"We are the Cartoon Heroes, oh-WOAH-oh!",
+	"We are the Cartoon Heroes,\noh-WOAH-oh!",
 	"Welcome to the toon town party!",
 	"Feelin blue, I'm thinkin' of you!",
 	"[bagpipe sounds]",
 	"Come along and sing a song,\nand join the jamboree!",
+	"shanrara, shanrara!",
 	"Dive down the rabbit hole!", --Etc
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
@@ -59,11 +60,18 @@ local SplashList = {
 	"Also try Groove Coaster!",
 	"Also try jubeat!",
 	"Also try maimai!",
+	"Also try ParaParaParadise!",
 	"Also try pop'n music!",
 	"Also try Pump It Up!",
 	"Also try Sound Voltex!",
 	"Also try Taiko no Tatsujin!",
+	"Also try Magical Truck Adventure!",
+	"Also try Mahjong!",
+	"Also try Hangly-Man!",
+	"Also try Minecraft!",
 }
+
+local arg = ...
 
 local minZoom = 0
 local maxZoom = 0
@@ -71,14 +79,32 @@ local maxZoom = 0
 return Def.BitmapText{
 		Name="SplashBitmapText",
 		Font="_wendy small", --Change the font, here!
-		Text=SplashList[math.random(1, #SplashList)], --Set the displayed text to a random line from the above list
+		Text="...", --Set the displayed text to a random line from the above list
 		InitCommand=function(self)
-			local x = _screen.cx + _screen.cx / 2
-			local y = _screen.cy / 2
+			local x = _screen.cx / 2
+			local y = _screen.cy / -2
+
+			if arg == 1 then --I LOVE VIDEO GAMEEES (yes with 3 e's)
+				self:settext("I LOVE VIDEO GAMES!")
+			elseif AllowThonk() then --THONK TIME
+				self:settext("🤔🤔🤔🤔🤔")
+				self:rainbowscroll(true):jitter(true):vibrate():effectmagnitude(1.1, 1.1, 1.1)
+			elseif MonthOfYear()==9 and math.random(1, 5) == 1 then
+				self:settext("Happy Halloween!")
+			elseif HolidayCheer() and math.random(1, 5) == 1 then -- the best way to spread holiday cheer is singing loud for all to hear
+				self:settext("Merry Christmas!")
+			else 
+				self:settext(SplashList[math.random(1, #SplashList)])
+			end
 			
-			--Set zoom dynamically based on splash string length. That way the copypastas don't take up half the screen
-			maxZoom = 0.45 - (string.len(self:GetText()) * 0.0005)
-			minZoom = maxZoom - 0.05
+			if AllowThonk() then
+				maxZoom = 1.5
+				minZoom = 1.3
+			else
+				--Set zoom dynamically based on splash string length. That way the copypastas don't take up half the screen
+				maxZoom = 0.45 - (string.len(self:GetText()) * 0.0005)
+				minZoom = maxZoom - 0.05
+			end
 			
 			self:Center():rotationz(20):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):zoom(maxZoom):diffusealpha(0) --Set rotation, position, and (diffuse) color
 			if self:GetText() == "Now with extra\nR A I N B O W S !" then --Add some RAINBOWS!
@@ -88,7 +114,10 @@ return Def.BitmapText{
 			end
 		end,
 		OnCommand=function(self) --When the screen is ready, queue the zoom command
-			self:queuecommand("Zoom"):linear(0.5):diffusealpha(1)
+			self:queuecommand("Zoom"):smooth(0.5):diffusealpha(1)
+		end,
+		OffCommand=function(self) --When the screen is ready, queue the zoom command
+			self:smooth(0.2):diffusealpha(0)
 		end,
 		ZoomCommand=function(self) --Zoom command: Smoothly zoom in and out, then queue the zoom command again
 			self:smooth(2):zoom(minZoom):smooth(2):zoom(maxZoom):queuecommand("Zoom")

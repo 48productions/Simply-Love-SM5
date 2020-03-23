@@ -12,7 +12,7 @@ elseif game == "techno" then directions = {"DownLeft", "Left", "UpLeft", "Down",
 end
 
 -- I LOVE VIDEO GAMES
-if game == "dance" and PREFSMAN:GetPreference("EasterEggs") and math.random(1,100) <= 5 then
+if ... == 1 then
 	directions = {"Left", "Up", "Down", "Right", "Left", "Up", "Down", "Right"}
 end
 
