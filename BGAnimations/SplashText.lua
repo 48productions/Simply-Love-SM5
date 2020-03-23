@@ -11,7 +11,7 @@ local SplashList = {
 	"Rave Until The Night Is Over!",
 	"Dance the night away!",
 	"Can your legs keep Up & Up?",
-	"Left go right go right\ngo pick up the step!", --DDR references
+	"Left go right go right\ngo pick up the step!", --DDR/BEMANI references
 	"Green black and blue make the colors\nin the sky!",
 	"Use your feet and\ndance to the beat!",
 	"Feel the rhythm in your soul!",
@@ -36,6 +36,7 @@ local SplashList = {
 	"NotNotITG!",
 	"StepMania!\nGGGGGOOOOOLLLLLDDDDD!",
 	"stepbeats REV. MOONRISE",
+	"NOW LET ME SEE YOU DANCE!",
 	"Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -51,6 +52,17 @@ local SplashList = {
 	"\"We're gonna make U dance!\nU can move your feet on the PUMP stage!\nU'll be the dancing hero in a minute.\nDon't U wanna feel the fever of dance?\nCome on everybody and let's just PUMP IT UP\"",
 	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
 	"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"",
+	"Also try beatmania!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
+	"Also try crossbeats!",
+	"Also try DDR Solo!",
+	"Also try DanceEvolution!",
+	"Also try Groove Coaster!",
+	"Also try jubeat!",
+	"Also try maimai!",
+	"Also try pop'n music!",
+	"Also try Pump It Up!",
+	"Also try Sound Voltex!",
+	"Also try Taiko no Tatsujin!",
 }
 
 local minZoom = 0
