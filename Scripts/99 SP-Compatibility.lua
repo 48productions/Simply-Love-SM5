@@ -3,7 +3,8 @@
 
 -- In 5.3, math.log10() was removed in favor of math.log(x, base)
 -- This is only used in ScreenGameplay underlay\PerPlayer\StepStatistics\JudgmentNumbers.lua
+-- Now free of version checking (it won't have to be rewritten for SM5.4)
 function log10Hack(x)
-	if ProductVersion():match("5.3") then return math.log(x, 10) end
+	if math.log10 == nil then return math.log(x, 10) end
 	return math.log10(x)
 end
