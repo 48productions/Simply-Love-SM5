@@ -93,6 +93,8 @@ return Def.BitmapText{
 				self:settext("Happy Halloween!")
 			elseif HolidayCheer() and math.random(1, 5) == 1 then -- the best way to spread holiday cheer is singing loud for all to hear
 				self:settext("Merry Christmas!")
+			elseif MonthOfYear()==10 and DayOfMonth()==20 and math.random(1, 5) == 1 then
+				self:settext("Happy 20,november!")
 			else 
 				self:settext(SplashList[math.random(1, #SplashList)])
 			end
