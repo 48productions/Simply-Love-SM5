@@ -27,6 +27,34 @@ end
 
 -- ----------------------------------------
 
+-- Preload the info for each group.
+-- TODO: support AdditionalSongFolders if possible
+
+local group_descriptions = {}
+local group_ratings = {}
+
+for _,group_name in ipairs(SONGMAN:GetSongGroupNames()) do
+	local group_desc = 0
+	local group_rates = 0
+	
+	-- (attempt to) read info.ini
+	local file = IniFile.ReadFile( "./Songs/"..group_name.."/info.ini" )
+	if file then
+		if file.GroupInfo then
+			if file.GroupInfo.Description then
+				group_desc = file.GroupInfo.Description
+			end
+			if file.GroupInfo.Ratings then
+				group_rates = file.GroupInfo.Ratings
+			end
+		end
+	end
+	
+	group_descriptions[group_name] = group_desc ~= "" and group_desc or 0
+	group_ratings[group_name] = group_rates ~= "" and group_rates or 0
+	
+end
+
 local t = Def.ActorFrame{
 
 	OnCommand=function(self)
@@ -67,7 +95,18 @@ local t = Def.ActorFrame{
 						:horizalign(right):y(-12)
 						:maxwidth(44)
 				end,
-				OnCommand=function(self) self:diffuse(0.5,0.5,0.5,1) end
+				OnCommand=function(self) self:diffuse(0.5,0.5,0.5,1) end,
+				-- hide if folder has a description
+				SetCommand=function(self)
+					if not GAMESTATE:IsCourseMode() then
+						local group_name = SCREENMAN:GetTopScreen():GetMusicWheel():GetSelectedSection()
+						if GAMESTATE:GetSortOrder() == "SortOrder_Group" and not GAMESTATE:GetCurrentSong() and group_descriptions[group_name] ~= 0 then
+							self:diffusealpha(0)
+						else
+							self:diffusealpha(1)
+						end
+					end
+				end
 			},
 
 			-- Song Artist
@@ -92,6 +131,17 @@ local t = Def.ActorFrame{
 				InitCommand=function(self)
 					self:horizalign(right):y(8)
 						:diffuse(0.5,0.5,0.5,1)
+				end,
+				-- hide if folder has rating info
+				SetCommand=function(self)
+					if not GAMESTATE:IsCourseMode() then
+						local group_name = SCREENMAN:GetTopScreen():GetMusicWheel():GetSelectedSection()
+						if GAMESTATE:GetSortOrder() == "SortOrder_Group" and not GAMESTATE:GetCurrentSong() and group_ratings[group_name] ~= 0 then
+							self:diffusealpha(0)
+						else
+							self:diffusealpha(1)
+						end
+					end
 				end
 			},
 
@@ -110,14 +160,14 @@ local t = Def.ActorFrame{
 				Text=THEME:GetString("SongDescription", "Length"),
 				InitCommand=function(self)
 					self:horizalign(right)
-						:x(_screen.w/4.5):y(8)
+						:xy(190, 8)
 						:diffuse(0.5,0.5,0.5,1)
 				end
 			},
 
 			-- Song Duration Value
 			LoadFont("Common Normal")..{
-				InitCommand=function(self) self:horizalign(left):xy(_screen.w/4.5 + 5, 8) end,
+				InitCommand=function(self) self:horizalign(left):xy(195, 8) end,
 				SetCommand=function(self)
 					local duration
 
@@ -169,6 +219,41 @@ local t = Def.ActorFrame{
 					end
 				end
 			}
+		},
+		
+		-- folder info
+		LoadFont("Common Normal")..{
+			InitCommand=function(self) self:horizalign(left):xy(-150,-12) end,
+			SetCommand=function(self)
+				if not GAMESTATE:IsCourseMode() then
+					if GAMESTATE:GetSortOrder() == "SortOrder_Group" and not GAMESTATE:GetCurrentSong() then
+						local group_name = SCREENMAN:GetTopScreen():GetMusicWheel():GetSelectedSection()
+						self:diffusealpha(1)
+						self:settext(group_descriptions[group_name] ~= 0 and group_descriptions[group_name] or "")
+					else
+						self:diffusealpha(0)
+					end
+				end
+			end
+		},
+		
+		-- folder rating info
+		LoadFont("Common Normal")..{
+			InitCommand=function(self) self:horizalign(left):xy(-150,8) end,
+			SetCommand=function(self)
+				if not GAMESTATE:IsCourseMode() then
+					if GAMESTATE:GetSortOrder() == "SortOrder_Group" and not GAMESTATE:GetCurrentSong() then
+						local group_name = SCREENMAN:GetTopScreen():GetMusicWheel():GetSelectedSection()
+						self:diffusealpha(1)
+						if group_ratings[group_name] ~= 0 then
+							self:settext(THEME:GetString("SongDescription", "GroupRatings") .. group_ratings[group_name])
+						else self:settext("")
+						end
+					else
+						self:diffusealpha(0)
+					end
+				end
+			end
 		},
 
 		-- long/marathon version bubble graphic and text
