@@ -15,8 +15,8 @@ end
 local af = Def.ActorFrame{ Name="GroupWheelShared" }
 
 af[#af+1] = Def.Quad{
-	InitCommand=function(self) self:zoomto(_screen.w, _screen.h-200):diffuse(0,0,0,0.9):cropbottom(1) end,
-	OnCommand=function(self) self:xy(_screen.cx, _screen.cy+60):finishtweening():accelerate(0.2):cropbottom(1) end,
+	InitCommand=function(self) self:zoomto(_screen.w, _screen.h-275):diffuse(0,0,0,0.9):cropbottom(1) end,
+	OnCommand=function(self) self:xy(_screen.cx, _screen.cy+10):finishtweening():accelerate(0.2):cropbottom(1) end,
 	SwitchFocusToGroupsMessageCommand=function(self) self:sleep(0.3):smooth(0.3):cropbottom(0) end,
 	SwitchFocusToSongsMessageCommand=function(self) self:cropbottom(1) end,
 	SwitchFocusToSingleSongMessageCommand=function(self) self:cropbottom(1) end,
@@ -32,22 +32,22 @@ af[#af+1] = Def.ActorFrame{
 	SwitchFocusToSongsMessageCommand=function(self) self:visible(false):diffusealpha(0) end,
 	SwitchFocusToSingleSongMessageCommand=function(self) self:visible(false):diffusealpha(0) end,
 
-	-- unique songs
+	-- Group description
 	Def.BitmapText{
 		Font="Common Normal",
 		InitCommand=function(self)
-			self:zoom(1.1):diffuse(Color.White):xy(0,15):maxwidth(300)
+			self:zoom(1):diffuse(Color.White):xy(0,22):maxwidth(300)
 		end,
 		CurrentGroupChangedMessageCommand=function(self, params)
-			if params.group then
-				self:settext( group_info[params.group].num_songs .. " Unique Songs" )
+			if group_info[params.group] ~= 0 then
+				self:settext(group_info[params.group])
 			else
-				self:self("")
+				self:settext("")
 			end
 		end,
 	},
 
-	-- artists
+--[[	-- artists
 	Def.BitmapText{
 		Font="Common Normal",
 		InitCommand=function(self)
@@ -90,7 +90,7 @@ af[#af+1] = Def.ActorFrame{
 				self:self("")
 			end
 		end,
-	},
+	},]]--
 
 }
 

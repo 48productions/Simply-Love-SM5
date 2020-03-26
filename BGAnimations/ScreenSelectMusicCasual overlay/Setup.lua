@@ -303,6 +303,25 @@ local GetGroupInfo = function(groups)
 end
 
 ---------------------------------------------------------------------------
+-- Returns info from each group's info.ini file (for group descriptions)
+local GetDescriptionInfo = function(groups)
+	local descriptions = {}
+	for group in ivalues(groups) do
+		local desc = 0
+		local file = IniFile.ReadFile( "./Songs/"..group.."/info.ini" )
+		if file then --Check if the file, GroupInfo section, and Description field exist, then get the group's description if they all exist
+			if file.GroupInfo then
+				if file.GroupInfo.Description then
+					desc = file.GroupInfo.Description
+				end
+			end
+		end
+		
+		descriptions[group] = desc ~= "" and desc or 0 --Set this group's description if it exists
+	end
+	return descriptions
+end
+---------------------------------------------------------------------------
 
 
 local current_song = GAMESTATE:GetCurrentSong()
@@ -341,7 +360,8 @@ return {
 	steps_type=steps_type,
 	Groups=groups,
 	group_index=group_index,
-	-- group_info=GetGroupInfo(groups),
+	--group_info=GetGroupInfo(groups), --Group info for old group info thing
+	group_info=GetDescriptionInfo(groups),
 	OptionsWheel=OptionsWheel,
 	OptionRows=OptionRows,
 	row=row,

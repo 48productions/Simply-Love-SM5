@@ -18,6 +18,9 @@ for dir in os.listdir(os.getcwd()):
     if os.path.isfile(dir + "/info.ini"):
         print("info.ini already exists in folder " + dir + ", ignoring.")
         continue
+    if not os.path.isdir(dir): # I've got a lotta random garbage in my songs folder that aren't folders, turns out python doesn't like creating info.ini files for "groups" that are just random files and not folders - 48
+        print(dir + " is not a folder, ignoring.")
+        continue
     x = input("Create an info.ini in folder " + dir + "? (y/N) ")
     if x.lower() == "y":
         desc = input("Description: ")

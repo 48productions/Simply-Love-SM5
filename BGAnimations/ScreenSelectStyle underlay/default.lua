@@ -293,7 +293,7 @@ for i,choice in ipairs(choices) do
 	t[#t+1] = LoadActor("./choice.lua", {choice, i} )
 end
 
-t[#t+1] = LoadActor( THEME:GetPathS("ScreenSelectMaster", "change") )..{ Name="Change", SupportPan=false }
-t[#t+1] = LoadActor( THEME:GetPathS("common", "start") )..{ Name="Start", SupportPan=false }
+t[#t+1] = LoadActor( THEME:GetPathS("ScreenSelectMaster", "change") )..{ Name="Change", SupportPan=false, IsAction=true }
+t[#t+1] = LoadActor( THEME:GetPathS("common", "start") )..{ Name="Start", SupportPan=false, IsAction=true }
 
 return t
