@@ -308,7 +308,12 @@ local GetDescriptionInfo = function(groups)
 	local descriptions = {}
 	for group in ivalues(groups) do
 		local desc = 0
-		local file = IniFile.ReadFile( "./Songs/"..group.."/info.ini" )
+		local file = nil
+		if FILEMAN:DoesFileExist("./Songs/"..group.."/info.ini") then
+			file = IniFile.ReadFile("./Songs/"..group.."/info.ini")
+		elseif FILEMAN:DoesFileExist("./AdditionalSongs/"..group.."/info.ini") then
+			file = IniFile.ReadFile("./AdditionalSongs/"..group.."/info.ini")
+		end
 		if file then --Check if the file, GroupInfo section, and Description field exist, then get the group's description if they all exist
 			if file.GroupInfo then
 				if file.GroupInfo.Description then

@@ -27,31 +27,38 @@ end
 
 -- ----------------------------------------
 
--- Preload the info for each group.
--- TODO: support AdditionalSongFolders if possible
+-- Preload the info.ini data for each group.
+-- Doing this every time the MusicWheel scrolls by a group would surely be bad for performance.
 
 local group_descriptions = {}
 local group_ratings = {}
 
-for _,group_name in ipairs(SONGMAN:GetSongGroupNames()) do
-	local group_desc = 0
-	local group_rates = 0
+for _,group in ipairs(SONGMAN:GetSongGroupNames()) do
+	local desc = 0
+	local rates = 0
+	local file = nil
 	
-	-- (attempt to) read info.ini
-	local file = IniFile.ReadFile( "./Songs/"..group_name.."/info.ini" )
+	-- open info.ini if it exists
+	if FILEMAN:DoesFileExist("./Songs/"..group.."/info.ini") then
+		file = IniFile.ReadFile("./Songs/"..group.."/info.ini")
+	-- check AdditionalSongs, too (this was easier than i thought it would be)
+	elseif FILEMAN:DoesFileExist("./AdditionalSongs/"..group.."/info.ini") then
+		file = IniFile.ReadFile("./AdditionalSongs/"..group.."/info.ini")
+	end
+	-- read info.ini if it loaded
 	if file then
 		if file.GroupInfo then
 			if file.GroupInfo.Description then
-				group_desc = file.GroupInfo.Description
+				desc = file.GroupInfo.Description
 			end
 			if file.GroupInfo.Ratings then
-				group_rates = file.GroupInfo.Ratings
+				rates = file.GroupInfo.Ratings
 			end
 		end
 	end
-	
-	group_descriptions[group_name] = group_desc ~= "" and group_desc or 0
-	group_ratings[group_name] = group_rates ~= "" and group_rates or 0
+	-- copy to the arrays, leaving a 0 in place of nil or empty strings
+	group_descriptions[group] = desc ~= "" and desc or 0
+	group_ratings[group] = rates ~= "" and rates or 0
 	
 end
 
