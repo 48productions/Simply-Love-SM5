@@ -160,7 +160,7 @@ local t = Def.ActorFrame {
 		-- allow players to switch to a TestInput overlay if the current game has visual assets to support it
 		-- and if we're in EventMode (public arcades probably don't want random players attempting to diagnose the pads...)
 		local game = GAMESTATE:GetCurrentGame():GetName()
-		if (game=="dance" or game=="pump" or game=="techno") and GAMESTATE:IsEventMode() then
+		if (game=="dance" or game=="pump" or game=="techno") then --Let's re-enable the input tester for now and see how it goes - 48
 			table.insert(wheel_options, {"FeelingSalty", "TestInput"})
 		end
 

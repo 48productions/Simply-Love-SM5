@@ -133,4 +133,19 @@ end
 
 t[#t+1] = Grid
 
+
+-- "Has Edit" Marker (next to steps list)
+--t[#t+1] = LoadActor( THEME:GetPathG("", "Has Edit (doubleres).png") )..{
+t[#t+1] = LoadActor("./editbubble (doubleres).png")..{
+	InitCommand=function(self)
+		self:visible(false):xy(-130, 60):zoom(0.375)
+		if ThemePrefs.Get("RainbowMode") then self:diffuse(0,0,0,1) end
+	end,
+	CurrentSongChangedMessageCommand=function(self)
+		local song = GAMESTATE:GetCurrentSong()
+		local stepstype = "StepsType_" .. GAMESTATE:GetCurrentGame():GetName():gsub("^%l", string.upper) .. "_" .. GAMESTATE:GetCurrentStyle():GetName():gsub("^%l", string.upper):gsub("Versus", "Single")
+		self:visible(song and song:HasEdits(stepstype) or false)
+	end
+}
+
 return t

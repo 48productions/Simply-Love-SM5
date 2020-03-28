@@ -1,4 +1,4 @@
-if not GAMESTATE:IsEventMode() then return end
+--if not GAMESTATE:IsEventMode() then return end --Let's re-enable the input tester in non-event modes - 48
 
 local game = GAMESTATE:GetCurrentGame():GetName()
 if not (game=="dance" or game=="pump" or game=="techno") then return end
