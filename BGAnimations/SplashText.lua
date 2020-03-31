@@ -11,6 +11,8 @@ local SplashList = {
 	"Rave Until The Night Is Over!",
 	"Dance the night away!",
 	"Can your legs keep Up & Up?",
+	"Here comes a new player!",
+	"Stomp your feet forever!",
 	"Left go right go right\ngo pick up the step!", --DDR/BEMANI references
 	"Green black and blue make\nthe colors in the sky!",
 	"Use your feet and\ndance to the beat!",
@@ -38,6 +40,10 @@ local SplashList = {
 	"StepMania!\nGGGGGOOOOOLLLLLDDDDD!",
 	"stepbeats REV. MOONRISE",
 	"NOW LET ME SEE YOU DANCE!",
+	"It's finally here!",
+	"Thank your arcade staff!",
+	"This isn't even my final form!",
+	"A new challenger approaches!",
 	"Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -60,6 +66,7 @@ local SplashList = {
 	"Also try Groove Coaster!",
 	"Also try jubeat!",
 	"Also try maimai!",
+	"Also try Paca Paca Passion Special!",
 	"Also try ParaParaParadise!",
 	"Also try pop'n music!",
 	"Also try Pump It Up!",

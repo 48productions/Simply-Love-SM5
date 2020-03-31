@@ -33,3 +33,17 @@ function DifficultyColor( difficulty )
 	local clr = SL.Global.ActiveColorIndex + (index-2)
 	return GetHexColor(clr)
 end
+
+function SortMenuColor(kind)
+	if kind == "SortBy" then
+		return color("#777747")
+	elseif kind == "ChangeStyle" then
+		return color("#7C4A4A")
+	elseif kind == "ChangeMode" then
+		return color("#7F634C")
+	elseif kind == "FeelingSalty" then --Input tester lol
+		return color("#4C7747")
+	else
+		return color("#888888")
+	end
+end

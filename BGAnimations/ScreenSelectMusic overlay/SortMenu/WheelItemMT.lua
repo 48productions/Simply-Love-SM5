@@ -53,7 +53,7 @@ return {
 				self.container:glow(color("1,1,1,0"))
 				self.container:accelerate(0.15)
 				self.container:zoom(0.5)
-				self.container:diffuse(color("#888888"))
+				self.container:diffuse(SortMenuColor(self.kind))
 				self.container:glow(color("1,1,1,0"))
 			end
 
