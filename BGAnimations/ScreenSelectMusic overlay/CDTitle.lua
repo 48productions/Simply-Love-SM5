@@ -40,8 +40,8 @@ end
 local t = Def.ActorFrame{
     OnCommand=function(self) self:SetUpdateFunction(CDTitleUpdate) end;
     Def.Sprite {
-        Name="CDTitle";
-        OnCommand=function(self) self:x(WideScale(276,382)):y(150):diffuseshift():effectperiod(6):effectcolor1(1,1,1,1):effectcolor2(1,1,1,0.4) end;
+        Name="CDTitle",
+        OnCommand=function(self) self:x(WideScale(276,382)):y(150):diffuseshift():effectperiod(5):effectcolor1(1,1,1,1):effectcolor2(1,1,1,0.5) end
     }
 }
 
