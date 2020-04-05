@@ -30,6 +30,8 @@ local t = Def.ActorFrame{
 
 	-- Graphical Banner
 	LoadActor("./Banner.lua"),
+	-- CD Title (separate from banner so it doesn't get zoomed)
+	LoadActor("./CDTitle.lua"),
 	-- Song Artist, BPM, Duration (Referred to in other themes as "PaneDisplay")
 	LoadActor("./SongDescription.lua"),
 
