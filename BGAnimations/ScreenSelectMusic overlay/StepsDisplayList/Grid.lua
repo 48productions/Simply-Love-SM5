@@ -138,7 +138,7 @@ t[#t+1] = Grid
 --t[#t+1] = LoadActor( THEME:GetPathG("", "Has Edit (doubleres).png") )..{
 t[#t+1] = LoadActor("./editbubble (doubleres).png")..{
 	InitCommand=function(self)
-		self:visible(false):xy(-130, 60):zoom(0.375):bounce():effectclock("beatnooffset"):effectmagnitude(0, 1, 0):effectperiod(1):effectoffset( -10 * GlobalOffsetSeconds)
+		self:visible(false):xy(-130, 60):zoom(0.375):bounce():effectclock("beatnooffset"):effectmagnitude(0, 1.5, 0):effectperiod(2):effectoffset( -10 * PREFSMAN:GetPreference("GlobalOffsetSeconds"))
 		if ThemePrefs.Get("RainbowMode") then self:diffuse(0,0,0,1) end
 	end,
 	CurrentSongChangedMessageCommand=function(self)
