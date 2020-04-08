@@ -9,13 +9,16 @@ Simply Potato is a StepMania 5 theme for the part of the post-ITG community that
 
 It features a clean and simple design, offers numerous potato-driven features not implemented by the StepMania 5 engine, and allows the current generation of PIU fans to breathe new life into the game they've never played in years because we haven't had crap for DDR/ITG cabs up until now ;_;
 
-Simply Potato is a fork of the original Simply Love SM5 theme that adds some visual changes and features:
-  * Support for Stepmania 5.3 (currently WIP, should be stable but testing is needed) and AMod (flat out broken right now, needs fixing)
+Simply Potato SM5 is a fork of the original Simply Love SM5 theme that adds some visual tweaks and new features. It is intended for the Idaho Rhythm Group's new public DDR cab (thus why everything is potato themed), and as such is *heavily* geared towards use on our specific cabinet. It'll still work just fine for private use too, though!
+
+Current major changes/tweaks:
+  * Support for Stepmania 5.3 (currently barebones and WIP, should be stable but testing is needed)
   * An option for a potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
   * New menu music options, independent of the visual style in use
   * Improvements to to memory card appearance and features, like different game style choice defaults for memory card and non-memory card users, among other minor visual tweaks
   * Tweaks to Casual Mode's music wheel (it now has a more standard cover flow-style look)
   * Tweaks to menu element positioning on the regular music wheel as well
+  * Splash text on the title screen
   * Other visual changes and tweaks
   
 Do note that while the original Simply Love theme was translated into several languages, Simply Potato (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!
@@ -47,7 +50,7 @@ To install this theme, unzip it and move the resulting directory inside the *The
 
 ## Screenshots
 
-Visit quietly-turning's imgur album for screenshots of the original Simply Love theme in action: [http://imgur.com/a/56wDq](http://imgur.com/a/56wDq)
+Visit quietly-turning's imgur album for screenshots of the original Simply Love SM5 theme in action: [http://imgur.com/a/56wDq](http://imgur.com/a/56wDq)
 
 ## New Features
 
@@ -89,6 +92,8 @@ Simply Potato has support for:
   * ~~Português Brasileiro~~
   * ~~日本語~~
   * ~~Deutsch~~
+
+*(Simply Love SM5 is translated into the above languages, but Simply Potato's additions are yet to be translated)*
 
 If, for some reason, you want to help translate Simply Potato's additional menu options, leave a comment in [this issue](https://github.com/48productions/Simply-Potato-SM5/issues/3) or submit a pull request.
 
