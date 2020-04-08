@@ -27,6 +27,7 @@ local SplashList = {
 	"[bagpipe sounds]",
 	"Come along and sing a song,\nand join the jamboree!",
 	"shanrara, shanrara!",
+	"Make the moves 'n' all\nwith the dance hall king!",
 	"Dive down the rabbit hole!", --Etc
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
@@ -118,6 +119,9 @@ return Def.BitmapText{
 			else 
 				self:settext(SplashList[math.random(1, #SplashList)])
 			end
+
+			-- If you need to test a string, do so here
+			--self:settext("")
 			
 			if AllowThonk() then
 				maxZoom = 1.5
