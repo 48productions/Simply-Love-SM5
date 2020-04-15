@@ -7,12 +7,14 @@ local SplashList = {
 	"Party all day,\nparty all night!",
 	"No need for a revolution,\nwe Ashura better solution!",
 	"Join the party and\nclap your hands!",
+	"Move your body\nto Infinity!",
 	"Slam it, Jam it,\nPump it Up!",
 	"Rave Until The Night Is Over!",
 	"Dance the night away!",
 	"Can your legs keep Up & Up?",
 	"Here comes a new player!",
 	"Stomp your feet forever!",
+	"Beyond Evolution!",
 	"Left go right go right\ngo pick up the step!", --DDR/BEMANI references
 	"Green black and blue make\nthe colors in the sky!",
 	"Use your feet and\ndance to the beat!",
@@ -28,12 +30,13 @@ local SplashList = {
 	"Come along and sing a song,\nand join the jamboree!",
 	"shanrara, shanrara!",
 	"Make the moves 'n' all\nwith the dance hall king!",
-	"Dive down the rabbit hole!", --Etc
+	"Dive down the rabbit hole!", --Etc random garbage
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
 	"Now mostly sans-free!",
 	"100% Open Source!",
 	"Fork me on Github!",
+	"Follow us on Twitter!",
 	"ft. Terrible Jokes",
 	"Now with extra\nR A I N B O W S !",
 	"What do you mean this splash text\n reminds you of something?",
@@ -44,7 +47,9 @@ local SplashList = {
 	"NOW LET ME SEE YOU DANCE!",
 	"It's finally here!",
 	"Thank your arcade staff!",
+	"Support your local arcades!",
 	"Support your local community!",
+	"Join your local community!",
 	"Participate in local events!",
 	"This isn't even my final form,\nDA-DON!",
 	"A new challenger approaches!",
@@ -53,7 +58,9 @@ local SplashList = {
 	"It's a\nFreestyle Takeover!",
 	"Rumble in the Desert!",
 	"This was a mistake!",
+	"Link Up!",
 	"Get dunked on!",
+	":eyes:",
 	"Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -63,6 +70,7 @@ local SplashList = {
 	"Locally grown,\nfreshly baked!",
 	"Just add pudding!",
 	"Stomp With the Duck!",
+	"Now slightly less\ncursed!",
 	"It's finally here!", --SimplyPotato cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows since 2018!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
@@ -73,6 +81,7 @@ local SplashList = {
 	"A real-time\ndance music game!",
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
 	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
+	"Not yet cancelled!",
 	"Also try beatmania!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
 	"Also try crossbeats!",
 	"Also try DDR Solo!",
@@ -89,7 +98,13 @@ local SplashList = {
 	"Also try Magical Truck Adventure!",
 	"Also try Mahjong!",
 	"Also try Hangly-Man!",
-	"Also try Minecraft!",
+	"Also try non-rhythm games!",
+	"Also try Minecraft!", --Now let's try other games/play styles in general
+	"Also try Terraria!",
+	"Also try co-op!",
+	"Also try routines!",
+	"Also try modfiles",
+	"Also try Mawaru!",
 }
 
 local arg = ...
@@ -100,11 +115,12 @@ local maxZoom = 0
 return Def.BitmapText{
 		Name="SplashBitmapText",
 		Font="_wendy small", --Change the font, here!
-		Text="...", --Set the displayed text to a random line from the above list
+		Text="...", --Use placeholder text for now, to be updated below
 		InitCommand=function(self)
 			local x = _screen.cx / 2
 			local y = _screen.cy / -2
 
+			--Decide on splash text to use - check arguments, date, etc for special splashes
 			if arg == 1 then --I LOVE VIDEO GAMEEES (yes with 3 e's)
 				self:settext("I LOVE VIDEO GAMES!")
 			elseif AllowThonk() then --THONK TIME
@@ -117,17 +133,17 @@ return Def.BitmapText{
 			elseif MonthOfYear()==10 and DayOfMonth()==20 and math.random(1, 5) == 1 then
 				self:settext("Happy 20,november!")
 			else 
-				self:settext(SplashList[math.random(1, #SplashList)])
+				self:settext(SplashList[math.random(1, #SplashList)]) --Set the displayed text to a random line from the above list
 			end
 
 			-- If you need to test a string, do so here
 			--self:settext("")
 			
-			if AllowThonk() then
+			if AllowThonk() then --Hard-code zoom if we're gonna be thonking
 				maxZoom = 1.5
 				minZoom = 1.3
 			else
-				--Set zoom dynamically based on splash string length. That way the copypastas don't take up half the screen
+				--Set zoom dynamically based on splash string length. That way the copypastas don't clip off the screen
 				maxZoom = 0.45 - (string.len(self:GetText()) * 0.0005)
 				minZoom = maxZoom - 0.05
 			end
@@ -135,7 +151,7 @@ return Def.BitmapText{
 			self:Center():rotationz(20):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):zoom(maxZoom):diffusealpha(0) --Set rotation, position, and (diffuse) color
 			if self:GetText() == "Now with extra\nR A I N B O W S !" then --Add some RAINBOWS!
 				self:rainbowscroll(true)
-			elseif self:GetText() == "Kerning!" then
+			elseif self:GetText() == "Kerning!" then --Add some kerning!
 				self:jitter(true)
 			end
 		end,
