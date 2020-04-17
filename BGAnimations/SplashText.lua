@@ -36,7 +36,6 @@ local SplashList = {
 	"Now mostly sans-free!",
 	"100% Open Source!",
 	"Fork me on Github!",
-	"Follow us on Twitter!",
 	"ft. Terrible Jokes",
 	"Now with extra\nR A I N B O W S !",
 	"What do you mean this splash text\n reminds you of something?",
@@ -60,7 +59,6 @@ local SplashList = {
 	"This was a mistake!",
 	"Link Up!",
 	"Get dunked on!",
-	":eyes:",
 	"Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -112,6 +110,13 @@ local arg = ...
 local minZoom = 0
 local maxZoom = 0
 
+local function InputHandler(event)
+	if (event.PlayerNumber and event.button and event.type == "InputEventType_Release" and event.GameButton == "Select") then  --The button is mapped to a player and a button, and the select button has been released, swap out the splash text
+		MESSAGEMAN:Broadcast("SwitchSplash")
+	end
+end
+
+
 return Def.BitmapText{
 		Name="SplashBitmapText",
 		Font="_wendy small", --Change the font, here!
@@ -120,7 +125,29 @@ return Def.BitmapText{
 			local x = _screen.cx / 2
 			local y = _screen.cy / -2
 
-			--Decide on splash text to use - check arguments, date, etc for special splashes
+			self:Center():rotationz(20):zoom(0):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):diffusealpha(0):queuecommand("SetText") --Set rotation, position, and (diffuse) color
+		end,
+		
+		OnCommand=function(self) --When the screen is ready, set initial zoom, queue the zoom command, and add the input callback
+			SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
+			self:queuecommand("FadeIn"):queuecommand("Zoom")
+		end,
+		
+		OffCommand=function(self) --When we're transitioning to a new screen, fade out the text
+			SCREENMAN:GetTopScreen():RemoveInputCallback(InputHandler) --This feels like a good idea, does it actually matter? - 48
+			self:smooth(0.2):diffusealpha(0)
+		end,
+		
+		FadeInCommand=function(self) --Fade in the text when starting the screen (implemented as a Command as a workaround with how SetText's zoom tween and the fade in interacted)
+			self:smooth(0.3):diffusealpha(1)
+		end,
+		
+		ZoomCommand=function(self) --Zoom command: Smoothly zoom in and out, then queue the zoom command again
+			self:smooth(2):zoom(minZoom):smooth(2):zoom(maxZoom):queuecommand("Zoom")
+		end,
+		
+		SetTextCommand=function(self) --Set text for the splash to use, checking the argument given to SplashText.lua, date, etc to see if we need to show a special splashes
+		
 			if arg == 1 then --I LOVE VIDEO GAMEEES (yes with 3 e's)
 				self:settext("I LOVE VIDEO GAMES!")
 			elseif AllowThonk() then --THONK TIME
@@ -135,7 +162,7 @@ return Def.BitmapText{
 			else 
 				self:settext(SplashList[math.random(1, #SplashList)]) --Set the displayed text to a random line from the above list
 			end
-
+	
 			-- If you need to test a string, do so here
 			--self:settext("")
 			
@@ -148,20 +175,19 @@ return Def.BitmapText{
 				minZoom = maxZoom - 0.05
 			end
 			
-			self:Center():rotationz(20):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):zoom(maxZoom):diffusealpha(0) --Set rotation, position, and (diffuse) color
-			if self:GetText() == "Now with extra\nR A I N B O W S !" then --Add some RAINBOWS!
+			self:zoom(maxZoom) --Zoom to our newly-calculated max zoom
+			
+			if self:GetText() == "Now with extra\nR A I N B O W S !" then --Add some RAINBOW
 				self:rainbowscroll(true)
 			elseif self:GetText() == "Kerning!" then --Add some kerning!
 				self:jitter(true)
 			end
 		end,
-		OnCommand=function(self) --When the screen is ready, queue the zoom command
-			self:queuecommand("Zoom"):smooth(0.5):diffusealpha(1)
-		end,
-		OffCommand=function(self) --When the screen is ready, queue the zoom command
-			self:smooth(0.2):diffusealpha(0)
-		end,
-		ZoomCommand=function(self) --Zoom command: Smoothly zoom in and out, then queue the zoom command again
-			self:smooth(2):zoom(minZoom):smooth(2):zoom(maxZoom):queuecommand("Zoom")
+		
+		SwitchSplashMessageCommand=function(self) 	--SwitchSplash: Switch to a new splash and play some funky animations while doing so (for updating the splash while the screen is being shown)
+			self:jitter(false):rainbowscroll(false):finishtweening():bouncebegin(0.2):zoom(0) --Cancel previous animations/effects, zoom text out
+			--SetText(self)
+			self:queuecommand("SetText") --Set a new random splash
+			self:bounceend(0.2):zoom(maxZoom):queuecommand("Zoom") --Zoom text back in and queue the looping zoom command again
 		end
 }
