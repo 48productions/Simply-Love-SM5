@@ -164,6 +164,13 @@ local t = Def.ActorFrame {
 			table.insert(wheel_options, {"FeelingSalty", "TestInput"})
 		end
 
+		-- Allow players in Home, Free Play, and/or Event Mode to quit the set without an Escape key - slaugaus
+		-- This uses the exact same logic that pressing Esc does (see InputHandler)
+		-- (In event mode, you can also press LLRR to do this)
+		if GAMESTATE:IsEventMode() or IsFreePlay() or IsHome() then
+			table.insert(wheel_options, {"FeelingSalty", "QuitGame"})
+		end
+
 		-- Override sick_wheel's default focus_pos, which is math.floor(num_items / 2)
 		--
 		-- keep in mind that num_items is the number of Actors in the wheel (here, 7)

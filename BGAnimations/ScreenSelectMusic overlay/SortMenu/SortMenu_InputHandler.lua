@@ -65,6 +65,11 @@ local function input(event)
 				screen:SetNextScreenName("ScreenReloadSSM")
 				screen:StartTransitioningScreen("SM_GoToNextScreen")
 
+			-- the player is ragequitting (ending the session early)
+			elseif focus.kind == "FeelingSalty" and focus.new_overlay == "QuitGame" then
+				screen:SetNextScreenName(Branch.SSMCancel())
+				screen:StartTransitioningScreen("SM_GoToNextScreen")
+
 			elseif focus.new_overlay then
 				if focus.new_overlay == "TestInput" then
 					sortmenu:queuecommand("DirectInputToTestInput")
