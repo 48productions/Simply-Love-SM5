@@ -45,4 +45,9 @@ if ThemePrefs.Get("ModsMachine") and FILEMAN:DoesFileExist("/modsmachine") then
 	af[#af+1] = LoadActor("/modsmachine")
 end
 
+--If we've specified to enable failing at a certain miss combo, load the lua for it
+if ThemePrefs.Get("FailOnMissCombo") > 0 then
+	af[#af+1] = LoadActor("./Fail30Misses.lua")
+end
+
 return af

@@ -231,6 +231,11 @@ Branch.AfterProfileSave = function()
 		if ThemePrefs.Get("AllowFailingOutOfSet") == true then
 			setOver = setOver or STATSMAN:GetCurStageStats():AllFailed()
 		end
+		-- OR if both players failed because of a miss combo (overriding AllowFailingOutOfSet)
+		if SL.Global.MissComboFail == true then
+			setOver = true
+			SL.Global.MissComboFail = false --Also clear the "miss combo fail" flag
+		end
 		-- this style is more verbose but avoids obnoxious if statements
 
 		if setOver then

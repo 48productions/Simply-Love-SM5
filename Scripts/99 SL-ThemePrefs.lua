@@ -6,6 +6,18 @@ local SL_CustomPrefs =
 		Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
 		Values 	= { true, false }
 	},
+	FailOnMissCombo =
+	{
+		Default = 0,
+		Choices = { THEME:GetString("ThemePrefs", "Off"), 30, 51 },
+		Values = {0, 30, 51}
+	},
+	MissComboFailsSet =
+	{
+		Default = true,
+		Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+		Values = { true, false }
+	},
 	NumberOfContinuesAllowed =
 	{
 		Default = 0,
