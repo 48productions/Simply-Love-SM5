@@ -19,6 +19,7 @@ Current major changes/tweaks:
   * Tweaks to Casual Mode's music wheel (it now has a more standard cover flow-style look)
   * Tweaks to menu element positioning on the regular music wheel as well
   * Splash text on the title screen
+  * Pump/ITG-style option to immediately fail players at a certain miss combo and kick them out of their set (configurable)
   * Other visual changes and tweaks
   
 Do note that while the original Simply Love theme was translated into several languages, Simply Potato (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!
