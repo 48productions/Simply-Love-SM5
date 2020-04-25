@@ -1,8 +1,7 @@
-Ben Speirs' SPEIRMIX GALAXY/Call Me Maybe
+# Ben Speirs' SPEIRMIX GALAXY/Call Me Maybe
 01-DanceDanceRevolution 1st-2ndMIX/Butterfly
 01-DanceDanceRevolution 1st-2ndMIX/Boom Boom Dollar (Red Monster Mix)
 02-DanceDanceRevolution 3rdMIX-5thMIX/DYNAMITE RAVE
-02-DanceDanceRevolution 3rdMIX-5thMIX/HIGHER
 03-DanceDanceRevolution MAX-Extreme/FANTASY (MELISSA)
 03-DanceDanceRevolution MAX-Extreme/FRECKLES (KCP Re-Edit)
 03-DanceDanceRevolution MAX-Extreme/GRADUATION
@@ -15,30 +14,26 @@ Ben Speirs' SPEIRMIX GALAXY/Call Me Maybe
 04-DanceDanceRevolution SuperNOVA-SuperNOVA2/PUT YOUR FAITH IN ME ~SATURDAY NIGHT MIX~
 05-DanceDanceRevolution X-X2/Butterfly (2008 X-edit)
 05-DanceDanceRevolution X-X2/IF YOU WERE HERE
-05-DanceDanceRevolution X-X2/30 Lives (Up-Up-Down-Down-Dance Mix)
 05-DanceDanceRevolution X-X2/Be your wings
 05-DanceDanceRevolution X-X2/Koko Soko
-06-DanceDanceRevolution X3 VS 2ndMIX/IN THE ZONE
-07-DanceDanceRevolution 2013/Top The Charts
 08-DanceDanceRevolution 2014/A to Z
 08-DanceDanceRevolution 2014/Din Don Dan
 08-DanceDanceRevolution 2014/Follow Tomorrow
 08-DanceDanceRevolution 2014/One Sided Love
 09-DanceDanceRevolution A/Believe
-09-DanceDanceRevolution A/Dadadadadadadadadada
 09-DanceDanceRevolution A/DANCE ALL NIGHT (DDR EDITION)
 09-DanceDanceRevolution A/Electric Dance System Music
 09-DanceDanceRevolution A/Eternal Summer
 09-DanceDanceRevolution A/HANDS UP IN THE AIR
 09-DanceDanceRevolution A/Lesson by DJ
 09-DanceDanceRevolution A/Yeah! Yeah!
-In The Groove/I Think I Like That Sound
-In The Groove/While Tha Rekkid Spinz
-In The Groove/Lemmings on the Run
-In The Groove 2/Robotix
-In The Groove 3/Dance Vibrations
-In The Groove 3/Smells Like a Chocolate
-Ben Speirs' SPEIRMIX VS Pump It Up (Vol. 1)/BAROQUE VIRUS
-Ben Speirs' SPEIRMIX VS Pump It Up (Vol. 1)/Funky Tonight
-Ben Speirs' SPEIRMIX VS Pump It Up (Vol. 1)/Reality
-Ben Speirs' SPEIRMIX VS Pump It Up (Vol. 1)/Tepris
+# In The Groove/I Think I Like That Sound
+# In The Groove/While Tha Rekkid Spinz
+# In The Groove/Lemmings on the Run
+# In The Groove 2/Robotix
+# In The Groove 3/Dance Vibrations
+# In The Groove 3/Smells Like a Chocolate
+Ben Speirs' SPEIRMIX VS Pump It Up (Vol.1)/BAROQUE VIRUS
+Ben Speirs' SPEIRMIX VS Pump It Up (Vol.1)/Funky Tonight
+Ben Speirs' SPEIRMIX VS Pump It Up (Vol.1)/Reality
+Ben Speirs' SPEIRMIX VS Pump It Up (Vol.1)/Tepris

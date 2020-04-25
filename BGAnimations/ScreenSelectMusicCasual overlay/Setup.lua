@@ -105,7 +105,7 @@ local GetFileContents = function(path)
 	-- to create a table of lines as strings
 	local lines = {}
 	for line in contents:gmatch("[^\r\n]+") do
-		lines[#lines+1] = line
+		if line[0] ~= '#' then lines[#lines+1] = line end
 	end
 
 	return lines
