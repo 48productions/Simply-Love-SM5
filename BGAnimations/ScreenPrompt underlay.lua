@@ -9,7 +9,7 @@ af[#af+1] = Def.Quad{
 
 -- the BG for the prompt itself
 af[#af+1] = Def.Quad {
-	InitCommand=function(self) self:xy(_screen.cx, _screen.cy-56):zoomto(_screen.w*0.75, _screen.h*0.25):diffuse(GetCurrentColor()) end
+	InitCommand=function(self) self:xy(_screen.cx, _screen.cy-56):zoomto(_screen.w*0.75, _screen.h*0.25):diffuse(ColorDarkTone(GetCurrentColor())) end
 }
 -- white border around prompt
 af[#af+1] = Border(_screen.w*0.75, _screen.h*0.25, 2)..{
