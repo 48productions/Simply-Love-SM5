@@ -5,7 +5,7 @@ local function input(event)
 	if not (event and event.PlayerNumber and event.button) then
 		return false
 	end
-	SOUND:StopMusic()
+	--SOUND:StopMusic() --Let's fade the music out when we open the sort menu, instead of stopping it on the first input in the sort menu - 48
 
 	local screen   = SCREENMAN:GetTopScreen()
 	local overlay  = screen:GetChild("Overlay")
