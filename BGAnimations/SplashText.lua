@@ -59,7 +59,9 @@ local SplashList = {
 	"This was a mistake!",
 	"Link Up!",
 	"Get dunked on!",
-	"Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
+        "I bet you can't\n press Start!",
+        "I bet you can't\n press Select!",
+        "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
 	"Kerning!",
@@ -71,6 +73,9 @@ local SplashList = {
 	"Now slightly less\ncursed!",
 	"It's finally here!", --SimplyPotato cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows since 2018!",
+        "The Yukon Gold of dance games!",
+        "Now with WiFi!",
+        "Classic as a Russet,\nTasty as a tater tot!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound become\nthe flash light that\npierces soul of crowd\"",
