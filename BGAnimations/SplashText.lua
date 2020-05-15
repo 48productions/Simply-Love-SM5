@@ -59,9 +59,9 @@ local SplashList = {
 	"This was a mistake!",
 	"Link Up!",
 	"Get dunked on!",
-        "I bet you can't\n press Start!",
-        "I bet you can't\n press Select!",
-        "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
+	"I bet you can't\n press Start!",
+    "I bet you can't\n press Select!",
+    "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
 	"Kerning!",
@@ -73,9 +73,9 @@ local SplashList = {
 	"Now slightly less\ncursed!",
 	"It's finally here!", --SimplyPotato cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows since 2018!",
-        "The Yukon Gold of dance games!",
-        "Now with WiFi!",
-        "Classic as a Russet,\nTasty as a tater tot!",
+    "The Yukon Gold of dance games!",
+    "Now with WiFi!",
+    "Classic as a Russet,\nFresh as a tater tot!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound become\nthe flash light that\npierces soul of crowd\"",
@@ -130,7 +130,7 @@ return Def.BitmapText{
 			local x = _screen.cx / 2
 			local y = _screen.cy / -2
 
-			self:Center():rotationz(20):zoom(0):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):diffusealpha(0):queuecommand("SetText") --Set rotation, position, and (diffuse) color
+			self:Center():rotationz(20):zoom(0):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):shadowlength(1):shadowcolor(0,0,0,0.8):queuecommand("SetText") --Set rotation, position, and (diffuse) color
 		end,
 		
 		OnCommand=function(self) --When the screen is ready, set initial zoom, queue the zoom command, and add the input callback
