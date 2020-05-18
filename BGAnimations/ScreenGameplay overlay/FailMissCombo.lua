@@ -2,7 +2,7 @@
 --Here lies a custom implementation of Fail 30/51/etc Misses
 --
 --If enabled in the theme prefs, players can fail a song if they get a certain miss combo
---If both players have failed, the song is *immediately* failed regardless of the default fail type
+--If all joined players have failed, the song is *immediately* failed regardless of the default fail type
 --Ideally (though also configurable), if both players fail by miss combo, the entire set is forcibly failed even if failing out of the whole set is disabled
 --This is intended for public machines where casual players might walk away from the game mid-song 
 --
@@ -18,19 +18,11 @@ for player in ivalues({PLAYER_1, PLAYER_2}) do --Get an instance of each joined 
 end
 
 return Def.Actor{
-	JudgmentMessageCommand=function(self, params) --Called whenever either player gets a judgement
-		--SM(params.Player)
-		--
-		if (stage_stats[params.Player]:GetCurrentMissCombo() >= fail_count and not stage_stats[params.Player]:GetFailed()) then --Player has over the specified miss combo and hasn't failed? Fail 'em!
-			--SM("FAIL " .. params.Player)
-			stage_stats[params.Player]:FailPlayer()
-			
-			if is_single_player then --This is the only player in the game, FAIL 'EM NOW!
-				self:playcommand("FailNow")
-			end
-		end
-		
-		if not is_single_player and (stage_stats[PLAYER_1]:GetCurrentMissCombo() >= fail_count and stage_stats[PLAYER_2]:GetCurrentMissCombo() >= fail_count) then --We're in a two player game where *both* players are above the miss combo fail count, FAIL 'EM NOW!
+	JudgmentMessageCommand=function(self, params) --Called whenever either player hits a note and gets a judgement
+
+		if is_single_player and stage_stats[params.Player]:GetCurrentMissCombo() >= fail_count then --Single player with a high miss count? Fail em!
+			self:playcommand("FailNow")
+		elseif not is_single_player and (stage_stats[PLAYER_1]:GetCurrentMissCombo() >= fail_count and stage_stats[PLAYER_2]:GetCurrentMissCombo() >= fail_count) then --Two players, both have a high miss count? Fail em!
 			self:playcommand("FailNow")
 		end
 		

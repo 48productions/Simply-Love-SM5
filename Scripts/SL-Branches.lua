@@ -131,7 +131,7 @@ Branch.AllowScreenNameEntry = function()
 	if SL.Global.GameMode == "Casual" then
 		return Branch.AfterProfileSaveSummary()
 
-	elseif ThemePrefs.Get("AllowScreenNameEntry") then
+	elseif ThemePrefs.Get("AllowScreenNameEntry") and SL.Global.MissComboFail == false then --If name entry is enabled and we didn't fail the set via a miss combo, go to name entry
 		return "ScreenNameEntryTraditional"
 
 	else
@@ -140,7 +140,7 @@ Branch.AllowScreenNameEntry = function()
 end
 
 Branch.AllowScreenEvalSummary = function()
-	if ThemePrefs.Get("AllowScreenEvalSummary") then
+	if ThemePrefs.Get("AllowScreenEvalSummary") and SL.Global.MissComboFail == false then --Show the evaluation summary screen if it's enabled and if the player didn't fail because of a miss combo
 		return "ScreenEvaluationSummary"
 	else
 		return Branch.AllowScreenNameEntry()
@@ -234,7 +234,6 @@ Branch.AfterProfileSave = function()
 		-- OR if both players failed because of a miss combo (overriding AllowFailingOutOfSet)
 		if SL.Global.MissComboFail == true then
 			setOver = true
-			SL.Global.MissComboFail = false --Also clear the "miss combo fail" flag
 		end
 		-- this style is more verbose but avoids obnoxious if statements
 
@@ -257,6 +256,7 @@ Branch.AfterProfileSave = function()
 end
 
 Branch.AfterProfileSaveSummary = function()
+	SL.Global.MissComboFail = false --Make sure to clear the "miss combo fail" flag before going into game over!
 	if ThemePrefs.Get("AllowScreenGameOver") then
 		return "ScreenGameOver"
 	else
