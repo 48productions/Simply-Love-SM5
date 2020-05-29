@@ -19,9 +19,12 @@ if SPLovesVideoGames() then video_games = 1 end
 -- sometimes due to concern that an update will cause them to lose data, sometimes accidentally, etc.
 
 -- It is important to display the current theme's name to help users quickly assess what version of SL
--- they are using right now.  THEME:GetCurThemeName() provides the name of the theme folder from the
--- filesystem, so we'll show that.  It is guaranteed to be unique and users are likely to recognize it.
-local sl_name = THEME:GetCurThemeName()
+-- they are using right now.  THEME:GetThemeDisplayName() provides the name of the theme folder from the
+-- edit: ThemeInfo.ini, so we'll show that.  It is likely to be unique and users are likely to recognize it.
+
+-- More importantly, you can easily change ThemeInfo.ini if you decide to rename your theme halfway through development
+-- You can't change the name of the theme's folder without breaking the repo - 48 :(
+local sl_name = THEME:GetThemeDisplayName()
 
 -- - - - - - - - - - - - - - - - - - - - -
 -- ProductFamily() returns "StepMania"

@@ -1,15 +1,17 @@
-# Simply Potato (StepMania 5)
+# Simply Spud (StepMania 5)
+
+(Formerly Simply Potato)
 
 🥔🥔🥔🥔🥔🥔🥔🥔
 ======================
 
 ## About
 
-Simply Potato is a StepMania 5 theme for the part of the post-ITG community that also happens to love potatoes.
+Simply Spud is a StepMania 5 theme for the part of the post-ITG community that also happens to love potatoes.
 
 It features a clean and simple design, offers numerous potato-driven features not implemented by the StepMania 5 engine, and allows the current generation of PIU fans to breathe new life into the game they've never played in years because we haven't had crap for DDR/ITG cabs up until now ;_;
 
-Simply Potato SM5 is a fork of the original Simply Love SM5 theme that adds some visual tweaks and new features. It is intended for the Idaho Rhythm Group's new public DDR cab (thus why everything is potato themed), and as such is *heavily* geared towards use on our specific cabinet. It'll still work just fine for private use too, though!
+Simply Spud SM5 is a fork of the original Simply Love SM5 theme that adds some visual tweaks and new features. It is intended for the Idaho Rhythm Group's new public DDR cab (thus why everything is potato themed), and as such is *heavily* geared towards use on our specific cabinet. It'll still work just fine for private use too, though!
 
 Current major changes/tweaks:
   * Support for Stepmania 5.3 (currently barebones and WIP, should be stable but testing is needed)
@@ -22,10 +24,12 @@ Current major changes/tweaks:
   * Pump/ITG-style option to immediately fail players at a certain miss combo and kick them out of their set (configurable)
   * Other visual changes and tweaks
   
-Do note that while the original Simply Love theme was translated into several languages, Simply Potato (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!
+Do note that while the original Simply Love theme was translated into several languages, Simply Spud (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!
 
-Thanks to quietly-turning, hurtpiggypig, and everyone else who helped with the original Simply Love themes for SM5 and SM3.95, directly or indirectly. Your help helped create the *de facto* Stepmania theme for multiple generations of dance game players, and no other theme I've seen has compared to the amount of polish and *love* that was put into the original themes.
 
+## Special Thanks
+  * Thanks to skogaby for letting us know that Simply Spud is a much better name than Simply Potato
+  * Thanks to quietly-turning, hurtpiggypig, and everyone else who helped with the original Simply Love themes for SM5 and SM3.95, directly or indirectly. Your help helped create the *de facto* Stepmania theme for multiple generations of dance game players, and no other theme I've seen has compared to the amount of polish and *love* that was put into the original themes.
 
 
 ## Requirements
@@ -45,7 +49,7 @@ If you are having trouble installing StepMania or getting it to run on your comp
 
 ## Installation
 
-Head to the [Releases Page](https://github.com/48productions/Simply-Potato-SM5/releases) to download the most recent formal release of Simply Potato. But not really. We haven't bothered to make one of those yet. Downloading directly from the *master* branch is the way to go for now.
+Head to the [Releases Page](https://github.com/48productions/Simply-Potato-SM5/releases) to download the most recent formal release of Simply Spud. But not really. We haven't bothered to make one of those yet. Downloading directly from the *master* branch is the way to go for now.
 
 To install this theme, unzip it and move the resulting directory inside the *Themes* folder in your [StepMania user data directory](https://github.com/stepmania/stepmania/wiki/User-Data-Locations). Note that the *Themes* folder has been moved into the *Appearance* folder in StepMania 5.3.
 
@@ -85,7 +89,7 @@ Or, *things quietly-turning has added that were not present in the original Simp
 
 #### Language Support
 
-Simply Potato has support for:
+Simply Spud has support for:
 
   * English
   * ~~Español~~
@@ -94,11 +98,11 @@ Simply Potato has support for:
   * ~~日本語~~
   * ~~Deutsch~~
 
-*(Simply Love SM5 is translated into the above languages, but Simply Potato's additions are yet to be translated)*
+*(Simply Love SM5 is translated into the above languages, but Simply Spud's additions are yet to be translated)*
 
-If, for some reason, you want to help translate Simply Potato's additional menu options, leave a comment in [this issue](https://github.com/48productions/Simply-Potato-SM5/issues/3) or submit a pull request.
+If, for some reason, you want to help translate Simply Spud's additional menu options, leave a comment in [this issue](https://github.com/48productions/Simply-Potato-SM5/issues/3) or submit a pull request.
 
-The current language can be changed in Simply Potato under *System Options*.  You may need to restart StepMania immediately after changing the language for all in-game text to be properly translated.
+The current language can be changed in Simply Spud under *System Options*.  You may need to restart StepMania immediately after changing the language for all in-game text to be properly translated.
 
 
 ---
@@ -116,6 +120,6 @@ See the [Manually Changing Preferences](https://github.com/stepmania/stepmania/w
 #### How can I get more songs to show up in Casual Mode?
 Please refer to the [Casual Mode README](./Other/CasualMode-README.md).
 
-#### Why potatoes?
+#### Why spuds?
 Why not? 🥔
 
