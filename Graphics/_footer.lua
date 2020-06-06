@@ -6,7 +6,7 @@ return Def.Quad{
 	InitCommand=function(self)
 		self:draworder(90):zoomto(_screen.w, 32):vertalign(bottom):y(32)
 		
-		if ThemePrefs.Get("RainbowMode") then
+		if ThemePrefs.Get("DarkMode") then
 			self:diffuse(dark)
 		else
 			self:diffuse(light)
