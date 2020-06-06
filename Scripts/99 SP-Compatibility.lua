@@ -8,3 +8,10 @@ function log10Hack(x)
 	if math.log10 == nil then return math.log(x, 10) end
 	return math.log10(x)
 end
+
+-- We're gonna be using this a lot.
+-- It's not the BEST solution (I'll have to rewrite it if 5.4 happens),
+-- but it'll have to do for now.  - slaugaus
+function IsSM53()
+	return not not ProductVersion():match("5.3") -- (not not = cast to bool)
+end

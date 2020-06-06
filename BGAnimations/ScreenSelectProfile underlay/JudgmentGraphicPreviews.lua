@@ -6,8 +6,8 @@ local already_loaded = {}
 for profile in ivalues(args.profile_data) do
 	if profile.judgment ~= nil and profile.judgment ~= "" and not FindInTable(profile.judgment, already_loaded) then
 
-		if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."/Graphics/_judgments/ITG/"..profile.judgment) then
-			af[#af+1] = LoadActor(THEME:GetPathG("","_judgments/ITG/"..profile.judgment))..{
+		if FILEMAN:DoesFileExist(GetJudgmentGraphicPath("ITG", profile.judgment)) then
+			af[#af+1] = LoadActor(GetJudgmentGraphicPath("ITG", profile.judgment))..{
 				Name="JudgmentGraphic_"..StripSpriteHints(profile.judgment),
 				InitCommand=function(self)
 					self:y(-50):animate(false)
@@ -18,15 +18,15 @@ for profile in ivalues(args.profile_data) do
 			}
 			table.insert(already_loaded, profile.judgment)
 
-		elseif FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."/Graphics/_judgments/FA+/"..profile.judgment) then
-			af[#af+1] = LoadActor(THEME:GetPathG("","_judgments/FA+/"..profile.judgment))..{
+		elseif FILEMAN:DoesFileExist(GetJudgmentGraphicPath("FA+", profile.judgment)) then
+			af[#af+1] = LoadActor(GetJudgmentGraphicPath("FA+", profile.judgment))..{
 				Name="JudgmentGraphic_"..StripSpriteHints(profile.judgment),
 				InitCommand=function(self) self:y(-50):animate(false) end
 			}
 			table.insert(already_loaded, profile.judgment)
 
-		elseif FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."/Graphics/_judgments/StomperZ/"..profile.judgment) then
-			af[#af+1] = LoadActor(THEME:GetPathG("","_judgments/StomperZ/"..profile.judgment))..{
+		elseif FILEMAN:DoesFileExist(GetJudgmentGraphicPath("StomperZ", profile.judgment)) then
+			af[#af+1] = LoadActor(GetJudgmentGraphicPath("StomperZ", profile.judgment))..{
 				Name="JudgmentGraphic_"..StripSpriteHints(profile.judgment),
 				InitCommand=function(self) self:y(-50):animate(false) end
 			}

@@ -530,15 +530,27 @@ local function FilenameIsMultiFrameSprite(filename)
 	return string.match(filename, " %d+x%d+") and string.match(filename, "%.[A-Za-z]+")
 end
 
+local function FileHas6Rows(filename)
+	-- 5.3 default supports 2x7 and 2x11 judgment graphics
+	-- and we don't (yet)
+	return string.match(filename, "x6")
+end
+
 function StripSpriteHints(filename)
 	-- handle common cases here, gory details in /src/RageBitmapTexture.cpp
-	return filename:gsub(" %d+x%d+", ""):gsub(" %(doubleres%)", ""):gsub(".png", "")
+	-- hopefully nobody is putting stuff in brackets/parens for non-hint purposes...
+	return filename:gsub(" %d+x%d+", ""):gsub(" %b()", ""):gsub(".png", ""):gsub(" %b[]", "")
 end
 
 function GetJudgmentGraphics(mode)
 	--if mode == 'Casual' then mode = 'ITG' end
 	local path = THEME:GetPathG('', '_judgments/' .. mode)
 	local files = FILEMAN:GetDirListing(path .. '/')
+	-- in 5.3, check for "gamewide" custom judgments
+	local files2
+	if IsSM53() and FILEMAN:DoesFileExist("/Appearance/Judgments") then
+		files2 = FILEMAN:GetDirListing("/Appearance/Judgments/")
+	end
 	local judgment_graphics = {}
 
 	for i,filename in ipairs(files) do
@@ -558,11 +570,33 @@ function GetJudgmentGraphics(mode)
 			end
 		end
 	end
+	
+	if files2 then -- naive assumption: it's probably safe to include these in all modes
+		for i,filename in ipairs(files2) do
+			if FilenameIsMultiFrameSprite(filename) and FileHas6Rows(filename) then
+				-- use regexp to get only the name of the graphic, stripping out the extension
+				local name = StripSpriteHints(filename)
+				
+				judgment_graphics[#judgment_graphics+1] = filename
+			end
+		end
+	end
 
 	-- "None" -> no graphic in Player judgment.lua
 	judgment_graphics[#judgment_graphics+1] = "None"
 
 	return judgment_graphics
+end
+
+-- because it may not be inside the theme now!
+function GetJudgmentGraphicPath(mode, name)
+	Trace(name)
+	local FiveThreePath = "/Appearance/Judgments/" .. name
+	-- GetPathG() throws a warning dialog if the file doesn't exist, so we have to do this instead
+	local ThemePath = "/" .. THEME:GetCurrentThemeDirectory() .. "/Graphics/_judgments/" .. mode .. "/" .. name
+	if FILEMAN:DoesFileExist(FiveThreePath) then return FiveThreePath
+	elseif FILEMAN:DoesFileExist(ThemePath) then return ThemePath
+	end
 end
 -- -----------------------------------------------------------------------
 -- GetComboFonts returns a table of strings that match valid ComboFonts for use in Gameplay
