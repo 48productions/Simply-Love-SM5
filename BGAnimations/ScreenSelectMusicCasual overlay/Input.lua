@@ -59,6 +59,7 @@ local CloseCurrentFolder = function()
 	t.WheelWithFocus.container:queuecommand("Hide")
 	t.WheelWithFocus = GroupWheel
 	t.WheelWithFocus.container:queuecommand("Unhide")
+    SOUND:PlayOnce( THEME:GetPathS("MusicWheel", "expand.ogg"), true )
 end
 
 local UnhideOptionRows = function(pn)
@@ -115,6 +116,7 @@ t.Init = function()
 		MESSAGEMAN:Broadcast("SingleSongCanceled")
 		t.WheelWithFocus = SongWheel
 		t.WheelWithFocus.container:queuecommand("Unhide")
+        SOUND:PlayOnce( THEME:GetPathS("MusicWheel", "sort.ogg"), true )
 	end
 end
 
@@ -150,13 +152,13 @@ t.Handler = function(event)
 			-- navigate the wheel left and right
 			if event.GameButton == "MenuRight" or event.GameButton == "MenuDown" then
 				t.WheelWithFocus:scroll_by_amount(1)
-				SOUND:PlayOnce( THEME:GetPathS("MusicWheel", "change.ogg") )
+				SOUND:PlayOnce( THEME:GetPathS("MusicWheel", "change.ogg"), true )
 				if t.WheelWithFocus==SongWheel then
 					SCREENMAN:GetTopScreen():GetChild("Overlay"):GetChild("SongWheelShared"):GetChild("Arrows"):GetChild("RightArrow"):finishtweening():playcommand("Press")
 				end
 			elseif event.GameButton == "MenuLeft" or event.GameButton == "MenuUp" then
 				t.WheelWithFocus:scroll_by_amount(-1)
-				SOUND:PlayOnce( THEME:GetPathS("MusicWheel", "change.ogg") )
+				SOUND:PlayOnce( THEME:GetPathS("MusicWheel", "change.ogg"), true )
 				if t.WheelWithFocus==SongWheel then
 					SCREENMAN:GetTopScreen():GetChild("Overlay"):GetChild("SongWheelShared"):GetChild("Arrows"):GetChild("LeftArrow"):finishtweening():playcommand("Press")
 				end
@@ -164,7 +166,7 @@ t.Handler = function(event)
 
 			-- proceed to the next wheel
 			elseif event.GameButton == "Start" then
-
+                
 				if t.WheelWithFocus:get_info_at_focus_pos() == "CloseThisFolder" then
 					CloseCurrentFolder()
 					return false
@@ -173,6 +175,7 @@ t.Handler = function(event)
 				t.Enabled = false
 				t.WheelWithFocus.container:queuecommand("Start")
 				SwitchInputFocus(event.GameButton)
+                SOUND:PlayOnce( THEME:GetPathS("Common", "start"), true )
 
 				if t.WheelWithFocus.container then
 					t.WheelWithFocus.container:queuecommand("Unhide")
@@ -200,6 +203,8 @@ t.Handler = function(event)
 				t.WheelWithFocus[event.PlayerNumber][index]:scroll_by_amount(1)
 				-- animate the right cursor
 				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("RightArrow"):finishtweening():playcommand("Press")
+                
+                SOUND:PlayOnce( THEME:GetPathS("", "_change value"), true )
 
 
 			elseif event.GameButton == "MenuLeft" then
@@ -207,6 +212,8 @@ t.Handler = function(event)
 				t.WheelWithFocus[event.PlayerNumber][index]:scroll_by_amount(-1)
 				-- animate the left cursor
 				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("LeftArrow"):finishtweening():playcommand("Press")
+                
+                SOUND:PlayOnce( THEME:GetPathS("", "_change value"), true )
 
 
 			elseif event.GameButton == "MenuUp" then
@@ -217,6 +224,7 @@ t.Handler = function(event)
 					-- scroll up to previous optionrow for this player
 					t.WheelWithFocus[event.PlayerNumber]:scroll_by_amount( -1 )
 					MESSAGEMAN:Broadcast("CancelBothPlayersAreReady")
+                    SOUND:PlayOnce( THEME:GetPathS("", "_prev row"), true )
 				end
 
 			elseif event.GameButton == "Start" or event.GameButton == "MenuDown" then
@@ -224,6 +232,7 @@ t.Handler = function(event)
 				-- if both players are ALREADY here (before changing the row)
 				-- it means it's time to start gameplay
 				if event.GameButton == "Start" and t.AllPlayersAreAtLastRow() then
+                    SOUND:PlayOnce( THEME:GetPathS("Common", "start"), true )
 					local topscreen = SCREENMAN:GetTopScreen()
 					if topscreen then
 						topscreen:StartTransitioningScreen("SM_GoToNextScreen")
@@ -240,6 +249,8 @@ t.Handler = function(event)
 					OptionRows[index]:OnSave(event.PlayerNumber, choice, choices, values)
 
 					t.WheelWithFocus[event.PlayerNumber]:scroll_by_amount(1)
+                    
+                    SOUND:PlayOnce( THEME:GetPathS("", "_next row"), true )
 				end
 
 				-- update the index, bounding it to not exceed the number of rows

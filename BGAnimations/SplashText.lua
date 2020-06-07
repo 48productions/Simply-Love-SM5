@@ -65,6 +65,8 @@ local SplashList = {
 	"Now available on VHS!",
 	"Now available on PC!",
 	"Now available on Switch!",
+    "You can become a hero of stage!",
+    "Let's STEPPING!",
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -74,7 +76,7 @@ local SplashList = {
 	"Locally grown,\nfreshly baked!",
 	"Just add pudding!",
 	"Stomp With the Duck!",
-	"Now slightly less\ncursed!",
+	"Still very much\ncursed!",
 	"It's finally here!", --SimplySpud cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows since 2018!",
     "The Yukon Gold of dance games!",
