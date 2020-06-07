@@ -590,7 +590,6 @@ end
 
 -- because it may not be inside the theme now!
 function GetJudgmentGraphicPath(mode, name)
-	Trace(name)
 	local FiveThreePath = "/Appearance/Judgments/" .. name
 	-- GetPathG() throws a warning dialog if the file doesn't exist, so we have to do this instead
 	local ThemePath = "/" .. THEME:GetCurrentThemeDirectory() .. "/Graphics/_judgments/" .. mode .. "/" .. name
