@@ -89,11 +89,6 @@ local function mods_randomize_positions(power,skew)
 					:y( base_positions[k].y + math.random(-60*power,60*power) )
 					:rotationz( math.random(-45,45) )
 					:decelerate(sk*(60/bpm)):skewx(sk*.6)
-
-				if k == "ScreenSelectPlayModeItemUnderlay8" then
-					b:zoom( base_positions[k].zoom )
-				end
-
 			end
 
 		end
@@ -847,15 +842,11 @@ local Update = function(self, delta)
 		end
 
 
-		local xp = radius*100*math.cos(beat*math.pi*0.25)
-		local yp = 100*math.sin(beat*math.pi*0.25)
+		local xp = radius*50*math.cos(beat*math.pi*0.25)
+		local yp = 50*math.sin(beat*math.pi*0.25)
 
-		if not base_positions["ScreenSelectPlayModeUnderlay"] then
-			base_positions["ScreenSelectPlayModeUnderlay"] = {x = underlay:GetX(), y = underlay:GetY(), zoom = underlay:GetZoom()}
-			ss_playmode_items["ScreenSelectPlayModeUnderlay"] = underlay
-		end
-
-		if mods_beat_enabled or mods_bob_enabled then
+        --Underlay (unused)
+		--[[if mods_beat_enabled or mods_bob_enabled then
 			if beat >= 64 and beat < 96 then
 				underlay:x(base_positions["ScreenSelectPlayModeUnderlay"].x + xp):y(base_positions["ScreenSelectPlayModeUnderlay"].y + yp):rotationz(0)
 			else
@@ -867,130 +858,157 @@ local Update = function(self, delta)
 			else
 				underlay:zoom(base_positions["ScreenSelectPlayModeUnderlay"].zoom)
 			end
-		end
+		end]]--
 
-		local items = {"IconChoiceCasual","IconChoiceITG","IconChoiceFA+","IconChoiceStomperZ"}
+		local items = {"IconChoiceCasual","IconChoiceITG"}
 		if SCREENMAN:GetTopScreen():GetName() == "ScreenSelectPlayMode2Thonk" then
 			items = {"IconChoiceRegular","IconChoiceMarathon"}
 		end
 
 		local zm = 1
-
+        
+        --Thonkify all the mode icons
 		for i=1, #items do
 
 			local b = SCREENMAN:GetTopScreen():GetChild( items[i] )
 			if b then
-
-				--menu items
-
+                
+                --Base icon zoom/position stuffs (also applies to children of this ActorFrame)
+                
+                --These small blocks of code are gonna get reused/tweaked for each individual actor to thonkify, so pay attention! - 48
+                --First, get a unique id to use for some tables later
 				local id = "ScreenSelectPlayModeItem_"..i
 
+                --If we haven't recorded a base position for this actor yet, record it's position and zoom
 				if not base_positions[id] then
 					base_positions[id] = {x = b:GetX(), y = b:GetY(), zoom = b:GetZoom()}
-					ss_playmode_items[id] = b
+					ss_playmode_items[id] = b --We'll also store a reference to this actor in another table (used for the random positioning during OOOOOOOOOOHHHHHHHHHHHHHHH)
 				end
 
+                --If a beat or bob mod is enabled, let's update this actor's position!
 				if mods_beat_enabled or mods_bob_enabled then
-					b:finishtweening():x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 )
+					b:finishtweening():x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 ) --First, reset it to its normal position
 
-					if mods_beat_enabled then
-						b:finishtweening():addx( beatBounce((1/zm)*32*((i%2)*2-1)) )
-					end
+                    --Finally, if any mods are active, position the actor accordingly
+                    if mods_beat_enabled then
+                        b:finishtweening():zoom(base_positions[id].zoom - 0.04 + math.abs(0.08*math.sin(beat*math.pi)) ):rotationz(0)
+                    else
+                        b:finishtweening():zoom(base_positions[id].zoom)
+                    end
 					if mods_bob_enabled then
-						b:finishtweening():rotationx( 90*beat ):addx(xp):addy(yp)
+						b:finishtweening():addx(xp):addy(yp)
 					end
 
 				end
+                
+                
+                --Mode name
+                local modeName = b:GetChild("ModeName")
+                if modeName then
+                    
+                    --What these blocks do is pretty rinse and repeat from here on - Refer to the commented example above
+                    local id = "ScreenSelectPlayModeItem"..i.."_ModeName"
+        
+                    if not base_positions[id] then
+                        base_positions[id] = {x = modeName:GetX(), y = modeName:GetY()}
+                        ss_playmode_items[id] = modeName
+                    end
+        
+                    if mods_beat_enabled or mods_bob_enabled then
+                        modeName:x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 )
+        
+                        if mods_beat_enabled then
+                            modeName:addx( beatBounce((1/zm)*45*((1%2)*2-1)) )
+                        end
+                        if mods_bob_enabled then
+                            modeName:rotationy( 90*beat )
+                        end
+    
+                    end
+
+                end
+                
+                
+                --Beginner icon
+                local beginnerIcon = b:GetChild("BeginnerIcon")
+                if beginnerIcon then
+                    
+                    local id = "ScreenSelectPlayModeItem"..i.."_BeginnerIcon"
+        
+                    if not base_positions[id] then
+                        base_positions[id] = {x = beginnerIcon:GetX(), y = beginnerIcon:GetY()}
+                        ss_playmode_items[id] = beginnerIcon
+                    end
+        
+                    if mods_beat_enabled or mods_bob_enabled then
+                        beginnerIcon:x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):skewx( 0 )
+        
+                        if mods_beat_enabled then
+                            beginnerIcon:addx( -beatBounce((1/zm)*45*((1%2)*2-1)) )
+                        end
+                        if mods_bob_enabled then
+                            beginnerIcon:rotationx( 90*beat )
+                        end
+    
+                    end
+
+                end
+                
+                
+                --Mode potato
+                local icon = b:GetChild("Icon")
+                if icon then
+                    
+                    local id = "ScreenSelectPlayModeItem"..i.."_Icon"
+        
+                    if not base_positions[id] then
+                        base_positions[id] = {x = icon:GetX(), y = icon:GetY(), zoom = icon:GetZoom()}
+                        ss_playmode_items[id] = icon
+                    end
+        
+                    if mods_beat_enabled or mods_bob_enabled then
+                        icon:x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 )
+        
+                        if mods_beat_enabled then
+                            icon:zoom( base_positions[id].zoom + math.abs(0.25*math.sin(beat*math.pi))):rotationz( 30*math.cos(beat*math.pi) )
+                        end
+                        if mods_bob_enabled then
+                            icon:skewx( 1*math.sin(beat*0.25*math.pi) )
+                        end
+    
+                    end
+
+                end
+                
+                
+                --Mode description
+                local desc = b:GetChild("ModeDesc")
+                if desc then
+
+                    local id = "ScreenSelectPlayModeItem"..i.."_ModeDesc"
+        
+                    if not base_positions[id] then
+                        base_positions[id] = {x = desc:GetX(), y = desc:GetY()}
+                        ss_playmode_items[id] = desc
+                    end
+        
+                    if mods_beat_enabled or mods_bob_enabled then
+                        desc:x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 )
+        
+                        if mods_beat_enabled then
+                            desc:addy( beatBounce((1/zm)*23*((1%2)*2-1)) )
+                        end
+                        if mods_bob_enabled then
+                            desc:rotationz( 50*math.sin(beat*0.25*math.pi) )
+                        end
+        
+                    end
+        
+                end
 
 			end
 
 		end
-
-		--underlay
-
-		--SM( underlay:GetChildren() )
-
-		local items2 = {SCREENMAN:GetTopScreen():GetChild("LifeMeter"),SCREENMAN:GetTopScreen():GetChild("Cursor"),SCREENMAN:GetTopScreen():GetChild("StomperZLifeMeter")}
-
-		table.insert(items2,underlay:GetChild("")[7]) -- 77.41
-
-		for i=1, #items2 do
-
-			local b = items2[i]
-			if b then
-
-				local id = "ScreenSelectPlayModeItem2_"..i
-
-				if not base_positions[id] then
-					base_positions[id] = {x = b:GetX(), y = b:GetY(), zoom = b:GetZoom()}
-					ss_playmode_items[id] = b
-				end
-
-				if mods_beat_enabled or mods_bob_enabled then
-					b:x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 ):zoom( base_positions[id].zoom )
-
-					if mods_beat_enabled then
-						b:addx( beatBounce((1/zm)*32*((i%2)*2-1)) )
-					end
-					if mods_bob_enabled then
-						b:rotationx( 90*beat )
-					end
-
-				end
-
-			end
-
-		end
-
-		local b = underlay:GetChild("")[6] --description text
-		if b then
-
-			local id = "ScreenSelectPlayModeItemUnderlay6"
-
-			if not base_positions[id] then
-				base_positions[id] = {x = b:GetX(), y = b:GetY(), zoom = b:GetZoom()}
-				ss_playmode_items[id] = b
-			end
-
-			if mods_beat_enabled or mods_bob_enabled then
-				b:x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 ):zoom( base_positions[id].zoom )
-
-				if mods_beat_enabled then
-					b:addy( beatBounce((1/zm)*32*((1%2)*2-1)) )
-				end
-				if mods_bob_enabled then
-					b:rotationz( 30*math.sin(beat*0.25*math.pi) )
-				end
-
-			end
-
-		end
-
-		local b = underlay:GetChild("")[8] --playfield
-		if b then
-
-			local id = "ScreenSelectPlayModeItemUnderlay8"
-
-			if not base_positions[id] then
-				base_positions[id] = {x = b:GetX(), y = b:GetY(), zoom = b:GetZoom()}
-				ss_playmode_items[id] = b
-			end
-
-			if mods_beat_enabled or mods_bob_enabled then
-				b:x( base_positions[id].x ):y( base_positions[id].y ):rotationy( 0 ):rotationz( 0 ):skewx( 0 ):zoom(base_positions[id].zoom)
-
-				if mods_beat_enabled then
-					b:zoom( base_positions[id].zoom + math.abs(0.5*math.sin(beat*math.pi))):rotationz( 30*math.cos(beat*math.pi) )
-				end
-				if mods_bob_enabled then
-					b:skewx( 1*math.sin(beat*0.25*math.pi) )
-				end
-
-			end
-
-		end
-
-
 
 
 

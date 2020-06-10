@@ -27,6 +27,7 @@ t[#t+1] = Def.Quad{
 
 --Beginner Icon
 t[#t+1] = LoadActor("beginner-icon.png")..{
+    Name="BeginnerIcon",
     Condition=text == "Casual" or text == "Regular", --Only show the beginner mode icon in casual mode
     InitCommand=function(self) self:bob():effecttiming(1.5, 0, 1.5, 0, 0) end,
     OnCommand=function(self) self:diffusealpha(0):sleep(0.07):linear(0.2):diffusealpha(1) end,
@@ -38,6 +39,7 @@ t[#t+1] = LoadActor("beginner-icon.png")..{
 
 --Icon
 t[#t+1] = LoadActor("icon-" .. text .. ".png")..{
+    Name="Icon",
     InitCommand=function(self) self:bob() end,
     OnCommand=function(self) self:diffusealpha(0):sleep(0.11):linear(0.2):diffusealpha(1) end,
     GainFocusCommand=function(self) self:stoptweening():decelerate(0.1):zoom(0.6):diffuse(color("#FFFFFF")):effectmagnitude(0, 8, 0) end,
@@ -48,7 +50,7 @@ t[#t+1] = LoadActor("icon-" .. text .. ".png")..{
 
 -- Mode title
 t[#t+1] = LoadFont("_wendy small")..{
-	Name="ModeName"..index,
+	Name="ModeName",
 	Text=ScreenString(text),
 
 	InitCommand=function(self) self:maxwidth(230):valign(1.3):y(-90) end,
@@ -61,6 +63,7 @@ t[#t+1] = LoadFont("_wendy small")..{
 
 --Mode description
 t[#t+1] = Def.BitmapText{
+    Name="ModeDesc",
 	Font="Common Normal",
 	InitCommand=function(self)
 		self:zoom(0.825):valign(-0.8):y(60)

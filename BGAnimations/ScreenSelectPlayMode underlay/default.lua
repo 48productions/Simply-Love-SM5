@@ -17,9 +17,9 @@ local Update = function(af, delta)
 		cursor.index = index
 
 		-- queue the appropiate command to the faux playfield, if needed
-		if choices[cursor.index+1] == "Marathon" or choices[cursor.index+1] == "Regular" then
-			af:queuecommand("FirstLoop"..choices[cursor.index+1])
-		end
+		--if choices[cursor.index+1] == "Marathon" or choices[cursor.index+1] == "Regular" then
+		--	af:queuecommand("FirstLoop"..choices[cursor.index+1])
+		--end
 
 		-- queue an "Update" to the AF containing the cursor, description text, score, and lifemeter actors
 		-- since they are children of that AF, they will also listen for that command

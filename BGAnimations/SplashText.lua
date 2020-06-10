@@ -160,11 +160,11 @@ return Def.BitmapText{
 		
 		SetTextCommand=function(self) --Set text for the splash to use, checking the argument given to SplashText.lua, date, etc to see if we need to show a special splashes
 		
-			if arg == 1 then --I LOVE VIDEO GAMEEES (yes with 3 e's)
-				self:settext("I LOVE VIDEO GAMES!")
-			elseif AllowThonk() then --THONK TIME
+			if AllowThonk() then --THONK TIME
 				self:settext("🤔🤔🤔🤔🤔")
 				self:rainbowscroll(true):jitter(true):vibrate():effectmagnitude(1.1, 1.1, 1.1)
+            elseif arg == 1 then --I LOVE VIDEO GAMEEES (yes with 3 e's)
+				self:settext("I LOVE VIDEO GAMES!")
 			elseif MonthOfYear()==9 and math.random(1, 5) == 1 then
 				self:settext("Happy Halloween!")
 			elseif HolidayCheer() and math.random(1, 5) == 1 then -- the best way to spread holiday cheer is singing loud for all to hear
