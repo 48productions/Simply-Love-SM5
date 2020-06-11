@@ -130,10 +130,12 @@ t.Handler = function(event)
 		if not t.AllowLateJoin() then return false end
 
 		-- latejoin
-		if t.WheelWithFocus == OptionsWheel and event.GameButton == "Start" then
+		if event.GameButton == "Start" then --Let's allow people to join mid-game regardless of where we are in selectmusic - 48
 			GAMESTATE:JoinPlayer( event.PlayerNumber )
 			Players = GAMESTATE:GetHumanPlayers()
-			UnhideOptionRows(event.PlayerNumber)
+			if t.WheelWithFocus == OptionsWheel then --If we're picking options, make sure to show the other player's options!
+				UnhideOptionRows(event.PlayerNumber)
+			end
 		end
 		return false
 	end
