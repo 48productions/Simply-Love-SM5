@@ -31,8 +31,8 @@ t[#t+1] = LoadActor("beginner-icon.png")..{
     Condition=text == "Casual" or text == "Regular", --Only show the beginner mode icon in casual mode
     InitCommand=function(self) self:bob():effecttiming(1.5, 0, 1.5, 0, 0) end,
     OnCommand=function(self) self:diffusealpha(0):sleep(0.07):linear(0.2):diffusealpha(1) end,
-    GainFocusCommand=function(self) self:stoptweening():decelerate(0.1):xy(90, -70):zoom(0.6):diffuse(color("#FFFFFF")):addrotationz(15):effectmagnitude(-2, 5, 0) end,
-	LoseFocusCommand=function(self) self:stoptweening():decelerate(0.1):xy(75, -80):zoom(0.4):diffuse(color("#808080")):addrotationz(-15):effectmagnitude(0, 0, 0) end,
+    GainFocusCommand=function(self) self:stoptweening():decelerate(0.1):xy(90, -70):zoom(0.45):diffuse(color("#FFFFFF")):addrotationz(15):effectmagnitude(-2, 5, 0) end,
+	LoseFocusCommand=function(self) self:stoptweening():decelerate(0.1):xy(75, -80):zoom(0.35):diffuse(color("#808080")):addrotationz(-15):effectmagnitude(0, 0, 0) end,
     OffCommand=function(self) self:linear(0.2):diffusealpha(0) end
 }
 
@@ -42,7 +42,7 @@ t[#t+1] = LoadActor("icon-" .. text .. ".png")..{
     Name="Icon",
     InitCommand=function(self) self:bob() end,
     OnCommand=function(self) self:diffusealpha(0):sleep(0.11):linear(0.2):diffusealpha(1) end,
-    GainFocusCommand=function(self) self:stoptweening():decelerate(0.1):zoom(0.6):diffuse(color("#FFFFFF")):effectmagnitude(0, 8, 0) end,
+    GainFocusCommand=function(self) self:stoptweening():decelerate(0.1):zoom(0.5):diffuse(color("#FFFFFF")):effectmagnitude(0, 8, 0) end,
 	LoseFocusCommand=function(self) self:stoptweening():decelerate(0.1):zoom(0.4):diffuse(color("#808080")):effectmagnitude(0, 0, 0) end,
     OffCommand=function(self) self:linear(0.2):diffusealpha(0) end
 }
