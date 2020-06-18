@@ -28,7 +28,7 @@ t[#t+1] = Def.Quad{
 --Beginner Icon
 t[#t+1] = LoadActor("beginner-icon.png")..{
     Name="BeginnerIcon",
-    Condition=text == "Casual" or text == "Regular", --Only show the beginner mode icon in casual mode
+    Condition=text == "Casual", --Only show the beginner mode icon in casual mode
     InitCommand=function(self) self:bob():effecttiming(1.5, 0, 1.5, 0, 0) end,
     OnCommand=function(self) self:diffusealpha(0):sleep(0.07):linear(0.2):diffusealpha(1) end,
     GainFocusCommand=function(self) self:stoptweening():decelerate(0.1):xy(90, -70):zoom(0.45):diffuse(color("#FFFFFF")):addrotationz(15):effectmagnitude(-2, 5, 0) end,
