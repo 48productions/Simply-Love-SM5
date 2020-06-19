@@ -42,6 +42,8 @@ local profile_whitelist = {
 
 	Vocalization = "string",
 	ReceptorArrowsPosition = "string",
+    
+    PlayerSeenModfileWarning = "boolean",
 }
 
 -- ------------------------------------------

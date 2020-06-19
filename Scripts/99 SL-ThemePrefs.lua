@@ -114,6 +114,16 @@ local SL_CustomPrefs =
 		},
 		Values 	= { true , false }
 	},
+    -- - - - - - - - - - - - - - - - - - - -
+	-- Enable the modfile warning?
+    AllowModfileWarning = {
+        Default = true,
+        Choices = {
+			THEME:GetString("ThemePrefs", "Yes"),
+			THEME:GetString("ThemePrefs", "No")
+		},
+		Values 	= { true , false }
+    },
 	-- - - - - - - - - - - - - - - - - - - -
 	-- SimplyLoveColor saves the theme color for the next time
 	-- the StepMania application is started.

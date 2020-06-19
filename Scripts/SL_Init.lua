@@ -34,6 +34,8 @@ local PlayerDefaults = {
 				MissBecauseHeld = false,
 				NPSGraphAtTop = false,
 				Vocalization = "None",
+                
+                PlayerSeenModfileWarning = false,
 			}
 			self.Streams = {
 				SongDir = nil,

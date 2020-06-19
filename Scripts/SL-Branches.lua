@@ -257,6 +257,7 @@ end
 
 Branch.AfterProfileSaveSummary = function()
 	SL.Global.MissComboFail = false --Make sure to clear the "miss combo fail" flag before going into game over!
+    --Because it is stored in the player prefs, the "seen modfile" check is reset after each game cycle if a player isn't using a profile, and is saved to their profile if it is
 	if ThemePrefs.Get("AllowScreenGameOver") then
 		return "ScreenGameOver"
 	else

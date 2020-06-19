@@ -34,6 +34,8 @@ local t = Def.ActorFrame{
 	LoadActor("./CDTitle.lua"),
 	-- Song Artist, BPM, Duration (Referred to in other themes as "PaneDisplay")
 	LoadActor("./SongDescription.lua"),
+    -- A "Hey you're currently playing a modfile" warning box
+    LoadActor("./ModfileWarning.lua"),
 
 	-- ---------------------------------------------------
 	-- finally, load the overlay used for sorting the MusicWheel (and more), hidden by default
