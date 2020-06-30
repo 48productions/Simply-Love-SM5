@@ -20,7 +20,7 @@ local t = Def.ActorFrame{
         if not ThemePrefs.Get("AllowModfileWarning") or AllPlayersSeenModfileWarning() then
             self:visible(false)
         else
-            self:xy(580, 110):diffusealpha(0):bob():effectperiod(4):effectmagnitude(0,4,0)
+            self:xy(610, 150):diffusealpha(0):bob():effectperiod(4):effectmagnitude(0,4,0)
         end
     end,
     OnCommand=function(self)
@@ -32,7 +32,7 @@ local t = Def.ActorFrame{
     CurrentSongChangedMessageCommand=function(self)
         local song = GAMESTATE:GetCurrentSong()
 		if song and song:GetGroupName():match("%[Mods%]") then --Highlighted a modfile? Wait a second, then start fading the warning in/out
-            self:stoptweening():sleep(1):smooth(0.4):diffusealpha(0.9):queuecommand("Fade")
+            self:stoptweening():sleep(0.5):smooth(0.4):diffusealpha(0.9):queuecommand("Fade")
             --SL.Global.SeenModfileWarning = true -- Set the flag that the modfile warning has been seen and should be hidden in future sets
             if GAMESTATE:IsSideJoined(PLAYER_1) then SL.P1.ActiveModifiers.PlayerSeenModfileWarning = true end --Also set this flag for all joined players
             if GAMESTATE:IsSideJoined(PLAYER_2) then SL.P2.ActiveModifiers.PlayerSeenModfileWarning = true end

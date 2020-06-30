@@ -15,6 +15,7 @@ local SplashList = {
 	"Here comes a new player!",
 	"Stomp your feet forever!",
 	"Beyond Evolution!",
+    "Rap coming at you with\nthe speed of a centipede!",
 	"Left go right go right\ngo pick up the step!", --DDR/BEMANI references
 	"Green black and blue make\nthe colors in the sky!",
 	"Use your feet and\ndance to the beat!",
@@ -77,7 +78,8 @@ local SplashList = {
 	"Locally grown,\nfreshly baked!",
 	"Just add pudding!",
 	"Stomp With the Duck!",
-	"Still very much\ncursed!",
+	"Now even more\ncursed!",
+    "Stay Safe!",
 	"It's finally here!", --SimplySpud cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows since 2018!",
     "The Yukon Gold of dance games!",
@@ -91,6 +93,7 @@ local SplashList = {
 	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
 	"A real-time\ndance music game!",
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
+    "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
 	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
 	"Not yet cancelled!",
 	"Also try beatmania!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)

@@ -32,7 +32,6 @@ end
 
 local group_descriptions = {}
 local group_ratings = {}
-
 for _,group in ipairs(SONGMAN:GetSongGroupNames()) do
 	local desc = 0
 	local rates = 0
@@ -236,7 +235,16 @@ local t = Def.ActorFrame{
 					if GAMESTATE:GetSortOrder() == "SortOrder_Group" and not GAMESTATE:GetCurrentSong() then
 						local group_name = SCREENMAN:GetTopScreen():GetMusicWheel():GetSelectedSection()
 						self:diffusealpha(1)
-						self:settext(group_descriptions[group_name] ~= 0 and group_descriptions[group_name] or "")
+                        
+                        --For some reason, SONGMAN:GetSongGroupNames() doesn't return USB custom song groups (from when group descriptions are pre-loaded, above), and MusicWheel:GetCurrentSections() doesn't seem to work either,
+                        --so let's detect custom groups when scrolling through the music wheel instead:
+                        --If we've scrolled onto a USB custom group, detect it here and set the group description accordingly. Not ideal but it works - 48
+						if SONGMAN:GetSongsInGroup(group_name)[1]:IsCustomSong() then
+                            self:settext(group_name .. THEME:GetString("ScreenSelectMusic", "USBGroupDesc"))
+                            
+                        else --Otherwise, set the group description to what we've loaded, or blank if there is no description
+                            self:settext(group_descriptions[group_name] ~= 0 and group_descriptions[group_name] or "")
+                         end
 					else
 						self:diffusealpha(0)
 					end
@@ -252,9 +260,10 @@ local t = Def.ActorFrame{
 					if GAMESTATE:GetSortOrder() == "SortOrder_Group" and not GAMESTATE:GetCurrentSong() then
 						local group_name = SCREENMAN:GetTopScreen():GetMusicWheel():GetSelectedSection()
 						self:diffusealpha(1)
-						if group_ratings[group_name] ~= 0 then
+						if group_ratings[group_name] and group_ratings[group_name] ~= 0 then
 							self:settext(THEME:GetString("SongDescription", "GroupRatings") .. group_ratings[group_name])
-						else self:settext("")
+                        else
+                            self:settext("")
 						end
 					else
 						self:diffusealpha(0)
