@@ -49,7 +49,7 @@ if SL.Global.GameMode ~= "Casual" then
 		OnCommand=function(self) self:y(_screen.cy+200.5) end,
 
 		Def.Quad{
-			InitCommand=function(self) self:diffuse(color("#1E282F")):zoomto(300, 26) end
+			InitCommand=function(self) self:diffuse(color_slate2):zoomto(300, 26) end
 		},
 
 		LoadFont("Common Normal")..{

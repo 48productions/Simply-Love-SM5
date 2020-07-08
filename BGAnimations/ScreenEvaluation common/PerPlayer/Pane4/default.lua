@@ -84,7 +84,7 @@ pane[#pane+1] = Def.Quad{
 		self:vertalign(top)
 			:zoomto(pane_width, 13 )
 			:xy(pane_width/2, 0)
-			:diffuse(color("#101519"))
+			:diffuse(color_slate5)
 	end,
 }
 
@@ -171,7 +171,7 @@ pane[#pane+1] = Def.Quad{
 		self:vertalign(top)
 			:zoomto(pane_width, 26 )
 			:xy(pane_width/2, -pane_height+13)
-			:diffuse(color("#101519"))
+			:diffuse(color_slate5)
 	end,
 }
 

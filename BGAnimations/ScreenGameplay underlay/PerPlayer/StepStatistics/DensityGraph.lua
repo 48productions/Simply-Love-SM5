@@ -60,7 +60,7 @@ local bg = Def.Quad{
 	InitCommand=function(self)
 		self:zoomto(width, height)
 			:align(0,0)
-			:diffuse(color("#1E282F"))
+			:diffuse(color_slate2)
 	end
 }
 

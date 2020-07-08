@@ -11,7 +11,7 @@ return Def.ActorFrame{
 	-- Draw a Quad behind the GraphDisplay (lifebar graph) and Judgment ScatterPlot
 	Def.Quad{
 		InitCommand=function(self)
-			self:zoomto(GraphWidth, GraphHeight):diffuse(color("#101519")):vertalign(top)
+			self:zoomto(GraphWidth, GraphHeight):diffuse(color_slate5):vertalign(top)
 		end
 	},
 

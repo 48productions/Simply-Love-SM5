@@ -1,6 +1,3 @@
-local dark = {0,0,0,0.9}
-local light = {0.65,0.65,0.65,1}
-
 return Def.ActorFrame{
 	Name="Header",
 
@@ -8,15 +5,15 @@ return Def.ActorFrame{
 		InitCommand=function(self)
 			self:zoomto(_screen.w, 32):vertalign(top):x(_screen.cx)
 			if ThemePrefs.Get("DarkMode") then
-				self:diffuse(dark)
+				self:diffuse(header_dark)
 			else
-				self:diffuse(light)
+				self:diffuse(header_light)
 			end
 		end,
 		ScreenChangedMessageCommand=function(self)
 			local topscreen = SCREENMAN:GetTopScreen():GetName()
 			if SL.Global.GameMode == "Casual" and (topscreen == "ScreenEvaluationStage" or topscreen == "ScreenEvaluationSummary") then
-				self:diffuse(dark)
+				self:diffuse(header_dark)
 			end
 		end,
 	},

@@ -6,7 +6,7 @@ return Def.ActorFrame{
 
 	--quad behind the MusicRate text
 	Def.Quad{
-		InitCommand=function(self) self:diffuse( color("#1E282F") ):setsize(418,16):zoom(0.7) end,
+		InitCommand=function(self) self:diffuse(color_slate2):setsize(418,16):zoom(0.7) end,
 	},
 
 	-- text for BPM (and maybe music rate if ~= 1.0)

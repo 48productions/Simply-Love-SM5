@@ -57,7 +57,7 @@ local t = Def.ActorFrame{
 	Def.Quad{
 		Name="Background",
 		InitCommand=function(self)
-			self:diffuse(color("#1e282f")):zoomto(320, 96)
+			self:diffuse(color_slate2):zoomto(320, 96)
 			if ThemePrefs.Get("RainbowMode") then
 				self:diffusealpha(0.75)
 			end
@@ -127,7 +127,7 @@ for RowNumber=1,num_rows do
 			self:diffuse( DifficultyColor(params.Difficulty) )
 			self:settext(params.Meter)
 		end,
-		UnsetCommand=function(self) self:settext(""):diffuse(color("#182025")) end,
+		UnsetCommand=function(self) self:settext(""):diffuse(color_slate3) end,
 	}
 end
 

@@ -69,7 +69,7 @@ return Def.ActorFrame{
 
 	--stepartist text
 	LoadFont("Common Normal")..{
-		InitCommand=function(self) self:diffuse(color("#1e282f")):horizalign(left):x(75):maxwidth(115) end,
+		InitCommand=function(self) self:diffuse(color_slate2):horizalign(left):x(75):maxwidth(115) end,
 		StepsHaveChangedCommand=function(self)
 
 			local SongOrCourse = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong()

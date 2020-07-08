@@ -80,7 +80,7 @@ local t = Def.ActorFrame{
 		-- background for Artist, BPM, and Song Length
 		Def.Quad{
 			InitCommand=function(self)
-				self:diffuse(color("#1e282f"))
+				self:diffuse(color_slate2)
 					:zoomto( IsUsingWideScreen() and 320 or 310, 48 )
 
 				if ThemePrefs.Get("RainbowMode") then

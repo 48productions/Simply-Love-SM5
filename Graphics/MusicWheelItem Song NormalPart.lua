@@ -3,7 +3,7 @@ local af = Def.ActorFrame{
 
 	Def.Quad{
 		InitCommand=function(self)
-			self:diffuse(0, 10/255, 17/255, 0.5) -- #000a11
+			self:diffuse(color_betweensongs)
 			:zoomto(_screen.w/2.1675, _screen.h/15)
 		end
 	},
@@ -12,7 +12,7 @@ local af = Def.ActorFrame{
 			if ThemePrefs.Get("RainbowMode") then
 				self:diffuse(1,1,1,0.5)
 			else
-				self:diffuse(10/255, 20/255, 27/255, 1) -- #0a141b
+				self:diffuse(color_slate4)
 			end
 			self:zoomto(_screen.w/2.1675, _screen.h/15 - 1)
 		end

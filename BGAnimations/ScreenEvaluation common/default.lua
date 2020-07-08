@@ -85,7 +85,7 @@ for player in ivalues(Players) do
 		Def.Quad{
 			Name="LowerQuad",
 			InitCommand=function(self)
-				self:diffuse(color("#1E282F")):y(_screen.cy+34):zoomto( 300,180 )
+				self:diffuse(color_slate2):y(_screen.cy+34):zoomto( 300,180 )
 				if ThemePrefs.Get("RainbowMode") then
 					self:diffusealpha(0.9)
 				end
