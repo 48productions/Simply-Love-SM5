@@ -15,7 +15,7 @@ af[#af+1] = Def.Quad{
 	InitCommand=function(self) self:zoomto(_screen.w, _screen.h/(row.how_many-2)):diffuse(0,0,0,1):cropbottom(1) end,
 	OnCommand=function(self)
 		self:xy(_screen.cx, math.ceil((row.how_many-2)/2) * row.h + 10):finishtweening()
-		    :accelerate(0.2):cropbottom(0)
+		    :smooth(0.2):cropbottom(0)
 	end,
 	SwitchFocusToGroupsMessageCommand=function(self) self:smooth(0.3):cropright(1) end,
 	SwitchFocusToSongsMessageCommand=function(self) self:smooth(0.3):cropright(0) end,

@@ -28,7 +28,7 @@ end
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
-		self:xy(_screen.cx-170, _screen.cy + 40)
+		self:y(_screen.cy + 40):sleep(0.06):decelerate(0.25):x(_screen.cx-170)
 	end,
 
 	---------------------------------------------------------------------

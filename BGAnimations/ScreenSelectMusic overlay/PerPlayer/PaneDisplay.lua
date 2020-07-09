@@ -126,14 +126,15 @@ local af = Def.ActorFrame{
 			self:x( _screen.w * 0.75 + 5)
 		end
 
-		self:y(_screen.cy + 5)
+		self:y(_screen.h)
 	end,
 
 	PlayerJoinedMessageCommand=function(self, params)
 		if player==params.Player then
-			self:visible(true)
+			--[[self:visible(true) --Original animation, added a new animation more in-line with the current OnCommand animation - 48
 				:zoom(0):croptop(0):bounceend(0.3):zoom(1)
-				:playcommand("Set")
+				:playcommand("Set")]]--
+            self:y(_screen.h):sleep(0.03):visible(true):decelerate(0.25):y(_screen.cy + 5):playcommand("Set")
 		end
 	end,
 	PlayerUnjoinedMessageCommand=function(self, params)
@@ -144,7 +145,7 @@ local af = Def.ActorFrame{
 
 	-- These playcommand("Set") need to apply to the ENTIRE panedisplay
 	-- (all its children) so declare each here
-	OnCommand=function(self) self:queuecommand("Set") end,
+	OnCommand=function(self) self:sleep(0.09):decelerate(0.25):y(_screen.cy + 5):queuecommand("Set") end,
 	CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	StepsHaveChangedCommand=function(self) self:queuecommand("Set") end,

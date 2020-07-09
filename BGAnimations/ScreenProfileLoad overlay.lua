@@ -1,4 +1,4 @@
-local tweentime = 0.325
+local tweentime = 0
 
 return Def.ActorFrame{
 	InitCommand=function(self)
@@ -19,7 +19,7 @@ return Def.ActorFrame{
 			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ):diffusealpha(0)
 		end,
 		OnCommand=function(self)
-			self:sleep(tweentime):linear(tweentime):diffusealpha(1)
+			--self:sleep(tweentime):linear(tweentime):diffusealpha(1)
 		end
 	},
 
@@ -33,7 +33,7 @@ return Def.ActorFrame{
 		OnCommand=function(self)
 			self:linear(tweentime):cropright(0):sleep(tweentime)
 			self:linear(tweentime):cropleft(1)
-			self:sleep(0.1):queuecommand("Load")
+			self:queuecommand("Load")
 		end,
 		LoadCommand=function(self)
 			SCREENMAN:GetTopScreen():Continue()
@@ -44,7 +44,11 @@ return Def.ActorFrame{
 		Font="_wendy small",
 		Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
 		InitCommand=function(self)
-			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ):zoom(0.6)
-		end
+			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ):zoom(0.6):diffusealpha(0)
+		end,
+        OnCommand=function(self)
+            self:linear(tweentime):diffusealpha(1):sleep(tweentime)
+            self:linear(tweentime):diffusealpha(0)
+        end
 	}
 }

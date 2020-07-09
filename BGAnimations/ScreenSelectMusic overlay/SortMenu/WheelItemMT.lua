@@ -45,13 +45,13 @@ return {
 			self.container:finishtweening()
 
 			if has_focus then
-				self.container:accelerate(0.15)
+				self.container:decelerate(0.15)
 				self.container:zoom(0.6)
 				self.container:diffuse( GetCurrentColor() )
 				self.container:glow(color("1,1,1,0.5"))
 			else
 				self.container:glow(color("1,1,1,0"))
-				self.container:accelerate(0.15)
+				self.container:decelerate(0.15)
 				self.container:zoom(0.5)
 				self.container:diffuse(SortMenuColor(self.kind))
 				self.container:glow(color("1,1,1,0"))

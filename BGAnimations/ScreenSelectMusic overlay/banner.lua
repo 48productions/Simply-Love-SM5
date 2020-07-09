@@ -5,12 +5,11 @@ local SongOrCourse, banner
 
 local t = Def.ActorFrame{
 	OnCommand=function(self)
+        self:y(112):zoom(0.7)
 		if IsUsingWideScreen() then
-			self:zoom(0.7655)
-			self:xy(_screen.cx - 170, 112)
+			self:decelerate(0.25):zoom(0.7655):x(_screen.cx - 170)
 		else
-			self:zoom(0.75)
-			self:xy(_screen.cx - 166, 112)
+			self:decelerate(0.25):zoom(0.75):x(_screen.cx - 166)
 		end
 	end,
 

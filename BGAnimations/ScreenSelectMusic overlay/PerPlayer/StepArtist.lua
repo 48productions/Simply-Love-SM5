@@ -8,7 +8,16 @@ return Def.ActorFrame{
 	Name="StepArtistAF_" .. pn,
 
 	-- song and course changes
-	OnCommand=function(self) self:queuecommand("StepsHaveChanged") end,
+	OnCommand=function(self)
+        self:queuecommand("StepsHaveChanged")
+        self:sleep(0.31):diffusealpha(1)
+        if player == PLAYER_1 then
+			self:x( _screen.cx - (IsUsingWideScreen() and 356 or 346))
+
+		elseif player == PLAYER_2 then
+			self:x( _screen.cx - 210)
+		end
+    end,
 	CurrentSongChangedMessageCommand=function(self) self:queuecommand("StepsHaveChanged") end,
 	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("StepsHaveChanged") end,
 
@@ -28,17 +37,14 @@ return Def.ActorFrame{
 	["Appear"..pn.."Command"]=function(self) self:visible(true):ease(0.5, 275):addy(scale(p,0,1,-1,1) * 30) end,
 
 	InitCommand=function(self)
-		self:visible( false ):halign( p )
+		self:visible( false ):halign( p ):diffusealpha(0)
 
-		if player == PLAYER_1 then
-
+		if player == PLAYER_1 then --X positioning moved to OnCommand for fancy animations - 48
 			self:y(_screen.cy + 44)
-			self:x( _screen.cx - (IsUsingWideScreen() and 356 or 346))
 
 		elseif player == PLAYER_2 then
-
 			self:y(_screen.cy + 97)
-			self:x( _screen.cx - 210)
+            
 		end
 
 		if GAMESTATE:IsHumanPlayer(player) then

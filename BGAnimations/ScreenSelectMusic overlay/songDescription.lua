@@ -64,7 +64,7 @@ end
 local t = Def.ActorFrame{
 
 	OnCommand=function(self)
-		self:xy(_screen.cx - (IsUsingWideScreen() and 170 or 165), _screen.cy - 28)
+        self:y(_screen.cy - 28):sleep(0.03):decelerate(0.25):x(_screen.cx - (IsUsingWideScreen() and 170 or 165))
 	end,
 
 	-- ----------------------------------------

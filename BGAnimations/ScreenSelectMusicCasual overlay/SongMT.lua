@@ -76,6 +76,11 @@ local song_mt = {
 					-- blinking quad behind banner
 					Def.Quad{
 						InitCommand=function(subself) subself:diffuse(0,0,0,0):zoomto(0,0) end,
+                        OnCommand=function(subself)
+                            if self.index == SongWheel:get_actor_item_at_focus_pos().index then
+                                subself:diffusealpha(0):sleep(self.index * 0.05):smooth(0.1):diffusealpha(1)
+                            end
+                        end,
 						GainFocusCommand=function(subself)
 							if self.song == "CloseThisFolder" then
 								subself:visible(false)
@@ -93,7 +98,15 @@ local song_mt = {
 					Def.Sprite{
 						Name="Banner",
 						InitCommand=function(subself) self.banner = subself; subself:diffusealpha(0) end,
-						OnCommand=function(subself) subself:queuecommand("Refresh") end,
+						OnCommand=function(subself)
+                            subself:zoomto(55,5):sleep(self.index * 0.05):smooth(0.1):diffusealpha(1)
+                            if self.index ~= SongWheel:get_actor_item_at_focus_pos().index then
+                                subself:zoomto(55,55)
+                            else
+                                subself:zoomto(126,126)
+                            end
+                            subself:queuecommand("Refresh")
+                        end,
 						RefreshCommand=function(subself)
 							subself:scaletoclipped(45,45)
 							if self.index ~= SongWheel:get_actor_item_at_focus_pos().index then
@@ -101,15 +114,15 @@ local song_mt = {
 							else
 								subself:zoomto(126,126)
 							end
-							subself:diffusealpha(1)
+							--subself:diffusealpha(1)
 						end,
 						GainFocusCommand=function(subself)
-							subself:linear(0.2):zoomto(126,126):stopeffect()
+							subself:decelerate(0.2):zoomto(126,126):stopeffect()
 							if self.song == "CloseThisFolder" then
 								subself:diffuseshift():effectcolor1(1,0.65,0.65,1):effectcolor2(1,1,1,1)
 							end
 						end,
-						LoseFocusCommand=function(subself) subself:linear(0.2):zoomto(55,55):stopeffect() end,
+						LoseFocusCommand=function(subself) subself:decelerate(0.2):zoomto(55,55):stopeffect() end,
 						SlideToTopCommand=function(subself) subself:linear(0.3):zoomto(110,110):rotationy(360):sleep(0):rotationy(0) end,
 						SlideBackIntoGridCommand=function(subself) subself:linear(0.12):zoomto(126,126) end,
 					},
@@ -122,20 +135,24 @@ local song_mt = {
 						self.title_bmt = subself
 						subself:zoom(0.8):diffuse(Color.White):shadowlength(0.75)
 					end,
+                    OnCommand=function(subself)
+                        subself:diffusealpha(0):sleep(self.index * 0.05):smooth(0.1)
+                        if self.index ~= SongWheel:get_actor_item_at_focus_pos().index then subself:diffusealpha(1) end
+                    end,
 					GainFocusCommand=function(subself)
 						if self.song == "CloseThisFolder" then
-							subself:y(10):zoom(0.9)
+							subself:decelerate(0.1):y(10):zoom(0.9)
 						else
-							subself:visible(false)
+							subself:decelerate(0.05):diffusealpha(0)
 						end
 					end,
 					LoseFocusCommand=function(subself)
 						if self.song == "CloseThisFolder" then
-							subself:zoom(0.8)
+							subself:decelerate(0.1):zoom(0.8)
 						else
-							subself:zoom(0.725)
+							subself:sleep(0.05):decelerate(0.05):zoom(0.725):diffusealpha(1)
 						end
-						subself:y(40):visible(true)
+						subself:y(40)
 					end,
 				},
 			}

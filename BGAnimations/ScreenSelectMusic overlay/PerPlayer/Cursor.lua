@@ -12,7 +12,7 @@ return Def.Sprite{
 	Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/PerPlayer/arrow.png"),
 	Name="Cursor"..pn,
 	InitCommand=function(self)
-		self:visible( GAMESTATE:IsHumanPlayer(player) )
+		self:visible( GAMESTATE:IsHumanPlayer(player) ):diffusealpha(0)
 		self:halign( p )
 
 		self:zoom(0.575)
@@ -38,7 +38,7 @@ return Def.Sprite{
 		if params.Player == player then self:visible(false) end
 	end,
 
-	OnCommand=function(self) self:queuecommand("Set") end,
+	OnCommand=function(self) self:playcommand("Set"):sleep(0.31):decelerate(0.1):diffusealpha(1) end,
 	CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	CurrentStepsP1ChangedMessageCommand=function(self) self:queuecommand("Set") end,
