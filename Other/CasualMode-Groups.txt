@@ -1,7 +1,0 @@
-# Groups added to this file will be displayed in Casual Mode's music list, other groups won't be shown
-# If no groups are here, all groups on the cabinet are used
-# Format: <Group Name>
-# Example: StepMania 5
-# look for more novice-friendly content here:
-# https://docs.google.com/spreadsheets/d/1F1IURV1UAYiICTLhAOKIJfwUN1iG12ZOufHZuDKiP48/edit#gid=761687175
-

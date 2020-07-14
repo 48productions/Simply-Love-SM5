@@ -1,4 +1,0 @@
-# A random song from this file is picked as the default song when entering casual mode
-# Format: Pack/Song
-# Example: StepMania 5/Goin' Under
-# Don't forget to add groups to the CasualMode groups list!
