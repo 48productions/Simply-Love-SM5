@@ -171,4 +171,7 @@ t[#t+1] = LoadActor("./StartButton.lua")
 
 t[#t+1] = LoadActor( THEME:GetPathS("common", "invalid") )..{ Name="invalid_sound", SupportPan = false }
 
+--Also load the loading text animation in (if we want, which we probably don't?)
+--t[#t+1] = LoadActor("./LoadingTextAnimation.lua") --Currently disabled - Uncomment this line to reenable casual's loading text
+
 return t

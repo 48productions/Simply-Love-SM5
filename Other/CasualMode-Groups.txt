@@ -1,44 +1,7 @@
+# Groups added to this file will be displayed in Casual Mode's music list, other groups won't be shown
+# If no groups are here, all groups on the cabinet are used
+# Format: <Group Name>
+# Example: StepMania 5
 # look for more novice-friendly content here:
 # https://docs.google.com/spreadsheets/d/1F1IURV1UAYiICTLhAOKIJfwUN1iG12ZOufHZuDKiP48/edit#gid=761687175
 
-# Commented out a lot of the default packs for now (mainly to try and keep all the casual mode content on one rating scale), will revisit in the future - 48
-
-# Anime Extravaganza 4
-# Anime Extravaganza 5
-# Animusic Season 1
-# Animusic Season 2
-# Barber Cuts
-# Ben Speirs' SPEIRMIX GALAXY
-# Fraxtil's Arrow Arrangements
-# Fraxtil's Beast Beats
-# Fraxtil's Cute Charts
-# In The Groove
-# In The Groove 2
-# In The Groove 3
-# In The Groove Rebirth
-# Notice Me Benpai
-# PROJECT CRYSTALLINE
-# Rock Out!
-# SOWNDS
-# Sudziosis III
-# Sudziosis 4
-# Sudziosis 5
-# TLOES Chapter 1
-# Valex's Magical 4-Arrow Adventure 5
-# Valex's Magical 4-Arrow Adventure 6
-# Valex's Magical 4-Arrow Adventure 7
-# Valex's Magical 4-Arrow Adventure 8
-# Valex's Magical 4-Arrow Adventure 9
-# Valex's Magical 4-Arrow Adventure 10
-# 3guys1pack
-
-Ben Speirs' SPEIRMIX VS Pump It Up (Vol.1)
-01-DanceDanceRevolution 1st-2ndMIX
-02-DanceDanceRevolution 3rdMIX-5thMIX
-03-DanceDanceRevolution MAX-Extreme
-04-DanceDanceRevolution SuperNOVA-SuperNOVA2
-05-DanceDanceRevolution X-X2
-06-DanceDanceRevolution X3 VS 2ndMIX
-07-DanceDanceRevolution 2013
-08-DanceDanceRevolution 2014
-09-DanceDanceRevolution A

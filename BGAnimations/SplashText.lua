@@ -31,7 +31,7 @@ local SplashList = {
 	"Come along and sing a song,\nand join the jamboree!",
 	"shanrara, shanrara!",
 	"Make the moves 'n' all\nwith the dance hall king!",
-	"The future has come to the Dance Game!",
+	"The future has come\nto the Dance Game!",
 	"Dive down the rabbit hole!", --Etc random garbage
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
