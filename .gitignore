@@ -4,3 +4,7 @@ config.lua
 Lua/
 readme-devconsole.txt
 Scripts/Stitch.lua
+
+# Gitignore the default song/group lists for casual mode
+Other/CasualMode-DefaultSong.txt
+Other/CasualMode-Groups.txt
