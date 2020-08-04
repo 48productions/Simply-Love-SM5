@@ -8,7 +8,8 @@ play_sample_music = function()
 	local song = GAMESTATE:GetCurrentSong()
 
 	if song then
-		local songpath = song:GetMusicPath()
+		--local songpath = song:GetMusicPath()
+        local songpath = song:GetPreviewMusicPath() --Let's obey custom music preview files (this function returns regular previews if needed, too!) - 48
 		local sample_start = song:GetSampleStart()
 		local sample_len = song:GetSampleLength()
 

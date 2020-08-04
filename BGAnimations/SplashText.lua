@@ -85,7 +85,8 @@ local SplashList = {
     "The Yukon Gold of dance games!",
     "Now with WiFi!",
     "Classic as a Russet,\nFresh as a tater tot!",
-	"Now with more tree!",
+	"Now with even MORE tree!",
+    "Shoot the cup!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound become\nthe flash light that\npierces soul of crowd\"",
@@ -93,6 +94,7 @@ local SplashList = {
 	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
 	"A real-time\ndance music game!",
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
+    "reproduce natural sound!\nFull range 10 loud speaker system adoption!",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
 	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
 	"Not yet cancelled!",
