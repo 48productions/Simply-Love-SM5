@@ -153,11 +153,13 @@ end
 local af = Def.ActorFrame{
 	Enabled = false,
 	InitCommand=function(self)
-		self:zoom(0.5):xy( frame_x, _screen.cy + WideScale(0,10) )
+		self:zoom(0.5):xy( frame_x, _screen.cy + WideScale(0,10) ):diffusealpha(0)
 
 		if ThemePrefs.Get("VisualTheme")=="Gay" and not HolidayCheer() then
 			self:bob():effectmagnitude(0,0,0):effectclock('bgm'):effectperiod(0.666)
-		end
+		else
+            self:bob():effectmagnitude(0, 0, 0)
+        end
 	end,
 	OffCommand=function(self)
 		self:sleep(0.04 * index)
@@ -165,17 +167,20 @@ local af = Def.ActorFrame{
 		self:diffusealpha(0)
 	end,
 	GainFocusCommand=function(self)
-		self:linear(0.125):zoom(1)
+		self:linear(0.125):zoom(1):diffusealpha(1)
 		if ThemePrefs.Get("VisualTheme")=="Gay" and not HolidayCheer() then
 			self:effectmagnitude(0,4,0)
-		end
+		else
+            self:effectmagnitude(0, 8, 0)
+        end
 	end,
 	LoseFocusCommand=function(self)
-		self:linear(0.125):zoom(0.5):effectmagnitude(0,0,0)
+		self:linear(0.125):zoom(0.5):effectmagnitude(0,0,0):diffusealpha(self.Enabled and 0.6 or 0.25)
 	end,
 	EnableCommand=function(self)
+        self:smooth(0.2)
 		if self.Enabled then
-			self:diffusealpha(1)
+			self:diffusealpha(0.6)
 		else
 			self:diffusealpha(0.25)
 		end

@@ -69,6 +69,7 @@ local SplashList = {
 	"Now available on Switch!",
     "You can become a hero of stage!",
     "Let's STEPPING!",
+    "-inhuman potato noises-",
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -80,13 +81,16 @@ local SplashList = {
 	"Stomp With the Duck!",
 	"Now even more\ncursed!",
     "Stay Safe!",
+    "Wash your hands!",
 	"It's finally here!", --SimplySpud cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows since 2018!",
-    "The Yukon Gold of dance games!",
+    "The Yukon Gold\nof dance games!",
     "Now with WiFi!",
     "Classic as a Russet,\nFresh as a tater tot!",
 	"Now with even MORE tree!",
     "Shoot the cup!",
+    "Showers are sweet!\nTake one today!",
+    "Now with\nmore gators!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound become\nthe flash light that\npierces soul of crowd\"",
@@ -94,7 +98,7 @@ local SplashList = {
 	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
 	"A real-time\ndance music game!",
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
-    "reproduce natural sound!\nFull range 10 loud speaker system adoption!",
+    "reproduce natural sound!\nFull range 10 loud\nspeaker system adoption!",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
 	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
 	"Not yet cancelled!",
@@ -121,6 +125,8 @@ local SplashList = {
 	"Also try routines!",
 	"Also try modfiles",
 	"Also try Mawaru!",
+    "%POP-SONG", --Realtime stats - Update on-the-fly according to the machine profile!
+    "%DANCE-SETS",
 }
 
 local arg = ...
@@ -128,9 +134,24 @@ local arg = ...
 local minZoom = 0
 local maxZoom = 0
 
+local splashNum = math.random(1, #SplashList) --Track the splash we're currently displaying so we can move between splashes with menu left/right
+
 local function InputHandler(event)
-	if (event.PlayerNumber and event.button and event.type == "InputEventType_Release" and event.GameButton == "Select") then  --The button is mapped to a player and a button, and the select button has been released, swap out the splash text
-		MESSAGEMAN:Broadcast("SwitchSplash")
+	if (event.PlayerNumber and event.button and event.type == "InputEventType_Release") then  --The button is mapped to a player and a button, and has been released
+        if event.GameButton == "Select" then --Select button - swap out to a random new splash text
+            splashNum = math.random(1, #SplashList)
+            MESSAGEMAN:Broadcast("SwitchSplash")
+        elseif IsArcade() then --If we're not in home mode, left/right advance to the next splash text
+            if event.GameButton == "MenuLeft" or event.GameButton == "Left" then
+                splashNum -= 1
+                if splashNum <= 0 then splashNum = #SplashList end
+                MESSAGEMAN:Broadcast("SwitchSplash")
+            elseif event.GameButton == "MenuRight" or event.GameButton == "Right" then
+                splashNum += 1
+                if splashNum > #SplashList then splashNum = 1 end
+                MESSAGEMAN:Broadcast("SwitchSplash")
+            end
+        end
 	end
 end
 
@@ -178,7 +199,23 @@ return Def.BitmapText{
 			elseif MonthOfYear()==10 and DayOfMonth()==20 and math.random(1, 5) == 1 then
 				self:settext("Happy 20,november!")
 			else 
-				self:settext(SplashList[math.random(1, #SplashList)]) --Set the displayed text to a random line from the above list
+				self:settext(SplashList[splashNum]) --Set the displayed text to a random line from the above list
+                
+                --A few of the random splashes from above may need special handling - handle them here
+                if self:GetText() == "Now with extra\nR A I N B O W S !" then --Add some RAINBOW
+                    self:rainbowscroll(true)
+                elseif self:GetText() == "Kerning!" then --Add some kerning!
+                    self:jitter(true)
+                elseif self:GetText() == "%POP-SONG" then -- Real-time statistic updates: Set these on the fly!
+                    title = PROFILEMAN:GetMachineProfile():GetMostPopularSong()
+                    if title then --Likely unessesary check to make sure there actually is a song title to display here
+                        self:settext("Also try\n\"" .. title:GetDisplayMainTitle() .. "\"!")
+                    else
+                        self:settext("Also try\n\"Simply Spud\"!")
+                    end
+                elseif self:GetText() == "%DANCE-SETS" then 
+                    self:settext("Over " .. PROFILEMAN:GetMachineProfile():GetTotalSessions() .. "\ndance sets performed!")
+                end
 			end
 	
 			-- If you need to test a string, do so here
@@ -194,12 +231,6 @@ return Def.BitmapText{
 			end
 			
 			self:zoom(maxZoom) --Zoom to our newly-calculated max zoom
-			
-			if self:GetText() == "Now with extra\nR A I N B O W S !" then --Add some RAINBOW
-				self:rainbowscroll(true)
-			elseif self:GetText() == "Kerning!" then --Add some kerning!
-				self:jitter(true)
-			end
 		end,
 		
 		SwitchSplashMessageCommand=function(self) 	--SwitchSplash: Switch to a new splash and play some funky animations while doing so (for updating the splash while the screen is being shown)
