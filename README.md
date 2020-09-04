@@ -11,18 +11,26 @@ Simply Spud is a StepMania 5 theme for the part of the post-ITG community that a
 
 It features a clean and simple design, offers numerous potato-driven features not implemented by the StepMania 5 engine, and allows the current generation of PIU fans to breathe new life into the game they've never played in years because we haven't had crap for DDR/ITG cabs up until now ;_;
 
-Simply Spud SM5 is a fork of the original Simply Love SM5 theme that adds some visual tweaks and new features. It is intended for the Idaho Rhythm Group's new public DDR cab (thus why everything is potato themed), and as such is *heavily* geared towards use on our specific cabinet. It'll still work just fine for private use too, though!
+...
+
+Simply Spud SM5 is a fork of the original Simply Love SM5 theme that adds visual flair and more features to make it more suitable for casual/intermediate play on a public cabinet. It's geared towards the Idaho Rhythm Group's new public StepMania cab, but it'll work fine on home setups, too!
 
 Current major changes/tweaks:
-  * Support for Stepmania 5.3 (currently barebones and WIP, should be stable but testing is needed)
-  * An option for a potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
-  * New menu music options, independent of the visual style in use
-  * Improvements to to memory card appearance and features, like different game style choice defaults for memory card and non-memory card users, among other minor visual tweaks
-  * Tweaks to Casual Mode's music wheel (it now has a more standard cover flow-style look)
-  * Tweaks to menu element positioning on the regular music wheel as well
-  * Splash text on the title screen
+  * Support for StepMania 5.3 (currently experimental, but seems stable at the moment)
+  * An optional potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
+  * [Improved style selection for casual players](https://i.imgur.com/9VP89ps.png) - Casual and ITG mode are now Beginner and Pro mode.
+     * FA+/StomperZ have been removed from the main style selection menu to reduce confusion for casual players, and are still selectable via the sort menu (MenuLeft + MenuRight or Select). This will hopefully be improved more in the future
   * Pump/ITG-style option to immediately fail players at a certain miss combo and kick them out of their set (configurable)
-  * Other visual changes and tweaks
+  * [Tweaks to Casual Mode's music wheel](https://i.imgur.com/ttb5uz6.png) (it now has a more standard cover flow-style look)
+
+
+Other changes include:
+  * Splash text on the title screen
+  * Default style choice changes depending on if a USB memory card is being used (optional), other USB visual tweaks/additions
+  * New menu music option, independent of the visual style in use
+  * Configurable descriptions/rating scale information for song groups
+  * "Modfile" groups - Gives modfiles colored titles, and shows a warning to new players.
+  * Many more easter eggs, bug fixes, animation flair, and other visual changes/tweaks
   
 Do note that while the original Simply Love theme was translated into several languages, Simply Spud (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!
 
@@ -36,7 +44,7 @@ Do note that while the original Simply Love theme was translated into several la
 
 You'll need to install [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12), [StepMania 5.1 beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2), or [StepMania 5.3](https://projectmoon.dance/index.php?id=2) to use this theme.
 
-Older versions of StepMania are not compatible.  StepMania 5.2 is not compatible. StepMania 5.3 support is currently experimental but should in theory be stable.
+Versions of StepMania older than 5.0.12 and StepMania 5.2 are not compatible. StepMania 5.3 support seems stable, but is currently experimental.
 
 #### Troubleshooting StepMania
 

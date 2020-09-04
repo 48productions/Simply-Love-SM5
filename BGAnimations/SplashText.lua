@@ -70,6 +70,8 @@ local SplashList = {
     "You can become a hero of stage!",
     "Let's STEPPING!",
     "-inhuman potato noises-",
+    "DO NOT LICK BUTTONS",
+    "DO NOT LICK PANELS",
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -100,6 +102,8 @@ local SplashList = {
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
     "reproduce natural sound!\nFull range 10 loud\nspeaker system adoption!",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
+    "\"I swear if you put your drink\non this arcade machine I'll\nsummon those kids from that\nbirthday party over there\nto scream next to you while\nyou play your next set.\"",
+    "A new speaker system!\nYou panetrate my core soul!",
 	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
 	"Not yet cancelled!",
 	"Also try beatmania!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
