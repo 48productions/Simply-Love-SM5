@@ -5,6 +5,7 @@ local NumWheelItems = 15
 local t = Def.ActorFrame{
 	InitCommand=function(self)
 		--self:Center():draworder(101)
+        SOUND:DimMusic(0.7, 60)
 	end,
     OnCommand=function(self)
         self:sleep(TweenTime * NumWheelItems):queuecommand("Load")

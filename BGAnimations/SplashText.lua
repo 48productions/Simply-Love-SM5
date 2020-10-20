@@ -82,8 +82,12 @@ local SplashList = {
 	"Just add pudding!",
 	"Stomp With the Duck!",
 	"Now even more\ncursed!",
-    "Stay Safe!",
+    "Stay Safe!", --Good heck this is still a thing? - 48 (10/20/2020)
+    "Seriously,\nStay Safe!!!!",
     "Wash your hands!",
+    "Seriously,\nwash your hands!",
+    "Dancing solo\nencouraged!",
+    "Sick dance solos\nstrongly encouraged!",
 	"It's finally here!", --SimplySpud cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows since 2018!",
     "The Yukon Gold\nof dance games!",
@@ -91,8 +95,10 @@ local SplashList = {
     "Classic as a Russet,\nFresh as a tater tot!",
 	"Now with even MORE tree!",
     "Shoot the cup!",
-    "Showers are sweet!\nTake one today!",
+    "Showers are sexy!\nTake one today!",
     "Now with\nmore gators!",
+    "(Hopefully) Air Raid\nSiren free!",
+    "Ticket redemption\ncoming soon!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound become\nthe flash light that\npierces soul of crowd\"",
@@ -123,6 +129,7 @@ local SplashList = {
 	"Also try Mahjong!",
 	"Also try Hangly-Man!",
 	"Also try non-rhythm games!",
+    "Also try pinball!",
 	"Also try Minecraft!", --Now let's try other games/play styles in general
 	"Also try Terraria!",
 	"Also try co-op!",
