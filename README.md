@@ -30,6 +30,7 @@ Other changes include:
   * New menu music option, independent of the visual style in use
   * Configurable descriptions/rating scale information for song groups
   * "Modfile" groups - Gives modfiles colored titles, and shows a warning to new players.
+  * Tweaks to the attract loop, including demo play (SM5 lets you set demo songs by adding a course named "Simply-Potato-SM5")
   * Many more easter eggs, bug fixes, animation flair, and other visual changes/tweaks
   
 Do note that while the original Simply Love theme was translated into several languages, Simply Spud (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!

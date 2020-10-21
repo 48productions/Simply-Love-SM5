@@ -1,6 +1,8 @@
 -- this file is used for for ScreenRankingSingle and ScreenRankingDouble
 
-local af = Def.ActorFrame{}
+local af = Def.ActorFrame{
+    InitCommand=function(self) SL.Global.GameplayReloadCheck = false end --Workaround to ensure we display the gameplay intro next song - 48
+}
 
 -- fade in the entire ActorFrame for RankingSingle's OnCommand
 af.OnCommand=function(self)

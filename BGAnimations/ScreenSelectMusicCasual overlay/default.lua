@@ -43,6 +43,7 @@ local optionrow_item_mt = LoadActor("./OptionRowItemMT.lua")
 
 local t = Def.ActorFrame {
 	InitCommand=function(self)
+        SL.Global.GameplayReloadCheck = false --Workaround to ensure we display the gameplay intro for the next song - 48
 		GroupWheel:set_info_set(Groups, group_index)
 		self:GetChild("GroupWheel"):SetDrawByZPosition(true)
 

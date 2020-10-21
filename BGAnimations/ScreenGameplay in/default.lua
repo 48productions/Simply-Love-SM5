@@ -6,7 +6,10 @@ local text = ""
 local SongNumberInCourse = 0
 local style = ThemePrefs.Get("VisualTheme")
 
-if GAMESTATE:IsCourseMode() then
+if GAMESTATE:IsDemonstration() then
+    text = THEME:GetString("Stage", "Demonstration")
+    
+elseif GAMESTATE:IsCourseMode() then
 	text = THEME:GetString("Stage", "Stage") .. " 1"
 
 elseif not PREFSMAN:GetPreference("EventMode") then
