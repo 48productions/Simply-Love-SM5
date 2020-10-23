@@ -154,11 +154,11 @@ local function InputHandler(event)
             MESSAGEMAN:Broadcast("SwitchSplash")
         elseif IsArcade() then --If we're not in home mode, left/right advance to the next splash text
             if event.GameButton == "MenuLeft" or event.GameButton == "Left" then
-                splashNum -= 1
+                splashNum = splashNum + 1
                 if splashNum <= 0 then splashNum = #SplashList end
                 MESSAGEMAN:Broadcast("SwitchSplash")
             elseif event.GameButton == "MenuRight" or event.GameButton == "Right" then
-                splashNum += 1
+                splashNum = splashNum - 1
                 if splashNum > #SplashList then splashNum = 1 end
                 MESSAGEMAN:Broadcast("SwitchSplash")
             end
