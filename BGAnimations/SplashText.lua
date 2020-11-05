@@ -72,6 +72,7 @@ local SplashList = {
     "-inhuman potato noises-",
     "DO NOT LICK BUTTONS",
     "DO NOT LICK PANELS",
+    "It's what\nplants crave!",
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -108,7 +109,7 @@ local SplashList = {
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
     "reproduce natural sound!\nFull range 10 loud\nspeaker system adoption!",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
-    "\"I swear if you put your drink\non this arcade machine I'll\nsummon those kids from that\nbirthday party over there\nto scream next to you while\nyou play your next set.\"",
+    "\"I swear if you put your drink on this\narcade machine I'll summon those\nkids from that birthday party over\nthere to scream next to you while\nyou play your next set.\"",
     "A new speaker system!\nYou panetrate my core soul!",
 	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
 	"Not yet cancelled!",
@@ -154,11 +155,11 @@ local function InputHandler(event)
             MESSAGEMAN:Broadcast("SwitchSplash")
         elseif IsArcade() then --If we're not in home mode, left/right advance to the next splash text
             if event.GameButton == "MenuLeft" or event.GameButton == "Left" then
-                splashNum = splashNum + 1
+                splashNum = splashNum - 1
                 if splashNum <= 0 then splashNum = #SplashList end
                 MESSAGEMAN:Broadcast("SwitchSplash")
             elseif event.GameButton == "MenuRight" or event.GameButton == "Right" then
-                splashNum = splashNum - 1
+                splashNum = splashNum + 1
                 if splashNum > #SplashList then splashNum = 1 end
                 MESSAGEMAN:Broadcast("SwitchSplash")
             end
