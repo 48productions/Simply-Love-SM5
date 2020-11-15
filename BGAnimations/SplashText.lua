@@ -1,4 +1,4 @@
---48's Splash text thingy - Need more Minecraft with your Stepmania? Here you go!
+--Splash text thingy - Need more Minecraft with your Stepmania? Here you go!
 
 --Add/remove lines of text from this list - it will randomly pick one to display when loaded
 local SplashList = {
@@ -73,6 +73,7 @@ local SplashList = {
     "DO NOT LICK BUTTONS",
     "DO NOT LICK PANELS",
     "It's what\nplants crave!",
+	"It's a buncha muncha\ncruncha arrows!"
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
