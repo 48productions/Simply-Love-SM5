@@ -101,6 +101,7 @@ local SplashList = {
     "Now with\nmore gators!",
     "(Hopefully) Air Raid\nSiren free!",
     "Ticket redemption\ncoming soon!",
+    "WTB BemaniPC\nNo, really",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound become\nthe flash light that\npierces soul of crowd\"",
@@ -110,9 +111,11 @@ local SplashList = {
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
     "reproduce natural sound!\nFull range 10 loud\nspeaker system adoption!",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
+  	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
     "\"I swear if you put your drink on this\narcade machine I'll summon those\nkids from that birthday party over\nthere to scream next to you while\nyou play your next set.\"",
     "A new speaker system!\nYou panetrate my core soul!",
-	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
+    "The Crazy Coaster!\nYour fate? Only heaven knows!",
+    "Hi-entertainment\ngame series!",
 	"Not yet cancelled!",
 	"Also try beatmania!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
 	"Also try crossbeats!",

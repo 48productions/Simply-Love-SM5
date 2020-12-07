@@ -114,10 +114,10 @@ af[#af+1] = Def.ActorFrame{
 	Def.BitmapText{
 		Font="Common Normal",
 		Name="Title",
-		InitCommand=function(self) self:zoom(1.3):diffuse(Color.White):horizalign(left):y(-45):maxwidth(300) end,
+		InitCommand=function(self) self:zoom(1.3):diffuse(Color.White):horizalign(left):y(-45):maxwidth(220) end,
 		CurrentSongChangedMessageCommand=function(self, params)
 			if params.song then
-				self:settext( params.song:GetDisplayMainTitle() )
+				self:settext( params.song:GetDisplayMainTitle() .. " " .. params.song:GetDisplaySubTitle())
 			end
 		end,
 	},
@@ -126,7 +126,7 @@ af[#af+1] = Def.ActorFrame{
 	Def.BitmapText{
 		Font="Common Normal",
 		Name="Artist",
-		InitCommand=function(self) self:zoom(0.85):diffuse(Color.White):y(-20):horizalign(left) end,
+		InitCommand=function(self) self:zoom(0.85):diffuse(Color.White):y(-20):horizalign(left):maxwidth(270) end,
 		CurrentSongChangedMessageCommand=function(self, params)
 			if params.song then
 				self:settext( THEME:GetString("ScreenSelectMusic", "Artist") .. ": " .. params.song:GetDisplayArtist() )

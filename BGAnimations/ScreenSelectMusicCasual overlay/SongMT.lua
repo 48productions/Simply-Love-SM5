@@ -8,7 +8,7 @@ local CloseFolderTexture = nil
 local NoJacketTexture = nil
 
 -- max number of characters allowed in a song title before truncating to ellipsis
-local max_chars = 28
+local max_chars = 17
 
 local song_mt = {
 	__index = {
@@ -43,7 +43,7 @@ local song_mt = {
 				end,
 				HideCommand=function(subself)
 					stop_music()
-					subself:visible(false):diffusealpha(0)
+					subself:decelerate(0.2):diffusealpha(0)
 				end,
 				UnhideCommand=function(subself)
 
@@ -133,7 +133,7 @@ local song_mt = {
 					Font="Common Normal",
 					InitCommand=function(subself)
 						self.title_bmt = subself
-						subself:zoom(0.8):diffuse(Color.White):shadowlength(0.75)
+						subself:zoom(0.8):diffuse(Color.White):shadowlength(0.75):maxwidth(80)
 					end,
                     OnCommand=function(subself)
                         subself:diffusealpha(0):sleep(self.index * 0.05):smooth(0.1)

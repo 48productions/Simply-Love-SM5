@@ -72,8 +72,8 @@ local item_mt = {
 						subself:sleep(0.25):linear(0.2):diffusealpha(1)
 					end
 				end,
-				GainFocusCommand=function(subself) subself:linear(0.2):zoom(0.8) end,
-				LoseFocusCommand=function(subself) subself:linear(0.2):zoom(0.6) end,
+				GainFocusCommand=function(subself) subself:decelerate(0.2):zoom(0.8) end,
+				LoseFocusCommand=function(subself) subself:decelerate(0.2):zoom(0.6) end,
 				SlideToTopCommand=function(subself)
 					subself:linear(0.12):y(35):zoom(0.35)
 					       :linear(0.2 ):x(70):queuecommand("Switch")

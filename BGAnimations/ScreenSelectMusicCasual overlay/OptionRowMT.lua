@@ -64,7 +64,7 @@ local optionrow_mt = {
 							if params.PlayerNumber == PLAYER_2 then subself:x(20) end
 						end,
 						SingleSongCanceledMessageCommand=function(subself) subself:rotationz(0) end,
-						BothPlayersAreReadyMessageCommand=function(subself) subself:finishtweening():sleep(0.2):linear(0.2):rotationz(180) end,
+						BothPlayersAreReadyMessageCommand=function(subself) subself:finishtweening():sleep(0.05):decelerate(0.2):rotationz(180) end,
 						CancelBothPlayersAreReadyMessageCommand=function(subself) subself:rotationz(0) end,
 
 						LoadActor("./img/arrow_glow.png")..{
@@ -91,7 +91,7 @@ local optionrow_mt = {
 							if params.PlayerNumber == PLAYER_1 then subself:x(180) end
 						end,
 						SingleSongCanceledMessageCommand=function(subself) subself:rotationz(0) end,
-						BothPlayersAreReadyMessageCommand=function(subself) subself:finishtweening():sleep(0.2):linear(0.2):rotationz(180) end,
+						BothPlayersAreReadyMessageCommand=function(subself) subself:finishtweening():sleep(0.05):decelerate(0.2):rotationz(180) end,
 						CancelBothPlayersAreReadyMessageCommand=function(subself) subself:rotationz(0) end,
 
 						LoadActor("./img/arrow_glow.png")..{
