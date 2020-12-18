@@ -24,7 +24,8 @@ if SPLovesVideoGames() then video_games = 1 end
 
 -- More importantly, you can easily change ThemeInfo.ini if you decide to rename your theme halfway through development
 -- You can't change the name of the theme's folder without breaking the repo - 48 :(
-local sl_name = THEME:GetThemeDisplayName()
+--local sl_name = THEME:GetThemeDisplayName()
+local sl_name = "Simply-Potato-SM5" --The theme's display name isn't it's path lol
 
 -- - - - - - - - - - - - - - - - - - - - -
 -- ProductFamily() returns "StepMania"
@@ -54,8 +55,9 @@ local style = ThemePrefs.Get("VisualTheme")
 local image = "TitleMenu"
 
 -- see: watch?v=wxBO6KX9qTA etc.
+--TODO: This doesn't work :(
 if FILEMAN:DoesFileExist("/Themes/"..sl_name.."/Graphics/_VisualStyles/"..ThemePrefs.Get("VisualTheme").."/TitleMenuAlt (doubleres).png") then
-	if math.random(1,100) <= 5 then image="TitleMenuAlt" end
+	if math.random(1,100) <= 100 then image="TitleMenuAlt" end
 end
 
 local af = Def.ActorFrame{

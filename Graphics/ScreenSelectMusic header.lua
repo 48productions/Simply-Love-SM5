@@ -39,7 +39,8 @@ local t = Def.ActorFrame{
 	LoadActor( THEME:GetPathG("", "_header.lua") ),
 
 	Def.BitmapText{
-		Font=PREFSMAN:GetPreference("EventMode") and "_upheaval_underline 80px" or "_upheaval_underline 80px",
+		--Font=PREFSMAN:GetPreference("EventMode") and "_upheaval_underline 80px" or "_upheaval_underline 80px",
+        Font="_upheaval_underline 80px",
 		Name="Stage Number",
 		InitCommand=function(self)
 			bmt_actor = self
