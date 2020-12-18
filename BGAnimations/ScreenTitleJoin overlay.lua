@@ -30,6 +30,4 @@ t[#t+1] = LoadFont("_upheaval 80px")..{
 	end
 }
 
-t[#t+1] = LoadActor("./SplashText.lua")
-
 return t
