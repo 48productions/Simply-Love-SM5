@@ -9,9 +9,9 @@ local SplashList = {
 	"Join the party and\nclap your hands!",
 	"Move your body\nto Infinity!",
 	"Slam it, Jam it,\nPump it Up!",
-	"Rave Until The Night Is Over!",
+	"Rave Until The\nNight Is Over!",
 	"Dance the night away!",
-	"Can your legs keep Up & Up?",
+	"Can your legs\nkeep Up & Up?",
 	"Here comes a new player!",
 	"Stomp your feet forever!",
 	"Beyond Evolution!",
@@ -19,20 +19,20 @@ local SplashList = {
 	"Left go right go right\ngo pick up the step!", --DDR/BEMANI references
 	"Green black and blue make\nthe colors in the sky!",
 	"Use your feet and\ndance to the beat!",
-	"Feel the rhythm in your soul!",
+	"Feel the rhythm\nin your soul!",
 	"Come on, let me hear\nyou say RIGHT!",
 	"Ducking Hardcore Edition!",
 	"We're going to have a party,\nhave a really great time!",
 	"[Tribal chants]",
 	"We are the Cartoon Heroes,\noh-WOAH-oh!",
-	"Welcome to the toon town party!",
-	"Feelin blue, I'm thinkin' of you!",
+	"Welcome to the\ntoon town party!",
+	"Feelin blue,\nI'm thinkin' of you!",
 	"[bagpipe sounds]",
 	"Come along and sing a song,\nand join the jamboree!",
 	"shanrara, shanrara!",
 	"Make the moves 'n' all\nwith the dance hall king!",
 	"The future has come\nto the Dance Game!",
-	"Dive down the rabbit hole!", --Etc random garbage
+	"Dive down the\nrabbit hole!", --Etc random garbage
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
 	"Now mostly sans-free!",
@@ -40,20 +40,20 @@ local SplashList = {
 	"Fork me on Github!",
 	"ft. Terrible Jokes",
 	"Now with extra\nR A I N B O W S !",
-	"What do you mean this splash text\n reminds you of something?",
+	"What do you mean this\nsplash text reminds\nyou of something?",
 	"NotNotITG!",
 	"NotDDR!",
 	"StepMania!\nGGGGGOOOOOLLLLLDDDDD!",
 	"stepbeats REV. MOONRISE",
 	"NOW LET ME SEE YOU DANCE!",
 	"It's finally here!",
-	"Thank your arcade staff!",
-	"Support your local arcades!",
-	"Support your local community!",
-	"Join your local community!",
-	"Participate in local events!",
-	"This isn't even my final form,\nDA-DON!",
-	"A new challenger approaches!",
+	"Thank your\narcade staff!",
+	"Support your\nlocal arcades!",
+	"Support your\nlocal community!",
+	"Join your\nlocal community!",
+	"Participate in\nlocal events!",
+	"This isn't even\nmy final form,\nDA-DON!",
+	"A new challenger\napproaches!",
 	"Show me your moves!",
 	"It's a Big Deal!",
 	"It's a\nFreestyle Takeover!",
@@ -63,11 +63,11 @@ local SplashList = {
 	"Get dunked on!",
 	"I bet you can't\n press Start!",
     "I bet you can't\n press Select!",
-	"Coming soon to an arcade near you!",
+	"Coming soon to\nan arcade near you!",
 	"Now available on VHS!",
 	"Now available on PC!",
 	"Now available on Switch!",
-    "You can become a hero of stage!",
+    "You can become\na hero of stage!",
     "Let's STEPPING!",
     "-inhuman potato noises-",
     "DO NOT LICK BUTTONS",
@@ -79,7 +79,8 @@ local SplashList = {
 	"Potato Revolution!",
 	"Kerning!",
 	"H E Y  G O R G E",
-	"Where the heck is Idaho anyways?",
+	"Where the heck\nis Idaho anyways?",
+    "what's an idaho",
 	"Locally grown,\nfreshly baked!",
 	"Just add pudding!",
 	"Stomp With the Duck!",
@@ -91,11 +92,11 @@ local SplashList = {
     "Dancing solo\nencouraged!",
     "Sick dance solos\nstrongly encouraged!",
 	"It's finally here!", --SimplySpud cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
-	"Smashing arrows since 2018!",
+	"Smashing arrows\nsince 2018!",
     "The Yukon Gold\nof dance games!",
     "Now with WiFi!",
     "Classic as a Russet,\nFresh as a tater tot!",
-	"Now with even MORE tree!",
+	"Now with\neven MORE tree!",
     "Shoot the cup!",
     "Showers are sexy!\nTake one today!",
     "Now with\nmore gators!",
@@ -104,7 +105,7 @@ local SplashList = {
     "WTB BemaniPC\nNo, really",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
-	"\"Your thundering sound become\nthe flash light that\npierces soul of crowd\"",
+	"\"Your thundering sound\nbecome the flash light\nthat pierces soul of crowd\"",
 	"\"We're gonna make U dance!\nU can move your feet on the PUMP stage!\nU'll be the dancing hero in a minute.\nDon't U wanna feel the fever of dance?\nCome on everybody and let's just PUMP IT UP\"",
 	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
 	"A real-time\ndance music game!",
@@ -124,16 +125,16 @@ local SplashList = {
 	"Also try Groove Coaster!",
 	"Also try jubeat!",
 	"Also try maimai!",
-	"Also try Paca Paca Passion Special!",
+	"Also try Paca Paca\nPassion Special!",
 	"Also try ParaParaParadise!",
 	"Also try pop'n music!",
 	"Also try Pump It Up!",
 	"Also try Sound Voltex!",
 	"Also try Taiko no Tatsujin!",
-	"Also try Magical Truck Adventure!",
+	"Also try\nMagical Truck Adventure!",
 	"Also try Mahjong!",
 	"Also try Hangly-Man!",
-	"Also try non-rhythm games!",
+	"Also try\nnon-rhythm games!",
     "Also try pinball!",
 	"Also try Minecraft!", --Now let's try other games/play styles in general
 	"Also try Terraria!",
@@ -174,7 +175,7 @@ end
 
 return Def.BitmapText{
 		Name="SplashBitmapText",
-		Font="_wendy small", --Change the font, here!
+		Font="_upheaval_underline 80px", --Change the font, here!
 		Text="...", --Use placeholder text for now, to be updated below
 		InitCommand=function(self)
 			local x = _screen.cx / 2
@@ -242,8 +243,8 @@ return Def.BitmapText{
 				minZoom = 1.3
 			else
 				--Set zoom dynamically based on splash string length. That way the copypastas don't clip off the screen
-				maxZoom = 0.45 - (string.len(self:GetText()) * 0.0005)
-				minZoom = maxZoom - 0.05
+				maxZoom = 0.34 - (string.len(self:GetText()) * 0.0006)
+				minZoom = maxZoom - 0.04
 			end
 			
 			self:zoom(maxZoom) --Zoom to our newly-calculated max zoom

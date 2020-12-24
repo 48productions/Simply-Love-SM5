@@ -81,9 +81,9 @@ local song = GAMESTATE:GetCurrentSong()
 }]]
 
 
-af[#af+1] = LoadFont("_wendy small")..{
+af[#af+1] = LoadFont("_upheaval_underline 80px")..{
 	InitCommand=function(self)
-		self:xy(_screen.cx,_screen.h-80):zoom(0.7):shadowlength(1.7)
+		self:xy(_screen.cx,_screen.h-80):zoom(0.5):shadowlength(1.7)
 		self:visible(false):queuecommand("Refresh")
 	end,
 	OnCommand=function(self)

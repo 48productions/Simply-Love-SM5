@@ -74,10 +74,10 @@ end
 
 t[#t+1] = Def.BitmapText{
         Condition=FirstStage,
-		Font="_wendy small",
+		Font="_upheaval_underline 80px",
 		Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
 		InitCommand=function(self)
-			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.6):diffusealpha(1):x(_screen.w * .75):y(_screen.cy):draworder(101)
+			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.5):diffusealpha(1):x(_screen.w * .75):y(_screen.cy):draworder(101)
 		end,
         OnCommand=function(self)
             self:accelerate(TweenTime * (NumWheelItems - 4)):y(_screen.h):diffusealpha(0)

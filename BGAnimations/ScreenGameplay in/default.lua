@@ -63,15 +63,15 @@ af[#af+1] = Def.ActorFrame{
 	}
 }
 
-af[#af+1] = LoadFont("_wendy small")..{
+af[#af+1] = LoadFont("_upheaval_underline 80px")..{
 	Text=text,
-	InitCommand=function(self) self:Center():diffusealpha(0):shadowlength(1) end,
+	InitCommand=function(self) self:Center():diffusealpha(0):shadowlength(1):zoom(0.6) end,
 	OnCommand=function(self)
 		-- don't animate the text tweening to the bottom of the screen if ScreenGameplay was just reloaded by a mod chart
 		if not SL.Global.GameplayReloadCheck then
 			self:accelerate(0.5):diffusealpha(1):sleep(0.66):accelerate(0.33)
 		end
-		self:zoom(0.4):y(_screen.h-30)
+		self:zoom(0.3):y(_screen.h-30)
 	end,
 	CurrentSongChangedMessageCommand=function(self)
 		if GAMESTATE:IsCourseMode() then

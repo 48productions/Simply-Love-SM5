@@ -8,6 +8,7 @@ local t = Def.ActorFrame{
         SOUND:DimMusic(0.7, 60)
 	end,
     OnCommand=function(self)
+        --self:sleep(5) --Debug: Sleep a bit longer, uncomment if you're tweaking text/animations here
         self:sleep(TweenTime * NumWheelItems):queuecommand("Load")
     end,
     LoadCommand=function(self)
@@ -26,11 +27,11 @@ local t = Def.ActorFrame{
         --For casual, this text can optionally slide into the center top of the screen.
         --To enable this, comment out the TweenTime = 0 call in the if statement below and comment out the condition preventing this actor from loading in Casual Mode. Also uncomment the line for the LoadingTextAnimation at the bottom of ScreenSelectMusicCasual overlay
         --For pro, it slides into the center right of the screen (over the music wheel animation)
-		Font="_wendy small",
+		Font="_upheaval_underline 80px",
 		Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
         Condition=SL.Global.GameMode ~= "Casual", --Don't load the loading text in casual mode (Comment out to reenable casual's loading text)
 		InitCommand=function(self)
-			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.6):diffusealpha(0):draworder(101):y(0)
+			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.5):diffusealpha(0):draworder(101):y(0)
                 :x(SL.Global.GameMode ~= "Casual" and _screen.w * .75 or _screen.cx)
 		end,
         OnCommand=function(self)
