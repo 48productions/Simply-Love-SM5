@@ -12,5 +12,10 @@ return Def.ActorFrame{
 		ShowPressStartForOptionsCommand=function(self) self:visible(true) end,
 		ShowEnteringOptionsCommand=function(self) self:linear(0.125):diffusealpha(0):queuecommand("NewText") end,
 		NewTextCommand=function(self) self:hibernate(0.1):settext(THEME:GetString("ScreenSelectMusic", "Entering Options...")):linear(0.125):diffusealpha(1):sleep(1) end
-	}
+	},
+    
+    Def.Quad{
+        InitCommand=function(self) self:diffuse(GetCurrentColor()):visible(false):xy(_screen.cx, _screen.cy+30):zoomto(2, 3) end,
+        OnCommand=function(self) self:visible(true):smooth(0.5):diffusealpha(1):zoomto(420, 3):linear(1.5):zoomto(0, 3) end,
+    }
 }
