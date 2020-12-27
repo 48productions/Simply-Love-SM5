@@ -621,13 +621,13 @@ GetComboFonts = function()
 		local has_png, has_ini = false, false
 
 		for filename in ivalues(files) do
-			if FilenameIsMultiFrameSprite(filename) and StripSpriteHints(filename)==directory_name then has_png = true end
+			if FilenameIsMultiFrameSprite(filename) and (StripSpriteHints(filename)==directory_name or directory_name == "Wendy (Cursed)") then has_png = true end --Stripping file hints on Wendy (Cursed) breaks this check - 48
 			if filename:match(".ini") and filename:gsub(".ini","")==directory_name then has_ini = true end
 		end
 
 		if has_png and has_ini then
-			-- special-case Wendy to always appear first in the list
-			if directory_name == "Wendy" then
+			-- special-case Upheaval to always appear first in the list
+			if directory_name == "Upheaval" then
 				table.insert(fonts, 1, directory_name)
 
 			-- special-cased Wendy (Cursed) to always appear last in the last
@@ -640,7 +640,6 @@ GetComboFonts = function()
 	end
 
 	if has_wendy_cursed then table.insert(fonts, "Wendy (Cursed)") end
-
 	return fonts
 end
 

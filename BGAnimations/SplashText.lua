@@ -100,7 +100,7 @@ local SplashList = {
     "Shoot the cup!",
     "Showers are sexy!\nTake one today!",
     "Now with\nmore gators!",
-    "(Hopefully) Air Raid\nSiren free!",
+    "(hopefully) air raid\nsiren free!",
     "Ticket redemption\ncoming soon!",
     "WTB BemaniPC\nNo, really",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
