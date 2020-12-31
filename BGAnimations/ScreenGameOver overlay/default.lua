@@ -1,18 +1,24 @@
 local Players = GAMESTATE:GetHumanPlayers();
 
 local t = Def.ActorFrame{
-	LoadFont("_wendy white")..{
+	--[[LoadFont("_upheaval_underline 80px")..{
 		Text="GAME",
 		InitCommand=function(self) self:xy(_screen.cx,_screen.cy-40):croptop(1):fadetop(1):zoom(1.2):shadowlength(1) end,
 		OnCommand=function(self) self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1) end,
 		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
 	},
-	LoadFont("_wendy white")..{
+	LoadFont("_upheaval_underline 80px")..{
 		Text="OVER",
 		InitCommand=function(self) self:xy(_screen.cx,_screen.cy+40):croptop(1):fadetop(1):zoom(1.2):shadowlength(1) end,
 		OnCommand=function(self) self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1) end,
 		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
-	},
+	},]]
+    Def.Sprite{
+        Texture="GameOver.png",
+        InitCommand=function(self) self:Center():zoom(0.5):diffusealpha(0) end,
+        OnCommand=function(self) self:smooth(0.75):diffusealpha(1) end,
+        OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
+    },
 
 	--Player 1 Stats BG
 	Def.Quad{
