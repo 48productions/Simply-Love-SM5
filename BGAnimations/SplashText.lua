@@ -74,6 +74,7 @@ local SplashList = {
     "DO NOT LICK PANELS",
     "It's what\nplants crave!",
 	"It's a buncha muncha\ncruncha arrows!",
+    "& KNUCKLES",
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
