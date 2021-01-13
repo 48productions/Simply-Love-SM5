@@ -85,7 +85,14 @@ local t = Def.ActorFrame {
 			-- if a profile is in use
 			if PROFILEMAN:IsPersistentProfile(player) then
 				-- update that profile's LastUsedHighScoreName attribute
-				PROFILEMAN:GetProfile(player):SetLastUsedHighScoreName( SL[ToEnumShortString(player)].HighScores.Name )
+				local profile = PROFILEMAN:GetProfile(player)
+                
+                profile:SetLastUsedHighScoreName( SL[ToEnumShortString(player)].HighScores.Name )
+                
+                --SM(profile:GetDisplayName())
+                if profile:GetDisplayName() == "" or profile:GetDisplayName() == "P1" or profile:GetDisplayName() == "P2" then --A display name hasn't been set yet (just using the default P1/P2), set the display name to the player's entered high score name
+                    profile:SetDisplayName(SL[ToEnumShortString(player)].HighScores.Name)
+                end
 			end
 		end
 
