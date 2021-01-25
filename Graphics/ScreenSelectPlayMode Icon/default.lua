@@ -67,7 +67,7 @@ t[#t+1] = Def.BitmapText{
 	Font="Common Normal",
 	InitCommand=function(self)
 		self:zoom(0.825):valign(-0.8):y(60)
-        self:settext(THEME:GetString("ScreenSelectPlayMode", text .. "Description"))
+        self:settext(THEME:GetString("ScreenSelectPlayMode", text .. (AllowThonk() and "DescriptionAlt" or "Description")))
 	end,
     OnCommand=function(self) self:diffusealpha(0):sleep(0.17):linear(0.2):diffusealpha(1) end,
     GainFocusCommand=function(self) self:stoptweening():linear(0.1):zoom(1.05):diffuse(color("#FFFFFF")) end,
