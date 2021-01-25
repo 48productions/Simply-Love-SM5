@@ -173,18 +173,16 @@ local GetGroups = function()
 end
 
 ---------------------------------------------------------------------------
--- parse ./Other/CasualMode-DefaultSong.txt to find one or more songs to
--- default to when SSMCasual first loads
--- returns a song object
+-- Parse a given text file for a list of songs in that file
+-- Returns the list of songs if present/valid, or nil if not
 
-local GetDefaultSong = function(groups)
-
-	local path = THEME:GetCurrentThemeDirectory() .. "Other/CasualMode-DefaultSong.txt"
+local GetSongsFromFile = function(groups, path)
+    local path = THEME:GetCurrentThemeDirectory() .. path
 	local preliminary_songs = GetFileContents(path)
 
-	-- the file was empty or doesn't exist, return the first song in the first group
+	-- the file was empty or doesn't exist, return nil
 	if preliminary_songs == nil or #preliminary_songs == 0 then
-		return SONGMAN:GetSongsInGroup(groups[1])[1]
+		return nil
 	end
 
 	-- verify that the song(s) specified actually exist
@@ -200,7 +198,35 @@ local GetDefaultSong = function(groups)
 			songs[#songs+1] = prelim_song
 		end
 	end
+    
+    return songs
+end
 
+
+---------------------------------------------------------------------------
+-- parse ./Other/CasualMode-DefaultSong.txt to find one or more songs to
+-- default to when SSMCasual first loads
+-- returns a song object
+
+local GetDefaultSong = function(groups, allow_af)
+    local songs
+    
+    -- If we're allowing april fool's mode, try loading songs from the alt default song list first
+    if allow_af then
+        songs = GetSongsFromFile(groups, "Other/CasualMode-DefaultSongAprilFools.txt")
+        
+        if songs == nil or #songs == 0 then --Couldn't find a song from the alt list, try loading from the regular list instead
+            songs = GetSongsFromFile(groups, "Other/CasualMode-DefaultSong.txt")
+        end
+    else
+        songs = GetSongsFromFile(groups, "Other/CasualMode-DefaultSong.txt")
+    end
+
+
+    -- Empty or nonexistent file, return the first song in the first group
+    if songs == nil then
+        return SONGMAN:GetSongsInGroup(groups[1])[1]
+    end
 
 	-- if multiple valid songs were found, randomly select and return one
 	if #songs >= 2 then
@@ -352,12 +378,19 @@ if #groups == 0 then
 	return nil
 end
 
--- there will be a current_song if we're on stage 2 or later
--- if no current_song, check ./Other/CasualMode-DefaultSong.txt
-if current_song == nil then
-	current_song = GetDefaultSong(groups)
-	GAMESTATE:SetCurrentSong(current_song)
+
+-- Now for the default songs:
+-- First: If we're in April Fool's mode and have already played one song, force a switch to a (regular, non-april fools) song
+if AllowAF() and SL.Global.Stages.PlayedThisGame == 1 then
+    current_song = GetDefaultSong(groups, false)
+
+-- Otherwise, check if there's a current song (this is set on stage 2+)
+-- if no current_song, check ./Other/CasualMode-DefaultSong.txt or CasualMode-DefaultSongAprilFools.txt
+elseif current_song == nil then
+	current_song = GetDefaultSong(groups, AllowAF())	
 end
+
+GAMESTATE:SetCurrentSong(current_song)
 
 group_index = FindInTable(current_song:GetGroupName(), groups) or 1
 

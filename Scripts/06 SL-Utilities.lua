@@ -208,7 +208,14 @@ end
 
 -- Scare the thonk out of anyone who dares enable Easter Eggs on April 1st - 48
 function AllowThonk()
- return ThemePrefs.Get("VisualTheme") == "Thonk" or (MonthOfYear()==3 and DayOfMonth()==1 and PREFSMAN:GetPreference("EasterEggs"))
+ return ThemePrefs.Get("VisualTheme") == "Thonk" or AllowAF()
+end
+
+--Allow april fools day shenanigans
+-- This function is used as a check to auto-enable thonk on April 1st
+-- It is ALSO used as an additional check for special surprises exclusively on April 1st that shouldn't *always* be active when thonk is the current visual style - 48
+function AllowAF()
+    return MonthOfYear()==3 and DayOfMonth()==1 and PREFSMAN:GetPreference("EasterEggs")
 end
 
 --I LOVE VIDEO GAMES (changes splash text and title screen arrow positions on ScreenTitleMenu/TitleJoin and ScreenLogo)
