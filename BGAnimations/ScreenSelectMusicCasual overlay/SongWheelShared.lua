@@ -164,7 +164,7 @@ af[#af+1] = Def.ActorFrame{
 			Font="Common Normal",
 			Name="Genre",
 			InitCommand=function(self)
-				self:zoom(0.65):diffuse(Color.White):y(28):horizalign(left)
+				self:zoom(0.65):diffuse(Color.White):y(28):horizalign(left):maxwidth(400)
 			end,
 			CurrentSongChangedMessageCommand=function(self, params)
 				if params.song then
