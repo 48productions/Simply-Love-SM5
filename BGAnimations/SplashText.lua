@@ -32,6 +32,7 @@ local SplashList = {
 	"shanrara, shanrara!",
 	"Make the moves 'n' all\nwith the dance hall king!",
 	"The future has come\nto the Dance Game!",
+    "DANCE with STEPS!",
 	"Dive down the\nrabbit hole!", --Etc random garbage
 	"Part of a complete\nbreakfast!",
 	"Almost like\nIn The Groove 3!",
@@ -104,7 +105,10 @@ local SplashList = {
     "(hopefully) air raid\nsiren free!",
     "Ticket redemption\ncoming soon!",
     "WTB BemaniPC\nNo, really",
-	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas
+    "Required to\nmove swiftly!",
+    "is this 13 orphans?",
+    "Not yet cancelled!",
+	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas (a.k.a. taglines from other rhythm games/songs/media)
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound\nbecome the flash light\nthat pierces soul of crowd\"",
 	"\"We're gonna make U dance!\nU can move your feet on the PUMP stage!\nU'll be the dancing hero in a minute.\nDon't U wanna feel the fever of dance?\nCome on everybody and let's just PUMP IT UP\"",
@@ -118,7 +122,8 @@ local SplashList = {
     "A new speaker system!\nYou panetrate my core soul!",
     "The Crazy Coaster!\nYour fate? Only heaven knows!",
     "Hi-entertainment\ngame series!",
-	"Not yet cancelled!",
+    "Shoes are recommended.\nThey make play easier!\nThey make play truly easier!!",
+    "\"Let's me Show you a\ntrue CURSECAB\"",
 	"Also try beatmania!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
 	"Also try crossbeats!",
 	"Also try DDR Solo!",
