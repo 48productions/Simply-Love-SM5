@@ -206,6 +206,103 @@ function map(func, array)
 	return new_array
 end
 
+
+
+--Parses a string for a date, returns a table formatted as {year, month, day}
+function parseDate(opt_date)
+    local ret = {}
+    local i = 1
+    for str in string.gmatch(opt_date, "[^/]+") do --Split our input string at each /, then convert each substring to a number and store it in a table
+    
+        ret[i] = tonumber(str)
+        if ret[i] == nil or ret[i] < 1 then return nil end --Ensure the value we got from tonumber is actually a number and is greater than 1 (check against month -1 lol)
+        i = i + 1
+    end
+    
+    if #ret == 3 and ret[1] <= 12 and ret[2] <= 31 then --Simple validation: We should have three numbers here, and the month and day should be at least *somewhat* feasible
+        --return {ret[3],ret[1],ret[2]}
+        return (ret[3] * 10000) + (ret[1] * 100) + ret[2]
+    else
+        return nil
+    end
+end
+
+
+--Checks if news entry opt with an id of id is valid on cur_date, also factors in a player's max_news value if applicable
+function checkValidNews(cur_date, news_path, max_news, id, opt)
+    --First: If max_news is specified, we're displaying news to a player on game start and shouldn't show them news they've already seen
+    --If this is the case, we'll run two extra checks: Is this news newer than the newest news they've been shown (max_news)? And is this news NOT limited to attract mode showings only?
+    if max_news == nil or (id > max_news and opt.ShowToPlayer) then
+        --Next: Does this entry have all the needed values, and does the image it specifies actually exist?
+        if opt.File and opt.StartDate and opt.EndDate and FILEMAN:DoesFileExist(news_path .. opt.File) then
+                    
+            --Last: Is this news valid on the current date?
+            local start_date = parseDate(opt.StartDate)
+            local end_date = parseDate(opt.EndDate)
+            
+            --Check if we parsed our start and end dates correctly, then make sure the current date is between those two dates
+            if start_date ~= nil and end_date ~= nil and start_date <= cur_date and end_date >= cur_date then
+            
+                --If we've gotten to this point without returning: Good news, everyone!
+                --We have valid news to display! Return the corresponding image
+                return news_path .. opt.File
+            else
+                --SM(start_date..cur_date..end_date)
+                return nil
+            end
+            
+        end
+    end
+    --SM(idS..id..max_news)
+    return nil --This news entry isn't valid
+end
+
+
+--Returns a path to the latest and greatest valid news image. Accounts for the following:
+
+-- - News that is set to start after/end before the current date will not be shown
+-- - If max_news is specified (not nil), news with an ID <= max_news will not be shown
+-- - If no valid news is found (or all news entries have config errors), nil is returned
+function getNewsImg(max_news)
+    local news_path = THEME:GetCurrentThemeDirectory() .. "Other/News/" --The path the news config/images are in
+    local config = nil --The news config file
+    
+    if FILEMAN:DoesFileExist(news_path.."/news.ini") then --Does news.ini exist? Try loading it
+        config = IniFile.ReadFile(news_path.."news.ini")
+        if config then --Loaded the news config, now see what news exists:tm:
+            --Get the current date
+            local cur_date = (Year() * 10000) + ((MonthOfYear() + 1) * 100) + DayOfMonth()
+            
+            --Now iterate through the news entries to find news to display:
+            
+            --First, get an array of all the news entry ids in the config. We'll sort this later so we can iterate through them.
+            --(Code shamelessly stolen from SM's 01 IniFile.lua, modified so we can iterate backwards through our config. Also makes stopping the loop once we find valid news easier)
+            local entry_keys = {}
+            for key, val in pairs(config) do
+                local num_key = tonumber(key)
+                if num_key ~= nil then entry_keys[num_key] = key end --The keys (news entries) in our table can be numbers that are secretly strings. Store our real news keys (strings) in this array under the index of the number version of the key
+            end
+            --SM(entry_keys)
+             --Now reverse-sort this key table...
+            table.sort(entry_keys, function(a,b) return a > b end)
+            
+            --...and iterate through it
+            for i, id in ipairs(entry_keys) do
+                local opt = config[id]
+                
+                --Check if this news id is valid, return it if it is
+                local img = checkValidNews(cur_date, news_path, max_news, id, opt)
+                if img then return img end
+                
+            end --Loop news entry iteration
+            
+        end
+    end
+    
+    return nil --At this point there's no valid news :(
+end
+
+
 -- Scare the thonk out of anyone who dares enable Easter Eggs on April 1st - 48
 function AllowThonk()
  return ThemePrefs.Get("VisualTheme") == "Thonk" or AllowAF()
