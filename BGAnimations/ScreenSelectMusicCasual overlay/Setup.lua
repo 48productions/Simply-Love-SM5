@@ -184,13 +184,16 @@ local GetSongsFromFile = function(groups, path)
 	if preliminary_songs == nil or #preliminary_songs == 0 then
 		return nil
 	end
-
+    
 	-- verify that the song(s) specified actually exist
 	local songs = {}
 	for prelim_song in ivalues(preliminary_songs) do
 		-- parse the group out of the prelim_song string to verify this song
 		-- exists within a permitted group
-		local _group = prelim_song:gsub("/[%w%s]*", "")
+		--local _group = prelim_song:gsub("/[%w%s]*", "") --The original gsub pattern doesn't work on songs with special characters in it's name (-, (, etc) - 48
+        local _group = string.match(prelim_song, "[^/]+")
+        --SM(prelim_song)
+        --SM(_group)
 
 		-- if this song exists and is part of a group returned by PruneGroups()
 		if SONGMAN:FindSong( prelim_song ) and FindInTable(_group, groups) then
