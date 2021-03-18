@@ -36,6 +36,7 @@ local PlayerDefaults = {
 				Vocalization = "None",
                 
                 PlayerSeenModfileWarning = false,
+                MaxNewsSeen = 0,
 			}
 			self.Streams = {
 				SongDir = nil,

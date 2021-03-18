@@ -44,6 +44,7 @@ local profile_whitelist = {
 	ReceptorArrowsPosition = "string",
 	
 	PlayerSeenModfileWarning = "boolean",
+    MaxNewsSeen = "number",
 	
 	PlayerOptionsString = "string"
 }

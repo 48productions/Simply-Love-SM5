@@ -2,7 +2,11 @@
 
 local img = getNewsImg(nil) --Defined in 06 SL-Utilities.lua
 
-if img == nil then img = THEME:GetPathG("", "_blank.png") end --No news to display, default to blank
+if img == nil then
+    img = THEME:GetPathG("", "_blank.png")
+else
+    img = THEME:GetPathO("", img)
+end --No news to display, default to blank
 
 return Def.Sprite{
     Texture=img,

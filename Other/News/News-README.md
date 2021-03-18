@@ -40,6 +40,7 @@ ShowToPlayer= (Optional)
  When finding news to show, Simply Spud will search for news entries this way:
  
  - Higher IDs are checked first (location in the file doesn't matter), the first valid entry found is what's used
+ - Skipping news IDs (i.e. your entries have IDs of 1, 2, 5) is known to be broken and is unsupported.
  - An entry isn't used if the ID isn't a number, the specified file isn't found, or if the date isn't formatted correctly in the config
  - Entries with a start date after the current date or an end date before the current date aren't used.
 

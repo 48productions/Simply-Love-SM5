@@ -245,7 +245,12 @@ function checkValidNews(cur_date, news_path, max_news, id, opt)
             
                 --If we've gotten to this point without returning: Good news, everyone!
                 --We have valid news to display! Return the corresponding image
-                return news_path .. opt.File
+                
+                if max_news ~= nil then --If max news is specified, set the max news seen values for all joined players
+                    if GAMESTATE:IsSideJoined(PLAYER_1) then SL.P1.ActiveModifiers.MaxNewsSeen = id end
+                    if GAMESTATE:IsSideJoined(PLAYER_2) then SL.P2.ActiveModifiers.MaxNewsSeen = id end
+                end
+                return "News/" .. opt.File
             else
                 --SM(start_date..cur_date..end_date)
                 return nil
@@ -282,7 +287,6 @@ function getNewsImg(max_news)
                 local num_key = tonumber(key)
                 if num_key ~= nil then entry_keys[num_key] = key end --The keys (news entries) in our table can be numbers that are secretly strings. Store our real news keys (strings) in this array under the index of the number version of the key
             end
-            --SM(entry_keys)
              --Now reverse-sort this key table...
             table.sort(entry_keys, function(a,b) return a > b end)
             
@@ -291,7 +295,7 @@ function getNewsImg(max_news)
                 local opt = config[id]
                 
                 --Check if this news id is valid, return it if it is
-                local img = checkValidNews(cur_date, news_path, max_news, id, opt)
+                local img = checkValidNews(cur_date, news_path, max_news, tonumber(id), opt)
                 if img then return img end
                 
             end --Loop news entry iteration
