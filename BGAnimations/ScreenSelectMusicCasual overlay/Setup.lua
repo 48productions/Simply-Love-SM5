@@ -202,6 +202,7 @@ local GetSongsFromFile = function(groups, path)
 		end
 	end
     
+    --SM(songs)
     return songs
 end
 
@@ -384,13 +385,13 @@ end
 
 -- Now for the default songs:
 -- First: If we're in April Fool's mode and have already played one song, force a switch to a (regular, non-april fools) song
-if AllowAF() and SL.Global.Stages.PlayedThisGame == 1 then
+if AllowThonk() and SL.Global.Stages.PlayedThisGame == 1 then
     current_song = GetDefaultSong(groups, false)
 
 -- Otherwise, check if there's a current song (this is set on stage 2+)
 -- if no current_song, check ./Other/CasualMode-DefaultSong.txt or CasualMode-DefaultSongAprilFools.txt
 elseif current_song == nil then
-	current_song = GetDefaultSong(groups, AllowAF())	
+	current_song = GetDefaultSong(groups, AllowThonk())	
 end
 
 GAMESTATE:SetCurrentSong(current_song)

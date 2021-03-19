@@ -56,8 +56,18 @@ local song_mt = {
 
 					subself:visible(true):sleep(0.3):linear(0.2):diffusealpha(1)
 				end,
-				SlideToTopCommand=function(subself) subself:linear(0.2):xy(col.w * WideScale(1.5, 2.25), _screen.cy-67) end,
-				SlideBackIntoGridCommand=function(subself) subself:linear(0.2):xy( col.w * (6 - 1.75), row.h * 2 ) end,
+				SlideToTopCommand=function(subself)
+                    if AllowThonk() then subself:bezier(0.4, {0, 0, 0.3, -3, 0.6, 3, 1, 1}) else subself:linear(0.2) end
+                    subself:xy(col.w * WideScale(1.5, 2.25), _screen.cy-67)
+                end,
+				SlideBackIntoGridCommand=function(subself)
+                    if AllowThonk() then
+                        subself:linear(0.2):y(-75):linear(0):xy( col.w * (6 - 1.75), _screen.h):linear(0.2)
+                    else
+                        subself:linear(0.2)
+                    end
+                    subself:xy( col.w * (6 - 1.75), row.h * 2 )
+                end,
 
 				-- wrap the function that plays the preview music in its own Actor so that we can
 				-- call sleep() and queuecommand() and stoptweening() on it and not mess up other Actors
@@ -197,7 +207,8 @@ local song_mt = {
 
 			-- Position icons in the bottom row
 			if item_index ~= middle_index  then
-				self.container:y( row.h * 3 ):x( col.w * (item_index - 1.75))
+                self.container:y( AllowThonk() and (row.h * 3 + (20 * math.sin(2 * item_index))) or (row.h * 3) )
+                self.container:x( col.w * (item_index - 1.75))
 
 			-- Now position the center row icon
 			elseif item_index == middle_index then
