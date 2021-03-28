@@ -56,7 +56,7 @@ local image = "TitleMenu"
 
 -- see: watch?v=wxBO6KX9qTA etc.
 if FILEMAN:DoesFileExist((IsSM53() and "/Appearance/Themes/" or "/Themes/")..sl_name.."/Graphics/_VisualStyles/"..ThemePrefs.Get("VisualTheme").."/TitleMenuAlt (doubleres).png") then
-	if math.random(1,100) <= 10 then image="TitleMenuAlt" end
+	if AllowAF() or math.random(1,100) <= 10 then image="TitleMenuAlt" end -- An alternate title screen image is shown on April Fools day  (or a 10% chance otherwise)
 end
 
 local af = Def.ActorFrame{
