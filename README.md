@@ -16,12 +16,14 @@ It features a clean and simple design, offers numerous potato-driven features no
 Simply Spud SM5 is a fork of the original Simply Love SM5 theme that adds visual flair and more features to make it more suitable for casual/intermediate play on a public cabinet. It's geared towards the Idaho Rhythm Group's new public StepMania cab, but it'll work fine on home setups, too!
 
 Current major changes/tweaks:
-  * Support for StepMania 5.3 (currently experimental, but seems stable at the moment)
+  * Support for StepMania 5.3 (seems very stable at the moment)
+  * A new font, and lots of new visual tweaks and additional animation flair across the theme
   * An optional potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
   * [Improved style selection for casual players](https://i.imgur.com/9VP89ps.png) - Casual and ITG mode are now Beginner and Pro mode.
      * FA+/StomperZ have been removed from the main style selection menu to reduce confusion for casual players, and are still selectable via the sort menu (MenuLeft + MenuRight or Select). This will hopefully be improved more in the future
   * Pump/ITG-style option to immediately fail players at a certain miss combo and kick them out of their set (configurable)
   * [Tweaks to Casual Mode's music wheel](https://i.imgur.com/ttb5uz6.png) (it now has a more standard cover flow-style look)
+  * A News feature, to show configurable images in the attract mode loop and to players with memory cards
 
 
 Other changes include:
@@ -31,7 +33,8 @@ Other changes include:
   * Configurable descriptions/rating scale information for song groups
   * "Modfile" groups - Gives modfiles colored titles, and shows a warning to new players.
   * Tweaks to the attract loop, including demo play (SM5 lets you set demo songs by adding a course named "Simply-Potato-SM5")
-  * Many more easter eggs, bug fixes, animation flair, and other visual changes/tweaks
+  * Cab lighting test in the service menu
+  * Many more easter eggs and bug fixes!
   
 Do note that while the original Simply Love theme was translated into several languages, Simply Spud (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!
 
