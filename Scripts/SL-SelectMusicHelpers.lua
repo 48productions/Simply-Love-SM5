@@ -14,7 +14,8 @@ play_sample_music = function()
 		local sample_len = song:GetSampleLength()
 
 		if songpath and sample_start and sample_len then
-			SOUND:DimMusic(PREFSMAN:GetPreference("SoundVolume"), math.huge)
+			--SOUND:DimMusic(PREFSMAN:GetPreference("SoundVolume"), math.huge)
+            SOUND:Volume(PREFSMAN:GetPreference("SoundVolume"))
 			SOUND:PlayMusicPart(songpath, sample_start,sample_len, 0.5, 1.5, false, true) --Let's not loop the sample music in case a casual walks away from the cab after a single song - 48
 		else
 			stop_music()

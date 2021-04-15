@@ -5,6 +5,10 @@
 🥔🥔🥔🥔🥔🥔🥔🥔
 ======================
 
+NOTE: The "53-only" branch contains extra fun new features.
+StepMania 5.3 4.9.5 or later is *required* to run this branch - this will likely be bumped up again in the future.
+
+
 ## About
 
 Simply Spud is a StepMania 5 theme for the part of the post-ITG community that also happens to love potatoes.

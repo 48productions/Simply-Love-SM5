@@ -56,7 +56,8 @@ local t = Def.ActorFrame {
 		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			SCREENMAN:set_input_redirected(player, true)
 		end
-		SOUND:DimMusic(0.25, 60) --Dim the music for a bit (seems to be cancelled if we restart the song preview)
+		--SOUND:DimMusic(0.25, 60) --Dim the music for a bit (seems to be cancelled if we restart the song preview)
+        SOUND:Volume(0.25, 1)
 		self:playcommand("ShowSortMenu")
 		overlay:playcommand("HideTestInput")
 	end,
@@ -84,7 +85,8 @@ local t = Def.ActorFrame {
 		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			SCREENMAN:set_input_redirected(player, false)
 		end
-		SOUND:DimMusic(1, 60) --Undim the music (in case it's been dimmed from showing the sort menu
+		--SOUND:DimMusic(1, 60) --Undim the music (in case it's been dimmed from showing the sort menu
+        SOUND:Volume(1, 1)
 		self:playcommand("HideSortMenu")
 		overlay:playcommand("HideTestInput")
 	end,

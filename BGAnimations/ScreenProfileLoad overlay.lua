@@ -5,7 +5,8 @@ local NumWheelItems = 15
 local t = Def.ActorFrame{
 	InitCommand=function(self)
 		--self:Center():draworder(101)
-        SOUND:DimMusic(0.7, 60)
+        --SOUND:DimMusic(0.7, 60)
+        SOUND:Volume(0.7, 1)
 	end,
     OnCommand=function(self)
         --self:sleep(5) --Debug: Sleep a bit longer, uncomment if you're tweaking text/animations here

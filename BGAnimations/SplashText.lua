@@ -76,6 +76,8 @@ local SplashList = {
     "It's what\nplants crave!",
 	"It's a buncha muncha\ncruncha arrows!",
     "& KNUCKLES",
+    "here's the real thing",
+    "Hop on to\nthe dance flow!",
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
