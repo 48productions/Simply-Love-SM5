@@ -230,6 +230,14 @@ local SL_CustomPrefs =
 		Choices = { THEME:GetString("ThemePrefs","Off"), THEME:GetString("ThemePrefs","On"), THEME:GetString("ThemePrefs","OnWithSound") },
 		Values  = { 0, 1, 2 }
 	},
+    
+    -- - - - - - - - - - - - - - - - - - - -
+    CasualSongsPerPlay = {
+        Default = 3,
+        Choices = range(1, 5, 1),
+        Values = range(1, 5, 1)
+    },
+    
 	-- - - - - - - - - - - - - - - - - - - -
 	--- ???
 	RabbitHole = {

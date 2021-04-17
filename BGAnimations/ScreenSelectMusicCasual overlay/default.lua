@@ -104,6 +104,7 @@ local t = Def.ActorFrame {
 				if SL.Global.Stages.PlayedThisGame == 0 then
 					SL.Global.GameMode = "ITG"
 					SetGameModePreferences()
+                    SL.Global.Stages.Remaining = PREFSMAN:GetPreference("SongsPerPlay") --In case casual and pro modes get different songs per play counts, set our remaining stages to the pro mode counter
 					THEME:ReloadMetrics()
 					SCREENMAN:GetTopScreen():SetNextScreenName("ScreenReloadSSM"):StartTransitioningScreen("SM_GoToNextScreen")
 				else --Play an error sound instead of making the player wonder why they can't transition to ITG mode

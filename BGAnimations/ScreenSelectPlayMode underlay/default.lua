@@ -55,6 +55,11 @@ local t = Def.ActorFrame{
 			SL.Global.GameMode = choices[cursor.index+1]
 			-- now that a GameMode has been selected, set related preferences
 			SetGameModePreferences()
+            
+            if SL.Global.GameMode == "Casual" then --In casual mode? Update remaining stages to our Casual-specific songs per play setting
+                SL.Global.Stages.Remaining = ThemePrefs.Get("CasualSongsPerPlay") or PREFSMAN:GetPreference("SongsPerPlay")
+            end
+            
 			-- and reload the theme's Metrics
 			THEME:ReloadMetrics()
 		end
