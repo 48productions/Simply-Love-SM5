@@ -64,11 +64,11 @@ end
 
 Branch.AfterEvaluationStage = function()
 	-- If we're in Casual mode, don't save the profile(s).
-	if SL.Global.GameMode == "Casual" then
-		return Branch.AfterProfileSave()
-	else
-		return "ScreenProfileSave"
-	end
+	--if SL.Global.GameMode == "Casual" then
+	--	return Branch.AfterProfileSave()
+	--else
+		return "ScreenProfileSave" --Plot twist let's *always* save profiles now - 48
+	--end
 end
 
 Branch.AfterSelectPlayMode = function()
@@ -129,7 +129,7 @@ Branch.AllowScreenNameEntry = function()
 	-- If we're in Casual mode, don't allow NameEntry, and don't
 	-- bother saving the profile(s). Skip directly to GameOver.
 	if SL.Global.GameMode == "Casual" then
-		return Branch.AfterProfileSaveSummary()
+		return "ScreenProfileSaveSummary" --Plot twist let's save profiles in casual now - 48
 
 	elseif ThemePrefs.Get("AllowScreenNameEntry") and SL.Global.MissComboFail == false then --If name entry is enabled and we didn't fail the set via a miss combo, go to name entry
 		return "ScreenNameEntryTraditional"
