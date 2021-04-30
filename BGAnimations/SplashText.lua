@@ -110,6 +110,7 @@ local SplashList = {
     "Not yet cancelled!",
     "It's bright and tight!",
     "Groove Triangle!",
+	"*angry fish shaking*",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas (a.k.a. taglines from other rhythm games/songs/media)
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound\nbecome the flash light\nthat pierces soul of crowd\"",
