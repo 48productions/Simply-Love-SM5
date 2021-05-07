@@ -663,3 +663,32 @@ GetDifficultyIndex = function(difficulty)
 	local difficulty_index = Difficulty:Reverse()[difficulty]
 	if type(difficulty_index) == "number" then return (difficulty_index + 1) end
 end
+
+-- -----------------------------------------------------------------------
+-- Returns the default song to select on the music wheel
+-- Now used for both Beginner and Pro mode
+
+GetDefaultSong=function()
+    local songs
+    
+    -- If we're allowing April Fool's mode, try loading songs from the alt default song list first
+    if AllowThonk() then
+    
+    else -- Otherwise, fall back on the normal default song list
+        songs = {
+            "AdditionalSongs/Group/Songs", -- (Note: Unlike the current Casual implementation, this needs Songs/AdditionalSongs prefixed before the group)
+        }
+    end
+    
+    -- Default song file not found, abort!
+    if songs == nil or #songs == 0 then
+        --SM("Haha, nope")
+        return nil
+        
+    -- Should've found at least one (maybe more) valid songs
+    else
+        local song = songs[math.random(1, #songs)]
+        --SM(song)
+        return song
+    end
+end

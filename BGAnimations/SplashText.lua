@@ -111,6 +111,7 @@ local SplashList = {
     "It's bright and tight!",
     "Groove Triangle!",
 	"*angry fish shaking*",
+    "Way better than other dance games,\nand those have ANIME!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas (a.k.a. taglines from other rhythm games/songs/media)
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound\nbecome the flash light\nthat pierces soul of crowd\"",
@@ -120,7 +121,7 @@ local SplashList = {
 	"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!",
     "reproduce natural sound!\nFull range 10 loud\nspeaker system adoption!",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
-  	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020, cancelled by corona. Here's to hoping Nanahira shows up in Anime Oasis 2021 (in Idaho of all places lmao)
+  	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020 and 2021, cancelled by corona
     "\"I swear if you put your drink on this\narcade machine I'll summon those\nkids from that birthday party over\nthere to scream next to you while\nyou play your next set.\"",
     "A new speaker system!\nYou panetrate my core soul!",
     "The Crazy Coaster!\nYour fate? Only heaven knows!",
@@ -140,6 +141,7 @@ local SplashList = {
 	"Also try Pump It Up!",
 	"Also try Sound Voltex!",
 	"Also try Taiko no Tatsujin!",
+    "Also try REFLEC BEAT",
 	"Also try\nMagical Truck Adventure!",
 	"Also try Mahjong!",
 	"Also try Hangly-Man!",

@@ -212,7 +212,9 @@ end
 -- default to when SSMCasual first loads
 -- returns a song object
 
-local GetDefaultSong = function(groups, allow_af)
+-- (Now unused - a modified version for all gamemodes is in SL-Helpers) - 48
+
+--[[local GetDefaultSong = function(groups, allow_af)
     local songs
     
     -- If we're allowing april fool's mode, try loading songs from the alt default song list first
@@ -245,7 +247,7 @@ local GetDefaultSong = function(groups, allow_af)
 
 	-- fall back on first valid song from first valid group if needed
 	return PruneSongsFromGroup( groups[1] )[1]
-end
+end]]
 
 
 ---------------------------------------------------------------------------
@@ -383,6 +385,9 @@ if #groups == 0 then
 end
 
 
+--[[ Let's let the engine decide on a default song now
+     (so that default songs also apply to pro mode) - 48
+
 -- Now for the default songs:
 -- First: If we're in April Fool's mode and have already played one song, force a switch to a (regular, non-april fools) song
 if AllowThonk() and SL.Global.Stages.PlayedThisGame == 1 then
@@ -395,6 +400,7 @@ elseif current_song == nil then
 end
 
 GAMESTATE:SetCurrentSong(current_song)
+]]
 
 group_index = FindInTable(current_song:GetGroupName(), groups) or 1
 
