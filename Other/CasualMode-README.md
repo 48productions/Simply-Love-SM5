@@ -29,21 +29,3 @@ Machine operators can customize this list as needed by adding (or removing) Grou
 If a group name is provided in that file that does not exist in the filesystem, it will be ignored.  If a group with no valid Casual Mode stepcharts is added to the list, that group will not appear as a valid choice.
 
 If no groups are specified in this file (i.e., the file is empty), all packs with valid stepcharts will be available for play in Casual Mode.
-
-## Specifying a Default Song for Casual Mode
-
-Casual Mode makes use of a second simple txt file to specify a list of default songs that Casual Mode will always start on.  The file is titled **CasualMode-DefaultSong.txt** and is located at *./Simply-Potato-SM/Other/CasualMode-DefaultSong.txt*
-
-Create this file, and place default songs in the format of:
-
-```
-group name/song name
-```
-
-where `group name` and `song name` are the filenames of the relevant directories in the filesystem.
-
-If a single line is provided, that song will always be the default song (assuming it exists).
-
-If multiple lines are specified, one will be randomly selected for each new game cycle in Casual Mode as the default song.
-
-If invalid or nonexistent songs are provided they will be ignored, and the first valid song in the first valid group will be used as a fallback default song.

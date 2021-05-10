@@ -8,6 +8,8 @@ Scripts/Stitch.lua
 # Gitignore the default song/group lists for casual mode
 Other/CasualMode-DefaultSong.txt
 Other/CasualMode-DefaultSongAprilFools.txt
+Other/DefaultSongs.txt
+Other/DefaultSongsAprilFools.txt
 Other/CasualMode-Groups.txt
 
 Other/News/test.png

@@ -1,3 +1,5 @@
+local default_songs
+
 -- -----------------------------------------------------------------------
 -- call this to draw a Quad with a border
 -- width of quad, height of quad, and border width, in pixels
@@ -664,30 +666,100 @@ GetDifficultyIndex = function(difficulty)
 	if type(difficulty_index) == "number" then return (difficulty_index + 1) end
 end
 
+
+---------------------------------------------------------------------------
+-- helper function used by GetGroups() and GetDefaultSong()
+-- returns the contents of a txt file as an indexed table, split on newline
+
+function GetFileContents(path)
+	local contents = ""
+
+	if FILEMAN:DoesFileExist(path) then
+		-- create a generic RageFile that we'll use to read the contents
+		local file = RageFileUtil.CreateRageFile()
+		-- the second argument here (the 1) signifies
+		-- that we are opening the file in read-only mode
+		if file:Open(path, 1) then
+			contents = file:Read()
+		end
+
+		-- destroy the generic RageFile now that we have the contents
+		file:destroy()
+	end
+
+	-- split the contents of the file on newline
+	-- to create a table of lines as strings
+	local lines = {}
+	for line in contents:gmatch("[^\r\n]+") do
+		if line[0] ~= '#' then lines[#lines+1] = line end
+	end
+
+	return lines
+end
+
+
+---------------------------------------------------------------------------
+-- Parse a given text file for a list of songs in that file
+-- Returns the list of songs if present/valid, or nil if not
+
+local GetSongsFromFile = function(groups, path)
+    local path = THEME:GetCurrentThemeDirectory() .. path
+	local preliminary_songs = GetFileContents(path)
+
+	-- the file was empty or doesn't exist, return nil
+	if preliminary_songs == nil or #preliminary_songs == 0 then
+		return nil
+	end
+    
+	-- verify that the song(s) specified actually exist
+	local songs = {}
+	for prelim_song in ivalues(preliminary_songs) do
+		-- parse the group out of the prelim_song string to verify this song
+		-- exists within a permitted group
+		--local _group = prelim_song:gsub("/[%w%s]*", "") --The original gsub pattern doesn't work on songs with special characters in it's name (-, (, etc) - 48
+        --local _group = string.match(prelim_song, "[^/]+")
+        local prelim_simfile = string.match(prelim_song, "/(.*)") --Remove the initial folder (Songs/AdditionalSongs/etc) from our path (SONGMAN:FindSong doesn't want it)
+
+		-- if this song exists and is part of a group returned by PruneGroups()
+		--if SONGMAN:FindSong( prelim_song ) and FindInTable(_group, groups) then
+        if prelim_simfile ~= nil and SONGMAN:FindSong( prelim_simfile ) then
+			-- add this prelim_song to the table of songs that do exist
+			songs[#songs+1] = prelim_song
+		end
+	end
+    
+    return songs
+end
+
+
+-- -----------------------------------------------------------------------
+-- Reloads the default song list from file
+-- (In it's own function so it can be easily called from Arctic's lua console)
+
+RefreshDefaultSongs = function()
+    default_songs = GetSongsFromFile(nil, AllowThonk() and "Other/DefaultSongsAprilFools.txt" or "Other/DefaultSongs.txt")
+end
+
+
 -- -----------------------------------------------------------------------
 -- Returns the default song to select on the music wheel
 -- Now used for both Beginner and Pro mode
 
 GetDefaultSong=function()
-    local songs
     
-    -- If we're allowing April Fool's mode, try loading songs from the alt default song list first
-    if AllowThonk() then
-    
-    else -- Otherwise, fall back on the normal default song list
-        songs = {
-            "AdditionalSongs/Group/Songs", -- (Note: Unlike the current Casual implementation, this needs Songs/AdditionalSongs prefixed before the group)
-        }
-    end
-    
-    -- Default song file not found, abort!
-    if songs == nil or #songs == 0 then
-        --SM("Haha, nope")
-        return nil
+    -- Default song list doesn't exist yet, try loading the default songs (needs to happen at least once on startup
+    if default_songs == nil or #default_songs == 0 then
+        RefreshDefaultSongs()
+        
+        -- Still no default songs, abort! ABORT!
+        if default_songs == nil or #default_songs == 0 then
+            --SM("No default songs found!")
+            return nil
+        end
         
     -- Should've found at least one (maybe more) valid songs
     else
-        local song = songs[math.random(1, #songs)]
+        local song = default_songs[math.random(1, #default_songs)]
         --SM(song)
         return song
     end

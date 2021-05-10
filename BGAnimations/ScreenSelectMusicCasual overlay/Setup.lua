@@ -82,36 +82,6 @@ local InitOptionRowsForSingleSong = function()
 end
 
 ---------------------------------------------------------------------------
--- helper function used by GetGroups() and GetDefaultSong()
--- returns the contents of a txt file as an indexed table, split on newline
-
-local GetFileContents = function(path)
-	local contents = ""
-
-	if FILEMAN:DoesFileExist(path) then
-		-- create a generic RageFile that we'll use to read the contents
-		local file = RageFileUtil.CreateRageFile()
-		-- the second argument here (the 1) signifies
-		-- that we are opening the file in read-only mode
-		if file:Open(path, 1) then
-			contents = file:Read()
-		end
-
-		-- destroy the generic RageFile now that we have the contents
-		file:destroy()
-	end
-
-	-- split the contents of the file on newline
-	-- to create a table of lines as strings
-	local lines = {}
-	for line in contents:gmatch("[^\r\n]+") do
-		if line[0] ~= '#' then lines[#lines+1] = line end
-	end
-
-	return lines
-end
-
----------------------------------------------------------------------------
 -- provided a group title as a string, prune out songs that don't have valid steps
 -- returns an indexed table of song objects
 
@@ -171,83 +141,6 @@ local GetGroups = function()
 		return SONGMAN:GetSongGroupNames()
 	end
 end
-
----------------------------------------------------------------------------
--- Parse a given text file for a list of songs in that file
--- Returns the list of songs if present/valid, or nil if not
-
-local GetSongsFromFile = function(groups, path)
-    local path = THEME:GetCurrentThemeDirectory() .. path
-	local preliminary_songs = GetFileContents(path)
-
-	-- the file was empty or doesn't exist, return nil
-	if preliminary_songs == nil or #preliminary_songs == 0 then
-		return nil
-	end
-    
-	-- verify that the song(s) specified actually exist
-	local songs = {}
-	for prelim_song in ivalues(preliminary_songs) do
-		-- parse the group out of the prelim_song string to verify this song
-		-- exists within a permitted group
-		--local _group = prelim_song:gsub("/[%w%s]*", "") --The original gsub pattern doesn't work on songs with special characters in it's name (-, (, etc) - 48
-        local _group = string.match(prelim_song, "[^/]+")
-        --SM(prelim_song)
-        --SM(_group)
-
-		-- if this song exists and is part of a group returned by PruneGroups()
-		if SONGMAN:FindSong( prelim_song ) and FindInTable(_group, groups) then
-			-- add this prelim_song to the table of songs that do exist
-			songs[#songs+1] = prelim_song
-		end
-	end
-    
-    --SM(songs)
-    return songs
-end
-
-
----------------------------------------------------------------------------
--- parse ./Other/CasualMode-DefaultSong.txt to find one or more songs to
--- default to when SSMCasual first loads
--- returns a song object
-
--- (Now unused - a modified version for all gamemodes is in SL-Helpers) - 48
-
---[[local GetDefaultSong = function(groups, allow_af)
-    local songs
-    
-    -- If we're allowing april fool's mode, try loading songs from the alt default song list first
-    if allow_af then
-        songs = GetSongsFromFile(groups, "Other/CasualMode-DefaultSongAprilFools.txt")
-        
-        if songs == nil or #songs == 0 then --Couldn't find a song from the alt list, try loading from the regular list instead
-            songs = GetSongsFromFile(groups, "Other/CasualMode-DefaultSong.txt")
-        end
-    else
-        songs = GetSongsFromFile(groups, "Other/CasualMode-DefaultSong.txt")
-    end
-
-
-    -- Empty or nonexistent file, return the first song in the first group
-    if songs == nil then
-        return SONGMAN:GetSongsInGroup(groups[1])[1]
-    end
-
-	-- if multiple valid songs were found, randomly select and return one
-	if #songs >= 2 then
-		local song = SONGMAN:FindSong( songs[math.random(1, #songs)] )
-		if song then return song end
-
-	-- if DefaultSong.txt only contained one song, return that
-	elseif #songs == 1 then
-		local song = SONGMAN:FindSong( songs[1] )
-		if song then return song end
-	end
-
-	-- fall back on first valid song from first valid group if needed
-	return PruneSongsFromGroup( groups[1] )[1]
-end]]
 
 
 ---------------------------------------------------------------------------
@@ -334,8 +227,10 @@ local GetGroupInfo = function(groups)
 	return info
 end
 
+
 ---------------------------------------------------------------------------
 -- Returns info from each group's info.ini file (for group descriptions)
+
 local GetDescriptionInfo = function(groups)
 	local descriptions = {}
 	for group in ivalues(groups) do
@@ -385,22 +280,19 @@ if #groups == 0 then
 end
 
 
---[[ Let's let the engine decide on a default song now
-     (so that default songs also apply to pro mode) - 48
 
--- Now for the default songs:
--- First: If we're in April Fool's mode and have already played one song, force a switch to a (regular, non-april fools) song
-if AllowThonk() and SL.Global.Stages.PlayedThisGame == 1 then
-    current_song = GetDefaultSong(groups, false)
-
--- Otherwise, check if there's a current song (this is set on stage 2+)
--- if no current_song, check ./Other/CasualMode-DefaultSong.txt or CasualMode-DefaultSongAprilFools.txt
-elseif current_song == nil then
-	current_song = GetDefaultSong(groups, AllowThonk())	
+-- If the current song isn't set at this point, we've failed to set a default song - Set the current song to the first song in the first group
+if current_song == nil then
+	current_song = SONGMAN:GetSongsInGroup(groups[1])[1]
+    GAMESTATE:SetCurrentSong(current_song)
+    
+else -- Next: Check if the current song is in one of the available groups - If not, we shouldn't have this song selected and should default to a new one
+    local current_group = current_song:GetGroupName()
+    if FindInTable(current_group, groups) == nil then
+        current_song = SONGMAN:GetSongsInGroup(groups[1])[1]
+        GAMESTATE:SetCurrentSong(current_song)
+    end
 end
-
-GAMESTATE:SetCurrentSong(current_song)
-]]
 
 group_index = FindInTable(current_song:GetGroupName(), groups) or 1
 
