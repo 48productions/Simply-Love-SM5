@@ -32,15 +32,15 @@ local minutes = math.floor((totalTime-(hours*3600))/60)
 local seconds = round(totalTime%60)
 
 local lines = {
-	ScreenString("SongsPlayedThisGame") .. "\n" .. songsPlayedThisGame,
-	ScreenString("NotesHitThisGame") .. "\n" .. notesHitThisGame,
-	ScreenString("TimeSpentThisGame") .. "\n" .. minutes .. THEME:GetString("ScreenGameOver", "Minutes") .. " " .. seconds .. THEME:GetString("ScreenGameOver", "Seconds")
+	string.format(ScreenString("SongsPlayedThisGame"), songsPlayedThisGame),
+	string.format(ScreenString("NotesHitThisGame"), notesHitThisGame),
+	ScreenString("TimeSpentThisGame") .. minutes .. THEME:GetString("ScreenGameOver", "Minutes") .. " " .. seconds .. THEME:GetString("ScreenGameOver", "Seconds")
 }
 
 -- assume above that the gameplay session was < 1 hour, but check now
 -- just in case, and modify the last line accordingly if needed
 if hours > 0 then
-	lines[3] = ScreenString("TimeSpentThisGame") .. "\n"..
+	lines[3] = ScreenString("TimeSpentThisGame") ..
 		hours .. ScreenString("Hours") .. " " ..
 		minutes .. ScreenString("Minutes") .. " " ..
 		seconds .. ScreenString("Seconds")

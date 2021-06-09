@@ -1,25 +1,10 @@
 local Players = GAMESTATE:GetHumanPlayers();
 
-local t = Def.ActorFrame{
-	--[[LoadFont("_upheaval_underline 80px")..{
-		Text="GAME",
-		InitCommand=function(self) self:xy(_screen.cx,_screen.cy-40):croptop(1):fadetop(1):zoom(1.2):shadowlength(1) end,
-		OnCommand=function(self) self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1) end,
-		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
-	},
-	LoadFont("_upheaval_underline 80px")..{
-		Text="OVER",
-		InitCommand=function(self) self:xy(_screen.cx,_screen.cy+40):croptop(1):fadetop(1):zoom(1.2):shadowlength(1) end,
-		OnCommand=function(self) self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1) end,
-		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
-	},]]
-    Def.Sprite{
-        Texture="GameOver.png",
-        InitCommand=function(self) self:Center():zoom(0.5):diffusealpha(0) end,
-        OnCommand=function(self) self:smooth(0.75):diffusealpha(1) end,
-        OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
-    },
+local using_mem_card = GAMESTATE:IsAnyHumanPlayerUsingMemoryCard()
+local new_profile_written = PROFILEMAN:ProfileFromMemoryCardIsNew('PlayerNumber_P1') or PROFILEMAN:ProfileFromMemoryCardIsNew('PlayerNumber_P2') --If either player has a *new* memory card profile, note it
 
+local t = Def.ActorFrame{
+    
 	--Player 1 Stats BG
 	Def.Quad{
 		InitCommand=function(self)
@@ -34,12 +19,29 @@ local t = Def.ActorFrame{
 			self:zoomto(160,_screen.h):xy(_screen.w-80, _screen.h/2):diffuse(color("#00000099"))
 			if ThemePrefs.Get("RainbowMode") then self:diffuse(color("#000000dd")) end
 		end,
-	}
+	},
+    
+    --"Thanks for playing"/USB reminder text
+    LoadFont("_upheaval_underline 80px")..{
+		Text=ScreenString("ThanksForPlaying"),
+		InitCommand=function(self) self:xy(_screen.cx,_screen.cy+150):diffuse(color("#aaaaaaff")):zoom(0.25) end,
+		OnCommand=function(self)
+			self:queuecommand("Pulse")
+			if using_mem_card then
+                if new_profile_written then --Display different messages if a new memory card profile was written
+                    self:settext(ScreenString("NewProfile"))
+                else
+                    self:settext(ScreenString("USBReminder"))
+                end
+            end
+		end,
+		PulseCommand=function(self) self:smooth(1.5):zoom(0.35):smooth(1.5):zoom(0.34):queuecommand("Pulse") end,
+	},
 }
 
 for player in ivalues(Players) do
 
-	local line_height = 60
+	local line_height = 28
 	local middle_line_y = 220
 	local x_pos = player == PLAYER_1 and 80 or _screen.w-80
 	local PlayerStatsAF = Def.ActorFrame{ Name="PlayerStatsAF_"..ToEnumShortString(player) }
@@ -84,7 +86,7 @@ for player in ivalues(Players) do
 			Text=stat,
 			InitCommand=function(self)
 				self:diffuse(PlayerColor(player))
-					:xy(x_pos, (line_height*i) + middle_line_y)
+					:xy(x_pos, _screen.h - (line_height*i))
 					:maxwidth(150)
 			end
 		}
@@ -93,8 +95,26 @@ for player in ivalues(Players) do
 	t[#t+1] = PlayerStatsAF
 end
 
-if GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then --If any player is using a memory card, remind them to take it with them!
-	t[#t+1] = LoadActor("usb-reminder")
+if using_mem_card then --If any player is using a memory card, remind them to take it with them!
+	t[#t+1] = LoadActor("usbicon.png")..{
+		InitCommand=function(self) self:xy(_screen.cx,_screen.cy+215):zoom(0.35) end,
+		OnCommand=function(self) self:glow(1,1,1,1):glowshift():queuecommand("Rotate") end,
+		RotateCommand=function(self) self:smooth(1):rotationz(8):smooth(1):rotationz(-8):queuecommand("Rotate") end,
+	}
 end
+
+--Background cover
+t[#t+1] = Def.Quad{
+    InitCommand=function(self) self:FullScreen():diffuse(color('#000000ff')) end,
+    OnCommand=function(self) self:sleep(0.5):smooth(3):diffusealpha(0) end
+}
+
+ --"Game Over" text
+t[#t+1] = Def.Sprite{
+    Texture="GameOver.png",
+    InitCommand=function(self) self:Center():zoom(0.4):diffusealpha(0) end,
+    OnCommand=function(self) self:smooth(0.5):diffusealpha(1):linear(15):zoom(0.6) end,
+    OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
+}
 
 return t
