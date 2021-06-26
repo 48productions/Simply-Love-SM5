@@ -26,7 +26,12 @@ local function input(event)
 			local focus = sort_wheel:get_actor_item_at_focus_pos()
 
 			if focus.kind == "SortBy" then
-				MESSAGEMAN:Broadcast('Sort',{order=focus.sort_by})
+                local sort_by = focus.sort_by
+                if sort_by == "Event" then --Special-case the event songs sort (sneak in to set "sort by" as "Preferred", and set the preferred songs to the event songs)
+                    sort_by = "Preferred"
+                    SONGMAN:SetPreferredSongs("Event.txt")
+                end
+				MESSAGEMAN:Broadcast('Sort',{order=sort_by})
 				overlay:queuecommand("DirectInputToEngine")
 
 

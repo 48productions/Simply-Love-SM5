@@ -173,6 +173,11 @@ local t = Def.ActorFrame {
 			table.insert(wheel_options, {"FeelingSalty", "QuitGame"})
 		end
 
+        -- If the event songs list is present, add an option to show only those songs
+        if FILEMAN:DoesFileExist("/" .. THEME:GetCurrentThemeDirectory() .. "/Other/SongManager Event.txt") then
+            table.insert(wheel_options, {"SortBy", "Event"})
+        end
+
 		-- Override sick_wheel's default focus_pos, which is math.floor(num_items / 2)
 		--
 		-- keep in mind that num_items is the number of Actors in the wheel (here, 7)
