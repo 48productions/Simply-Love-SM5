@@ -115,6 +115,8 @@ local SplashList = {
     "Way better than other\ndance games, and\nthose have ANIME!",
     "Powered by\nbahamutforever.net!",
     "Powered by\nbAHamUtFoREvEr.nET",
+	"Y2K Compliant!",
+	"Y2K Complaint!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas (a.k.a. taglines from other rhythm games/songs/media)
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound\nbecome the flash light\nthat pierces soul of crowd\"",
