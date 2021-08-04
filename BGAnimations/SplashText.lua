@@ -159,6 +159,7 @@ local SplashList = {
 	"Also try routines!",
 	"Also try modfiles",
 	"Also try Mawaru!",
+    "Also try the remote\ndesert tower edition!",
     "%POP-SONG", --Realtime stats - Update on-the-fly according to the machine profile!
     "%DANCE-SETS",
 }

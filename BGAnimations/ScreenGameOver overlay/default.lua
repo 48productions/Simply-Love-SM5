@@ -95,13 +95,13 @@ for player in ivalues(Players) do
 	t[#t+1] = PlayerStatsAF
 end
 
-if using_mem_card then --If any player is using a memory card, remind them to take it with them!
+--[[if using_mem_card then --If any player is using a memory card, remind them to take it with them!
 	t[#t+1] = LoadActor("usbicon.png")..{
 		InitCommand=function(self) self:xy(_screen.cx,_screen.cy+215):zoom(0.35) end,
 		OnCommand=function(self) self:glow(1,1,1,1):glowshift():queuecommand("Rotate") end,
 		RotateCommand=function(self) self:smooth(1):rotationz(8):smooth(1):rotationz(-8):queuecommand("Rotate") end,
 	}
-end
+end]]
 
 --Background cover
 t[#t+1] = Def.Quad{

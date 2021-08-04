@@ -59,7 +59,33 @@ local t = Def.ActorFrame{
 		OnCommand=function(self) self:sleep(0.1):decelerate(0.33):diffusealpha(1) end,
 		OffCommand=function(self) self:accelerate(0.33):diffusealpha(0) end,
 		HideCommand=function(self) self:sleep(0.5):settext( ("%s %i/%i"):format(page_text, page, pages) ) end
-	}
+	},
+    
+    -- Memory card prompt (show if no players using cards)
+    Def.ActorFrame{
+        Condition=GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() == false and PREFSMAN:GetPreference("MemoryCards") == true,
+        InitCommand=function(self) self:xy(_screen.w + 105, _screen.h - 50):draworder(9999) end,
+        OnCommand=function(self) self:sleep(0.2):decelerate(0.4):x(_screen.w - 105) end,
+        OffCommand=function(self) self:accelerate(0.4):x(_screen.w + 105) end,
+        Def.Quad{
+            InitCommand=function(self)
+                self:zoomto(210, 50):diffuse(color_slate4):fadeleft(0.1)
+            end,
+        },
+        Def.Quad{
+            InitCommand=function(self)
+                self:zoomto(210, 1):y(25):fadeleft(0.3)
+            end,
+        },
+        LoadFont("Common normal")..{
+            Text=THEME:GetString("ScreenEvaluationSummary", "USBPrompt"),
+            InitCommand=function(self) self:horizalign(2):xy(97, -2):maxwidth(140):diffuseshift():effectcolor1(color('#ffffffff')):effectcolor2(color('#ddddaaff')):effectperiod(2) end,
+        },
+        Def.Sprite{
+            Texture=THEME:GetPathG("","usbicon.png"),
+            InitCommand=function(self) self:zoom(0.15):baserotationz(-40):x(-67) end,
+        },
+    }
 }
 
 if SL.Global.GameMode ~= "StomperZ" then
