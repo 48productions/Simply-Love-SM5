@@ -58,6 +58,7 @@ for i=1,#TapNoteScores.Types do
 			self:x( TapNoteScores.x[pn] )
 			self:y((i-1)*35 -20)
 			self:targetnumber(number)
+            if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * i) end
 		end
 	}
 
@@ -78,6 +79,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 			self:y((index-1)*35 + 53)
 			self:x( RadarCategories.x[pn] )
 			self:targetnumber(performance)
+            if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
 		end
 	}
 
@@ -88,6 +90,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 		BeginCommand=function(self)
 			self:y((index-1)*35 + 53)
 			self:x( ((player == PLAYER_1) and -168) or 230 )
+            if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
 		end
 	}
 
@@ -100,6 +103,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 			self:settext(("%03.0f"):format(possible))
 			local leadingZeroAttr = { Length=3-tonumber(tostring(possible):len()), Diffuse=color("#5A6166") }
 			self:AddAttribute(0, leadingZeroAttr )
+            if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
 		end
 	}
 end

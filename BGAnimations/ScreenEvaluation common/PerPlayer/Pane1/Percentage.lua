@@ -27,6 +27,7 @@ return Def.ActorFrame{
 		InitCommand=function(self)
 			self:horizalign(right):zoom(0.585)
 			self:x( (player == PLAYER_1 and 1.5 or 141))
+            if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(-0.1) end
 		end
 	}
 }

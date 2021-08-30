@@ -6,7 +6,10 @@ local text = ""
 local SongNumberInCourse = 0
 local style = ThemePrefs.Get("VisualTheme")
 
-if GAMESTATE:IsDemonstration() then
+if AllowThonk() then
+    text = THEME:GetString("Stage", "Thonk")
+    
+elseif GAMESTATE:IsDemonstration() then
     text = THEME:GetString("Stage", "Demonstration")
     
 elseif GAMESTATE:IsCourseMode() then
@@ -70,6 +73,7 @@ af[#af+1] = LoadFont("_upheaval_underline 80px")..{
 		-- don't animate the text tweening to the bottom of the screen if ScreenGameplay was just reloaded by a mod chart
 		if not SL.Global.GameplayReloadCheck then
 			self:accelerate(0.5):diffusealpha(1):sleep(0.66):accelerate(0.33)
+            if AllowThonk() then self:addrotationz(1080) end
 		end
 		self:zoom(0.3):y(_screen.h-30)
 	end,

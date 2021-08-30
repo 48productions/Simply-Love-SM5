@@ -229,7 +229,7 @@ local t = Def.ActorFrame{
 		
 		-- folder info
 		LoadFont("Common Normal")..{
-			InitCommand=function(self) self:horizalign(left):xy(-150,-12) end,
+			InitCommand=function(self) self:horizalign(left):xy(-150,-12):maxwidth(WideScale(275,310)) end,
 			SetCommand=function(self)
 				if not GAMESTATE:IsCourseMode() then
 					if GAMESTATE:GetSortOrder() == "SortOrder_Group" and not GAMESTATE:GetCurrentSong() then

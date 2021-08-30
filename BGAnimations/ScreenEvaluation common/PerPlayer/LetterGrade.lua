@@ -15,6 +15,7 @@ t[#t+1] = LoadActor(THEME:GetPathG("", "_grades/"..grade..".lua"), playerStats).
 	InitCommand=function(self)
 		self:x(70 * (player==PLAYER_1 and -1 or 1))
 		self:y(_screen.cy-134)
+        if AllowThonk() then self:bob():effectmagnitude(0,3,0) end
 	end,
 	OnCommand=function(self) self:zoom(0.4) end
 }

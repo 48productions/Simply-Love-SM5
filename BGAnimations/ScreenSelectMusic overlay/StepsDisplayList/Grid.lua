@@ -94,7 +94,7 @@ for RowNumber=1,num_rows do
 		Name="Blocks_"..RowNumber,
 		Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/StepsDisplayList/_block.png"),
 
-		InitCommand=function(self) self:diffusealpha(0) end,
+		InitCommand=function(self) self:diffusealpha(0) if AllowThonk() then self:bob():effectmagnitude(0,1,0):effectclock("beat"):effectoffset(0.1 * RowNumber) end end,
 		OnCommand=function(self)
 			local width = self:GetWidth()
 			local height= self:GetHeight()

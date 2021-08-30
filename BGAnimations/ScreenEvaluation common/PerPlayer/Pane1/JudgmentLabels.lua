@@ -70,6 +70,8 @@ for i=1, #TapNoteScores.Types do
 				if SL.Global.GameMode ~= "ITG" then
 					self:diffuse( SL.JudgmentColors[SL.Global.GameMode][i] )
 				end
+                
+                if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * i) end
 			end
 		}
 	end
@@ -88,6 +90,7 @@ for index, label in ipairs(RadarCategories) do
 		BeginCommand=function(self)
 			self:x( (player == PLAYER_1 and -160) or 90 )
 			self:y((index-1)*28 + 41)
+            if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
 		end
 	}
 end
