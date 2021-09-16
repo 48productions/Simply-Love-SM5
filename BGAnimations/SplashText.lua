@@ -134,6 +134,8 @@ local SplashList = {
     "\"Shoes are recommended.\nThey make play easier!\nThey make play truly easier!!\"",
     "\"Are you bored with DDR?\nJust play! Release your stress!\nYou'll prepare your health for\ntomorrow, Simply Spud is good for\nyour soul and body.\"",
     "\"The adults are confused,\nand we adolescents\nsee things clearly.\"",
+    "\"Show me your fantastic stage!\"",
+    "\"Simply Spud will be with you.\"",
     "\"Let's me Show you a\ntrue CURSECAB\"",
     "and this is why\nthe curse on your soul\nnever goes away",
 	"Also try beatmania!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
