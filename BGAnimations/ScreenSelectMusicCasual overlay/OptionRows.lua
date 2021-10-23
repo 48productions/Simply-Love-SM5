@@ -46,7 +46,7 @@ local OptionRows = {
 		end
 	},
 	-- ------------------------------------------------------
-	{
+	--[[{
 		Name = "Speed",
 		HelpText = THEME:GetString("ScreenSelectMusicCasual", "SelectSpeedMod"),
 		Choices = function()
@@ -68,7 +68,7 @@ local OptionRows = {
 			local player_options = GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred")
 			player_options:CMod(values[index])
 		end,
-	},
+	},]]
 }
 -- ------------------------------------------------------
 

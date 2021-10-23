@@ -51,17 +51,18 @@ local optionrow_mt = {
 					LoseFocusCommand=function(subself) subself:diffusealpha(0) end,
 					GainFocusCommand=function(subself) subself:diffusealpha(1) end,
 
-					-- right arrow
+					-- arrow
 					Def.ActorFrame{
-						Name="RightArrow",
-						OnCommand=function(subself) subself:x(216) end,
+						Name="Arrow",
+						OnCommand=function(subself) subself:x(-16) end,
 						PressCommand=function(subself)
 							subself:decelerate(0.05):zoom(0.7):glow(1,1,1,0.086)
 							       :accelerate(0.05):zoom(  1):glow(1,1,1,0)
 						end,
 						ExitRowCommand=function(subself, params)
-							subself:y(-15)
-							if params.PlayerNumber == PLAYER_2 then subself:x(20) end
+                            subself:visible(false)
+							--[[subself:y(-15)
+							if params.PlayerNumber == PLAYER_2 then subself:x(20) end]]--
 						end,
 						SingleSongCanceledMessageCommand=function(subself) subself:rotationz(0) end,
 						BothPlayersAreReadyMessageCommand=function(subself) subself:finishtweening():sleep(0.05):decelerate(0.2):rotationz(180) end,
@@ -79,7 +80,7 @@ local optionrow_mt = {
 					},
 
 					-- left arrow
-					Def.ActorFrame{
+					--[[Def.ActorFrame{
 						Name="LeftArrow",
 						OnCommand=function(subself) subself:x(-16) end,
 						PressCommand=function(subself)
@@ -104,7 +105,7 @@ local optionrow_mt = {
 							InitCommand=function(subself) subself:zoom(0.15):rotationz(180):diffuse(Color.White) end,
 
 						}
-					}
+					}]]
 				}
 			}
 

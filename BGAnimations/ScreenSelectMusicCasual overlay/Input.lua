@@ -200,25 +200,39 @@ t.Handler = function(event)
 			-- get the index of the active optionrow for this player
 			local index = ActiveOptionRow[event.PlayerNumber]
 
-			if event.GameButton == "MenuRight" then
+			if event.GameButton == "MenuRight" or event.GameButton == "MenuDown" then
+                -- If the player is on the last row (chose a difficulty), move them back up a row to cancel their selection
+                if index == #OptionRows then
+                    index = math.max(index-1, 1)
+                    ActiveOptionRow[event.PlayerNumber] = index
+                    t.WheelWithFocus[event.PlayerNumber]:scroll_by_amount( -1 )
+                end
+                
 				-- scroll to the next optionrow_item in this optionrow
 				t.WheelWithFocus[event.PlayerNumber][index]:scroll_by_amount(1)
 				-- animate the right cursor
-				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("RightArrow"):finishtweening():playcommand("Press")
+				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("Arrow"):finishtweening():playcommand("Press")
                 
-                SOUND:PlayOnce( THEME:GetPathS("", "_change value"), true )
+                SOUND:PlayOnce( THEME:GetPathS("", "_harder"), true )
 
 
-			elseif event.GameButton == "MenuLeft" then
+			elseif event.GameButton == "MenuLeft" or event.GameButton == "MenuUp" then
+                -- If the player is on the last row (chose a difficulty), move them back up a row to cancel their selection
+                if index == #OptionRows then
+                    index = math.max(index-1, 1)
+                    ActiveOptionRow[event.PlayerNumber] = index
+                    t.WheelWithFocus[event.PlayerNumber]:scroll_by_amount( -1 )
+                end
+                
 				-- scroll to the previous optionrow_item in this optionrow
 				t.WheelWithFocus[event.PlayerNumber][index]:scroll_by_amount(-1)
 				-- animate the left cursor
-				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("LeftArrow"):finishtweening():playcommand("Press")
+				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("Arrow"):finishtweening():playcommand("Press")
                 
-                SOUND:PlayOnce( THEME:GetPathS("", "_change value"), true )
+                SOUND:PlayOnce( THEME:GetPathS("", "_easier"), true )
 
 
-			elseif event.GameButton == "MenuUp" then
+			--[[elseif event.GameButton == "MenuUp" then
 
 				if ActiveOptionRow[event.PlayerNumber] > 1 then
 					-- set the currently active option row, bounding it to not go below 1
@@ -229,18 +243,8 @@ t.Handler = function(event)
                     SOUND:PlayOnce( THEME:GetPathS("", "_prev row"), true )
 				end
 
-			elseif event.GameButton == "Start" or event.GameButton == "MenuDown" then
-
-				-- if both players are ALREADY here (before changing the row)
-				-- it means it's time to start gameplay
-				if event.GameButton == "Start" and t.AllPlayersAreAtLastRow() then
-                    SOUND:PlayOnce( THEME:GetPathS("Common", "start"), true )
-					local topscreen = SCREENMAN:GetTopScreen()
-					if topscreen then
-						topscreen:StartTransitioningScreen("SM_GoToNextScreen")
-					end
-					return false
-				end
+			elseif event.GameButton == "Start" or event.GameButton == "MenuDown" then]]
+            elseif event.GameButton == "Start" then
 
 				-- we want to proceed linearly to the last optionrow and then stop there
 				if ActiveOptionRow[event.PlayerNumber] < #OptionRows then
@@ -252,7 +256,8 @@ t.Handler = function(event)
 
 					t.WheelWithFocus[event.PlayerNumber]:scroll_by_amount(1)
                     
-                    SOUND:PlayOnce( THEME:GetPathS("", "_next row"), true )
+                    --SOUND:PlayOnce( THEME:GetPathS("", "_next row"), true )
+                    SOUND:PlayOnce( THEME:GetPathS("Common", "start"), true )
 				end
 
 				-- update the index, bounding it to not exceed the number of rows
@@ -266,9 +271,15 @@ t.Handler = function(event)
 					t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):playcommand("ExitRow", {PlayerNumber=event.PlayerNumber})
 				end
 
-				-- if all available players are now at the final row (start icon), animate cursors spinning
+				-- if all available players are now at the final row, start the game
 				if t.AllPlayersAreAtLastRow() then
-					MESSAGEMAN:Broadcast("BothPlayersAreReady")
+					--MESSAGEMAN:Broadcast("BothPlayersAreReady")
+                    
+                    local topscreen = SCREENMAN:GetTopScreen()
+					if topscreen then
+						topscreen:StartTransitioningScreen("SM_GoToNextScreen")
+					end
+					return false
 				end
 
 			elseif event.GameButton == "Select" then

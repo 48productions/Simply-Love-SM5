@@ -136,6 +136,7 @@ local SplashList = {
     "\"The adults are confused,\nand we adolescents\nsee things clearly.\"",
     "\"Show me your fantastic stage!\"",
     "\"Simply Spud will be with you.\"",
+    "\"Sound and Color that are\ninterspersed into the world\ngather in here now.\nopening the way to the\nglamourous world anyone\nhas never seen before.\"",
     "\"Let's me Show you a\ntrue CURSECAB\"",
     "and this is why\nthe curse on your soul\nnever goes away",
 	"Also try Beatmania IIDX!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
