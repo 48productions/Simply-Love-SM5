@@ -22,7 +22,7 @@ If *all* stepcharts belonging to a given song are above that threshold, that son
 
 Casual Mode makes use of a simple txt file to explicitly specify what song groups should be available in Casual Mode.  The file is titled **CasualMode-Groups.txt** and is located at *./Simply-Potato-SM/Other/CasualMode-Groups.txt*
 
-Simply Potato ships with ~~28~~ no unique groups specified. For reasonable, trusted defaults, and if you are a machine operator looking for more novice content for your machine, you can start by adding [these packs from stock Simply Spud's group lists!](https://github.com/quietly-turning/Simply-Love-SM5/blob/release/Other/CasualMode-Groups.txt)
+Simply Potato ships with ~~28~~ no unique groups specified. For reasonable, trusted defaults, and if you are a machine operator looking for more novice content for your machine, you can start by adding [these packs from stock Simply Love's group lists!](https://github.com/quietly-turning/Simply-Love-SM5/blob/release/Other/CasualMode-Groups.txt)
 
 Machine operators can customize this list as needed by adding (or removing) Groups by name, one per line.
 

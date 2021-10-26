@@ -233,6 +233,10 @@ function checkValidNews(cur_date, news_path, max_news, id, opt)
     --First: If max_news is specified, we're displaying news to a player on game start and shouldn't show them news they've already seen
     --If this is the case, we'll run two extra checks: Is this news newer than the newest news they've been shown (max_news)? And is this news NOT limited to attract mode showings only?
     if max_news == nil or (id > max_news and opt.ShowToPlayer) then
+    
+        --If max_news isn't specified (showing in attract mode), make sure showing in attract mode isn't disabled
+        if max_news == nil and opt.DisableAttractShow then return nil end
+    
         --Next: Does this entry have all the needed values, and does the image it specifies actually exist?
         if opt.File and opt.StartDate and opt.EndDate and FILEMAN:DoesFileExist(news_path .. opt.File) then
                     

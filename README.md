@@ -7,28 +7,28 @@
 
 ## About
 
-Simply Spud is a StepMania 5 theme for the part of the post-ITG community that also happens to love potatoes.
+Simply Spud is a fork of the Simply Love StepMania 5 theme for the part of the post-ITG community that also happens to love potatoes.
 
-It features a clean and simple design, offers numerous potato-driven features not implemented by the StepMania 5 engine, and allows the current generation of PIU fans to breathe new life into the game they've never played in years because we haven't had crap for DDR/ITG cabs up until now ;_;
+It features more visual flair, and MANY UI changes to make the theme more suitable for casual/intermediate play on a public cabinet (though it'll work fine on home setups, too!)
 
-...
+---
 
-Simply Spud SM5 is a fork of the original Simply Love SM5 theme that adds visual flair and more features to make it more suitable for casual/intermediate play on a public cabinet. It's geared towards the Idaho Rhythm Group's new public StepMania cab, but it'll work fine on home setups, too!
-
-Current major changes/tweaks:
-  * Support for StepMania 5.3 (seems very stable at the moment)
+Current major changes:
+  * Support for StepMania 5.3 (for improved performance/stability and new features)
+  * Overhauled to greatly improve casual play experience, including:
+   * [Improved style selection](https://i.imgur.com/9VP89ps.png) - Casual and ITG mode are now Beginner and Pro mode, the default changes when using a memory card.
+   * [Tweaks to Casual Mode's music wheel](https://i.imgur.com/ttb5uz6.png) (it now has a more standard cover flow-style look)
+   * A simplified casual mode option menu, and other UI tweaks to the casual music wheel
+   * Default songs now affect *all* play modes
+   * Pump/ITG-style option to immediately fail players at a certain miss combo and kick them out of their set (configurable)
   * A new font, and lots of new visual tweaks and additional animation flair across the theme
   * An optional potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
-  * [Improved style selection for casual players](https://i.imgur.com/9VP89ps.png) - Casual and ITG mode are now Beginner and Pro mode.
-     * FA+/StomperZ have been removed from the main style selection menu to reduce confusion for casual players, and are still selectable via the sort menu (MenuLeft + MenuRight or Select). This will hopefully be improved more in the future
-  * Pump/ITG-style option to immediately fail players at a certain miss combo and kick them out of their set (configurable)
-  * [Tweaks to Casual Mode's music wheel](https://i.imgur.com/ttb5uz6.png) (it now has a more standard cover flow-style look)
   * A News feature, to show configurable images in the attract mode loop and to players with memory cards
 
 
 Other changes include:
   * Splash text on the title screen
-  * Default style choice changes depending on if a USB memory card is being used (optional), other USB visual tweaks/additions
+  * More player-facing prompts to use a USB drive (when configured)
   * New menu music option, independent of the visual style in use
   * Configurable descriptions/rating scale information for song groups
   * "Modfile" groups - Gives modfiles colored titles, and shows a warning to new players.
@@ -46,9 +46,9 @@ Do note that while the original Simply Love theme was translated into several la
 
 ## Requirements
 
-You'll need to install [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12), [StepMania 5.1 beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2), or [StepMania 5.3](https://projectmoon.dance/index.php?id=2) to use this theme.
+You'll need to install [StepMania 5.3](https://projectmoon.dance/index.php?id=2), [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12), or [StepMania 5.1 beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2) to use this theme.
 
-Versions of StepMania older than 5.0.12 and StepMania 5.2 are not compatible. StepMania 5.3 support seems stable, but is currently experimental.
+Versions of StepMania older than 5.0.12 and StepMania 5.2 are not compatible.
 
 #### Troubleshooting StepMania
 

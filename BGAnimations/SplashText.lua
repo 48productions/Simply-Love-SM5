@@ -117,6 +117,8 @@ local SplashList = {
     "Powered by\nbAHamUtFoREvEr.nET",
 	"Y2K Compliant!",
 	"Y2K Complaint!",
+    "\"Let's me Show you a\ntrue CURSECAB\"",
+    "and this is why\nthe curse on your soul\nnever goes away",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas (a.k.a. taglines from other rhythm games/songs/media)
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound\nbecome the flash light\nthat pierces soul of crowd\"",
@@ -137,8 +139,7 @@ local SplashList = {
     "\"Show me your fantastic stage!\"",
     "\"Simply Spud will be with you.\"",
     "\"Sound and Color that are\ninterspersed into the world\ngather in here now.\nopening the way to the\nglamourous world anyone\nhas never seen before.\"",
-    "\"Let's me Show you a\ntrue CURSECAB\"",
-    "and this is why\nthe curse on your soul\nnever goes away",
+    "\"Lighting Beat Shock Stage\"!",
 	"Also try Beatmania IIDX!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
 	"Also try crossbeats!",
 	"Also try DDR Solo!",
