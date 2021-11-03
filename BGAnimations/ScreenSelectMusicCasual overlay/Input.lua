@@ -210,7 +210,7 @@ t.Handler = function(event)
                 
 				-- scroll to the next optionrow_item in this optionrow
 				t.WheelWithFocus[event.PlayerNumber][index]:scroll_by_amount(1)
-				-- animate the right cursor
+				-- animate the cursor
 				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("Arrow"):finishtweening():playcommand("Press")
                 
                 SOUND:PlayOnce( THEME:GetPathS("", "_harder"), true )
@@ -226,7 +226,7 @@ t.Handler = function(event)
                 
 				-- scroll to the previous optionrow_item in this optionrow
 				t.WheelWithFocus[event.PlayerNumber][index]:scroll_by_amount(-1)
-				-- animate the left cursor
+				-- animate the cursor
 				t.WheelWithFocus[event.PlayerNumber].container:GetChild("item"..index):GetChild("Cursor"):GetChild("Arrow"):finishtweening():playcommand("Press")
                 
                 SOUND:PlayOnce( THEME:GetPathS("", "_easier"), true )

@@ -64,12 +64,14 @@ local CurSpeedmodTypes = {"x", "C", "M"}
 --if IsSM53() then
 	--CurSpeedmodTypes = {"x", "C", "M", "A"} - Disabled for now since AMod crashes 5.3 when loading profiles, I swear to the sun I'll fix it eventually - 48 (3/16/2020)
 --end
+local CurSpeedmodNames = {THEME:GetString("SLPlayerOptions", "SpeedmodX"), THEME:GetString("SLPlayerOptions", "SpeedmodC"), THEME:GetString("SLPlayerOptions", "SpeedmodM")}
 
 local Overrides = {
 
 	-------------------------------------------------------------------------
 	SpeedModType = {
-		Choices = CurSpeedmodTypes,
+		Choices = CurSpeedmodNames, -- Specifying only Values breaks speedmods, and I need to force different string names anyways. Go, RANDOM JANK! - 48
+        Values = CurSpeedmodTypes,
 		ExportOnChange = true,
 		LayoutType = "ShowOneInRow",
 		SaveSelections = function(self, list, pn)
@@ -77,7 +79,7 @@ local Overrides = {
 				if list[i] then
 					-- Broadcast a message that ./BGAnimations/ScreenPlayerOptions overlay.lua will be listening for
 					-- so it can hackishly modify the single BitmapText actor used in the SpeedMod optionrow
-					MESSAGEMAN:Broadcast('SpeedModType'..ToEnumShortString(pn)..'Set', {SpeedModType=self.Choices[i]})
+					MESSAGEMAN:Broadcast('SpeedModType'..ToEnumShortString(pn)..'Set', {SpeedModType=self.Values[i]})
 				end
 			end
 		end

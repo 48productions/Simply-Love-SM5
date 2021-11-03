@@ -37,9 +37,9 @@ local optionrow_mt = {
 				Def.Quad{
 					InitCommand=function(subself)
 						self.bgQuad = subself
-						subself:horizalign(left):zoomto(200, 28):diffuse(Color.White):diffusealpha(0.5)
+						subself:horizalign(left):zoomto(200, 95):diffuse(color_slate2):diffusealpha(0.5)
 					end,
-					OnCommand=function(subself) subself:y(26) end,
+					OnCommand=function(subself) subself:y(65) end,
 					GainFocusCommand=function(subself) subself:diffusealpha(1) end,
 					LoseFocusCommand=function(subself) subself:diffusealpha(0.5) end,
 				},
@@ -54,7 +54,7 @@ local optionrow_mt = {
 					-- arrow
 					Def.ActorFrame{
 						Name="Arrow",
-						OnCommand=function(subself) subself:x(-16) end,
+						OnCommand=function(subself) subself:x(-16):y(28) end,
 						PressCommand=function(subself)
 							subself:decelerate(0.05):zoom(0.7):glow(1,1,1,0.086)
 							       :accelerate(0.05):zoom(  1):glow(1,1,1,0)
@@ -78,35 +78,17 @@ local optionrow_mt = {
 							InitCommand=function(subself) subself:zoom(0.15):diffuse(Color.White) end,
 						}
 					},
-
-					-- left arrow
-					--[[Def.ActorFrame{
-						Name="LeftArrow",
-						OnCommand=function(subself) subself:x(-16) end,
-						PressCommand=function(subself)
-							subself:decelerate(0.05):zoom(0.7):glow(1,1,1,0.086)
-							       :accelerate(0.05):zoom(  1):glow(1,1,1,0)
-						end,
-						ExitRowCommand=function(subself, params)
-							subself:y(-15)
-							if params.PlayerNumber == PLAYER_1 then subself:x(180) end
-						end,
-						SingleSongCanceledMessageCommand=function(subself) subself:rotationz(0) end,
-						BothPlayersAreReadyMessageCommand=function(subself) subself:finishtweening():sleep(0.05):decelerate(0.2):rotationz(180) end,
-						CancelBothPlayersAreReadyMessageCommand=function(subself) subself:rotationz(0) end,
-
-						LoadActor("./img/arrow_glow.png")..{
-							Name="LeftArrowGlow",
-							InitCommand=function(subself) subself:zoom(0.15):rotationz(180) end,
-							OnCommand=function(subself) subself:diffuseshift():effectcolor1(1,1,1,0):effectcolor2(1,1,1,1) end
-						},
-						LoadActor("./img/arrow.png")..{
-							Name="LeftArrow",
-							InitCommand=function(subself) subself:zoom(0.15):rotationz(180):diffuse(Color.White) end,
-
-						}
-					}]]
-				}
+				},
+                
+                -- Ready icon (when player has chosen difficulty)
+                Def.Sprite{
+                    Name="ReadyIcon",
+                    Texture=THEME:GetPathG("", "Checkmark (doubleres).png"),
+                    Condition= self.name == "item1", -- Only load if this is the difficulty optionrow and not the "Press START" optionrow
+                    InitCommand=function(subself) subself:zoom(0.8):diffusealpha(0):rotationz(-50):xy(-22, 60) end,
+                    LoseFocusCommand=function(subself) subself:finishtweening():decelerate(0.3):rotationz(0):diffusealpha(1) end,
+                    GainFocusCommand=function(subself) subself:finishtweening():decelerate(0.15):rotationz(-50):diffusealpha(0) end,
+                }
 			}
 
 			return af
@@ -126,7 +108,7 @@ local optionrow_mt = {
 		set = function(self, optionrow)
 			if not optionrow then return end
 			self.helptext:settext( optionrow.HelpText )
-			if optionrow.HelpText == "" then
+			if optionrow.HelpText == "" then -- Hide the BG Quad for the "Exit" option row
 				self.bgQuad:visible(false)
 			end
 		end

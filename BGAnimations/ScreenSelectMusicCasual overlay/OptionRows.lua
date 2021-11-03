@@ -1,6 +1,6 @@
 -- helper functions
 local GetDifficulty = function(steps)
-	return {THEME:GetString( "CustomDifficulty", steps:GetDifficulty():gsub("Difficulty_", "") ), steps:GetMeter()}
+	return {THEME:GetString( "CustomDifficulty", steps:GetDifficulty():gsub("Difficulty_", "") ), steps:GetMeter(), DifficultyColor(steps:GetDifficulty())}
 end
 
 -- ------------------------------------------------------

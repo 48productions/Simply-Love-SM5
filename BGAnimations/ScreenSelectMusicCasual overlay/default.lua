@@ -163,7 +163,7 @@ for pn in ivalues( {PLAYER_1, PLAYER_2} ) do
 		-- Create sub-wheels for each optionrow with 3 items each.
 		-- Regardless of how many items are actually in that row,
 		-- we only display 1 at a time.
-		t[#t+1] = OptionsWheel[pn][i]:create_actors(ToEnumShortString(pn).."OptionWheel"..i, 3, optionrow_item_mt, WideScale(30, 130) + 140 * x_offset, _screen.cy - 5 + i * 62)
+		t[#t+1] = OptionsWheel[pn][i]:create_actors(ToEnumShortString(pn).."OptionWheel"..i, 4, optionrow_item_mt, WideScale(30, 130) + 140 * x_offset, _screen.cy - 5 + i * 62)
 	end
 end
 

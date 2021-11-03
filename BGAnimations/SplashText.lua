@@ -140,9 +140,10 @@ local SplashList = {
     "\"Simply Spud will be with you.\"",
     "\"Sound and Color that are\ninterspersed into the world\ngather in here now.\nopening the way to the\nglamourous world anyone\nhas never seen before.\"",
     "\"Lighting Beat Shock Stage\"!",
+    "\"Big Bang!\nOn Music Galaxy!..\"",
+    "\"The size is cute and lovely,\nbut pleasure is great.\"",
 	"Also try Beatmania IIDX!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
 	"Also try crossbeats!",
-	"Also try DDR Solo!",
 	"Also try DanceEvolution!",
 	"Also try Groove Coaster!",
 	"Also try jubeat!",
