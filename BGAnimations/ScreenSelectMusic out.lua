@@ -16,6 +16,9 @@ return Def.ActorFrame{
     
     Def.Quad{
         InitCommand=function(self) self:diffuse(GetCurrentColor()):visible(false):xy(_screen.cx, _screen.cy+30):zoomto(2, 3) end,
-        ShowPressStartForOptionsCommand=function(self) self:visible(true):smooth(0.5):diffusealpha(1):zoomto(420, 3):linear(1.5):zoomto(0, 3) end,
+        ShowPressStartForOptionsCommand=function(self)
+            self:visible(true):smooth(0.5):diffusealpha(1):zoomto(420, 3):linear(1.5):zoomto(0, 3)
+            if AllowThonk() then self:accelerate(0.5):zoomto(_screen.w, _screen.h / 3):diffuse(Color.Red):diffusealpha(0):addrotationz(45) end
+        end,
     }
 }

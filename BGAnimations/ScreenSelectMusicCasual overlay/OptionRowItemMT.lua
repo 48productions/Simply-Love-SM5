@@ -22,6 +22,7 @@ local optionrow_item_mt = {
 					InitCommand=function(subself)
 						self.bmt1 = subself
 						subself:horizalign(left):diffusealpha(1):diffuse(Color.Black)
+                        if AllowThonk() then subself:bob():effectmagnitude(1,0,0):effectclock("beat"):effectoffset(0.1 * item_index) end
 					end,
 					OnCommand=function(subself) subself:sleep(0.13):linear(0.05):x(200) end,
 					GainFocusCommand=function(subself) subself:diffusealpha(1) end,
@@ -34,6 +35,7 @@ local optionrow_item_mt = {
 					InitCommand=function(subself)
 						self.bmt2 = subself
 						subself:horizalign(right):diffusealpha(0):diffuse(Color.White)
+                        if AllowThonk() then subself:bob():effectmagnitude(1,0,0):effectclock("beat"):effectoffset(0.1 * item_index) end
 					end,
 					OnCommand=function(subself) subself:sleep(0.13):linear(0.05):x(340) end,
 					GainFocusCommand=function(subself) subself:diffusealpha(1) end,

@@ -41,6 +41,7 @@ local t = Def.ActorFrame{
 		BeginCommand=function(self)
 			banner = SCREENMAN:GetTopScreen():GetChild('Banner')
 			self:SetTarget(banner)
+            if AllowThonk() then self:wag():effectmagnitude(0,0,1):effectclock("beat") end
 		end
 	},
 
