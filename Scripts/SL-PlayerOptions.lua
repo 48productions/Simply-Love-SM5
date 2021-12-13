@@ -232,13 +232,13 @@ local Overrides = {
 			local last 	= 2
 			local step 	= 0.01
 
-			return stringify( range(first, last, step), "%g")
+			return stringify( range(first, last, step), "%.2f")
 		end,
 		ExportOnChange = true,
 		OneChoiceForAllPlayers = true,
 		LoadSelections = function(self, list, pn)
-			local rate = ("%g"):format( SL.Global.ActiveModifiers.MusicRate )
-			local i = FindInTable(rate, self.Choices) or 1
+			local rate = ("%.2f"):format( SL.Global.ActiveModifiers.MusicRate )
+			local i = FindInTable(rate, self.Choices) or 96
 			list[i] = true
 			return list
 		end,
