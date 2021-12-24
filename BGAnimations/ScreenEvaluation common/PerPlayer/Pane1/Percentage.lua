@@ -26,7 +26,8 @@ return Def.ActorFrame{
 		Text=percent,
 		InitCommand=function(self)
 			self:horizalign(right):zoom(0.585)
-			self:x( (player == PLAYER_1 and 1.5 or 141))
+			self:x( (player == PLAYER_1 and 1.5 or 141)):diffusealpha(0)
+            self:sleep(2.8):smooth(0.5):diffusealpha(1)
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(-0.1) end
 		end
 	}
