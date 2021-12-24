@@ -19,6 +19,8 @@ play_sample_music = function()
 		else
 			stop_music()
 		end
+
+        --song:PlayPreviewMusic() --5.3 only, not ready for production quite yet. Real close though :eyes: - 48
 	else
 		stop_music()
 	end

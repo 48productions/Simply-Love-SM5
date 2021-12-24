@@ -96,7 +96,7 @@ local song_mt = {
 								subself:visible(false)
 							else
 								subself:visible(true):linear(0.2):diffusealpha(1):zoomto(128, 128)
-									:diffuseshift():effectcolor1(0.75,0.75,0.75,1):effectcolor2(0,0,0,1)
+									:diffuseshift():effectcolor1(0.75,0.75,0.75,1):effectcolor2(0,0,0,1):effectclock("beat"):effectperiod(2)
 							end
 						end,
 						LoseFocusCommand=function(subself) subself:visible( false):diffusealpha(0):stopeffect():zoomto(0,0) end,

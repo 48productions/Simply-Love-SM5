@@ -61,7 +61,7 @@ af[#af+1] = Def.ActorFrame{
 		LoadActor("./img/arrow_glow.png")..{
 			Name="RightArrowGlow",
 			InitCommand=function(self) self:zoom(0.25) end,
-			OnCommand=function(self) self:diffuseshift():effectcolor1(1,1,1,0):effectcolor2(1,1,1,1) end
+			OnCommand=function(self) self:diffuseshift():effectcolor1(1,1,1,0):effectcolor2(1,1,1,1):effectclock("beat") end
 		},
 		LoadActor("./img/arrow.png")..{
 			Name="RightArrow",
@@ -78,7 +78,7 @@ af[#af+1] = Def.ActorFrame{
 		LoadActor("./img/arrow_glow.png")..{
 			Name="LeftArrowGlow",
 			InitCommand=function(self) self:zoom(0.25):rotationz(180) end,
-			OnCommand=function(self) self:diffuseshift():effectcolor1(1,1,1,0):effectcolor2(1,1,1,1) end
+			OnCommand=function(self) self:diffuseshift():effectcolor1(1,1,1,0):effectcolor2(1,1,1,1):effectclock("beat") end
 		},
 		LoadActor("./img/arrow.png")..{
 			Name="LeftArrow",

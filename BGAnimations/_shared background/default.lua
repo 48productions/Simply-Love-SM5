@@ -19,11 +19,23 @@ end
 
 -- a simple Quad to serve as the backdrop
 af[#af+1] = Def.Quad{
-	InitCommand=function(self) self:FullScreen():Center():diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ) end,
+	InitCommand=function(self)
+        self:FullScreen():Center()
+        if ThemePrefs.Get("VisualTheme") == "Potato" then
+            self:diffusetopedge(color("#1f1002")):diffusebottomedge(color("#201300"))
+        else
+            self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black )
+        end
+    end,
 	BackgroundImageChangedMessageCommand=function(self)
 		THEME:ReloadMetrics()
 		SL.Global.ActiveColorIndex = ThemePrefs.Get("RainbowMode") and 3 or ThemePrefs.Get("SimplyLoveColor")
-		self:linear(1):diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black )
+		self:linear(1)
+        if ThemePrefs.Get("VisualTheme") == "Potato" then
+            self:diffusetopedge(color("#1f1002")):diffusebottomedge(color("#201300"))
+        else
+            self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black )
+        end
 	end
 }
 

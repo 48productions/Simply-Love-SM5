@@ -117,8 +117,8 @@ local SplashList = {
     "Powered by\nbAHamUtFoREvEr.nET",
 	"Y2K Compliant!",
 	"Y2K Complaint!",
-    "\"Let's me Show you a\ntrue CURSECAB\"",
     "and this is why\nthe curse on your soul\nnever goes away",
+    "Certified\nFresh Songs!",
 	"Naaa naaa na naa naa naaa!\nNaa naa naa nananaa naa naaa!", --Copypastas (a.k.a. taglines from other rhythm games/songs/media)
 	"Dariri Ram dariram dariram\nDarirari rariram\nDaririram dam!",
 	"\"Your thundering sound\nbecome the flash light\nthat pierces soul of crowd\"",
@@ -126,6 +126,7 @@ local SplashList = {
 	"Oooooooo AAA E A A I A U\nJOooooo AA E O A A U U A\nEeeeeeeee AA E A E I E A\nJOooooo EE O A AA AAA",
 	"\"A real-time\ndance music game!\"",
 	"\"A real-time dance music\ngame hard and fat.\nThat's beat mania!\nIt's too cool!\"",
+    "\"Let's me Show you a\ntrue CURSECAB\"",
     "\"reproduce natural sound!\nFull range 10 loud\nspeaker system adoption!\"",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
   	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020 and 2021, cancelled by corona
