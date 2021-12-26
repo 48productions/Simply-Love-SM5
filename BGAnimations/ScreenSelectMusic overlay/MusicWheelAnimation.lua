@@ -73,15 +73,29 @@ for i=1,NumWheelItems-2 do
 end
 
 t[#t+1] = Def.BitmapText{
-        Condition=FirstStage,
-		Font="_upheaval_underline 80px",
-		Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
-		InitCommand=function(self)
-			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.5):diffusealpha(1):x(_screen.w * .75):y(_screen.cy):draworder(101)
-		end,
-        OnCommand=function(self)
-            self:accelerate(TweenTime * (NumWheelItems - 4)):y(_screen.h):diffusealpha(0)
-        end
-	}
+    Condition=FirstStage,
+    Font="_upheaval_underline 80px",
+    Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
+    InitCommand=function(self)
+        self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.5):diffusealpha(1):x(_screen.w * .75):y(_screen.cy):draworder(101)
+    end,
+    OnCommand=function(self)
+        self:accelerate(TweenTime * (NumWheelItems - 4)):y(_screen.h):diffusealpha(0)
+    end
+}
+
+-- Music wheel border - bottom layer
+t[#t+1] = Def.Quad{
+    InitCommand=function(self)
+        self:zoomto(2, _screen.h):xy(_screen.cx + 30, _screen.cy):diffuse(color_slate):diffusealpha(0.8)
+    end,
+}
+
+-- Music wheel border - top layer
+t[#t+1] = Def.Quad{
+    InitCommand=function(self)
+        self:zoomto(2, _screen.h):xy(_screen.cx + 30, _screen.cy):effectclock("beat"):diffusealpha(0.5):fadetop(0.3):fadebottom(0.3):heartbeat():effectmagnitude(1, 0.5, 0):effectperiod(1):effectoffset(1)
+    end,
+}
 
 return t

@@ -28,7 +28,7 @@ return Def.Sprite{
 			self:effectmagnitude(3,0,0)
 		end
 
-		self:effectperiod(1):effectoffset( -10 * GlobalOffsetSeconds)
+		self:effectperiod(1)--:effectoffset( -10 * GlobalOffsetSeconds)
 	end,
 
 	PlayerJoinedMessageCommand=function(self, params)
