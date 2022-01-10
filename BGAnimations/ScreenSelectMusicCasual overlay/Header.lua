@@ -24,6 +24,15 @@ local af = Def.ActorFrame{
 		SwitchFocusToSongsMessageCommand=function(self) self:linear(0.1):diffusealpha(0) end,
 		SwitchFocusToGroupsMessageCommand=function(self) self:sleep(0.25):linear(0.1):diffusealpha(1) end,
 	},
+    -- "Press SELECT to close group"
+    Def.BitmapText{
+        Font="Common normal",
+        Text=ScreenString("HeaderBackText"),
+        InitCommand=function(self) self:diffuse(1,1,1,0):zoom(WideScale(0.5,0.56)):horizalign(left):xy(124, 54) end,
+		OffCommand=function(self) self:accelerate(0.33):diffusealpha(0) end,
+		SwitchFocusToGroupsMessageCommand=function(self) self:finishtweening():linear(0.01):diffusealpha(0) end,
+		SwitchFocusToSongsMessageCommand=function(self) self:sleep(0.7):linear(0.1):diffusealpha(0.55) end,
+    },
 }
 
 -- Stage Number

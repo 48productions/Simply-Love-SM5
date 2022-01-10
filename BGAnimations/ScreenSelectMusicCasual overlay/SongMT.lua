@@ -30,6 +30,7 @@ local song_mt = {
 					subself:finishtweening():sleep(0.25):linear(0.25):diffusealpha(1):queuecommand("PlayMusicPreview")
 				end,
 
+                -- Position jackets when moving from group to song selection
 				StartCommand=function(subself)
 					-- slide the chosen Actor into place
 					if self.index == SongWheel:get_actor_item_at_focus_pos().index then
@@ -38,13 +39,18 @@ local song_mt = {
 
 					-- hide everything else
 					else
-						subself:visible(false)
+						subself:decelerate(0.2):addy(70):diffusealpha(0)
 					end
 				end,
+                -- Hide everything so we can go to group selection
 				HideCommand=function(subself)
 					stop_music()
-					subself:decelerate(0.2):diffusealpha(0)
+                    subself:decelerate(0.2):diffusealpha(0)
+                    if self.index ~= SongWheel:get_actor_item_at_focus_pos().index then
+                        subself:addy(70)
+                    end
 				end,
+                -- Move back to song selection from difficulty selection
 				UnhideCommand=function(subself)
 
 					-- we're going back to song selection
@@ -52,14 +58,16 @@ local song_mt = {
 					if self.index == SongWheel:get_actor_item_at_focus_pos().index then
 						subself:playcommand("SlideBackIntoGrid")
 						MESSAGEMAN:Broadcast("SwitchFocusToSongs")
-					end
-
-					subself:visible(true):sleep(0.3):linear(0.2):diffusealpha(1)
+					else
+                        subself:decelerate(0.25):diffusealpha(1):addy(-70)
+                    end
 				end,
+                -- Move from song to difficulty selection (selected song only)
 				SlideToTopCommand=function(subself)
                     if AllowThonk() then subself:bezier(0.4, {0, 0, 0.3, -3, 0.6, 3, 1, 1}) else subself:linear(0.2) end
                     subself:xy(col.w * WideScale(1.5, 2.25), _screen.cy-67)
                 end,
+                -- Move from difficulty to song selection (selected song only)
 				SlideBackIntoGridCommand=function(subself)
                     if AllowThonk() then
                         subself:linear(0.2):y(-75):linear(0):xy( col.w * (6 - 1.75), _screen.h):linear(0.2)
@@ -96,7 +104,7 @@ local song_mt = {
 								subself:visible(false)
 							else
 								subself:visible(true):linear(0.2):diffusealpha(1):zoomto(128, 128)
-									:diffuseshift():effectcolor1(0.75,0.75,0.75,1):effectcolor2(0,0,0,1):effectclock("beat"):effectperiod(2)
+									:diffuseramp():effectcolor2(0.75,0.75,0.75,1):effectcolor1(0,0,0,1):effectclock("beat"):effectperiod(1)
 							end
 						end,
 						LoseFocusCommand=function(subself) subself:visible( false):diffusealpha(0):stopeffect():zoomto(0,0) end,

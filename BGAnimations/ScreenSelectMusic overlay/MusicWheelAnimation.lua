@@ -87,14 +87,14 @@ t[#t+1] = Def.BitmapText{
 -- Music wheel border - bottom layer
 t[#t+1] = Def.Quad{
     InitCommand=function(self)
-        self:zoomto(2, _screen.h):xy(_screen.cx + 30, _screen.cy):diffuse(color_slate):diffusealpha(0.8)
+        self:zoomto(2, _screen.h):xy(_screen.w - _screen.w/2.1675, _screen.cy):diffuse(color_slate):diffusealpha(0.8)
     end,
 }
 
 -- Music wheel border - top layer
 t[#t+1] = Def.Quad{
     InitCommand=function(self)
-        self:zoomto(2, _screen.h):xy(_screen.cx + 30, _screen.cy):effectclock("beat"):diffusealpha(0.5):fadetop(0.3):fadebottom(0.3):heartbeat():effectmagnitude(1, 0.5, 0):effectperiod(1):effectoffset(1)
+        self:zoomto(2, _screen.h):xy(_screen.w - _screen.w/2.1675, _screen.cy):effectclock("beat"):diffusealpha(0.5):fadetop(0.3):fadebottom(0.3):heartbeat():effectmagnitude(1, 0.5, 0):effectperiod(1):effectoffset(1)
     end,
 }
 

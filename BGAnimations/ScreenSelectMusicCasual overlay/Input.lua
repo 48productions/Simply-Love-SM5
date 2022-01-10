@@ -179,8 +179,9 @@ t.Handler = function(event)
 				SwitchInputFocus(event.GameButton)
                 SOUND:PlayOnce( THEME:GetPathS("Common", "start"), true )
 
+                -- Group -> Song selection???
 				if t.WheelWithFocus.container then
-					t.WheelWithFocus.container:queuecommand("Unhide")
+					--t.WheelWithFocus.container:queuecommand("Unhide") - Everything gets unhidden by something else anyways, seems redundant - 48
 				else
 					for pn in ivalues(Players) do
 						UnhideOptionRows(pn)

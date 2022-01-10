@@ -16,11 +16,11 @@ play_sample_music = function()
 		if songpath and sample_start and sample_len then
 			SOUND:DimMusic(PREFSMAN:GetPreference("SoundVolume"), math.huge)
 			SOUND:PlayMusicPart(songpath, sample_start,sample_len, 0.5, 1.5, false, true) --Let's not loop the sample music in case a casual walks away from the cab after a single song - 48
+            --song:PlayPreviewMusic() --5.3 only, not ready for production quite yet. Real close though :eyes: - 48
 		else
 			stop_music()
 		end
-
-        --song:PlayPreviewMusic() --5.3 only, not ready for production quite yet. Real close though :eyes: - 48
+        
 	else
 		stop_music()
 	end

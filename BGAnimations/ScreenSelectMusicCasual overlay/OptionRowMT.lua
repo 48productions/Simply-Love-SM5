@@ -54,7 +54,7 @@ local optionrow_mt = {
 					-- arrow
 					Def.ActorFrame{
 						Name="Arrow",
-						OnCommand=function(subself) subself:x(-16):y(28) end,
+						OnCommand=function(subself) subself:x(-16):y(28):bounce():effectclock("beatnooffset"):effectmagnitude(-3,0,0):effectperiod(1) end,
 						PressCommand=function(subself)
 							subself:decelerate(0.05):zoom(0.7):glow(1,1,1,0.086)
 							       :accelerate(0.05):zoom(  1):glow(1,1,1,0)
