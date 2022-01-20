@@ -8,7 +8,7 @@ local GetStepsToDisplay = LoadActor("./StepsToDisplay.lua")
 
 local t = Def.ActorFrame{
 	Name="StepsDisplayList",
-	InitCommand=function(self) self:vertalign(top):y(_screen.cy + 70):sleep(0.06):decelerate(0.25):x(_screen.cx-170) end,
+	InitCommand=function(self) self:vertalign(top):y(_screen.cy + 70):sleep(0.06):decelerate(0.25) end,
 	-- - - - - - - - - - - - - -
 
 	OnCommand=function(self) self:queuecommand("RedrawStepsDisplay") end,
@@ -57,10 +57,7 @@ local t = Def.ActorFrame{
 	Def.Quad{
 		Name="Background",
 		InitCommand=function(self)
-			self:diffuse(color_slate2):zoomto(320, 96)
-			if ThemePrefs.Get("RainbowMode") then
-				self:diffusealpha(0.75)
-			end
+			self:diffuse(color_slate2):zoomto(320, 96):diffusealpha(0.85)
 		end
 	},
 }

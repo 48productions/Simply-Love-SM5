@@ -7,12 +7,17 @@ local t = Def.ActorFrame{
 	OnCommand=function(self)
         self:y(112):zoom(0.7)
 		if IsUsingWideScreen() then
-			self:decelerate(0.25):zoom(0.7655):x(_screen.cx - 170)
+			self:decelerate(0.25):zoom(0.7655)--:x(_screen.cx - 170)
 		else
-			self:decelerate(0.25):zoom(0.75):x(_screen.cx - 166)
+			self:decelerate(0.25):zoom(0.75)--:x(_screen.cx - 166)
 		end
 	end,
 
+    Def.Quad{
+        InitCommand=function(self)
+            self:setsize(422,167):diffusealpha(0.3):glowramp():effectcolor1(0.1,0.1,0.1,0.35):effectcolor2(0.8,0.8,0.8,0.8):effectclock("beatnooffset")
+        end,
+    },
 	Def.ActorFrame{
 		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set") end,
 		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set") end,

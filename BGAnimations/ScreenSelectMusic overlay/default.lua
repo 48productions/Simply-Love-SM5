@@ -20,20 +20,36 @@ local t = Def.ActorFrame{
 	-- make the MusicWheel appear to cascade down; this should draw underneath P2's PaneDisplay
 	LoadActor("./MusicWheelAnimation.lua"),
 
-	-- elements we need two of (one for each player) that draw underneath the StepsDisplayList
-	-- this includes the stepartist boxes and the PaneDisplays (number of steps, jumps, holds, etc.)
-	LoadActor("./PerPlayer/Under.lua"),
-	-- grid of Difficulty Blocks (normal) or CourseContentsList (CourseMode)
-	LoadActor("./StepsDisplayList/default.lua"),
-	-- elements we need two of that draw over the StepsDisplayList (just the bouncing cursors, really)
-	LoadActor("./PerPlayer/Over.lua"),
+        
+    -- Background quad to dim the screen when picking a difficulty
+    Def.Quad{
+        InitCommand=function(self) self:FullScreen():diffuse(color_black):diffusealpha(0) if AllowThonk() then self:rainbow():effectperiod(20) end end,
+        SongChosenMessageCommand=function(self) self:decelerate(0.5):diffusealpha(0.5) end,
+        SongUnchosenMessageCommand=function(self) self:decelerate(0.5):diffusealpha(0) end,
+    },
 
-	-- Graphical Banner
-	LoadActor("./Banner.lua"),
-	-- CD Title (separate from banner so it doesn't get zoomed)
-	LoadActor("./CDTitle.lua"),
-	-- Song Artist, BPM, Duration (Referred to in other themes as "PaneDisplay")
-	LoadActor("./SongDescription.lua"),
+    -- Organization for all elements we need to zoom in for two part difficulty select, for convenience
+    Def.ActorFrame{
+        InitCommand=function(self) self:x(_screen.cx - (IsUsingWideScreen() and 170 or 166)) end,
+        SongChosenMessageCommand=function(self) self:decelerate(0.5):zoom(1.2):xy(_screen.cx, -10) end,
+        SongUnchosenMessageCommand=function(self) self:decelerate(0.5):zoom(1):xy(_screen.cx - (IsUsingWideScreen() and 170 or 166), 0) end,
+        
+        -- elements we need two of (one for each player) that draw underneath the StepsDisplayList
+        -- this includes the stepartist boxes and the PaneDisplays (number of steps, jumps, holds, etc.)
+        LoadActor("./PerPlayer/Under.lua"),
+        -- grid of Difficulty Blocks (normal) or CourseContentsList (CourseMode)
+        LoadActor("./StepsDisplayList/default.lua"),
+        -- elements we need two of that draw over the StepsDisplayList (just the bouncing cursors, really)
+        LoadActor("./PerPlayer/Over.lua"),
+        -- Song Artist, BPM, Duration (Referred to in other themes as "PaneDisplay")
+        LoadActor("./SongDescription.lua"),
+        
+        -- Graphical Banner
+        LoadActor("./Banner.lua"),
+        -- CD Title (separate from banner so it doesn't get zoomed)
+        LoadActor("./CDTitle.lua"),
+    },
+    	
     -- A "Hey you're currently playing a modfile" warning box
     LoadActor("./ModfileWarning.lua"),
 
@@ -42,6 +58,7 @@ local t = Def.ActorFrame{
 	LoadActor("./SortMenu/default.lua"),
 	-- a Test Input overlay can (maybe) be accessed from the SortMenu
 	LoadActor("./TestInput.lua"),
+    
 }
 
 return t

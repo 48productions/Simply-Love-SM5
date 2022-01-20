@@ -11,12 +11,6 @@ return Def.ActorFrame{
 	OnCommand=function(self)
         self:queuecommand("StepsHaveChanged")
         self:sleep(0.31):diffusealpha(1)
-        if player == PLAYER_1 then
-			self:x( _screen.cx - (IsUsingWideScreen() and 356 or 346))
-
-		elseif player == PLAYER_2 then
-			self:x( _screen.cx - 210)
-		end
     end,
 	CurrentSongChangedMessageCommand=function(self) self:queuecommand("StepsHaveChanged") end,
 	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("StepsHaveChanged") end,
@@ -40,10 +34,10 @@ return Def.ActorFrame{
 		self:visible( false ):halign( p ):diffusealpha(0)
 
 		if player == PLAYER_1 then --X positioning moved to OnCommand for fancy animations - 48
-			self:y(_screen.cy + 44)
+			self:xy(-186, _screen.cy + 44)
 
 		elseif player == PLAYER_2 then
-			self:y(_screen.cy + 97)
+			self:xy(-40, _screen.cy + 97)
             
 		end
 

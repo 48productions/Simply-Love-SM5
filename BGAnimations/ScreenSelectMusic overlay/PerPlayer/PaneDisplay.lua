@@ -121,9 +121,9 @@ local af = Def.ActorFrame{
 		self:visible(GAMESTATE:IsHumanPlayer(player))
 
 		if player == PLAYER_1 then
-			self:x(_screen.w * 0.25 - 5)
+			self:x(-25)
 		elseif player == PLAYER_2 then
-			self:x( _screen.w * 0.75 + 5)
+			self:x(365)
 		end
 
 		self:y(_screen.h)

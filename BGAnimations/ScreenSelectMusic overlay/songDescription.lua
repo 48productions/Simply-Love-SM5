@@ -64,7 +64,7 @@ end
 local t = Def.ActorFrame{
 
 	OnCommand=function(self)
-        self:y(_screen.cy - 28):sleep(0.03):decelerate(0.25):x(_screen.cx - (IsUsingWideScreen() and 170 or 165))
+        self:y(_screen.cy - 28):sleep(0.03):decelerate(0.25)
 	end,
 
 	-- ----------------------------------------
@@ -83,9 +83,9 @@ local t = Def.ActorFrame{
 				self:diffuse(color_slate2)
 					:zoomto( IsUsingWideScreen() and 320 or 310, 48 )
 
-				if ThemePrefs.Get("RainbowMode") then
-					self:diffusealpha(0.75)
-				end
+				--if ThemePrefs.Get("RainbowMode") then
+					self:diffusealpha(0.85)
+				--end
 			end
 		},
 
@@ -301,7 +301,30 @@ local t = Def.ActorFrame{
 					end
 				end
 			}
-		}
+		},
+        
+        Def.ActorFrame{
+            InitCommand=function(self) self:diffusealpha(0.2):zoomy(0) end,
+            SongChosenMessageCommand=function(self) self:decelerate(0.5):diffusealpha(1):zoomy(1):sleep(3):decelerate(0.5):zoomy(0) end,
+            SongUnchosenMessageCommand=function(self) self:finishtweening():decelerate(0.5):diffusealpha(0):zoomy(0) end,
+            Def.Quad{
+                InitCommand=function(self)
+                    self:zoomto( IsUsingWideScreen() and 318 or 308, 46 )
+                end
+            },
+            Def.Quad{
+                InitCommand=function(self)
+                    self:diffuse(color_slate2):zoomto( IsUsingWideScreen() and 316 or 306, 44 )
+                end
+            },
+            Def.BitmapText {
+                Font="_upheaval 80px",
+                Text=ScreenString("SelectDifficulty"),
+                InitCommand=function(self) self:zoomy(0.35):zoomx(0.3):y(-4) end,
+                SongChosenMessageCommand=function(self) self:finishtweening():linear(4):zoomx(0.35):shadowlength(3) end,
+                SongUnchosenMessageCommand=function(self) self:smooth(1):zoomx(0.3):shadowlength(0) end,
+            },
+        },
 	}
 }
 
