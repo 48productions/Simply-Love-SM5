@@ -1,9 +1,24 @@
-local file
+local af = Def.ActorFrame{
+    Name="StepsDisplayListAF"
+}
+local paneAF = Def.ActorFrame{
+    CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,
+	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("Set") end,
+	StepsHaveChangedCommand=function(self) self:queuecommand("Set") end,
+}
+
 
 if GAMESTATE:IsCourseMode() then
-	file = LoadActor("./CourseContentsList.lua")
+	af[#af+1] = LoadActor("./CourseContentsList.lua")
 else
-	file = LoadActor("./Grid.lua")
+	af[#af+1] = LoadActor("./Grid.lua")
 end
 
-return file
+for player in ivalues({PLAYER_1, PLAYER_2}) do
+    -- colored background for chart statistics
+    paneAF[#paneAF+1] = LoadActor("./DetailsDisplay.lua", player)
+end
+
+
+af[#af+1] = paneAF
+return af

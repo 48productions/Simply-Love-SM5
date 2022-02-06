@@ -27,7 +27,7 @@ color_slate3 = color("#182025")
 color_slate4 = color("#0a141b")
 
 --default (0, 10/255, 17/255, 0.5) -- #000a11, used exclusively between songs, because it's very important to have near-black and not black
-color_betweensongs = color("#000a11")
+color_betweensongs = {0, 0.1, 0.12, 0.4}
 
 -- default #101519, dark color behind judgement graph/percentage
 color_slate5 = color("#101519")

@@ -76,6 +76,7 @@ local SplashList = {
     "It's what\nplants crave!",
 	"It's a buncha muncha\ncruncha arrows!",
     "AND KNUCKLES",
+    "Winners don't\nuse drugs!",
     "Half-baked!", --Idaho/Potato/Idaho Rhythm Group memes???
 	"Potato EVOLVED!",
 	"Potato Revolution!",
@@ -87,7 +88,7 @@ local SplashList = {
 	"Just add pudding!",
 	"Stomp With the Duck!",
 	"Now even more\ncursed!",
-    "Stay Safe!", --Good heck this is still a thing? - 48 (10/20/2020)
+    "Stay Safe!", --Good heck this is still a thing? - 48 (1/23/2021)
     "Seriously,\nStay Safe!!!!",
     "Wash your hands!",
     "Seriously,\nwash your hands!",

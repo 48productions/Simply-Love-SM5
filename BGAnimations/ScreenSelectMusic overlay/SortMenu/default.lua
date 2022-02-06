@@ -27,6 +27,16 @@ local wheel_item_mt = LoadActor("WheelItemMT.lua")
 
 local sortmenu = { w=210, h=160 }
 
+
+-- songChosen helps with two-part difficulty select, and has 3 values:
+--  0: Song is not chosen (allow opening the sort menu)
+--  1: We're currently unchosing a song (this select button press is backing us out into song select and shouldn't open the sort menu, but the next select press should.)
+--  2: We've chosen a song (the sort menu should NOT open here, as Select should back out of difficulty select into song select instead)
+
+-- This is a janky workaround for the fact that SongUnchosen fires before DirectInputToSortMenu.
+-- Using a boolean here means that pressing select to exit difficulty select would set songChosen to false before DirectInputToSortMenu is called, thus immediately opening (and closing, for some reason) the sort menu as well.
+local songChosen = 0
+
 ------------------------------------------------------------
 
 local t = Def.ActorFrame {
@@ -46,7 +56,11 @@ local t = Def.ActorFrame {
 	ShowSortMenuCommand=function(self) self:visible(true) end,
 	HideSortMenuCommand=function(self) self:visible(false) end,
 
+    SongChosenMessageCommand=function(self) songChosen = 2 end,
+    SongUnchosenMessageCommand=function(self) songChosen = 1 end,
+
 	DirectInputToSortMenuCommand=function(self)
+        if songChosen > 0 then if songChosen == 1 then songChosen = 0 end return end
 		local screen = SCREENMAN:GetTopScreen()
 		local overlay = self:GetParent()
 
@@ -107,7 +121,7 @@ local t = Def.ActorFrame {
 			{"SortBy", "Group"},
 			{"SortBy", "Title"},
 			{"SortBy", "Artist"},
-			{"SortBy", "Genre"},
+			--{"SortBy", "Genre"},
 			{"SortBy", "BPM"},
 			{"SortBy", "Length"},
 		}
@@ -176,6 +190,16 @@ local t = Def.ActorFrame {
         -- If the event songs list is present, add an option to show only those songs
         if FILEMAN:DoesFileExist("/" .. THEME:GetCurrentThemeDirectory() .. "/Other/SongManager Event.txt") then
             table.insert(wheel_options, {"SortBy", "Event"})
+        end
+        
+        -- If the custom genre songs list is present, switch the genre sort option to preferred sort using that list instead
+        -- (Reasoning: Genres aren't standardized in SM simfiles, and I'd argue Genre sort isn't useful because of this)
+        -- Therefore: Provide an option to specify which genres show up, and which songs show up in those genres
+        -- (The intention is for widespread categories - J-Pop/Anime, Vocaloid, etc, a la pretty much every other JP music game)
+        if FILEMAN:DoesFileExist("/" .. THEME:GetCurrentThemeDirectory() .. "/Other/SongManager CustomGenre.txt") then
+            table.insert(wheel_options, {"SortBy", "CustomGenre"})
+        else
+            table.insert(wheel_options, {"SortBy", "Genre"})
         end
 
 		-- Override sick_wheel's default focus_pos, which is math.floor(num_items / 2)

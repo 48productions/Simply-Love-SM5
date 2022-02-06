@@ -68,7 +68,7 @@ return Def.Sprite{
 		RowIndex = clamp(RowIndex, 1, 5)
 
 		-- update cursor y position
-		local sdl = self:GetParent():GetParent():GetChild("StepsDisplayList")
+		local sdl = self:GetParent():GetParent():GetChild("StepsDisplayListAF"):GetChild("StepsDisplayList")
 		if sdl then
 			local grid = sdl:GetChild("Grid")
 			self:y(sdl:GetY() + grid:GetY() + grid:GetChild("Blocks_"..RowIndex):GetY() + 1 )

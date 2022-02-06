@@ -25,11 +25,16 @@ local function input(event)
 			sortmenu:GetChild("start_sound"):play()
 			local focus = sort_wheel:get_actor_item_at_focus_pos()
 
+            --Special-case the sorts powered by Preferred Sort (Event and CustomGenre, set sort to Preferred and set the preferred sort list)
 			if focus.kind == "SortBy" then
                 local sort_by = focus.sort_by
-                if sort_by == "Event" then --Special-case the event songs sort (sneak in to set "sort by" as "Preferred", and set the preferred songs to the event songs)
+                if sort_by == "Event" then
                     sort_by = "Preferred"
                     SONGMAN:SetPreferredSongs("Event.txt")
+                end
+                if sort_by == "CustomGenre" then
+                    sort_by = "Preferred"
+                    SONGMAN:SetPreferredSongs("CustomGenre.txt")
                 end
 				MESSAGEMAN:Broadcast('Sort',{order=sort_by})
 				overlay:queuecommand("DirectInputToEngine")
