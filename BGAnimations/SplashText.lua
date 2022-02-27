@@ -145,6 +145,7 @@ local SplashList = {
     "\"Big Bang!\nOn Music Galaxy!..\"",
     "\"The size is cute and lovely,\nbut pleasure is great.\"",
     "\"From 1-2 persons can enjoy playing its games\nsimultaneously. Enjoy 'exciting and powerful games'\nwhile standing & 'composed games' while sitting.\nThe speakers are location on both sides of the monitor\nso that they can be easily heard and greatly\nenhance the sound effects, thereby further\nenticing you into the 'world of game.'",
+    "\"We Are the Source of Smiles\"",
 	"Also try Beatmania IIDX!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
 	"Also try crossbeats!",
 	"Also try DanceEvolution!",

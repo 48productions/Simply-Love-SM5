@@ -64,7 +64,7 @@ end
 local t = Def.ActorFrame{
 
 	OnCommand=function(self)
-        self:xy(_screen.cx + 208, _screen.cy + 16):sleep(0.03):decelerate(0.25)
+        self:xy(_screen.w - _screen.w/4.335, _screen.cy + 16):sleep(0.03):decelerate(0.25)
 	end,
 
 	-- ----------------------------------------
@@ -82,7 +82,7 @@ local t = Def.ActorFrame{
 			InitCommand=function(self)
 				self:diffuse(color_slate2)
 					:zoomto(_screen.w/2.1675, 32 )
-                    :x(21)
+                    :x(0)
 
 				--if ThemePrefs.Get("RainbowMode") then
 				--end
@@ -101,7 +101,7 @@ local t = Def.ActorFrame{
 			InitCommand=function(self)
 				self:diffuse(color_slate2)
 					:zoomto(_screen.w/2.1675, 93 )
-                    :x(23)
+                    :x(2)
 				--if ThemePrefs.Get("RainbowMode") then
 				--end
 			end,

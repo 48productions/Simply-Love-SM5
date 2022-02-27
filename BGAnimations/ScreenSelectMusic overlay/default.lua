@@ -39,13 +39,13 @@ local t = Def.ActorFrame{
             SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(30) end,
             -- elements we need two of (one for each player) that draw underneath the StepsDisplayList
             -- this includes the stepartist boxes and the PaneDisplays (number of steps, jumps, holds, etc.)
-            LoadActor("./PerPlayer/Under.lua"),
+            --LoadActor("./PerPlayer/Under.lua"), (removed/consolidated to other files, lmao - 48)
             -- grid of Difficulty Blocks (normal) or CourseContentsList (CourseMode)
             LoadActor("./StepsDisplayList/default.lua"),
             -- elements we need two of that draw over the StepsDisplayList (just the bouncing cursors, really)
             LoadActor("./PerPlayer/Over.lua"),
             -- Song Artist, BPM, Duration (Referred to in other themes as "PaneDisplay")
-            LoadActor("./SongDescription.lua"),
+            --LoadActor("./SongDescription.lua"),
         },
         
         -- Graphical Banner

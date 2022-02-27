@@ -6,35 +6,44 @@ local news_img = nil
 
 local tipList = {
     -- UI Navigation
-    "When picking a song folder,\nthe genre and difficulty scale\nare below the folder's banner!",
+    "When picking a song folder,\nthe genre and difficulty scale\nare below the folder's name!",
     "DDR songs use a different\nrating scale for difficulties!",
-    "Different folders use different\ndifficulty rating scales!",
-    "A folder's difficulty rating scale\nis shown below the folder's banner!",
+    "A folder's difficulty rating scale\nis shown below the folder's name!",
+    "A Level 9 in DDR isn't always\na Level 9 in other song groups!",
     "Press  &SELECT;  when picking a song\nto open the sorting menu",
+    "Picked a song by accident?\nPress  &SELECT;  to go back!",
     "You can sort by song name\nusing the &SELECT; button sort menu",
+    "From the  &SELECT;  button Sort menu,\nyou can sort by song genre/category!",
     "Using a USB drive? Press &SELECT; on the\nresults screen to save a screenshot",
     "Press UP + DOWN to\nclose the current folder",
     "A song's length is shown below its banner.\nSome harder songs test your stamina!",
+    "Long songs eat up multiple stages!\nThey may not show up if you\ndon't have enough stages left.",
     
     -- Charting meta
     "Some long, \"Hold\" notes are colored differently.\nTap these \"Roll\" notes repeatedly!",
     "DDR songs have a different step charting\nstyle from other folders. Which do you like more?",
-    "\"Tech\"-focused songs focus on hard patterns,\nwhile \"Stamina\" songs test your endurance.",
+    "\"Tech\"-focused songs focus on\ntricky patterns and rhythms!",
+    "\"Stamina\"-focused songs test your endurance, some\ncharts are several minutes long!",
+    "If your arrows look like Skittles,\nthere's some funky rhythms afoot.\n\nStep the rainbow!",
     "Orange \"Modfile\" songs use insane scripted effects!\nUp for a challenge? Try \"Mawaruchi Surviver!\"",
     
     -- Get Involved!!!!
     "Use a USB drive to play\ncustom songs, save options, and more!",
-    "You can write your own custom\nsongs/steps at home using \"StepMania\"",
+    "You can write your own custom\nsongs/steps at home using\n\"StepMania\" or \"Project Outfox\"!",
     "Participate in local\nevents and tournaments!",
-    "Thank your rad arcade staff!",
-    "This game transforms on April Fools day.\nBe there.",
+    "Thank your arcade staff!!!",
+    "This game TRANSFORMS on APRIL FOOLS day.\nBE THERE!!!",
+    "Simply Spud is community-ran!\nWe're always taking suggestions/feedback!",
+    "Found an issue?\nTalk to the cabinet's maintainers!",
     
     -- Improvement tips!
     "Keep standing on the arrows when playing,\ntry not to return to the center!",
+    "Stepping on panels when there are no arrows\nis a-okay!",
+    "You don't lose life if\nyou step where there's no arrows!",
     "Alternating your feet after each arrow\ncan make some step patterns easier!",
     "Use either foot for any arrow!\nAdd your own flair to the dance!",
     "Practice makes perfect!\nKeep playing, and you'll improve fast!",
-    "Dancing expert? Press &START; again after\npicking a song to change your options",
+    "Dancing expert? Press  &START;  again after\npicking a song to change your options",
     "Arrows too dense to read? Try upping\nthe \"Speed Mod\" option a tad",
     "The \"Constant Arrow Speed\" option\nsets the arrow's speed to be the same regardless\nof the song's BPM",
     "The \"Screen Filter\" option darkens the\nbackground, so arrows are easier to see",

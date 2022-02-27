@@ -139,6 +139,8 @@ local t = Def.ActorFrame{
             local song = GAMESTATE:GetCurrentSong()
             self:visible( song and (song:IsLong() or song:IsMarathon()) or false )
         end,
+        SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(0.3) end,
+        SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(1) end,
 
         LoadActor(THEME:GetPathG('bubble', ''))..{
             InitCommand=function(self) self:diffuse(GetCurrentColor()):zoom(0.455) end
