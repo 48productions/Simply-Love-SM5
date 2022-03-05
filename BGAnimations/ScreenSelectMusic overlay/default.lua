@@ -31,12 +31,12 @@ local t = Def.ActorFrame{
     -- Organization for all elements we need to zoom in for two part difficulty select, for convenience
     Def.ActorFrame{
         InitCommand=function(self) self:x(_screen.cx - (IsUsingWideScreen() and 170 or 166)) end,
-        SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):zoom(1.2):xy(_screen.cx, -10) end,
+        SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):zoom(1.2):xy(_screen.cx, -20) end,
         SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):zoom(1):xy(_screen.cx - (IsUsingWideScreen() and 170 or 166), 0) end,
         
         Def.ActorFrame{
-            SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(-30) end,
-            SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(30) end,
+            SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(-20) end,
+            SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(20) end,
             -- elements we need two of (one for each player) that draw underneath the StepsDisplayList
             -- this includes the stepartist boxes and the PaneDisplays (number of steps, jumps, holds, etc.)
             --LoadActor("./PerPlayer/Under.lua"), (removed/consolidated to other files, lmao - 48)

@@ -82,7 +82,7 @@ local t = Def.ActorFrame{
 		Def.Quad{
 			InitCommand=function(self)
 				self:diffuse(color_slate2)
-					:zoomto( 418, 32 )
+					:zoomto( 418, 52 ):y(13)
 
 				--if ThemePrefs.Get("RainbowMode") then
 					self:diffusealpha(0.85)
@@ -90,7 +90,7 @@ local t = Def.ActorFrame{
             end
         },
 
-        -- Title/Artist
+        -- Title
         LoadFont("Common Normal")..{
             InitCommand=function(self) self:zoom(1.2):maxwidth(WideScale(340,340)) end,
             SetCommand=function(self)
@@ -99,32 +99,119 @@ local t = Def.ActorFrame{
                     self:settext( course and #course:GetCourseEntries() or "" )
                 else
                     local song = GAMESTATE:GetCurrentSong()
-                    self:settext( song and song:GetDisplayFullTitle() .. " // " .. song:GetDisplayArtist() or "" )
+                    self:settext( song and song:GetDisplayFullTitle() or "" )
                 end
             end
         },
         
+        -- Artist
+        LoadFont("Common Normal")..{
+            InitCommand=function(self) self:y(24):maxwidth(WideScale(210,210)):diffuse(0.8,0.8,0.8,1) end,
+            SetCommand=function(self)
+                local song = GAMESTATE:GetCurrentSong()
+                self:settext( song and song:GetDisplayArtist() or "" )
+            end
+        },
+        
+        -- BPM Label
+			LoadFont("Common Normal")..{
+				Text=THEME:GetString("SongDescription", "BPM"),
+				InitCommand=function(self)
+					self:horizalign(right):xy(-172,24):diffuse(0.5,0.5,0.5,1)
+				end,
+			},
+
+			-- BPM value
+			LoadFont("Common Normal")..{
+				InitCommand=function(self) self:horizalign(left):xy(-168, 24):diffuse(1,1,1,1):maxwidth(50) end,
+				SetCommand=function(self)
+					--defined in ./Scipts/SL-BPMDisplayHelpers.lua
+					local text = GetDisplayBPMs()
+					self:settext(text or "")
+				end
+			},
+
+			-- Song Duration Label
+			LoadFont("Common Normal")..{
+				Text=THEME:GetString("SongDescription", "Length"),
+				InitCommand=function(self)
+					self:horizalign(right)
+						:xy(158, 24)
+						:diffuse(0.5,0.5,0.5,1)
+				end
+			},
+
+			-- Song Duration Value
+			LoadFont("Common Normal")..{
+				InitCommand=function(self) self:horizalign(left):xy(162, 24):maxwidth(40) end,
+				SetCommand=function(self)
+					local duration
+
+					if GAMESTATE:IsCourseMode() then
+						local Players = GAMESTATE:GetHumanPlayers()
+						local player = Players[1]
+						local trail = GAMESTATE:GetCurrentTrail(player)
+
+						if trail then
+							duration = TrailUtil.GetTotalSeconds(trail)
+						end
+					else
+						local song = GAMESTATE:GetCurrentSong()
+						if song then
+							duration = song:MusicLengthSeconds()
+						end
+					end
+
+
+					if duration then
+						duration = duration / SL.Global.ActiveModifiers.MusicRate
+						if duration == 105.0 then
+							-- r21 lol
+							self:settext( THEME:GetString("SongDescription", "r21") )
+						else
+							local hours = 0
+							if duration > 3600 then
+								hours = math.floor(duration / 3600)
+								duration = duration % 3600
+							end
+
+							local finalText
+							if hours > 0 then
+								-- where's HMMSS when you need it?
+								finalText = hours .. ":" .. SecondsToMMSS(duration)
+							else
+								finalText = SecondsToMSS(duration)
+							end
+
+							self:settext( finalText )
+						end
+					else
+						self:settext("")
+					end
+				end
+			},
+        
         
         -- "SELECT DIFFICULTY" popup
         Def.ActorFrame{
-            InitCommand=function(self) self:diffusealpha(0.2):zoomy(0) end,
+            InitCommand=function(self) self:diffusealpha(0.2):zoomy(0):y(27) end,
             SongChosenMessageCommand=function(self) self:decelerate(0.5):diffusealpha(1):zoomy(1):sleep(3):decelerate(0.5):zoomy(0) end,
             SongUnchosenMessageCommand=function(self) self:finishtweening():decelerate(0.5):diffusealpha(0):zoomy(0) end,
             -- Border (white) quad
             Def.Quad{
-                InitCommand=function(self) self:zoomto( 418, 32 ) end
+                InitCommand=function(self) self:zoomto( 418, 23 ) end
             },
             -- Background (slate) quad
             Def.Quad{
-                InitCommand=function(self) self:diffuse(color_slate2):zoomto( 416, 30 ) end
+                InitCommand=function(self) self:diffuse(color_slate2):zoomto( 416, 21 ) end
             },
             -- Text
             Def.BitmapText {
                 Font="_upheaval 80px",
                 Text=ScreenString("SelectDifficulty"),
-                InitCommand=function(self) self:zoomy(0.30):zoomx(0.3):y(-4) end,
-                SongChosenMessageCommand=function(self) self:finishtweening():linear(4):zoomx(0.35):shadowlength(3) end,
-                SongUnchosenMessageCommand=function(self) self:smooth(1):zoomx(0.3):shadowlength(0) end,
+                InitCommand=function(self) self:zoomy(0.20):zoomx(0.2):y(-2) end,
+                SongChosenMessageCommand=function(self) self:finishtweening():linear(4):zoomx(0.25):shadowlength(3) end,
+                SongUnchosenMessageCommand=function(self) self:smooth(1):zoomx(0.2):shadowlength(0) end,
             },
         },
     },
@@ -133,7 +220,7 @@ local t = Def.ActorFrame{
     -- long/marathon version bubble graphic and text
     Def.ActorFrame{
         InitCommand=function(self)
-            self:zoom(1.33):xy( IsUsingWideScreen() and 120 or 120 , 135):bob():effectclock('beat'):effectperiod(4):effectmagnitude(0,1,0)
+            self:zoom(1.33):xy( IsUsingWideScreen() and 180 or 180 , 155):bob():effectclock('beat'):effectperiod(4):effectmagnitude(0,1,0)
         end,
         SetCommand=function(self)
             local song = GAMESTATE:GetCurrentSong()
