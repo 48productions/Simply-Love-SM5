@@ -9,6 +9,7 @@ local af = Def.ActorFrame{}
 if game == "dance" then directions =      {"Left", "Down", "Up", "Right", "Left", "Down", "Up", "Right"}
 elseif game == "pump" then directions =   {"DownLeft", "UpLeft", "Center", "UpRight", "DownRight", "DownLeft", "UpLeft", "Center", "UpRight", "DownRight"}
 elseif game == "techno" then directions = {"DownLeft", "Left", "UpLeft", "Down", "Up", "UpRight", "Right", "DownRight"}
+else return Def.Actor{}
 end
 
 -- I LOVE VIDEO GAMES
