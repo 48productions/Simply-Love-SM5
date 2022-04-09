@@ -12,6 +12,7 @@ end
 -- We're gonna be using this a lot.
 -- It's not the BEST solution (I'll have to rewrite it if 5.4 happens),
 -- but it'll have to do for now.  - slaugaus
+-- Modded with blatantly stolen code from the OutFox 4.14 release - 48
 function IsSM53()
-	return not not ProductVersion():match("5.3") -- (not not = cast to bool)
+	return (type(ProductID) == "function" and ProductID():find("OutFox")) or (not not ProductVersion():match("5.3"))
 end

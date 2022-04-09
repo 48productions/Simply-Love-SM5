@@ -136,7 +136,7 @@ return {
 		{
 			Name="HeySora",
 			Img="heysora.png",
-			About="HeySora kindly translated Simply Love's UI into French.\n\nHe also went through the theme with a fine-tooth comb to find and fix bugs, offer helpful suggestions, and help make the theme better for everyone."
+			About="HeySora kindly translated Simply Love's UI into French.\n\nShe also went through the theme with a fine-tooth comb to find and fix bugs, offer helpful suggestions, and help make the theme better for everyone."
 		},
 		{
 			Name="Moru Zerinho6",

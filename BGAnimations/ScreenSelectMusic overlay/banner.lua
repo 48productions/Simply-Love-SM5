@@ -99,7 +99,14 @@ local t = Def.ActorFrame{
                     self:settext( course and #course:GetCourseEntries() or "" )
                 else
                     local song = GAMESTATE:GetCurrentSong()
-                    self:settext( song and song:GetDisplayFullTitle() or "" )
+                    if song then
+                        self:settext( song:GetDisplayFullTitle() )
+                        if #song:GetDisplaySubTitle() > 0 then
+                            self:AddAttribute(#song:GetDisplayMainTitle(), {Length = -1; Diffuse = color("#bbbbbb")})
+                        end
+                    else
+                        self:settext("")
+                    end
                 end
             end
         },
