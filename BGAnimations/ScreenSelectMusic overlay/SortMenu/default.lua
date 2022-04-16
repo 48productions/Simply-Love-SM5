@@ -60,7 +60,7 @@ local t = Def.ActorFrame {
     SongUnchosenMessageCommand=function(self) songChosen = 1 end,
 
 	DirectInputToSortMenuCommand=function(self)
-        if songChosen > 0 then if songChosen == 1 then songChosen = 0 end return end
+        if songChosen > 0 then if songChosen == 1 then songChosen = 0 end return end -- Jank to prevent the sort menu from showing if we back out of a song in two-part select
 		local screen = SCREENMAN:GetTopScreen()
 		local overlay = self:GetParent()
 
@@ -71,6 +71,7 @@ local t = Def.ActorFrame {
 			SCREENMAN:set_input_redirected(player, true)
 		end
 		SOUND:DimMusic(0.25, 60) --Dim the music for a bit (seems to be cancelled if we restart the song preview)
+        MESSAGEMAN:Broadcast("SortMenuOpened")
 		self:playcommand("ShowSortMenu")
 		overlay:playcommand("HideTestInput")
 	end,
@@ -99,6 +100,7 @@ local t = Def.ActorFrame {
 			SCREENMAN:set_input_redirected(player, false)
 		end
 		SOUND:DimMusic(1, 60) --Undim the music (in case it's been dimmed from showing the sort menu
+        MESSAGEMAN:Broadcast("SortMenuClosed")
 		self:playcommand("HideSortMenu")
 		overlay:playcommand("HideTestInput")
 	end,
