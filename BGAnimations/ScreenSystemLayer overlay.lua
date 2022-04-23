@@ -91,8 +91,9 @@ t[#t+1] = LoadFont("_upheaval_underline 80px")..{
 		-- PS: "ShowCreditDisplay" isn't a real Metric as far as the engine is concerned
 		-- I invented it for Simply Love and it has (understandably) confused other themers.
 		-- Sorry about this.
+        -- Add "DisableCenterCreditDisplay" to the list of fake metrics, too - had to go for help text - 48
 		if screen then
-			self:visible( THEME:GetMetric( screen:GetName(), "ShowCreditDisplay" ) )
+			self:visible( THEME:GetMetric( screen:GetName(), "ShowCreditDisplay" ) and not THEME:GetMetric( screen:GetName(), "DisableCenterCreditDisplay" ) )
 		end
 
 		if PREFSMAN:GetPreference("EventMode") then

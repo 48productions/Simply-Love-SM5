@@ -137,7 +137,7 @@ local af = Def.ActorFrame{
 					self:queuecommand("Marquee")
 				else
 					-- no credit information was specified in the simfile for this stepchart, so just set to an empty string
-					self:settext("")
+					self:settext(THEME:GetString( "ScreenSelectMusic", "StepsUnknown" ))
 				end
 			else
 				-- there wasn't a song/course or a steps object, so the MusicWheel is probably hovering

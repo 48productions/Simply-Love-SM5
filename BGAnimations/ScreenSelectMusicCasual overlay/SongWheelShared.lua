@@ -3,6 +3,11 @@ local row = args[1]
 local col = args[2]
 local y_offset = args[3]
 
+-- Max thresholds to consider "Easy" vs "Medium" vs "Hard" songs
+local difficultyMax = ThemePrefs.Get("CasualMaxMeter")
+local difficultyHard = difficultyMax * 0.66
+local difficultyMedium = difficultyMax * 0.33
+
 local af = Def.ActorFrame{
 	Name="SongWheelShared",
 	InitCommand=function(self) self:y(y_offset) end
@@ -102,11 +107,11 @@ af[#af+1] = Def.ActorFrame{
 		self:runcommandsonleaves(function(leaf) if leaf.settext then leaf:settext("") end end)
 	end,
 	SwitchFocusToSongsMessageCommand=function(self)
-		self:visible(true):linear(0.2):zoom(1):y(row.h*2+10):x( col.w * (6 - 1.75) + 80)
+		self:visible(true):decelerate(0.3):zoom(1):y(row.h*2+10):x( col.w * (6 - 1.75) + 80)
 		self:runcommandsonleaves(function(leaf) leaf:diffuse(1,1,1,1) end)
 	end,
 	SwitchFocusToSingleSongMessageCommand=function(self)
-		self:linear(0.2):zoom(0.9):xy(col.w * (2.25)+WideScale(20,65), row.h+43)
+		self:decelerate(0.3):zoom(0.9):xy(col.w * (2.25)+WideScale(20,65), row.h+43)
 		self:runcommandsonleaves(function(leaf) leaf:diffuse(1,1,1,1) end)
 	end,
 
@@ -159,7 +164,7 @@ af[#af+1] = Def.ActorFrame{
 				end
 	 		end,
 		},
-		-- genre
+		-- difficulty
 		Def.BitmapText{
 			Font="Common Normal",
 			Name="Genre",
@@ -168,9 +173,13 @@ af[#af+1] = Def.ActorFrame{
 			end,
 			CurrentSongChangedMessageCommand=function(self, params)
 				if params.song then
-					local genre = params.song:GetGenre()
-					if genre == "" then genre = THEME:GetString("ScreenSelectMusic", "NoGenre") end
-					self:settext( THEME:GetString("ScreenSelectMusic", "Genre") .. ": " .. genre )
+                    -- Get the easiest steps and display them along with BPM, length, etc
+                    -- Show a name next to the difficulty based SOLELY on the meter, and NOT the actual difficulty name
+                    -- (to prevent situations like a boss song having a novice 10 as their easiest difficulty and still showing novice...)
+                    -- todo: This blatantly assumes the easiest steps will be the first ones. This probably isn't a wise assumption...
+					local easiestMeter = SongUtil.GetPlayableSteps(params.song)[1]:GetMeter()
+                    local difficultyText = easiestMeter >= difficultyHard and THEME:GetString("ScreenSelectMusic", "HardMeter") or easiestMeter >= difficultyMedium and THEME:GetString("ScreenSelectMusic", "MediumMeter") or THEME:GetString("ScreenSelectMusic", "EasyMeter")
+					self:settext( THEME:GetString("ScreenSelectMusic", "Difficulty") .. ": " .. difficultyText .. " " .. easiestMeter )
 				end
 			end,
 		},

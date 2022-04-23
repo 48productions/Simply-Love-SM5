@@ -64,15 +64,17 @@ local song_mt = {
 				end,
                 -- Move from song to difficulty selection (selected song only)
 				SlideToTopCommand=function(subself)
-                    if AllowThonk() then subself:bezier(0.4, {0, 0, 0.3, -3, 0.6, 3, 1, 1}) else subself:linear(0.2) end
+                    subself:sleep(0.01)
+                    if AllowThonk() then subself:bezier(0.4, {0, 0, 0.3, -3, 0.6, 3, 1, 1}) else subself:decelerate(0.3) end
                     subself:xy(col.w * WideScale(1.5, 2.25), _screen.cy-67)
                 end,
                 -- Move from difficulty to song selection (selected song only)
 				SlideBackIntoGridCommand=function(subself)
+                    subself:sleep(0.01)
                     if AllowThonk() then
-                        subself:linear(0.2):y(-75):linear(0):xy( col.w * (6 - 1.75), _screen.h):linear(0.2)
+                        subself:linear(0.3):y(-75):linear(0):xy( col.w * (6 - 1.75), _screen.h):linear(0.2)
                     else
-                        subself:linear(0.2)
+                        subself:decelerate(0.3)
                     end
                     subself:xy( col.w * (6 - 1.75), row.h * 2 )
                 end,

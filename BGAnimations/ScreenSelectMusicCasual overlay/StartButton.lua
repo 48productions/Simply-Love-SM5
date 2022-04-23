@@ -5,7 +5,7 @@ return Def.ActorFrame{
 	InitCommand=function(self) self:diffusealpha(0):xy(_screen.cx, _screen.h-76) end,
 	SwitchFocusToSongsMessageCommand=function(self) self:linear(0.1):diffusealpha(0) end,
 	SwitchFocusToGroupsMessageCommand=function(self) self:linear(0.1):diffusealpha(0) end,
-	SwitchFocusToSingleSongMessageCommand=function(self) self:sleep(0.3):linear(0.1):diffusealpha(1) end,
+	SwitchFocusToSingleSongMessageCommand=function(self) self:sleep(0.38):linear(0.1):diffusealpha(1) end,
 
 	LoadActor("./img/start_glow.png")..{
 		Name="Glow",
