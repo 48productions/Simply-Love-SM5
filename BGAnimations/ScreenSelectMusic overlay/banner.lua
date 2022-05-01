@@ -96,7 +96,7 @@ local t = Def.ActorFrame{
             SetCommand=function(self)
                 if GAMESTATE:IsCourseMode() then
                     local course = GAMESTATE:GetCurrentCourse()
-                    self:settext( course and #course:GetCourseEntries() or "" )
+                    self:settext( course and course:GetDisplayFullTitle() or "" )
                 else
                     local song = GAMESTATE:GetCurrentSong()
                     if song then
@@ -115,8 +115,13 @@ local t = Def.ActorFrame{
         LoadFont("Common Normal")..{
             InitCommand=function(self) self:y(24):maxwidth(WideScale(210,210)):diffuse(0.8,0.8,0.8,1) end,
             SetCommand=function(self)
-                local song = GAMESTATE:GetCurrentSong()
-                self:settext( song and song:GetDisplayArtist() or "" )
+                if GAMESTATE:IsCourseMode() then
+                    local course = GAMESTATE:GetCurrentCourse()
+                    self:settext( course and course:GetGroupName() or "" )
+                else
+                    local song = GAMESTATE:GetCurrentSong()
+                    self:settext( song and song:GetDisplayArtist() or "" )
+                end
             end
         },
         
