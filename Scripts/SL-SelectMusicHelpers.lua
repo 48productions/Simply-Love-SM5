@@ -110,3 +110,62 @@ SSM_Header_StageText = function()
 		end
 	end
 end
+
+----------------------------------------------------------------------------------------
+-- Preload the info.ini data for each group.
+-- Doing this every time the MusicWheel scrolls by a group would surely be bad for performance.
+
+group_descriptions = {} -- A string description of each group, or 0 if missing
+group_ratings = {} -- A string rating scale for each group, or 0 if missing
+group_rating_types = {} -- An int of what type of rating scale we're using. 0 = Missing, 1 = DDR/X/New, 2=ITG/Old, 3 = Mods group
+
+reloadGroupInfo = function()
+    for _,group in ipairs(SONGMAN:GetSongGroupNames()) do
+        local desc = 0
+        local rates = 0
+        local rates_type = 0
+        local file = nil
+        
+        -- open info.ini if it exists
+        if FILEMAN:DoesFileExist("./Songs/"..group.."/info.ini") then
+            file = IniFile.ReadFile("./Songs/"..group.."/info.ini")
+        -- check AdditionalSongs, too (this was easier than i thought it would be)
+        elseif FILEMAN:DoesFileExist("./AdditionalSongs/"..group.."/info.ini") then
+            file = IniFile.ReadFile("./AdditionalSongs/"..group.."/info.ini")
+        end
+        -- read info.ini if it loaded
+        if file then
+            if file.GroupInfo then
+                if file.GroupInfo.Description then
+                    desc = file.GroupInfo.Description
+                end
+			if file.GroupInfo.Ratings then
+                    rates = file.GroupInfo.Ratings
+                    if rates ~= "" then -- If rating info was found, parse it for clues to set our rating type
+                        if rates:match("X") or rates:match("DDR") then rates_type = 1
+                        elseif rates:match("ITG") or rates:match("Old") then rates_type = 2
+                        end
+                    end
+                end
+            end
+        end
+        -- copy to the arrays, leaving a 0 in place of nil or empty strings
+        group_descriptions[group] = desc ~= "" and desc or 0
+        group_ratings[group] = rates ~= "" and rates or 0
+        group_rating_types[group] = group:match("%[Mods%]") and 3 or rates_type -- Set the rating info type based on clues above, but let [Mods] groups override this
+        
+    end
+end
+
+-- Song titles can be recolored in Simply Spud based on a few criteria:
+--  - Song "DVNO" gets a special color (handled in metrics)
+--  - Songs in groups titled "[Mods]" are colored orange
+--  - Songs in groups rated as "X-Scale" or "DDR Scale" are colored green for beginners
+--  - Songs in groups rated as "ITG Scale" are colored yellow for pros
+getSongTitleColor = function(groupName)
+    if group_rating_types[groupName] == 1 then return ThemePrefs.Get("RainbowMode") and color("#345431") or color("#72FF66") end
+    if group_rating_types[groupName] == 2 then return ThemePrefs.Get("RainbowMode") and color("#515130") or color("#FFFF66") end
+    if group_rating_types[groupName] == 3 then return ThemePrefs.Get("RainbowMode") and color("#563F32") or color("#FF9B66") end
+    
+    return ThemePrefs.Get("RainbowMode") and color("#0a141b") or Color.White -- Default to white (black in rainbow mode)
+end
