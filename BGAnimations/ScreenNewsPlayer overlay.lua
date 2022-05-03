@@ -8,8 +8,9 @@ local tipList = {
     -- UI Navigation
     "When picking a song folder,\nthe genre and difficulty scale\nare below the folder's name!",
     "DDR songs use a different\nrating scale for difficulties!",
-    "A folder's difficulty rating scale\nis shown below the folder's name!",
-    "A Level 9 in DDR isn't always\na Level 9 in other song groups!",
+	"Green songs use modern DDR difficulty ratings,\nYellow songs use old-school DDR/ITG difficulty ratings!",
+	"A Green level 6 song is about as hard\nas a Yellow level 4 song",
+	"For yellow songs, pick a lower\ndifficulty than usual.\nA Green 6 is about a Yellow 4!",
     "Press  &SELECT;  when picking a song\nto open the sorting menu",
     "Picked a song by accident?\nPress  &SELECT;  to go back!",
     "You can sort by song name\nusing the &SELECT; button sort menu",
@@ -21,7 +22,7 @@ local tipList = {
     
     -- Charting meta
     "Some long, \"Hold\" notes are colored differently.\nTap these \"Roll\" notes repeatedly!",
-    "DDR songs have a different step charting\nstyle from other folders. Which do you like more?",
+    "DDR songs have a different step charting\nstyle from other folders.\nWhich do you like more?",
     "\"Tech\"-focused songs focus on\ntricky patterns and rhythms!",
     "\"Stamina\"-focused songs test your endurance, some\ncharts are several minutes long!",
     "If your arrows look like Skittles,\nthere's some funky rhythms afoot.\n\nStep the rainbow!",
@@ -29,7 +30,7 @@ local tipList = {
     
     -- Get Involved!!!!
     "Use a USB drive to play\ncustom songs, save options, and more!",
-    "You can write your own custom\nsongs/steps at home using\n\"StepMania\" or \"Project Outfox\"!",
+    "You can write your own custom\nsongs/steps at home using\nprograms like \"ArrowVortex\" or \"Stepmania/Project Outfox\"!",
     "Participate in local\nevents and tournaments!",
     "Thank your arcade staff!!!",
     "This game TRANSFORMS on APRIL FOOLS day.\nBE THERE!!!",
@@ -43,7 +44,7 @@ local tipList = {
     "Alternating your feet after each arrow\ncan make some step patterns easier!",
     "Use either foot for any arrow!\nAdd your own flair to the dance!",
     "Practice makes perfect!\nKeep playing, and you'll improve fast!",
-    "Dancing expert? Press  &START;  again after\npicking a song to change your options",
+    "Dancing expert? Press  &START;  again after\npicking a song to change advanced options",
     "Arrows too dense to read? Try upping\nthe \"Speed Mod\" option a tad",
     "The \"Constant Arrow Speed\" option\nsets the arrow's speed to be the same regardless\nof the song's BPM",
     "The \"Screen Filter\" option darkens the\nbackground, so arrows are easier to see",
