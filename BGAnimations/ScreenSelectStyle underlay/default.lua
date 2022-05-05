@@ -295,5 +295,14 @@ end
 
 t[#t+1] = LoadActor( THEME:GetPathS("ScreenSelectMaster", "change") )..{ Name="Change", SupportPan=false, IsAction=true }
 t[#t+1] = LoadActor( THEME:GetPathS("common", "start") )..{ Name="Start", SupportPan=false, IsAction=true }
+t[#t+1] = LoadFont("Common Normal")..{
+    Name="Legal",
+    Text=THEME:GetString("ScreenSelectStyle", "Legal"),
+    InitCommand=function(self)
+        self:shadowlength(1):xy(_screen.cx, _screen.h * 0.85):zoom(0.7):diffuseshift():effectcolor1(1,1,1,0.8):effectcolor2(1,1,1,0.6):effectperiod(2):diffusealpha(0)
+    end,
+    OnCommand=function(self) self:smooth(0.3):diffusealpha(1) end,
+    OffCommand=function(self) self:smooth(0.3):diffusealpha(0) end,
+}
 
 return t
