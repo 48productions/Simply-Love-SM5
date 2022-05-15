@@ -9,7 +9,7 @@ local function input(event)
 
 	local screen   = SCREENMAN:GetTopScreen()
 	local overlay  = screen:GetChild("Overlay")
-	local sortmenu = overlay:GetChild("SortMenu")
+	local sortmenu = overlay:GetChild("SortMenuAF")
 
 	if event.type ~= "InputEventType_Release" then
 
