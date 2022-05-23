@@ -37,6 +37,7 @@ return Def.ActorFrame{
             if screenName ~= "ScreenSelectMusicCasual" and screenName ~= "ScreenSelectMusic" then return end
             self:queuecommand("ChangeText")
         end,
+        OffCommand=function(self) self:stoptweening():smooth(0.15):diffusealpha(0) end,
         
         -- ScreenSelectMusicCasual - three categories: Groups, Songs, SingleSong
         SwitchFocusToGroupsMessageCommand=function(self)

@@ -1,5 +1,6 @@
 local af = Def.ActorFrame{
-    Name="StepsDisplayListAF"
+    Name="StepsDisplayListAF",
+    OnCommand=function(self) self:x(-450):sleep(0.8):decelerate(0.5):x(0) end,
 }
 local paneAF = Def.ActorFrame{
     CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,

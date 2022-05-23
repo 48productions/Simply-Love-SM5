@@ -7,19 +7,25 @@ local t = Def.ActorFrame{
     CurrentSongChangedMessageCommand=function(self) self:playcommand("Set") end,
     CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set") end,
 	OnCommand=function(self)
-        self:y(112):zoom(0.7)
+        self:xy(-450, 112):zoom(0.7):sleep(0.75)
 		if IsUsingWideScreen() then
-			self:decelerate(0.25):zoom(0.7655)--:x(_screen.cx - 170)
+			self:decelerate(0.5):zoom(0.7655):x(0)--:x(_screen.cx - 170)
 		else
-			self:decelerate(0.25):zoom(0.75)--:x(_screen.cx - 166)
+			self:decelerate(0.5):zoom(0.75):x(0)--:x(_screen.cx - 166)
 		end
 	end,
+    OffCommand=function(self)
+        self:decelerate(0.5):zoom(0.7)
+    end,
 
+    -- Blinking gray banner outline
     Def.Quad{
         InitCommand=function(self)
             self:setsize(422,167):diffusealpha(0.3):glowramp():effectcolor1(0.1,0.1,0.1,0.35):effectcolor2(0.8,0.8,0.8,0.8):effectclock("beatnooffset")
         end,
     },
+    
+    -- Fallback banner (arrow design, if song has no banner)
 	Def.ActorFrame{
 		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set") end,
 		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set") end,
@@ -43,6 +49,7 @@ local t = Def.ActorFrame{
 		},
 	},
 
+    -- Banner image
 	Def.ActorProxy{
 		Name="BannerProxy",
 		BeginCommand=function(self)
@@ -209,6 +216,7 @@ local t = Def.ActorFrame{
             InitCommand=function(self) self:diffusealpha(0.2):zoomy(0):y(27) end,
             SongChosenMessageCommand=function(self) self:decelerate(0.5):diffusealpha(1):zoomy(1):sleep(3):decelerate(0.5):zoomy(0) end,
             SongUnchosenMessageCommand=function(self) self:finishtweening():decelerate(0.5):diffusealpha(0):zoomy(0) end,
+            OffCommand=function(self) self:finishtweening():decelerate(0.3):diffusealpha(0) end,
             -- Border (white) quad
             Def.Quad{
                 InitCommand=function(self) self:zoomto( 418, 23 ) end
@@ -240,6 +248,7 @@ local t = Def.ActorFrame{
         end,
         SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(0.3) end,
         SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(1) end,
+        OffCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(1) end,
 
         LoadActor(THEME:GetPathG('bubble', ''))..{
             InitCommand=function(self) self:diffuse(GetCurrentColor()):zoom(0.455) end

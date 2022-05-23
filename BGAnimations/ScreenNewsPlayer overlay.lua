@@ -25,12 +25,12 @@ local tipList = {
     "DDR songs have a different step charting\nstyle from other folders.\nWhich do you like more?",
     "\"Tech\"-focused songs focus on\ntricky patterns and rhythms!",
     "\"Stamina\"-focused songs test your endurance, some\ncharts are several minutes long!",
-    "If your arrows look like Skittles,\nthere's some funky rhythms afoot.\n\nStep the rainbow!",
+    "If your arrows look like Skittles,\nthere's some funky rhythms afoot.\nStep the rainbow!",
     "Orange \"Modfile\" songs use insane scripted effects!\nUp for a challenge? Try \"Mawaruchi Surviver!\"",
     
     -- Get Involved!!!!
     "Use a USB drive to play\ncustom songs, save options, and more!",
-    "You can write your own custom\nsongs/steps at home using\nprograms like \"ArrowVortex\" or \"Stepmania/Project Outfox\"!",
+    "You can write your own custom\nsongs/steps at home using programs like\n\"ArrowVortex\" or \"Stepmania/Project Outfox\"!",
     "Participate in local\nevents and tournaments!",
     "Thank your arcade staff!!!",
     "This game TRANSFORMS on APRIL FOOLS day.\nBE THERE!!!",
@@ -46,7 +46,8 @@ local tipList = {
     "Practice makes perfect!\nKeep playing, and you'll improve fast!",
     "Dancing expert? Press  &START;  again after\npicking a song to change advanced options",
     "Arrows too dense to read? Try upping\nthe \"Speed Mod\" option a tad",
-    "The \"Constant Arrow Speed\" option\nsets the arrow's speed to be the same regardless\nof the song's BPM",
+    "The \"Constant Arrow Speed\" option\nsets the note speed to be the same regardless\nof the song's BPM",
+    "The \"Max Arrow Speed\" option\nsets the note speed automatically\nbased on the song's BPM",
     "The \"Screen Filter\" option darkens the\nbackground, so arrows are easier to see",
     "The \"Music Rate\" option speeds up/slows down\nthe song, great for practicing tricky steps",
     "Using only your heels/toes to hit\narrows can help with fast steps",
@@ -78,9 +79,11 @@ local function input(event)
 end
 
 local t = Def.ActorFrame{
+    InitCommand=function(self) self:Center() end,
     OnCommand=function(self)
         --If we've figured out we're not display news (in casual mode, didn't find news to display, etc),
         --Automatically skip this screen - we don't need to initialize the other stuff here just GET OUT
+        --self:sleep(30)
         if displayingNews == false then
             SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand("Finish")
         else
@@ -122,47 +125,48 @@ local t = Def.ActorFrame{
 
  --Going into a non-casual gamemode that uses the regular music wheel, play the first half of the music wheel intro animation
 if SL.Global.GameMode ~= "Casual" then
-    --BG
+    -- Background
     t[#t+1] = Def.Quad{
-        InitCommand=function(self)
-            self:x( _screen.cx+_screen.w/4 - 1)
-                :y( _screen.cy )
-                :zoomto(_screen.w/2, 28 * NumWheelItems - 4)
-                :diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White )
-        end,
+        InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ):diffusealpha(0.6):zoomto(_screen.w, 150) end,
     }
-    --FG
-    t[#t+1] = Def.Quad{
-        InitCommand=function(self)
-            self:x( _screen.cx+_screen.w/4 )
-                :y( _screen.cy)
-                :zoomto(_screen.w/2, 28 * NumWheelItems - 4)
-                :diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black )
-        end,
-    }
-    --Loading text
+    -- SELECT MUSIC text
     t[#t+1] = Def.BitmapText{
-		Font="_upheaval_underline 80px",
-		Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
-		InitCommand=function(self)
-			self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.5):diffusealpha(1):draworder(101):y(0)
-                :xy(SL.Global.GameMode ~= "Casual" and _screen.w * .75 or _screen.cx, SL.Global.GameMode ~= "Casual" and _screen.cy or _screen.h / 6)
-		end,
-	}
+        Font="_upheaval_underline 80px",
+        Text="SELECT MUSIC",
+        InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.8):diffusealpha(1):y(-20) end,
+    }
+    -- Stage counter text
+    t[#t+1] = Def.BitmapText{
+        Font="_upheaval_underline 80px",
+        Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
+        InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.5):diffusealpha(1):y(30) end,
+    }
+
+
+    -- Upper/lower borders
+    t[#t+1] = Def.Quad{
+        InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoomto(_screen.w, 5):y(-75) end,
+    }
+    
+    t[#t+1] = Def.Quad{
+        InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoomto(_screen.w, 5):y(75) end,
+    }
+    
     
     --Tip text
     t[#t+1] = Def.BitmapText{
-        --Text=RNGJESUS from array, change depending on memory/non-memory
         Font="Common normal",
         Text="TIP: "..tipList[math.random(1, #tipList)],
         InitCommand=function(self)
-            self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):xy(_screen.w * .75, _screen.h * 0.7):diffusealpha(0):draworder(101)
+            self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):y( _screen.cy * 0.5):diffusealpha(0):shadowlength(2)
         end,
         OnCommand=function(self) self:smooth(0.2):diffusealpha(0.7) end,
         OffCommand=function(self)
             self:smooth(0.1):diffusealpha(0)
         end,
     }
+    
+    
     
     if GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then
     
@@ -176,66 +180,69 @@ if SL.Global.GameMode ~= "Casual" then
         
         if news_img then
             --News image
-            t[#t+1] = Def.Sprite{
-                Texture=news_img and THEME:GetPathO("", news_img) or THEME:GetPathG("", "_blank.png"),
-                InitCommand=function(self)
-                    self:diffusealpha(0):draworder(104)
-                    self:stretchto(_screen.w * 0.14 + 1, _screen.h * 0.10 + 1, _screen.w * 0.86 - 1, _screen.h * 0.82 - 1)
-                end,
-                OnCommand=function(self)
-                    self:smooth(0.5):diffusealpha(1)
-                end,
-                FinishCommand=function(self)
-                    self:smooth(0.15):diffusealpha(0)
-                end,
-            }
-            
-            --News BG
-            t[#t+1] = Def.Quad{
-                InitCommand=function(self)
-                    self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#00000000')):draworder(103)
-                end,
-                OnCommand=function(self)
-                    self:smooth(0.25):stretchto(_screen.w * 0.14, _screen.h * 0.10, _screen.w * 0.86, _screen.h * 0.82):diffusealpha(1)
-                end,
-                FinishCommand=function(self)
-                    self:smooth(0.25):zoomto(_screen.w * 0.8,0)
-                end,
-            }
-            
-            --News BG Outline
-            t[#t+1] = Def.Quad{
-                InitCommand=function(self)
-                    self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#cccccc00')):draworder(102)
-                end,
-                OnCommand=function(self)
-                    self:smooth(0.25):stretchto(_screen.w * 0.14 - 1, _screen.h * 0.10 - 1, _screen.w * 0.86 + 1, _screen.h * 0.82 + 1):diffusealpha(1)
-                end,
-                FinishCommand=function(self)
-                    self:smooth(0.25):zoomto(_screen.w * 0.8,0)
-                end,
-            }
-            
-            --"Press START to continue" text
-            t[#t+1] = LoadFont("_upheaval_underline 80px")..{
-                InitCommand=function(self)
-                    self:xy(_screen.cx,_screen.h-65):zoom(0.5):shadowlength(1.7):settext("Press &START; to continue"):diffusealpha(0):draworder(105)
-                end,
-                OnCommand=function(self)
-                    self:smooth(1):diffusealpha(1):diffuseshift():effectperiod(1.333):effectcolor1(1,1,1,0.3):effectcolor2(1,1,1,1)
-                end,
-                FinishCommand=function(self) self:smooth(0.3):diffusealpha(0) end,
-            }
-            
-            --Screen BG
-            t[#t+1] = Def.Quad{
-                InitCommand=function(self)
-                    self:FullScreen():draworder(101):diffuse(color('#00000000'))
-                end,
-                OnCommand=function(self)
-                    self:smooth(0.1):diffusealpha(0.3)
-                end,
-                FinishCommand=function(self) self:smooth(0.1):diffusealpha(0) end,
+            t[#t+1] = Def.ActorFrame{
+                InitCommand=function(self) self:xy(-_screen.cx, -_screen.cy) end,
+                Def.Sprite{
+                    Texture=news_img and THEME:GetPathO("", news_img) or THEME:GetPathG("", "_blank.png"),
+                    InitCommand=function(self)
+                        self:diffusealpha(0):draworder(104)
+                        self:stretchto(_screen.w * 0.14 + 1, _screen.h * 0.10 + 1, _screen.w * 0.86 - 1, _screen.h * 0.82 - 1)
+                    end,
+                    OnCommand=function(self)
+                        self:smooth(0.5):diffusealpha(1)
+                    end,
+                    FinishCommand=function(self)
+                        self:smooth(0.15):diffusealpha(0)
+                    end,
+                },
+                
+                --News BG
+                Def.Quad{
+                    InitCommand=function(self)
+                        self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#00000000')):draworder(103)
+                    end,
+                    OnCommand=function(self)
+                        self:smooth(0.25):stretchto(_screen.w * 0.14, _screen.h * 0.10, _screen.w * 0.86, _screen.h * 0.82):diffusealpha(1)
+                    end,
+                    FinishCommand=function(self)
+                        self:smooth(0.25):zoomto(_screen.w * 0.8,0)
+                    end,
+                },
+                
+                --News BG Outline
+                Def.Quad{
+                    InitCommand=function(self)
+                        self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#cccccc00')):draworder(102)
+                    end,
+                    OnCommand=function(self)
+                        self:smooth(0.25):stretchto(_screen.w * 0.14 - 1, _screen.h * 0.10 - 1, _screen.w * 0.86 + 1, _screen.h * 0.82 + 1):diffusealpha(1)
+                    end,
+                    FinishCommand=function(self)
+                        self:smooth(0.25):zoomto(_screen.w * 0.8,0)
+                    end,
+                },
+                
+                --"Press START to continue" text
+                LoadFont("_upheaval_underline 80px")..{
+                    InitCommand=function(self)
+                        self:xy(_screen.cx,_screen.h-65):zoom(0.5):shadowlength(1.7):settext("Press &START; to continue"):diffusealpha(0):draworder(105)
+                    end,
+                    OnCommand=function(self)
+                        self:smooth(1):diffusealpha(1):diffuseshift():effectperiod(1.333):effectcolor1(1,1,1,0.3):effectcolor2(1,1,1,1)
+                    end,
+                    FinishCommand=function(self) self:smooth(0.3):diffusealpha(0) end,
+                },
+                
+                --Screen BG
+                Def.Quad{
+                    InitCommand=function(self)
+                        self:FullScreen():draworder(101):diffuse(color('#00000000'))
+                    end,
+                    OnCommand=function(self)
+                        self:smooth(0.1):diffusealpha(0.3)
+                    end,
+                    FinishCommand=function(self) self:smooth(0.1):diffusealpha(0) end,
+                }
             }
         end
     end

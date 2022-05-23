@@ -1,15 +1,14 @@
-local TweenTime = 0.03
-local NumWheelItems = 15
+local tweentime = 0.5
 
 
 local t = Def.ActorFrame{
 	InitCommand=function(self)
-		--self:Center():draworder(101)
+		self:Center()--:draworder(101)
         SOUND:DimMusic(0.7, 60)
 	end,
     OnCommand=function(self)
-        --self:sleep(5) --Debug: Sleep a bit longer, uncomment if you're tweaking text/animations here
-        self:sleep(TweenTime * NumWheelItems):queuecommand("Load")
+        --self:sleep(20) --Debug: Sleep a bit longer, uncomment if you're tweaking text/animations here
+        self:sleep(tweentime):queuecommand("Load")
     end,
     LoadCommand=function(self)
 		SCREENMAN:GetTopScreen():Continue()
@@ -35,7 +34,7 @@ local t = Def.ActorFrame{
                 :x(SL.Global.GameMode ~= "Casual" and _screen.w * .75 or _screen.cx)
 		end,
         OnCommand=function(self)
-            self:decelerate(TweenTime * NumWheelItems):diffusealpha(1)
+            self:decelerate(tweentime):diffusealpha(1)
                 :y(SL.Global.GameMode ~= "Casual" and _screen.cy or _screen.h / 6)
         end
 	}
@@ -43,53 +42,48 @@ local t = Def.ActorFrame{
 
 if SL.Global.GameMode ~= "Casual" then --Going into a non-casual gamemode that uses the regular music wheel, play the first half of the music wheel intro animation
     
-    --This animation is a reversed version of the one in BGAnimations/ScreenSelectMusic overlay/MusicWheelAnimation.lua, see there for documentation
-    for i=1,NumWheelItems-2 do
-    -- upper bg
-        t[#t+1] = Def.Quad{
-            InitCommand=function(self)
-                self:x( _screen.cx+_screen.w/4 - 1)
-                    :y( 8 + (_screen.h/NumWheelItems)*i )
-                    :zoomto(_screen.w/2, (_screen.h/NumWheelItems)/2)
-                    :diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White )
-                    :cropbottom(1)
-            end,
-            OnCommand=function(self) self:sleep(i*(TweenTime/2)):linear(TweenTime):cropbottom(0) end,
+    -- AF 1: Slide right
+    t[#t+1] = Def.ActorFrame{
+        InitCommand=function(self) self:x(-_screen.w ) end,
+        OnCommand=function(self) self:decelerate(tweentime):x(0) end,
+        
+        -- Background
+        Def.Quad{
+            InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ):diffusealpha(0.5):zoomto(_screen.w, 150) end,
+        },
+
+
+        -- SELECT MUSIC text
+        Def.BitmapText{
+            Font="_upheaval_underline 80px",
+            Text="SELECT MUSIC",
+            InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.8):diffusealpha(1):y(-20) end,
         }
-        -- lower bg
-        t[#t+1] = Def.Quad{
-                InitCommand=function(self)
-                self:x( _screen.cx+_screen.w/4 - 1 )
-                    :y( 24 + (_screen.h/NumWheelItems)*i )
-                    :zoomto(_screen.w/2, (_screen.h/NumWheelItems)/2)
-                    :diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White )
-                    :croptop(1)
-            end,
-            OnCommand=function(self) self:sleep(i*(TweenTime/2)):linear(TweenTime):croptop(0) end,
+    }
+
+
+    -- AF 2: Slide left
+    t[#t+1] = Def.ActorFrame{
+        InitCommand=function(self) self:x(_screen.w ) end,
+        OnCommand=function(self) self:decelerate(tweentime):x(0) end,
+        
+        -- Stage counter text
+        Def.BitmapText{
+            Font="_upheaval_underline 80px",
+            Text=THEME:GetString("ScreenProfileLoad","Loading Profiles..."),
+            InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoom(0.5):diffusealpha(1):y(30) end,
+        },
+
+
+        -- Upper/lower borders
+        Def.Quad{
+            InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoomto(_screen.w, 5):y(-75) end,
+        },
+        
+        Def.Quad{
+            InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.White ):zoomto(_screen.w, 5):y(75) end,
         }
-        -- upper
-        t[#t+1] = Def.Quad{
-            InitCommand=function(self)
-                self:x( _screen.cx+_screen.w/4 )
-                    :y( 8 + (_screen.h/NumWheelItems)*i )
-                    :zoomto(_screen.w/2, (_screen.h/NumWheelItems)/2)
-                    :diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black )
-                    :cropbottom(1)
-            end,
-            OnCommand=function(self) self:sleep(i*(TweenTime/2)):linear(TweenTime):cropbottom(0) end,
-        }
-        -- lower
-        t[#t+1] = Def.Quad{
-                InitCommand=function(self)
-                self:x( _screen.cx+_screen.w/4 )
-                    :y( 24 + (_screen.h/NumWheelItems)*i )
-                    :zoomto(_screen.w/2, (_screen.h/NumWheelItems)/2)
-                    :diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black )
-                    :croptop(1)
-            end,
-            OnCommand=function(self) self:sleep(i*(TweenTime/2)):linear(TweenTime):croptop(0) end,
-        }
-    end
+    }
 else --Transitioning to casual mode, set tweentime to 0 so we transition instantly (this also affects the sleep delay before we go to the next screen)
     tweentime = 0 --(Comment out to reenable casual's loading text)
 end

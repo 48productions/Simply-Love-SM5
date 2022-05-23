@@ -29,9 +29,9 @@ end
 reloadGroupInfo() -- Group info parsing moved to SL-SelectMusicHelpers.lua - 48
 
 local t = Def.ActorFrame{
-
+    InitCommand=function(self) self:xy(_screen.w*1.5, _screen.cy + 16) end,
 	OnCommand=function(self)
-        self:xy(_screen.w - _screen.w/4.335, _screen.cy + 16):sleep(0.03):decelerate(0.25)
+        self:sleep(0.5):decelerate(0.5):x(_screen.cx+_screen.w/4+14)
 	end,
 
 	-- ----------------------------------------

@@ -56,7 +56,7 @@ local t = Def.ActorFrame {
 		-- Always ensure player input is directed back to the engine when initializing SelectMusic.
 		InitCommand=function(self) self:y(-_screen.h + sortmenu.h):queuecommand("DirectInputToEngine") end,
 		-- Always ensure player input is directed back to the engine when leaving SelectMusic.
-		OffCommand=function(self) self:playcommand("DirectInputToEngine") end,
+		OffCommand=function(self) self:playcommand("DirectInputToEngine"):visible(false) end,
 
 		-- Figure out which choices to put in the SortWheel based on various current conditions.
 		OnCommand=function(self) self:playcommand("AssessAvailableChoices") end,
