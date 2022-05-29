@@ -38,7 +38,7 @@ return Def.Sprite{
 		if params.Player == player then self:visible(false) end
 	end,
 
-	OnCommand=function(self) self:playcommand("Set"):sleep(0.31):decelerate(0.1):diffusealpha(1) end,
+	OnCommand=function(self) self:playcommand("Set"):sleep(1.4):decelerate(0.2):diffusealpha(1) end,
 	CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	CurrentStepsP1ChangedMessageCommand=function(self) self:queuecommand("Set") end,

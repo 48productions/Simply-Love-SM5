@@ -38,7 +38,7 @@ local t = Def.ActorFrame{
         Def.ActorFrame{
             SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(-20) end,
             SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(20) end,
-            OffCommand=function(self) self:decelerate(0.3):diffusealpha(0):addy(50) end,
+            OffCommand=function(self) self:stoptweening():decelerate(0.3):diffusealpha(0):addy(50) end,
             -- elements we need two of (one for each player) that draw underneath the StepsDisplayList
             -- this includes the stepartist boxes and the PaneDisplays (number of steps, jumps, holds, etc.)
             --LoadActor("./PerPlayer/Under.lua"), (removed/consolidated to other files, lmao - 48)

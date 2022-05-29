@@ -16,6 +16,8 @@ local t = Def.ActorFrame{
 	end,
     OffCommand=function(self)
         self:decelerate(0.5):zoom(0.7)
+         -- If we're not transitioning to gameplay (quit early via the sort menu etc), fade out the banner as well so it doesn't randomly linger
+        if SCREENMAN:GetTopScreen():GetNextScreenName() ~= "ScreenGameplay" then self:visible(false) end
     end,
 
     -- Blinking gray banner outline
