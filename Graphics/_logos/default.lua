@@ -1,6 +1,14 @@
 local noteskin = PREFSMAN:GetPreference("EditorNoteSkinP1") -- uses the editor noteskin because "default noteskin" isn't a real preference
 -- TODO: give this its own theme preference???
 
+-- Fall back to the "default" noteskin if the above noteskin can't be found (surprisingly easy to run into when switching between game modes, etc)
+if not NOTESKIN:DoesNoteSkinExist(noteskin) then
+    noteskin = "default"
+    
+    -- If "default" isn't a valid noteskin, all hope is lost in the world. Retreat!
+    if not NOTESKIN:DoesNoteSkinExist(noteskin) then return Def.Actor{} end
+end
+
 local game = GAMESTATE:GetCurrentGame():GetName()
 local directions
 
@@ -13,7 +21,7 @@ else return Def.Actor{}
 end
 
 -- I LOVE VIDEO GAMES
-if ... == 1 then
+if ... == 1 and game == "dance" then
 	directions = {"Left", "Up", "Down", "Right", "Left", "Up", "Down", "Right"}
 end
 

@@ -19,6 +19,7 @@ local tipList = {
     "Press UP + DOWN to\nclose the current folder",
     "A song's length is shown below its banner.\nSome harder songs test your stamina!",
     "Long songs eat up multiple stages!\nThey may not show up if you\ndon't have enough stages left.",
+    "Hold  &START;  while playing a song to\nend the song early.",
     
     -- Charting meta
     "Some long, \"Hold\" notes are colored differently.\nTap these \"Roll\" notes repeatedly!",
