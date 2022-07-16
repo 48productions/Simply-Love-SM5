@@ -10,7 +10,7 @@ local swoosh, move
 local Update = function(self)
 
 	newBPS = GAMESTATE:GetSongBPS()
-	move = (newBPS*-1)/2
+	move = (newBPS*-1)
 
 	if GAMESTATE:GetSongFreeze() then move = 0 end
 	if swoosh then swoosh:texcoordvelocity(move,0) end
@@ -37,9 +37,12 @@ local meter = Def.ActorFrame{
 		-- check state of mind
 		HealthStateChangedMessageCommand=function(self,params)
 			if(params.PlayerNumber == player) then
-				if(params.HealthState == 'HealthState_Hot') then
-					self:diffuse(color("1,1,1,1"))
-				else
+				if(params.HealthState == 'HealthState_Hot') then -- Lifebar full = (almost) white
+					self:diffuse(color("0.8,0.8,0.8,1"))
+				elseif params.HealthState == 'HealthState_Dead' then -- Lifebar gone = red (also fill set the bar to fill the meter)
+                    self:diffuse(color("0.35,0,0,1"))
+                    self:decelerate(0.4):zoomx(meterFillLength)
+                else -- Lifebar somewhere in between = player-colored
 					self:diffuse(PlayerColor(player))
 				end
 			end
@@ -53,6 +56,8 @@ local meter = Def.ActorFrame{
 				self:bouncebegin(0.1):zoomx( life )
 			end
 		end,
+        
+        
 	},
 
 	LoadActor("swoosh.png")..{

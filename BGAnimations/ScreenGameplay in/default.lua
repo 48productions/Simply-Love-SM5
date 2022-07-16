@@ -6,6 +6,9 @@ local text = ""
 local SongNumberInCourse = 0
 local style = ThemePrefs.Get("VisualTheme")
 
+local path = "/"..THEME:GetCurrentThemeDirectory().."Graphics/_FallbackBanners/"..style
+local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("","_FallbackBanners/Arrows")
+
 if AllowThonk() then
     text = THEME:GetString("Stage", "Thonk")
     
@@ -63,7 +66,84 @@ af[#af+1] = Def.ActorFrame{
 	LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/GameplayIn minisplode"))..{
 		InitCommand=function(self) self:diffuse(GetCurrentColor()):Center():rotationz(10):zoom(0) end,
 		OnCommand=function(self) self:sleep(0.4):decelerate(0.8):rotationz(0):zoom(0.9):diffusealpha(0) end
-	}
+	},
+    
+    -- Banner/jacket AF
+    Def.ActorFrame{
+        OnCommand=function(self)
+            if SL.Global.GameMode=="Casual" then
+                self:visible(false) -- Need the other half of this animation, first - 48
+            else
+                self:xy(_screen.cx,_screen.cy-126):zoom(0.84):sleep(1.5):accelerate(0.5):y(0):diffusealpha(0)
+            end
+        end,
+        -- Banner outline
+        Def.Quad{
+            InitCommand=function(self)
+                self:setsize(422,167):diffuse(0.8,0.8,0.8,0.6)
+            end,
+            OnCommand=function(self) if is_casual then self:diffusealpha(0) return end end,
+        },
+        -- Banner/jacket sprite
+        Def.Sprite{
+            InitCommand=function(self)
+                local img_path
+                local img_type
+                local is_casual = SL.Global.GameMode=="Casual"
+                local song = GAMESTATE:GetCurrentSong()
+                self:glow(Color.White) -- Start of our white "blink" animation
+                -- (Todo: The blink is only to mask the change from the engine banner preserving the banner aspect ratio and the sprite just scaling the image. If this can be changed, the blink should be removed)
+                
+                if is_casual then
+                    -- Need the other half of this animation, first - 48
+                    -- Banner loading routine lifted from Casual mode
+                    --[[if song:HasJacket() then
+                        self.img_path = song:GetJacketPath()
+                        self.img_type = "Jacket"
+                    elseif song:HasBackground() then
+                        self.img_path = song:GetBackgroundPath()
+                        self.img_type = "Background"
+                    elseif song:HasBanner() then
+                        self.img_path = song:GetBannerPath()
+                        self.img_type = "Banner"
+                    else]] -- Fall back to the casual "no jacket" texture
+                        self:Load( THEME:GetPathB("ScreenSelectMusicCasual", "overlay/img/no-jacket.png") )
+                        return
+                    --end
+                else
+                    -- For pro mode, we only check if a banner is present. (The engine wheel, afaik, will only load banners, so this makes for a smoother transition)
+                    
+                    
+                    if song:HasBanner() then
+                        self.img_path = song:GetBannerPath()
+                        self.img_type = "Banner"
+                    else
+                        self:Load(banner_directory.."/banner"..SL.Global.ActiveColorIndex.." (doubleres).png")
+                        return
+                    end
+                end
+
+                -- thank you, based Jousway
+                if (Sprite.LoadFromCached ~= nil) then
+                    self:LoadFromCached(self.img_type, self.img_path)
+
+                -- support SM5.0.12 begrudgingly
+                else
+                    self:LoadBanner(self.img_path)
+                end
+                
+                
+            end,
+            OnCommand=function(self)
+                if is_casual then
+                    self:setsize(128,128)
+                else
+                    self:setsize(418,164)
+                end
+                self:smooth(0.4):glow(0,0,0,0) -- Second half of the intro flash animation
+            end,
+        },
+    },
 }
 
 af[#af+1] = LoadFont("_upheaval_underline 80px")..{

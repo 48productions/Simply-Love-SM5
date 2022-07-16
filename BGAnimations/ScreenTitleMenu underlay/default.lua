@@ -1,3 +1,6 @@
+local logo_tween_time = 0.5 -- Time for the "falling" Simply Spud" logo animation
+local logo_tween_offset = 0.13
+
 local TextColor = (ThemePrefs.Get("RainbowMode") and (not HolidayCheer()) and Color.Black) or Color.White
 
 local SongStats = SONGMAN:GetNumSongs() .. " songs in "
@@ -70,11 +73,15 @@ local af = Def.ActorFrame{
 }
 
 -- decorative arrows, now using the editor noteskin!
-af[#af+1] = LoadActor(THEME:GetPathG("", "_logos"), video_games)..{
-	OnCommand=function(self)
-		self:y(-16):zoom(0.55)
-	end,
-}
+if style == "Potato" then
+    -- Todo: New potato arrows here
+else
+    af[#af+1] = LoadActor(THEME:GetPathG("", "_logos"), video_games)..{
+        OnCommand=function(self)
+            self:y(-16):zoom(0.55)
+        end,
+    }
+end
 
 -- old
 --af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
@@ -84,11 +91,72 @@ af[#af+1] = LoadActor(THEME:GetPathG("", "_logos"), video_games)..{
 --}
 --end
 
--- SIMPLY [something]
-af[#af+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
-	InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(0.75) end,
-	OffCommand=function(self) self:linear(0.5):shadowlength(0) end
-}
+-- Spud theme handles the logo VERY DIFFERENTLY (tween individual letters), special-case it here
+if style == "Potato" then
+    -- Logo AF
+    af[#af+1] = Def.ActorFrame{
+        InitCommand=function(self) self:zoom(0.42):diffusealpha(1) end,                
+        LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Logo_Shadow (doubleres).png"))..{
+            InitCommand=function(self) self:diffusealpha(0) end,
+            OnCommand=function(self) self:sleep(logo_tween_offset * 7):smooth(0.5):diffusealpha(1) end,
+        },
+        -- "Simply" AF
+        Def.ActorFrame{
+            InitCommand=function(self) self:y(-128-100) end,
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Simply_S (doubleres).png"))..{ -- S
+                InitCommand=function(self) self:x(-294):diffusealpha(0) end,
+                OnCommand=function(self) self:decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Simply_I (doubleres).png"))..{ -- I
+                InitCommand=function(self) self:x(-176):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Simply_M (doubleres).png"))..{ -- M
+                InitCommand=function(self) self:x(-49):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 2):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Simply_P (doubleres).png"))..{ -- P
+                InitCommand=function(self) self:x(84):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 3):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Simply_L (doubleres).png"))..{ -- L
+                InitCommand=function(self) self:x(211):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 4):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Simply_Y (doubleres).png"))..{ -- Y
+                InitCommand=function(self) self:x(294):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 5):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+        },
+        
+        -- "Spud" AF
+        Def.ActorFrame{
+            InitCommand=function(self) self:y(89-100) end,
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Spud_S (doubleres).png"))..{ -- S
+                InitCommand=function(self) self:x(-271):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 3):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Spud_P (doubleres).png"))..{ -- P
+                InitCommand=function(self) self:x(-96):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 4.66):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Spud_U (doubleres).png"))..{ -- U
+                InitCommand=function(self) self:x(87):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 6.33):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Spud_D (doubleres).png"))..{ -- D
+                InitCommand=function(self) self:x(269):diffusealpha(0) end,
+                OnCommand=function(self) self:sleep(logo_tween_offset * 8):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
+            },
+        },
+    }
+else
+    -- Use the old logo-handling method for non-potato styles
+    af[#af+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
+        InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(0.75) end,
+        OffCommand=function(self) self:linear(0.5):shadowlength(0) end
+    }
+end
 
 -- SM version, SL version, song stats
 af[#af+1] = Def.ActorFrame{

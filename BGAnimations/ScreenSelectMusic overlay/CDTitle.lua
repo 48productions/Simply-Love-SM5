@@ -46,6 +46,7 @@ local t = Def.ActorFrame{
                 cdtitle:smooth(0.03):diffusealpha(0)
             end
         end,
+        OffCommand=function(self) self:smooth(0.1):diffusealpha(0) end,
     }
 }
 

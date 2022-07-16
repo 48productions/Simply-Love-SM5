@@ -27,7 +27,7 @@ local t = Def.ActorFrame{
         end,
     },
     
-    -- Fallback banner (arrow design, if song has no banner)
+    -- Fallback banner (heart/arrow design, if song has no banner)
 	Def.ActorFrame{
 		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set") end,
 		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set") end,
@@ -87,6 +87,7 @@ local t = Def.ActorFrame{
     Def.ActorFrame{
 
         InitCommand=function(self) self:y(100) end,
+        OffCommand=function(self) self:sleep(1.7):smooth(0.3):diffusealpha(0) end,
         -- background quad
 		Def.Quad{
 			InitCommand=function(self)
@@ -250,7 +251,7 @@ local t = Def.ActorFrame{
         end,
         SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(0.3) end,
         SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(1) end,
-        OffCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(1) end,
+        OffCommand=function(self) self:stoptweening():decelerate(0.5):diffusealpha(1):sleep(1.2):smooth(0.3):diffusealpha(0) end,
 
         LoadActor(THEME:GetPathG('bubble', ''))..{
             InitCommand=function(self) self:diffuse(GetCurrentColor()):zoom(0.455) end

@@ -146,6 +146,9 @@ local SplashList = {
     "\"The size is cute and lovely,\nbut pleasure is great.\"",
     "\"From 1-2 persons can enjoy playing its games\nsimultaneously. Enjoy 'exciting and powerful games'\nwhile standing & 'composed games' while sitting.\nThe speakers are location on both sides of the monitor\nso that they can be easily heard and greatly\nenhance the sound effects, thereby further\nenticing you into the 'world of game.'",
     "\"We Are the Source of Smiles\"",
+    "\"Show all your DJ skill now!\nPlay with your hands and whole body.\nLET'S COOL NOW!\"",
+    "\"Real time pop music\nmixing emulation!\"",
+    "\"R U Ready 2 Go insida DJ Box?\"",
 	"Also try Beatmania IIDX!", --Also try [other game at Jeremy's] (because minecraft has a bunch of these too)
 	"Also try crossbeats!",
 	"Also try DanceEvolution!",

@@ -16,7 +16,13 @@ return Def.ActorFrame{
 		InitCommand=function(self) self:zoom(0.8):shadowlength(0.6):maxwidth(_screen.w/2.5 - 10) end,
 		CurrentSongChangedMessageCommand=function(self)
 			local song = GAMESTATE:GetCurrentSong()
-			self:settext( song and song:GetDisplayFullTitle() or "" )
+            if song then
+                local title = song:GetDisplayFullTitle()
+                self:settext( title .. " // " .. song:GetDisplayArtist())
+                self:AddAttribute(#title, {Length = -1; Diffuse = color("#dddddd")})
+            else
+                self:settext("")
+            end
 		end
 	}
 }
