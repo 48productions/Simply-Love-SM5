@@ -41,6 +41,22 @@ af[#af+1] = Def.ActorFrame{
 		else
 			self:sleep(2):queuecommand("Hide")
 		end
+        -- Transition animations for the notefields
+        for i = 1,2 do
+            if(SCREENMAN:GetTopScreen():GetChild('PlayerP' .. i) ~= nil) then
+                columns = SCREENMAN:GetTopScreen():GetChild('PlayerP' .. i):GetChild('NoteField'):GetColumnActors()
+                for j = #columns, 1, -1 do
+                    columnnum = j
+                    if(i % 2 == 0) then
+                        -- if playernum is even, make sure to reverse the order that the columns slide in at.
+                        columnnum = #columns - j + 1
+                    end
+                    transitionspeed = 0.5
+                    columns[j]:addy(200):diffusealpha(0):sleep(1.37):decelerate(transitionspeed + (columnnum / 3 * transitionspeed))
+                              :addy(-200):diffusealpha(1)
+                end
+            end
+        end
 	end,
 	HideCommand=function(self)
 		self:visible(false)
