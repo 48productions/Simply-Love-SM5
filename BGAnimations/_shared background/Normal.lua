@@ -12,13 +12,13 @@ local anim_data = {
 
 local t = Def.ActorFrame {
 	InitCommand=function(self)
-		self:visible(not ThemePrefs.Get("RainbowMode"))
+		self:visible(not ThemePrefs.Get("RainbowMode") and ThemePrefs.Get("VisualTheme") ~= "Potato")
 	end,
 	OnCommand=function(self) self:accelerate(0.8):diffusealpha(1) end,
 	HideCommand=function(self) self:visible(false) end,
 
 	BackgroundImageChangedMessageCommand=function(self)
-		if not ThemePrefs.Get("RainbowMode") then
+		if not ThemePrefs.Get("RainbowMode") and ThemePrefs.Get("VisualTheme") ~= "Potato" then
 			self:visible(true):linear(0.6):diffusealpha(1)
 
 			local new_file = THEME:GetPathG("", "_VisualStyles/" .. ThemePrefs.Get("VisualTheme") .. "/SharedBackground.png")

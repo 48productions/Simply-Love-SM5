@@ -168,7 +168,7 @@ return Def.BitmapText{
 			local x = _screen.cx / 2
 			local y = _screen.cy / -2
 
-			self:Center():rotationz(20):zoom(0):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):shadowlength(1):shadowcolor(0,0,0,0.8):queuecommand("SetText") --Set rotation, position, and (diffuse) color
+			self:Center():rotationz(20):zoom(0):xy(x, y):diffuse(GetHexColor(SL.Global.ActiveColorIndex)):shadowlength(1):shadowcolor(0,0,0,0.8):queuecommand("SetText"):diffusealpha(0) --Set rotation, position, and (diffuse) color
 		end,
 		
 		OnCommand=function(self) --When the screen is ready, set initial zoom, queue the zoom command, and add the input callback
@@ -182,7 +182,7 @@ return Def.BitmapText{
 		end,
 		
 		FadeInCommand=function(self) --Fade in the text when starting the screen (implemented as a Command as a workaround with how SetText's zoom tween and the fade in interacted)
-			self:smooth(0.3):diffusealpha(1)
+			self:sleep(1.8):smooth(0.3):diffusealpha(1)
 		end,
 		
 		ZoomCommand=function(self) --Zoom command: Smoothly zoom in and out, then queue the zoom command again

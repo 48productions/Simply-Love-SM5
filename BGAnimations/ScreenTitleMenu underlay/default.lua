@@ -70,6 +70,12 @@ local af = Def.ActorFrame{
 		self:Center()
 	end,
 	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
+    
+    --Background cover for the intro animation
+    Def.Quad{
+        InitCommand=function(self) self:zoomto(_screen.w,_screen.h):diffuse(0,0,0,1) end,
+        OnCommand=function(self) self:sleep(logo_tween_offset * 7.5 + logo_tween_time):decelerate(0.5):diffuse(1,1,1,0.05):decelerate(0.5):diffusealpha(0) end
+    }
 }
 
 -- decorative arrows, now using the editor noteskin!
@@ -149,6 +155,12 @@ if style == "Potato" then
                 OnCommand=function(self) self:sleep(logo_tween_offset * 8):decelerate(logo_tween_time):addy(100):diffusealpha(1) end,
             },
         },
+        
+        -- Zoomy spud logo
+        LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/TitleMenu (doubleres).png"))..{
+            InitCommand=function(self) self:diffusealpha(0) end,
+            OnCommand=function(self) self:sleep(logo_tween_offset * 7.5 + logo_tween_time):diffusealpha(0.3):decelerate(0.5):diffusealpha(0):zoom(1.5) end,
+        },
     }
 else
     -- Use the old logo-handling method for non-potato styles
@@ -161,7 +173,7 @@ end
 -- SM version, SL version, song stats
 af[#af+1] = Def.ActorFrame{
 	InitCommand=function(self) self:zoom(0.8):y(-120):diffusealpha(0) end,
-	OnCommand=function(self) self:sleep(0.2):linear(0.4):diffusealpha(1) end,
+	OnCommand=function(self) self:sleep(logo_tween_offset * 8 + logo_tween_time):linear(0.4):diffusealpha(1) end,
 
 	LoadFont("Common Normal")..{
 		--Text=sm_version .. "       " .. sl_name .. (sl_version and (" v" .. sl_version) or ""),
@@ -180,7 +192,7 @@ if HolidayCheer() then
 	af[#af+1] = Def.Sprite{
 		Texture=THEME:GetPathB("ScreenTitleMenu", "underlay/hat.png"),
 		InitCommand=function(self) self:zoom(0.225):xy( 130, -self:GetHeight()/2 ):rotationz(15):queuecommand("Drop") end,
-		DropCommand=function(self) self:decelerate(1.333):y(-110) end,
+		DropCommand=function(self) self:sleep(logo_tween_offset * 3):decelerate(1.333):y(-100) end,
 	}
 end
 

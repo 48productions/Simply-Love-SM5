@@ -10,6 +10,9 @@ local t = Def.ActorFrame{
 	OnCommand=function(self)
 		SCREENMAN:GetTopScreen():AddInputCallback( LoadActor("./InputHandler.lua", {af=self, num_panes=NumPanes}) )
 	end,
+    OffCommand=function(self)
+        self:smooth(0.4):diffusealpha(0)
+    end,
 
 	-- ./Graphics/Triangles.lua, shows up if we're in StomperZ mode
 	LoadActor( THEME:GetPathB("", "Triangles.lua") ),

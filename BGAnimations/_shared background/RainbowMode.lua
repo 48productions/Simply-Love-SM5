@@ -14,11 +14,11 @@ local delay = 0
 
 local af1 = Def.ActorFrame{
 	InitCommand=function(self)
-		self:visible( ThemePrefs.Get("RainbowMode") )
+		self:visible( ThemePrefs.Get("RainbowMode") and ThemePrefs.Get("VisualTheme") ~= "Potato")
 	end,
 	OnCommand=function(self) self:Center():bob():effectmagnitude(0,50,0):effectperiod(8) end,
 	BackgroundImageChangedMessageCommand=function(self)
-		if ThemePrefs.Get("RainbowMode") then
+		if ThemePrefs.Get("RainbowMode") and ThemePrefs.Get("VisualTheme") ~= "Potato" then
 			self:visible(true):linear(0.6):diffusealpha(1)
 		else
 			self:linear(0.6):diffusealpha(0):queuecommand("Hide")

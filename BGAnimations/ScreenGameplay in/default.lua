@@ -86,6 +86,7 @@ af[#af+1] = Def.ActorFrame{
     
     -- Banner/jacket AF
     Def.ActorFrame{
+        Condition=not GAMESTATE:IsDemonstration(),
         OnCommand=function(self)
             if SL.Global.GameMode=="Casual" then
                 self:visible(false) -- Need the other half of this animation, first - 48
@@ -93,6 +94,21 @@ af[#af+1] = Def.ActorFrame{
                 self:xy(_screen.cx,_screen.cy-126):zoom(0.84):sleep(1.5):accelerate(0.5):y(0):diffusealpha(0)
             end
         end,
+        
+        -- Banner 'splode particles
+        LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Left
+            InitCommand=function(self) self:diffuse(GetCurrentColor()):x(200):rotationz(-10):zoom(0):diffusealpha(0.9) end,
+            OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(230,40):zoom(1.1):diffusealpha(0) end
+        },
+        LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flycenter (doubleres).png"))..{ -- Center
+            InitCommand=function(self) self:diffuse(GetCurrentColor()):y(-50):zoom(0):diffusealpha(0.9) end,
+            OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(10):y(-120):zoom(1.1):diffusealpha(0) end
+        },
+        LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Right
+            InitCommand=function(self) self:diffuse(GetCurrentColor()):x(-200):rotationy(180):rotationz(-10):zoom(0):diffusealpha(0.9) end,
+            OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(-230,40):zoom(1.1):diffusealpha(0) end
+        },
+        
         -- Banner outline
         Def.Quad{
             InitCommand=function(self)
@@ -159,6 +175,7 @@ af[#af+1] = Def.ActorFrame{
                 self:smooth(0.4):glow(0,0,0,0) -- Second half of the intro flash animation
             end,
         },
+        
     },
 }
 
