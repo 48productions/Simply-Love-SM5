@@ -1,4 +1,4 @@
-# Simply Spud (StepMania 5)
+# Simply Spud
 
 (Formerly Simply Potato)
 
@@ -7,36 +7,34 @@
 
 ## About
 
-Simply Spud is a fork of the Simply Love StepMania 5 theme for the part of the post-ITG community that also happens to love potatoes.
+Simply Spud is a StepMania/Outfox theme that focues on:
+ * A balance of simplicity and stylistic flair
+ * An intuitive menu design for casual players, with useful features for pro players
 
-It features more visual flair, and MANY UI changes to make the theme more suitable for casual/intermediate play on a public cabinet (though it'll work fine on home setups, too!)
+A fork of Simply Love SM5, it adds several layers of flair and polish while sharing some of the original's simplistic charm and most of its core features for pro players.
 
 ---
 
 Current major changes:
-  * Support for StepMania 5.3 (for improved performance/stability and new features)
-  * Overhauled to greatly improve casual play experience, including:
-   * [Improved style selection](https://i.imgur.com/9VP89ps.png) - Casual and ITG mode are now Beginner and Pro mode, the default changes when using a memory card.
-   * [Tweaks to Casual Mode's music wheel](https://i.imgur.com/ttb5uz6.png) (it now has a more standard cover flow-style look)
-   * A simplified casual mode option menu, and other UI tweaks to the casual music wheel
-   * Default songs now affect *all* play modes
-   * Pump/ITG-style option to immediately fail players at a certain miss combo and kick them out of their set (configurable)
-  * A new font, and lots of new visual tweaks and additional animation flair across the theme
+  * Supports Outfox (formerly StepMania 5.3, for improved performance and new features)
+  * Overhauled aesthetics - nearly every screen has more animation and stylistic flair
+  * Overhauled play experience
+   * [Improved style selection](https://i.imgur.com/9VP89ps.png) - Casual and ITG mode are now Beginner and Pro mode. FA+/StomperZ are still available in Pro mode.
+   * [Overhauled Casual Mode](https://i.imgur.com/ttb5uz6.png) - now features a cover-flow style song list and improved difficulty selection
+   * [Reworked Pro Mode] - More open and visually stylized song selection, separate difficulty selection
   * An optional potato-inspired visual style to go along with the other styles (hearts, arrows, thonk, etc)
+
+Other useful features and tools for public cab operators:
+  * Configurable song rating scales/group descriptions on the music wheel, can color song titles based on rating scale
+  * Default songs for profileless players now affect *all* play modes
+  * Can optionally auto-fail players at 30/51 miss combo (for players that walk away from the cab mid-song)
   * A News feature, to show configurable images in the attract mode loop and to players with memory cards
-
-
-Other changes include:
-  * Splash text on the title screen
-  * More player-facing prompts to use a USB drive (when configured)
-  * New menu music option, independent of the visual style in use
-  * Configurable descriptions/rating scale information for song groups
   * "Modfile" groups - Gives modfiles colored titles, and shows a warning to new players.
-  * Tweaks to the attract loop, including demo play (SM5 lets you set demo songs by adding a course named "Simply-Potato-SM5")
+  * Tweaks to the attract loop, including demo play (set the songs to play by adding a course named "Simply-Potato-SM5")
   * Cab lighting test in the service menu
   * Many more easter eggs and bug fixes!
   
-Do note that while the original Simply Love theme was translated into several languages, Simply Spud (at the moment at least) only has English translations for the new lines of text. Expect errors if you're using a language other than English, sorry!
+Do note that while the original Simply Love theme was translated into several languages, Simply Spud (at the moment at least) only has English translations for the new lines of text.
 
 
 ## Special Thanks
@@ -46,7 +44,7 @@ Do note that while the original Simply Love theme was translated into several la
 
 ## Requirements
 
-You'll need to install [StepMania 5.3](https://projectmoon.dance/index.php?id=2), [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12), or [StepMania 5.1 beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2) to use this theme.
+You'll need to install [Project Outfox](https://projectoutfox.com/downloads), [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12), or [StepMania 5.1 beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2) to use this theme.
 
 Versions of StepMania older than 5.0.12 and StepMania 5.2 are not compatible.
 
@@ -61,60 +59,21 @@ If you are having trouble installing StepMania or getting it to run on your comp
 
 ## Installation
 
-Head to the [Releases Page](https://github.com/48productions/Simply-Potato-SM5/releases) to download the most recent formal release of Simply Spud. But not really. We haven't bothered to make one of those yet. Downloading directly from the *master* branch is the way to go for now.
+Simply Spud is frequently updated, and as such is currently rolling release.
 
-To install this theme, unzip it and move the resulting directory inside the *Themes* folder in your [StepMania user data directory](https://github.com/stepmania/stepmania/wiki/User-Data-Locations). Note that the *Themes* folder has been moved into the *Appearance* folder in StepMania 5.3.
+Click the green "Code" button, then "Download ZIP" at the top to download the theme.
+
+Unzip the theme into the *Themes* folder (StepMania 5) or the *Appearance/Themes* folder (Outfox).
+
 
 ## Screenshots
 
-Visit quietly-turning's imgur album for screenshots of the original Simply Love SM5 theme in action: [http://imgur.com/a/56wDq](http://imgur.com/a/56wDq)
+Coming soon!
+
 
 ## New Features
 
 Or, *things quietly-turning has added that were not present in the original Simply Love for StepMania 3.95.*
-
-#### New GameModes
-
-* [Casual](http://imgur.com/zLLhDWQh.png) – Intended for novice players; restricted song list, no failing, no LifeMeter, simplified UI, etc.  You can read more about customizing what content appears in Casual Mode [here](./Other/CasualMode-README.md).
-* [ITG](http://imgur.com/HS03hhJh.png) – Play using the *In the Groove* standards established over a decade ago
-* [FA+](http://imgur.com/teZtlbih.png) – Similar to ITG, but features tighter TimingWindows; can be used to qualify for ECFA events
-* [StomperZ](http://imgur.com/dOKTpVbh.png) – Emulates a very small set of features from Rhythm Horizon gameplay
-
-#### New Auxiliary Features
-
-  * [Live Step Statistics](https://imgur.com/w4ddgSK.png) – This optional gameplay overlay tracks how many of each judgment have been earned in real time and features a notes-per-second density histogram.  This can make livestreaming more interesting for viewers.
-  * [Judgment Scatter Plot](https://imgur.com/JK5Li2w.png) – ScreenEvaluation now features a judgment scatterplot where notes hit early are rendered "below the middle" and notes hit late are rendered "above the middle." This can offer insight into how a player performed over time. Did the player gradually hit notes earlier and earlier as the song wore on? This feature can help players answer such questions.
-  * [Judgment Density Histogram](https://imgur.com/FAuieAf.png) – The evaluation screen also now features a histogram that will help players assess whether they are more often hitting notes early or late.
-  * [Per-Column Judgment Breakdown](https://imgur.com/ErcvncM.png)
-  * [IIDX-inspired Pacemaker](http://imgur.com/NwN8Fnbh.png)
-  * [QR Code Integration with GrooveStats](https://imgur.com/olgg4hS.png) – Evaluation now displays a QR code that will upload the score you just earned to your [GrooveStats](http://groovestats.com/) account.
-  * Improved MeasureCounter – Stepcharts can now be parsed ahead of time, so it is no longer necessary to play through a stepchart at least once to acquire a stream breakdown.
-
-#### New Aesthetic Features
- * [RainbowMode](http://i.imgur.com/aKsvrcch.png) – add some color to Simply Love! Why pick *one* color when you can pick *all the colors*?
- * [NoteSkin and Judgment previews](https://imgur.com/QUSqxr8.png) in the modifier menu
- * Improved widescreen support
-
-#### New Conveniences for Public Machine Operators
-  * [MenuTimer Options](http://imgur.com/DPffsdQh.png) – Set the MenuTimers for various screens.
-  * [Long/Marathon Song Cutoffs](http://i.imgur.com/fzNJDVDh.png) – The cutoffs for songs that cost 2 and 3 rounds can be set in *Arcade Options*.
-
-#### Language Support
-
-Simply Spud has support for:
-
-  * English
-  * ~~Español~~
-  * ~~Français~~
-  * ~~Português Brasileiro~~
-  * ~~日本語~~
-  * ~~Deutsch~~
-
-*(Simply Love SM5 is translated into the above languages, but Simply Spud's additions are yet to be translated)*
-
-If, for some reason, you want to help translate Simply Spud's additional menu options, leave a comment in [this issue](https://github.com/48productions/Simply-Potato-SM5/issues/3) or submit a pull request.
-
-The current language can be changed in Simply Spud under *System Options*.  You may need to restart StepMania immediately after changing the language for all in-game text to be properly translated.
 
 
 ---

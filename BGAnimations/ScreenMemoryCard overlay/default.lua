@@ -2,7 +2,7 @@ local TopString = ScreenString("Top")  --Default the first string to an alternat
 local BottomerString = ""
 
 local af = Def.ActorFrame{
-	InitCommand=function(self) self:Center() end
+	InitCommand=function(self) self:Center() SL.Global.GameplayReloadCheck = false end -- Reset GameplayReloadCheck so that the next ScreenDemonstration loop has the proper intro animation
 }
 
 --SCREENMAN:SystemMessage(PREFSMAN:GetPreference("MemoryCards"))
