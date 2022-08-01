@@ -25,17 +25,19 @@ local t = Def.ActorFrame {
 	end
 }
 
+-- Scrolling potatoes
 for i=1,3 do
 	t[#t+1] = Def.Sprite {
 		Texture=THEME:GetPathG("", file..i),
 		OnCommand=function(self)
-			self:zoom(0.4):Center()
+			self:zoom(0.45):Center()
 			:customtexturerect(0,0,1,1):texcoordvelocity(anim_data.texcoordvelocity[i][1], anim_data.texcoordvelocity[i][2])
 			:diffusealpha(anim_data.diffusealpha[i])
 		end,
 	}
 end
 
+-- Accent image
 t[#t+1] = Def.Sprite {
     Texture=THEME:GetPathG("", file.."Accent"),
 		OnCommand=function(self)

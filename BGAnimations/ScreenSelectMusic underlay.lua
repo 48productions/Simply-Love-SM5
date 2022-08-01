@@ -54,6 +54,9 @@ local t = Def.ActorFrame{
 				--if ThemePrefs.Get("RainbowMode") then
 				--end
 			end,
+            OffCommand=function(self)
+                self:linear(0.2):diffusealpha(0) -- Match the animation for the musicwheel in metrics
+            end,
             SetCommand=function(self)
                 if not GAMESTATE:GetCurrentSong() then
                     self:diffuse(color_slate)
@@ -72,6 +75,9 @@ local t = Def.ActorFrame{
 				--if ThemePrefs.Get("RainbowMode") then
 				--end
 			end,
+            OffCommand=function(self)
+                self:linear(0.2):diffusealpha(0) -- Match the animation for the musicwheel in metrics
+            end,
             SetCommand=function(self)
                 if not GAMESTATE:GetCurrentSong() then
                     self:diffuse(color_slate)
