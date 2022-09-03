@@ -34,15 +34,16 @@ local t = Def.ActorFrame{
         self:sleep(0.5):decelerate(0.5):x(_screen.cx+_screen.w/4+14)
 	end,
 
+    CurrentSongChangedMessageCommand=function(self) self:playcommand("Set") end,
+    CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set") end,
+    CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set") end,
+    CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set") end,
+    CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set") end,
+    CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set") end,
+
 	-- ----------------------------------------
 	-- Actorframe for Artist, BPM, and Song length
 	Def.ActorFrame{
-		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set") end,
-		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set") end,
-		CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set") end,
-		CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set") end,
-		CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set") end,
-		CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set") end,
 
 		-- background for Artist, BPM, and Song Length
 		Def.Quad{
@@ -270,7 +271,14 @@ local t = Def.ActorFrame{
                 end
             },
 		},
-	}
+	},
 }
+
+
+-- If we're on a build that supports Def.NoteField, load the chart preview
+-- Plot twist: Don't. According to Squirrel, Def.NoteField isn't designed for this atm and will receive more changes in Outfox Alpha 5, so imma can this until then - 48
+--[[if Def.NoteField then
+    t[#t+1] = LoadActor("./ChartPreview.lua")
+end]]
 
 return t
