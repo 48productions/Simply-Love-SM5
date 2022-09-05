@@ -237,14 +237,8 @@ end
 -- quirks/oversights in the engine on a per-game + per-style basis
 
 local NoteFieldWidth = {
-	-- dance Just Works™.  Wow!  It's almost like this game gets the most attention and fixes.
-	dance = {
-		single  = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) end,
-		versus  = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) end,
-		double  = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) end,
-		solo    = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) end,
-		routine = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) end,
-	},
+	-- dance works and doesn't need modification (use the fallback width instead of overriding it here)
+    
 	-- the values returned by the engine for Pump are slightly too small(?), so... uh... pad it
 	pump = {
 		single  = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) + 10 end,
@@ -254,7 +248,6 @@ local NoteFieldWidth = {
 	},
 	-- techno works for single8, needs to be smaller for versus8 and double8
 	techno = {
-		single8 = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) end,
 		versus8 = function(p) return (GAMESTATE:GetCurrentStyle():GetWidth(p)/1.65) end,
 		double8 = function(p) return (GAMESTATE:GetCurrentStyle():GetWidth(p)/1.65) end,
 	},
@@ -266,7 +259,6 @@ local NoteFieldWidth = {
 	-- kb7 works for single, needs to be smaller for versus
 	-- there is no kb7 double (would that be kb14?)
 	kb7 = {
-		single = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p) end,
 		versus = function(p) return GAMESTATE:GetCurrentStyle():GetWidth(p)/1.65 end,
 	},
 }
@@ -276,7 +268,13 @@ GetNotefieldWidth = function(player)
 
 	local game = GAMESTATE:GetCurrentGame():GetName()
 	local style = GAMESTATE:GetCurrentStyle():GetName()
-	return NoteFieldWidth[game][style](player)
+	
+    -- Fallback to the engine-provided width in case our lookup table doesn't specify a new value for width
+    if NoteFieldWidth[game] and NoteFieldWidth[game][style] then
+        return NoteFieldWidth[game][style](player)
+    else
+        return GAMESTATE:GetCurrentStyle():GetWidth(player)
+    end
 end
 
 -- -----------------------------------------------------------------------

@@ -17,10 +17,12 @@ local t = Def.ActorFrame{
             local cdtitle = self
             local height = cdtitle:GetHeight()
             local width = cdtitle:GetWidth()
+            
+            cdtitle:stoptweening()
 
             if song then
                 if song:HasCDTitle() then
-                    cdtitle:stoptweening():diffusealpha(0)
+                    cdtitle:diffusealpha(0)
                     cdtitle:Load(song:GetCDTitlePath())
                         -- Zoom weird (large) CDTitles to maxh or maxw
                     if height >= maxh and width >= maxw then
