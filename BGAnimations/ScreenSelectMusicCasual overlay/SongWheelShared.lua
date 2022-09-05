@@ -10,7 +10,8 @@ local difficultyMedium = difficultyMax * 0.33
 
 local af = Def.ActorFrame{
 	Name="SongWheelShared",
-	InitCommand=function(self) self:y(y_offset) end
+	InitCommand=function(self) self:y(y_offset) end,
+    OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
 }
 
 -----------------------------------------------------------------

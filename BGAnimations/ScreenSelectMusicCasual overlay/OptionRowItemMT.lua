@@ -15,6 +15,7 @@ local optionrow_item_mt = {
 				end,
 				UnhideCommand=function(subself) subself:sleep(0.3):linear(0.2):diffusealpha(1) end,
 				HideCommand=function(subself) subself:diffusealpha(0) end,
+                OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
 
                 -- Option title (difficulty name)
 				Def.BitmapText{

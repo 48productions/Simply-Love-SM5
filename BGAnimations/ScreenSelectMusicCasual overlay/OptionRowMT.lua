@@ -14,6 +14,7 @@ local optionrow_mt = {
 					subself:diffusealpha(0):queuecommand("Hide2")
 				end,
 				OnCommand=function(subself) subself:y(item_index * 62) end,
+                OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
 
 				HideCommand=function(subself) subself:linear(0.2):diffusealpha(0):queuecommand("Hide2") end,
 				Hide2Command=function(subself) subself:visible(false) end,

@@ -51,6 +51,7 @@ local item_mt = {
 					end
 				end,
 				OnCommand=function(subself) subself:finishtweening() end,
+                OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
 
 				StartCommand=function(subself)
 					if self.index == GroupWheel:get_actor_item_at_focus_pos().index then

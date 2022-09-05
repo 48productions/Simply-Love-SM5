@@ -43,7 +43,7 @@ local optionrow_item_mt = LoadActor("./OptionRowItemMT.lua")
 
 local t = Def.ActorFrame {
 	InitCommand=function(self)
-        SL.Global.GameplayReloadCheck = false --Workaround to ensure we display the gameplay intro for the next song - 48
+        SL.Global.GameplayReloadCheck = false
 		GroupWheel:set_info_set(Groups, group_index)
 		self:GetChild("GroupWheel"):SetDrawByZPosition(true)
 
@@ -135,7 +135,11 @@ local t = Def.ActorFrame {
 	EnableInputCommand=function(self)
 		Input.Enabled = true
 	end,
-
+    
+    Def.Quad{
+        InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0) end,
+        OffCommand=function(self) self:smooth(1):diffusealpha(1) end,
+    },
 
 	LoadActor("./PlayerOptionsShared.lua", {row, col, Input}),
 	LoadActor("./SongWheelShared.lua", {row, col, songwheel_y_offset}),

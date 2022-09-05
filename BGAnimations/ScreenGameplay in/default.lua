@@ -40,23 +40,23 @@ af[#af+1] = Def.ActorFrame{
 			self:playcommand("Hide")
 		else
 			self:sleep(2):queuecommand("Hide")
-		end
-        -- Transition animations for the notefields
-        for i = 1,2 do
-            if(SCREENMAN:GetTopScreen():GetChild('PlayerP' .. i) ~= nil) then
-                columns = SCREENMAN:GetTopScreen():GetChild('PlayerP' .. i):GetChild('NoteField'):GetColumnActors()
-                for j = #columns, 1, -1 do
-                    columnnum = j
-                    if(i % 2 == 0) then
-                        -- if playernum is even, make sure to reverse the order that the columns slide in at.
-                        columnnum = #columns - j + 1
+                    -- Transition animations for the notefields
+            for i = 1,2 do
+                if(SCREENMAN:GetTopScreen():GetChild('PlayerP' .. i) ~= nil) then
+                    columns = SCREENMAN:GetTopScreen():GetChild('PlayerP' .. i):GetChild('NoteField'):GetColumnActors()
+                    for j = #columns, 1, -1 do
+                        columnnum = j
+                        if(i % 2 == 0) then
+                            -- if playernum is even, make sure to reverse the order that the columns slide in at.
+                            columnnum = #columns - j + 1
+                        end
+                        transitionspeed = 0.5
+                        columns[j]:addy(200):diffusealpha(0):sleep(1.37):decelerate(transitionspeed + (columnnum / 3 * transitionspeed))
+                                  :addy(-200):diffusealpha(1)
                     end
-                    transitionspeed = 0.5
-                    columns[j]:addy(200):diffusealpha(0):sleep(1.37):decelerate(transitionspeed + (columnnum / 3 * transitionspeed))
-                              :addy(-200):diffusealpha(1)
                 end
             end
-        end
+		end
 	end,
 	HideCommand=function(self)
 		self:visible(false)
@@ -89,32 +89,57 @@ af[#af+1] = Def.ActorFrame{
         Condition=not GAMESTATE:IsDemonstration(),
         OnCommand=function(self)
             if SL.Global.GameMode=="Casual" then
-                self:visible(false) -- Need the other half of this animation, first - 48
+                self:xy(_screen.cx,_screen.cy-140):sleep(1.5):accelerate(0.5):y(0):diffusealpha(0)
             else
                 self:xy(_screen.cx,_screen.cy-126):zoom(0.84):sleep(1.5):accelerate(0.5):y(0):diffusealpha(0)
             end
         end,
         
         -- Banner 'splode particles
-        LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Left
-            InitCommand=function(self) self:diffuse(GetCurrentColor()):x(200):rotationz(-10):zoom(0):diffusealpha(0.9) end,
-            OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(230,40):zoom(1.1):diffusealpha(0) end
+        -- Keep two AFs here - one set for the casual mode transition, and one set for the pro mode transition
+        Def.ActorFrame{
+            Condition=SL.Global.GameMode=="Casual",
+            LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Left
+                InitCommand=function(self) self:diffuse(GetCurrentColor()):x(70):rotationz(-10):zoom(0):diffusealpha(0.9) end,
+                OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(120,40):zoom(1.1):diffusealpha(0) end
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flycenter (doubleres).png"))..{ -- Center
+                InitCommand=function(self) self:diffuse(GetCurrentColor()):zoom(0):diffusealpha(0.9) end,
+                OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(10):y(-80):zoom(1.1):diffusealpha(0) end
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Right
+                InitCommand=function(self) self:diffuse(GetCurrentColor()):x(70):rotationy(180):rotationz(-10):zoom(0):diffusealpha(0.9) end,
+                OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(-120,40):zoom(1.1):diffusealpha(0) end
+            },
         },
-        LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flycenter (doubleres).png"))..{ -- Center
-            InitCommand=function(self) self:diffuse(GetCurrentColor()):y(-50):zoom(0):diffusealpha(0.9) end,
-            OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(10):y(-120):zoom(1.1):diffusealpha(0) end
-        },
-        LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Right
-            InitCommand=function(self) self:diffuse(GetCurrentColor()):x(-200):rotationy(180):rotationz(-10):zoom(0):diffusealpha(0.9) end,
-            OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(-230,40):zoom(1.1):diffusealpha(0) end
+        
+        Def.ActorFrame{
+            Condition=SL.Global.GameMode~="Casual",
+            LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Left
+                InitCommand=function(self) self:diffuse(GetCurrentColor()):x(200):rotationz(-10):zoom(0):diffusealpha(0.9) end,
+                OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(230,40):zoom(1.1):diffusealpha(0) end
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flycenter (doubleres).png"))..{ -- Center
+                InitCommand=function(self) self:diffuse(GetCurrentColor()):y(-50):zoom(0):diffusealpha(0.9) end,
+                OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(10):y(-120):zoom(1.1):diffusealpha(0) end
+            },
+            LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu flytop (doubleres).png"))..{ -- Right
+                Condition=SL.Global.GameMode~="Casual",
+                InitCommand=function(self) self:diffuse(GetCurrentColor()):x(-200):rotationy(180):rotationz(-10):zoom(0):diffusealpha(0.9) end,
+                OnCommand=function(self) self:sleep(0.4):decelerate(0.6):rotationz(20):xy(-230,40):zoom(1.1):diffusealpha(0) end
+            },
         },
         
         -- Banner outline
         Def.Quad{
             InitCommand=function(self)
-                self:setsize(422,167):diffuse(0.8,0.8,0.8,0.6)
+                if SL.Global.GameMode=="Casual" then
+                    self:setsize(132,132)
+                else
+                    self:setsize(422,167)
+                end
+                self:diffuse(0.8,0.8,0.8,0.6)
             end,
-            OnCommand=function(self) if is_casual then self:diffusealpha(0) return end end,
         },
         -- Banner/jacket sprite
         Def.Sprite{
@@ -129,7 +154,7 @@ af[#af+1] = Def.ActorFrame{
                 if is_casual then
                     -- Need the other half of this animation, first - 48
                     -- Banner loading routine lifted from Casual mode
-                    --[[if song:HasJacket() then
+                    if song:HasJacket() then
                         self.img_path = song:GetJacketPath()
                         self.img_type = "Jacket"
                     elseif song:HasBackground() then
@@ -138,10 +163,10 @@ af[#af+1] = Def.ActorFrame{
                     elseif song:HasBanner() then
                         self.img_path = song:GetBannerPath()
                         self.img_type = "Banner"
-                    else]] -- Fall back to the casual "no jacket" texture
+                    else -- Fall back to the casual "no jacket" texture
                         self:Load( THEME:GetPathB("ScreenSelectMusicCasual", "overlay/img/no-jacket.png") )
                         return
-                    --end
+                    end
                 else
                     -- For pro mode, we only check if a banner is present. (The engine wheel, afaik, will only load banners, so this makes for a smoother transition)
                     
@@ -167,7 +192,7 @@ af[#af+1] = Def.ActorFrame{
                 
             end,
             OnCommand=function(self)
-                if is_casual then
+                if SL.Global.GameMode=="Casual" then
                     self:setsize(128,128)
                 else
                     self:setsize(418,164)

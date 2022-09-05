@@ -29,6 +29,13 @@ local song_mt = {
 				OnCommand=function(subself)
 					subself:finishtweening():sleep(0.25):linear(0.25):diffusealpha(1):queuecommand("PlayMusicPreview")
 				end,
+                OffCommand=function(subself)
+                    if self.index == SongWheel:get_actor_item_at_focus_pos().index and SCREENMAN:GetTopScreen():GetNextScreenName() == "ScreenGameplay" then
+						subself:decelerate(1):rotationy(360):xy(_screen.cx,_screen.cy-126):zoom(1.2)
+					else
+						subself:accelerate(0.5):addy(50):diffusealpha(0)
+					end
+                end,
 
                 -- Position jackets when moving from group to song selection
 				StartCommand=function(subself)
@@ -36,7 +43,6 @@ local song_mt = {
 					if self.index == SongWheel:get_actor_item_at_focus_pos().index then
 						subself:queuecommand("SlideToTop")
 						MESSAGEMAN:Broadcast("SwitchFocusToSingleSong")
-
 					-- hide everything else
 					else
 						subself:decelerate(0.2):addy(70):diffusealpha(0)

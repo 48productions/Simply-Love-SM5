@@ -8,6 +8,7 @@ local af = Def.ActorFrame{
 			self:diffuse(color("#000000dd"))
 			self:zoomto(_screen.w, row.h*0.5):valign(0):xy( _screen.cx, 0 )
 		end,
+        OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
 		SwitchFocusToSongsMessageCommand=function(self)
 			self:sleep(0.1):linear(0.1):zoomtoheight(row.h*0.5)
 		end,
