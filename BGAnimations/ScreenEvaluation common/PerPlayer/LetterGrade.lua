@@ -14,6 +14,8 @@ if title == "D" then grade = "Grade_Tier99" end
 
 local t = Def.ActorFrame{}
 
+--grade = "Grade_Tier02" -- Force a specific grade for testing
+
 t[#t+1] = LoadActor(THEME:GetPathG("", "_grades/"..grade..".lua"), playerStats)..{
 	InitCommand=function(self)
 		self:x(70 * (player==PLAYER_1 and -1 or 1))
