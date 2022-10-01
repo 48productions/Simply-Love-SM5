@@ -30,8 +30,6 @@ end
 local t = Def.ActorFrame{
 	InitCommand=function(self)
 		self:SetUpdateFunction( Update )
-			:xy(_screen.cx+90, _screen.cy)
-			:zoom(1.25)
 	end,
 	OnCommand=function(self)
 		-- Get the Topscreen and its name, now that that TopScreen itself actually exists
@@ -46,7 +44,7 @@ local t = Def.ActorFrame{
 			choice_actors[#choice_actors+1] = TopScreen:GetChild("IconChoice"..choice)
 		end
 
-		self:queuecommand("Update")
+        self:queuecommand("Update")
 	end,
 	OffCommand=function(self)
 		if ScreenName=="ScreenSelectPlayMode" or ScreenName=="ScreenSelectPlayModeThonk" then
@@ -64,6 +62,16 @@ local t = Def.ActorFrame{
 			THEME:ReloadMetrics()
 		end
 	end,
+}
+
+t[#t+1] = LoadFont("Common Normal")..{
+    Name="Legal",
+    Text=THEME:GetString("ScreenSelectStyle", "Legal"),
+    InitCommand=function(self)
+        self:shadowlength(1):xy(_screen.cx, _screen.h * 0.87):zoom(0.8):diffuseshift():effectcolor1(1,1,1,0.6):effectcolor2(1,1,1,0.5):effectperiod(2):diffusealpha(0)
+    end,
+    OnCommand=function(self) self:smooth(0.3):diffusealpha(1) end,
+    OffCommand=function(self) self:smooth(0.3):diffusealpha(0) end,
 }
 
 return t

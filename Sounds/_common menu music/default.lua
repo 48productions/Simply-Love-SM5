@@ -25,19 +25,21 @@ local file = songs[ style ]
 -- fall back on the song for Hearts as default music
 -- (this sometimes happens when people are experimenting
 -- with making their own custom VisualThemes)
-
-if AllowThonk() then file = songs.Thonk end
-
 if not file then file = songs.Hearts end
 
--- annnnnd some EasterEggs
-if PREFSMAN:GetPreference("EasterEggs") and file ~= songs.Thonk then
-	--  41 days remain until the end of the year.
-	if MonthOfYear()==10 and DayOfMonth()==20 then file = "20" end
-	-- Halloween is a holiday too - 48
-	if MonthOfYear()==9 then file = "Spooky Scary Chiptunes" end
-	-- the best way to spread holiday cheer is singing loud for all to hear
-	if MonthOfYear()==11 then file = "HolidayCheer" end
+-- Force thonk music if thonk mode is enabled
+if AllowThonk() then file = songs.Thonk end
+
+-- Force other easter egg music as deemed needed, but ONLY if menu music isn't set to silent
+if file ~= songs.Silent then
+    if PREFSMAN:GetPreference("EasterEggs") and file ~= songs.Thonk then
+        --  41 days remain until the end of the year (20,November)
+        if MonthOfYear()==10 and DayOfMonth()==20 then file = "20" end
+        -- Halloween is a holiday too
+        if MonthOfYear()==9 then file = "Spooky Scary Chiptunes" end
+        -- the best way to spread holiday cheer is singing loud for all to hear (Christmas)
+        if MonthOfYear()==11 then file = "HolidayCheer" end
+    end
 end
 
 return THEME:GetPathS("", "_common menu music/" .. file)
