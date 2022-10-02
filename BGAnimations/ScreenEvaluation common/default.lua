@@ -69,7 +69,7 @@ for player in ivalues(Players) do
 		LoadActor("./PerPlayer/Difficulty.lua", player),
 
 		-- Record Texts (Machine and/or Personal)
-		LoadActor("./PerPlayer/RecordTexts.lua", player)
+		LoadActor("./PerPlayer/RecordTexts.lua", player),
 	}
 
 	-- the lower half of ScreenEvaluation
@@ -112,6 +112,9 @@ for player in ivalues(Players) do
 
 		-- was this player disqualified from ranking?
 		LoadActor("./PerPlayer/Disqualified.lua", player),
+        
+        -- Arrows on either side of the panedisplay
+        LoadActor("./PerPlayer/PaneArrows.lua", player),
 	}
 
 	-- add available Panes to the lower ActorFrame via a loop

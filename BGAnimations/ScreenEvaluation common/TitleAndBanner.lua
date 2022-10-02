@@ -42,8 +42,21 @@ af[#af+1] = Def.Quad{
 -- song/course title text
 af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
-		local songtitle = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse():GetDisplayFullTitle()) or GAMESTATE:GetCurrentSong():GetDisplayFullTitle()
-		if songtitle then self:settext(songtitle):maxwidth(banner.width*banner.zoom) end
+        local songtitle
+		if GAMESTATE:IsCourseMode() then
+            songtitle = GAMESTATE:GetCurrentCourse():GetDisplayFullTitle()
+            if songtitle then self:settext(songtitle) end
+        else
+            local song = GAMESTATE:GetCurrentSong()
+            songtitle = song:GetDisplayFullTitle()
+            if songtitle then
+                self:settext(songtitle)
+                if #song:GetDisplaySubTitle() > 0 then
+                    self:AddAttribute(#song:GetDisplayMainTitle(), {Length = -1; Diffuse = color("#bbbbbb")})
+                end
+            end
+        end
+		self:maxwidth(banner.width*banner.zoom*0.95):maxheight(13):y(-1)
 	end
 }
 

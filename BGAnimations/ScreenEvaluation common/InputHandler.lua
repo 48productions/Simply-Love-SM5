@@ -35,8 +35,10 @@ return function(event)
 		if event.GameButton == "MenuRight" or event.GameButton == "MenuLeft" then
 			if event.GameButton == "MenuRight" then
 				active_pane[pn] = ((active_pane[pn] + 1) % #panes[pn])
+                af:GetChild(pn.."_AF_Lower"):GetChild("PaneArrowsAF"):GetChild("ArrowRight"):queuecommand("Press")
 			elseif event.GameButton == "MenuLeft" then
 				active_pane[pn] = ((active_pane[pn] - 1) % #panes[pn])
+                af:GetChild(pn.."_AF_Lower"):GetChild("PaneArrowsAF"):GetChild("ArrowLeft"):queuecommand("Press")
 			end
 
 			for i=1,#panes[pn] do
@@ -52,7 +54,7 @@ return function(event)
 		end
 	end
 
-	if GAMESTATE:IsEventMode() and PREFSMAN:GetPreference("OnlyDedicatedMenuButtons") and event.type ~= "InputEventType_Repeat" then
+	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons") and event.type ~= "InputEventType_Repeat" then
 		MESSAGEMAN:Broadcast("TestInputEvent", event)
 	end
 

@@ -128,7 +128,7 @@ local t = Def.ActorFrame{
 if SL.Global.GameMode ~= "Casual" then
     -- Background
     t[#t+1] = Def.Quad{
-        InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ):diffusealpha(0.6):zoomto(_screen.w, 150) end,
+        InitCommand=function(self) self:diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black ):diffusealpha(0.5):zoomto(_screen.w, 150) end,
     }
     -- SELECT MUSIC text
     t[#t+1] = Def.BitmapText{
