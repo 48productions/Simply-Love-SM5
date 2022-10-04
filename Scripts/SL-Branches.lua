@@ -12,7 +12,10 @@ SelectMusicOrCourse = function()
 	end
 end
 
--- Override the fallback Branch.TitleMenu to never show ScreenLogo
+-- Override the fallback Branch.TitleMenu and Branch.AfterInit to never show ScreenLogo
+Branch.AfterInit = function()
+	return Branch.TitleMenu()
+end,
 Branch.TitleMenu = function()
     -- Branch to the title menu (play/options/edit/exit) in home mode, and title join "press start to join" in pay/free play modes
     if GAMESTATE:GetCoinMode() == "CoinMode_Home" then
