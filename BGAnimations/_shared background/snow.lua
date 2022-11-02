@@ -4,15 +4,15 @@
 -- variables you might want to configure to your liking
 
 -- starting values (these can be manipulated later as needed)
-local num_particles = 200
+local num_particles = 150
 -- particle size in pixels
 local min_size = 12
 local max_size = 35
 -- particle velocity in pixels per second
 local min_vx = -7
 local max_vx = 7
-local min_vy = 55
-local max_vy = 85
+local min_vy = 35
+local max_vy = 55
 -- try to keep it SFW
 local path_to_texture = THEME:GetPathB("","_shared background/snowflake.png")
 
@@ -54,11 +54,6 @@ end
 
 local af = Def.ActorFrame{
 	InitCommand=function(self) self:SetUpdateFunction( Update ) end
-}
-
--- background Quad with a black-to-blue gradient
-af[#af+1] = Def.Quad{
-	InitCommand=function(self) self:FullScreen():Center():diffusetopedge(Color.Black):diffusebottomedge(color("#061f4f")) end
 }
 
 local snow_af = Def.ActorFrame{

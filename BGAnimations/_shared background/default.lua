@@ -1,8 +1,3 @@
--- the best way to spread holiday cheer is singing loud for all to hear
-if HolidayCheer() then
-	return LoadActor( THEME:GetPathB("", "_shared background/Snow.lua") )
-end
-
 local af = Def.ActorFrame{}
 
 -- use the "VisualTheme" ThemePrefs value to generate a proper filepath to the appropriate
@@ -47,6 +42,8 @@ af[#af+1] = Def.Quad{
 
 -- Load the lua for each background. They set themselves as visible/invisible when needed, for better transitions between rainbow and non-rainbow mode
 -- This... probably doesn't drain performance TOO much when not in use???
+-- the best way to spread holiday cheer is singing loud for all to hear
+if HolidayCheer() then af[#af+1] = LoadActor("./Snow.lua") end -- Overlay snow on the other backgrounds for the holidays
 af[#af+1] = LoadActor("./Normal.lua", file)
 af[#af+1] = LoadActor("./RainbowMode.lua", file)
 af[#af+1] = LoadActor("./Spud.lua")
