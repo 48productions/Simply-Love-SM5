@@ -3,7 +3,11 @@ local Players = GAMESTATE:GetHumanPlayers();
 local using_mem_card = GAMESTATE:IsAnyHumanPlayerUsingMemoryCard()
 local new_profile_written = PROFILEMAN:ProfileFromMemoryCardIsNew('PlayerNumber_P1') or PROFILEMAN:ProfileFromMemoryCardIsNew('PlayerNumber_P2') --If either player has a *new* memory card profile, note it
 
+local logo_tween_time = 0.5 -- Time for the falling text animation
+local logo_tween_offset = 0.13
+
 local t = Def.ActorFrame{
+    OnCommand=function(self) self:propagate(true):queuecommand("AnimateLogo") end,
     
 	--Player 1 Stats BG
 	Def.Quad{
@@ -105,16 +109,61 @@ end]]
 
 --Background cover
 t[#t+1] = Def.Quad{
-    InitCommand=function(self) self:FullScreen():diffuse(color('#000000ff')) end,
-    OnCommand=function(self) self:sleep(0.5):smooth(3):diffusealpha(0) end
+    InitCommand=function(self) self:zoomto(_screen.w,_screen.h):Center():diffuse(0,0,0,1) end,
+    AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 7.5 + logo_tween_time):decelerate(0.75):diffuse(1,1,1,0.01):decelerate(3):diffusealpha(0) end,
 }
 
  --"Game Over" text
-t[#t+1] = Def.Sprite{
-    Texture="GameOver.png",
-    InitCommand=function(self) self:Center():zoom(0.4):diffusealpha(0) end,
-    OnCommand=function(self) self:smooth(0.5):diffusealpha(1):linear(15):zoom(0.6) end,
-    OffCommand=function(self) self:smooth(0.5):diffusealpha(0) end,
+ t[#t+1] = Def.ActorFrame{
+    InitCommand=function(self) self:zoom(0.42):Center() end,
+    -- Text shadow (don't have the asset for this yet)
+    --[[LoadActor(THEME:GetPathG("", "_VisualStyles/Potato/Logo/Logo_Shadow (doubleres).png"))..{
+        InitCommand=function(self) self:diffusealpha(0) end,
+        AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 7):smooth(1):diffusealpha(1) end,
+    },]]
+    -- "Game" AF
+    Def.ActorFrame{
+        InitCommand=function(self) self:y(-128-100) end,
+        OffCommand=function(self) self:finishtweening() end,
+        LoadActor("Text/Game_G (doubleres).png")..{
+            InitCommand=function(self) self:x(-271):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0) end end,
+        },
+        LoadActor("Text/Game_A (doubleres).png")..{
+            InitCommand=function(self) self:x(-96):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:sleep(logo_tween_offset):decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0.1) end end,
+        },
+        LoadActor("Text/Game_M (doubleres).png")..{
+            InitCommand=function(self) self:x(87):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 2):decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0.2) end end,
+        },
+        LoadActor("Text/Game_E (doubleres).png")..{
+            InitCommand=function(self) self:x(269):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 3):decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0.3) end end,
+        },
+    },
+    
+    -- "Over" AF
+    Def.ActorFrame{
+        InitCommand=function(self) self:y(89-100) end,
+        OffCommand=function(self) self:finishtweening() end,
+        LoadActor("Text/Over_O (doubleres).png")..{
+            InitCommand=function(self) self:x(-271):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 2):decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0.1) end end,
+        },
+        LoadActor("Text/Over_V (doubleres).png")..{
+            InitCommand=function(self) self:x(-96):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 3):decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0.2) end end,
+        },
+        LoadActor("Text/Over_E (doubleres).png")..{
+            InitCommand=function(self) self:x(87):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 4):decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0.3) end end,
+        },
+        LoadActor("Text/Over_R (doubleres).png")..{
+            InitCommand=function(self) self:x(269):diffusealpha(0) end,
+            AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 5):decelerate(logo_tween_time):addy(100):diffusealpha(1) if AllowThonk() then self:bounce():effectoffset(0.4) end end,
+        },
+    },
 }
 
 return t

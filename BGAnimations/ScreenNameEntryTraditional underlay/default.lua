@@ -29,8 +29,10 @@ local PossibleCharacters = {
 -- Primary ActorFrame
 local t = Def.ActorFrame {
 	InitCommand=function(self)
-		self:queuecommand("CaptureInput")
+		self:queuecommand("CaptureInput"):diffusealpha(0)
 	end,
+    OnCommand=function(self) self:smooth(0.25):diffusealpha(1) end,
+    OffCommand=function(self) self:smooth(0.25):diffusealpha(0) end,
 	CaptureInputCommand=function(self)
 		local topscreen = SCREENMAN:GetTopScreen()
 
