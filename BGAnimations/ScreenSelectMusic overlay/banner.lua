@@ -111,6 +111,7 @@ local t = Def.ActorFrame{
                     local song = GAMESTATE:GetCurrentSong()
                     if song then
                         self:settext( song:GetDisplayFullTitle() )
+                        self:diffuse(getSongTitleColor(song:GetGroupName()))
                         if #song:GetDisplaySubTitle() > 0 then
                             self:AddAttribute(#song:GetDisplayMainTitle(), {Length = -1; Diffuse = color("#bbbbbb")})
                         end

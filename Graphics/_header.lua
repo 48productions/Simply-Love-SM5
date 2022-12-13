@@ -17,6 +17,23 @@ return Def.ActorFrame{
 			end
 		end,
 	},
+    Def.Quad{
+        InitCommand=function(self)
+			self:zoomto(_screen.w, 1):vertalign(top):xy(_screen.cx, 32)
+			if ThemePrefs.Get("DarkMode") then
+				self:diffuse(header_light)
+			else
+				self:diffuse(header_dark)
+			end
+            self:diffusealpha(0.6)
+		end,
+		ScreenChangedMessageCommand=function(self)
+			local topscreen = SCREENMAN:GetTopScreen():GetName()
+			if SL.Global.GameMode == "Casual" and (topscreen == "ScreenEvaluationStage" or topscreen == "ScreenEvaluationSummary") then
+				self:diffuse(header_light):diffusealpha(0.6)
+			end
+		end,
+    },
 
 	LoadFont("_upheaval_underline 80px")..{
 		Name="HeaderText",

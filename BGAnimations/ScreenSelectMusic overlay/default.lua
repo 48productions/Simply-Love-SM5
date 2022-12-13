@@ -58,6 +58,9 @@ local t = Def.ActorFrame{
     	
     -- A "Hey you're currently playing a modfile" warning box
     LoadActor("./ModfileWarning.lua"),
+    
+    -- A display of the current sort mode
+    LoadActor("./SortDisplay.lua"),
 
 	-- ---------------------------------------------------
 	-- finally, load the overlay used for sorting the MusicWheel (and more), hidden by default
