@@ -1,5 +1,6 @@
 local num_rows    = 5
-local num_columns = 20
+local num_columns = 20 -- Current number of columns (changes based on the current song's rating scale)
+local num_columns_max = 20 -- Max number of columns (used for DDR X scale)
 local GridZoomX = IsUsingWideScreen() and 0.4 or 0.31
 local BlockZoomY = 0.275
 local StepsToDisplay, SongOrCourse, StepsOrTrails
@@ -12,9 +13,21 @@ local t = Def.ActorFrame{
 	-- - - - - - - - - - - - - -
 
 	OnCommand=function(self) self:queuecommand("RedrawStepsDisplay") end,
-	CurrentSongChangedMessageCommand=function(self) self:queuecommand("RedrawStepsDisplay") end,
+	CurrentSongChangedMessageCommand=function(self) self:queuecommand("UpdateRatingScale"):queuecommand("RedrawStepsDisplay") end,
 	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("RedrawStepsDisplay") end,
 	StepsHaveChangedCommand=function(self) self:queuecommand("RedrawStepsDisplay") end,
+    
+    UpdateRatingScaleCommand=function(self)
+        local song = GAMESTATE:GetCurrentSong()
+        if song then
+            local ratingType = group_rating_types[song:GetGroupName()]
+            if ratingType == 1 then num_columns = num_columns_max return -- DDR Scale
+            elseif ratingType == 2 then num_columns = 15 return -- ITG Scale
+            elseif ratingType == 3 then num_columns = 12 return end -- Mods scale
+        end
+        
+        num_columns = num_columns_max -- No rating scale specified or no song selected, use X scale
+    end,
     
 	-- - - - - - - - - - - - - -
 
@@ -76,13 +89,13 @@ Grid[#Grid+1] = Def.Sprite{
 	Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/StepsDisplayList/_block.png"),
 
 	InitCommand=function(self) self:diffuse(color("#182025")) end,
-	OnCommand=function(self)
-		local width = self:GetWidth()
+    UpdateRatingScaleCommand = function(self)
+        local width = self:GetWidth()
 		local height= self:GetHeight()
-		self:zoomto(width * num_columns * GridZoomX, height * num_rows * BlockZoomY)
+		self:zoomto(width * num_columns_max * GridZoomX, height * num_rows * BlockZoomY)
 		self:y( 3 * height * BlockZoomY )
 		self:customtexturerect(0, 0, num_columns, num_rows)
-	end
+    end
 }
 
 for RowNumber=1,num_rows do
@@ -137,23 +150,6 @@ t[#t+1] = Def.ActorFrame{
     InitCommand=function(self)
         self:x(-150)
     end,
-    CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,
-    
-    -- Rating scale background gradient
-    Def.Quad{
-        InitCommand=function(self)
-            self:zoomto(32, 96):x(6):faderight(1)
-        end,
-        SetCommand=function(self)
-            local song = GAMESTATE:GetCurrentSong()
-            if song then
-                self:diffuse(getSongTitleColor(song:GetGroupName())):diffusealpha(0.3)
-            else
-                --- No song selected - get the current "no scale" color
-                self:diffuse(getSongTitleColor("")):diffusealpha(0.3)
-            end
-        end,
-    },
     
     -- Rating scale text
     LoadFont("_wendy small")..{
@@ -161,9 +157,11 @@ t[#t+1] = Def.ActorFrame{
             self:zoom(0.2):baserotationz(-90):diffusealpha(0.6)
             self:settext("DDR Difficulty")
         end,
-        SetCommand=function(self)
+        UpdateRatingScaleCommand=function(self)
             local song = GAMESTATE:GetCurrentSong()
             if song then
+                self:diffuse(getSongTitleColor(song:GetGroupName())):diffusealpha(0.6)
+            
                 local ratingType = group_rating_types[song:GetGroupName()]
                 if ratingType == 1 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleDDR")) return
                 elseif ratingType == 2 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleITG")) return
@@ -172,6 +170,7 @@ t[#t+1] = Def.ActorFrame{
             
             -- No song selected or group doesn't have rating info
             self:settext(THEME:GetString("ScreenSelectMusic", "ScaleNone"))
+            self:diffuse(getSongTitleColor("")):diffusealpha(0.5)
         end,
     }
 }
