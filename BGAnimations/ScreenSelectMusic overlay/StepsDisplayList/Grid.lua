@@ -1,6 +1,6 @@
 local num_rows    = 5
 local num_columns = 20
-local GridZoomX = IsUsingWideScreen() and 0.435 or 0.39
+local GridZoomX = IsUsingWideScreen() and 0.4 or 0.31
 local BlockZoomY = 0.275
 local StepsToDisplay, SongOrCourse, StepsOrTrails
 
@@ -65,7 +65,7 @@ local t = Def.ActorFrame{
 
 local Grid = Def.ActorFrame{
 	Name="Grid",
-	InitCommand=function(self) self:horizalign(left):vertalign(top):xy(8, -52 ) end,
+	InitCommand=function(self) self:horizalign(left):vertalign(top):xy(18, -52 ) end,
 }
 
 
@@ -87,6 +87,7 @@ Grid[#Grid+1] = Def.Sprite{
 
 for RowNumber=1,num_rows do
 
+    -- The grid blocks themselves
 	Grid[#Grid+1] =	Def.Sprite{
 		Name="Blocks_"..RowNumber,
 		Texture=THEME:GetPathB("ScreenSelectMusic", "overlay/StepsDisplayList/_block.png"),
@@ -110,13 +111,14 @@ for RowNumber=1,num_rows do
 		end
 	}
 
+    -- The difficulty meter number
 	Grid[#Grid+1] = LoadFont("_wendy small")..{
 		Name="Meter_"..RowNumber,
 		InitCommand=function(self)
 			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
 			self:horizalign(right)
 			self:y(RowNumber * height * BlockZoomY)
-			self:x( IsUsingWideScreen() and -140 or -126 )
+			self:x( IsUsingWideScreen() and -130 or -116 )
 			self:zoom(0.3)
 		end,
 		SetCommand=function(self, params)
@@ -129,6 +131,50 @@ for RowNumber=1,num_rows do
 end
 
 t[#t+1] = Grid
+
+-- Rating scale info side panel
+t[#t+1] = Def.ActorFrame{
+    InitCommand=function(self)
+        self:x(-150)
+    end,
+    CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,
+    
+    -- Rating scale background gradient
+    Def.Quad{
+        InitCommand=function(self)
+            self:zoomto(32, 96):x(6):faderight(1)
+        end,
+        SetCommand=function(self)
+            local song = GAMESTATE:GetCurrentSong()
+            if song then
+                self:diffuse(getSongTitleColor(song:GetGroupName())):diffusealpha(0.3)
+            else
+                --- No song selected - get the current "no scale" color
+                self:diffuse(getSongTitleColor("")):diffusealpha(0.3)
+            end
+        end,
+    },
+    
+    -- Rating scale text
+    LoadFont("_wendy small")..{
+        InitCommand=function(self)
+            self:zoom(0.2):baserotationz(-90):diffusealpha(0.6)
+            self:settext("DDR Difficulty")
+        end,
+        SetCommand=function(self)
+            local song = GAMESTATE:GetCurrentSong()
+            if song then
+                local ratingType = group_rating_types[song:GetGroupName()]
+                if ratingType == 1 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleDDR")) return
+                elseif ratingType == 2 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleITG")) return
+                elseif ratingType == 3 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleMods")) return end
+            end
+            
+            -- No song selected or group doesn't have rating info
+            self:settext(THEME:GetString("ScreenSelectMusic", "ScaleNone"))
+        end,
+    }
+}
 
 
 -- "Has Edit" Marker (next to steps list)

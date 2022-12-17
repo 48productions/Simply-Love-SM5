@@ -19,7 +19,7 @@ return Def.Sprite{
 		self:bounce():effectclock("beatnooffset")
 
 		if player == PLAYER_1 then
-			self:x(-160)
+			self:x(-142)
 			self:effectmagnitude(-3,0,0)
 
 		elseif player == PLAYER_2 then
