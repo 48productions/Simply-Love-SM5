@@ -10,7 +10,7 @@ Use this to show info about new content, events, etc. Great for public cab usage
 
  - Place images to show in `Other/News/`
  - Filename doesn't matter much, you'll just specify it in the config later
- - Transparent images are allowed - everything is displayed over the SL's normal "flying icons" background
+ - Transparent images are allowed - everything is displayed over the normal "flying icons" background
 
 ---
 
@@ -18,33 +18,37 @@ Use this to show info about new content, events, etc. Great for public cab usage
 
  To configure the news feature, edit `Other/News/news.ini`.
  
- Add news entries to show in the following format, preface lines with `#` to comment them out:
+ Add news entries to show in the following format:
  ```
+# You can preface lines with a `#` to comment them out
 [ID]
 File=
 StartDate=
 EndDate=
 ShowToPlayer= (Optional)
+DisableAttractShow= (Optional)
  ```
  
  
- - `[ID]` - The ID of this news entry, must be a number. Higher IDs are given higher priority when finding news to display. Described more in the next section.
+ - `[ID]` - The ID of this news entry, must be a number. Higher IDs are given higher priority when finding news to display.
  - `File` - The image file to show, located in `Other/News/`
  - `StartDate` - This news entry will not be shown before this date. Format as `MM/DD/YYYY` (i.e. `02/15/2021`).
  - `EndDate` - This news entry will not be shown after this date, format same as StartDate.
- - `ShowToPlayer` (Optional) - If present and not set to "false"/0, this news entry will be shown to memory card users as well, omit this field to only show in attract mode. Described more in the next section.
+ - `ShowToPlayer` (Optional) - If set to true, this news entry will be shown to Pro Mode players with a memory card in-game as well. Omit this field entirely to only show this entry in attract mode.
+ - `DisableAttractShow` (Optional) - If set to true, this news entry will not be shown in attract mode. Omit this field entirely to show this entry in attract mode
 
 
 ### Finding News to Show
 
  When finding news to show, Simply Spud will search for news entries this way:
  
- - Higher IDs are checked first (location in the file doesn't matter), the first valid entry found is what's used
+ - Higher IDs are checked first (location in the news.ini file doesn't matter), the first valid entry found is what's used
  - Skipping news IDs (i.e. your entries have IDs of 1, 2, 5) is known to be broken and is unsupported.
  - An entry isn't used if the ID isn't a number, the specified file isn't found, or if the date isn't formatted correctly in the config
  - Entries with a start date after the current date or an end date before the current date aren't used.
 
 
-When showing news to a player:
+There are two locations ingame that news can be shown in:
 
- - The ShowToPlayer field must be present and the player can't have already seen a news entry with an equal or higher ID (that way they don't see the same news multiple times)
+Attract Mode: The highest news entry (if any) that meets the above criteria is shown in the attract loop by default unless that entry has DisableAttractShow set.
+During Mode Selection: The highest news entry (if any) that meets the above criteria AND has ShowToPlayer enabled will be shown to players in Pro Mode just before entering the music wheel. Players with a memory card will only see this entry once, and never again.

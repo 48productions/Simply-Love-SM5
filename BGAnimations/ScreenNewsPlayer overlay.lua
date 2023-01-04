@@ -82,7 +82,7 @@ end
 local t = Def.ActorFrame{
     InitCommand=function(self) self:Center() end,
     OnCommand=function(self)
-        --If we've figured out we're not display news (in casual mode, didn't find news to display, etc),
+        --If we've figured out we're not displaying news (in casual mode, didn't find news to display, etc),
         --Automatically skip this screen - we don't need to initialize the other stuff here just GET OUT
         --self:sleep(30)
         if displayingNews == false then
@@ -169,83 +169,80 @@ if SL.Global.GameMode ~= "Casual" then
     
     
     
-    if GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then
+    --Get the highest max news seen values between both players
+    local max_news = math.max(SL.P1.ActiveModifiers.MaxNewsSeen, SL.P2.ActiveModifiers.MaxNewsSeen)
+    news_img = getNewsImg(max_news)
+    --news_img = getNewsImg(nil) --Debug: Force a fetch of the latest attract mode news
+    if news_img then
+        displayingNews = true
+    end
     
-        --Get the highest max news seen values between both players
-        local max_news = math.max(SL.P1.ActiveModifiers.MaxNewsSeen, SL.P2.ActiveModifiers.MaxNewsSeen)
-        news_img = getNewsImg(max_news)
-        --news_img = getNewsImg(nil) --Debug: Force a fetch of the latest news
-        if news_img then
-            displayingNews = true
-        end
-        
-        if news_img then
-            --News image
-            t[#t+1] = Def.ActorFrame{
-                InitCommand=function(self) self:xy(-_screen.cx, -_screen.cy) end,
-                Def.Sprite{
-                    Texture=news_img and THEME:GetPathO("", news_img) or THEME:GetPathG("", "_blank.png"),
-                    InitCommand=function(self)
-                        self:diffusealpha(0):draworder(104)
-                        self:stretchto(_screen.w * 0.14 + 1, _screen.h * 0.10 + 1, _screen.w * 0.86 - 1, _screen.h * 0.82 - 1)
-                    end,
-                    OnCommand=function(self)
-                        self:smooth(0.5):diffusealpha(1)
-                    end,
-                    FinishCommand=function(self)
-                        self:smooth(0.15):diffusealpha(0)
-                    end,
-                },
-                
-                --News BG
-                Def.Quad{
-                    InitCommand=function(self)
-                        self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#00000000')):draworder(103)
-                    end,
-                    OnCommand=function(self)
-                        self:smooth(0.25):stretchto(_screen.w * 0.14, _screen.h * 0.10, _screen.w * 0.86, _screen.h * 0.82):diffusealpha(1)
-                    end,
-                    FinishCommand=function(self)
-                        self:smooth(0.25):zoomto(_screen.w * 0.8,0)
-                    end,
-                },
-                
-                --News BG Outline
-                Def.Quad{
-                    InitCommand=function(self)
-                        self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#cccccc00')):draworder(102)
-                    end,
-                    OnCommand=function(self)
-                        self:smooth(0.25):stretchto(_screen.w * 0.14 - 1, _screen.h * 0.10 - 1, _screen.w * 0.86 + 1, _screen.h * 0.82 + 1):diffusealpha(1)
-                    end,
-                    FinishCommand=function(self)
-                        self:smooth(0.25):zoomto(_screen.w * 0.8,0)
-                    end,
-                },
-                
-                --"Press START to continue" text
-                LoadFont("_upheaval_underline 80px")..{
-                    InitCommand=function(self)
-                        self:xy(_screen.cx,_screen.h-65):zoom(0.5):shadowlength(1.7):settext("Press &START; to continue"):diffusealpha(0):draworder(105)
-                    end,
-                    OnCommand=function(self)
-                        self:smooth(1):diffusealpha(1):diffuseshift():effectperiod(1.333):effectcolor1(1,1,1,0.3):effectcolor2(1,1,1,1)
-                    end,
-                    FinishCommand=function(self) self:smooth(0.3):diffusealpha(0) end,
-                },
-                
-                --Screen BG
-                Def.Quad{
-                    InitCommand=function(self)
-                        self:FullScreen():draworder(101):diffuse(color('#00000000'))
-                    end,
-                    OnCommand=function(self)
-                        self:smooth(0.1):diffusealpha(0.3)
-                    end,
-                    FinishCommand=function(self) self:smooth(0.1):diffusealpha(0) end,
-                }
+    if news_img then
+        --News image
+        t[#t+1] = Def.ActorFrame{
+            InitCommand=function(self) self:xy(-_screen.cx, -_screen.cy) end,
+            Def.Sprite{
+                Texture=news_img and THEME:GetPathO("", news_img) or THEME:GetPathG("", "_blank.png"),
+                InitCommand=function(self)
+                    self:diffusealpha(0):draworder(104)
+                    self:stretchto(_screen.w * 0.14 + 1, _screen.h * 0.10 + 1, _screen.w * 0.86 - 1, _screen.h * 0.82 - 1)
+                end,
+                OnCommand=function(self)
+                    self:smooth(0.5):diffusealpha(1)
+                end,
+                FinishCommand=function(self)
+                    self:smooth(0.15):diffusealpha(0)
+                end,
+            },
+            
+            --News BG
+            Def.Quad{
+                InitCommand=function(self)
+                    self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#00000000')):draworder(103)
+                end,
+                OnCommand=function(self)
+                    self:smooth(0.25):stretchto(_screen.w * 0.14, _screen.h * 0.10, _screen.w * 0.86, _screen.h * 0.82):diffusealpha(1)
+                end,
+                FinishCommand=function(self)
+                    self:smooth(0.25):zoomto(_screen.w * 0.8,0)
+                end,
+            },
+            
+            --News BG Outline
+            Def.Quad{
+                InitCommand=function(self)
+                    self:zoomto(_screen.w * 0.8,0):Center():diffuse(color('#cccccc00')):draworder(102)
+                end,
+                OnCommand=function(self)
+                    self:smooth(0.25):stretchto(_screen.w * 0.14 - 1, _screen.h * 0.10 - 1, _screen.w * 0.86 + 1, _screen.h * 0.82 + 1):diffusealpha(1)
+                end,
+                FinishCommand=function(self)
+                    self:smooth(0.25):zoomto(_screen.w * 0.8,0)
+                end,
+            },
+            
+            --"Press START to continue" text
+            LoadFont("_upheaval_underline 80px")..{
+                InitCommand=function(self)
+                    self:xy(_screen.cx,_screen.h-65):zoom(0.5):shadowlength(1.7):settext("Press &START; to continue"):diffusealpha(0):draworder(105)
+                end,
+                OnCommand=function(self)
+                    self:smooth(1):diffusealpha(1):diffuseshift():effectperiod(1.333):effectcolor1(1,1,1,0.3):effectcolor2(1,1,1,1)
+                end,
+                FinishCommand=function(self) self:smooth(0.3):diffusealpha(0) end,
+            },
+            
+            --Screen BG
+            Def.Quad{
+                InitCommand=function(self)
+                    self:FullScreen():draworder(101):diffuse(color('#00000000'))
+                end,
+                OnCommand=function(self)
+                    self:smooth(0.1):diffusealpha(0.3)
+                end,
+                FinishCommand=function(self) self:smooth(0.1):diffusealpha(0) end,
             }
-        end
+        }
     end
 end
 
