@@ -14,7 +14,7 @@ This document is written from the perspective of a theme developer trying to tar
 
 
 Stumble: Unclear mode selection (Casual, ITG, FA+, StomperZ) frequently leads users to accidentally pick the wrong mode
-Change: Mode selection reduced to two clear choices with brief descriptions instead of the lengthy (but very descriptive ^_^) sentences in SL - Beginner and Pro mode.
+Change: Mode selection reduced to two clear choices with brief descriptions instead of the lengthy (but admittedly very descriptive ^_^) sentences in SL - Beginner and Pro mode.
     Regular and Marathon remains behind the Pro mode option, as they did in stock SL.
 
 
@@ -40,7 +40,7 @@ Suggested Change: This could be added as a new option, in addition to the curren
 
 
 Stumble: The different speedmod types are not very descriptive, and it's unclear what the difference between them is.
-Change: Added slightly more text in the options menu for this. These changes have not proved effective.
+Change: Added slightly more text in the options menu for this. These changes have (understandably) not proved effective.
 
 
 
@@ -54,6 +54,7 @@ Change:
 
 
 
-Stumble: 
+Stumble: Many new players (especially kids) step whenever there is a note in the lane, and not when it overlaps the outline
+Change: Added a "how to play" pop-up before the first song of each casual mode set. I've yet to see if this helps.
 
 

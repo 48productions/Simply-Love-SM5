@@ -1,6 +1,22 @@
--- helper functions
+-- Max thresholds to consider "Easy" vs "Medium" vs "Hard" songs
+local difficultyMax = ThemePrefs.Get("CasualMaxMeter")
+local difficultyHard = difficultyMax * 0.66
+local difficultyMedium = difficultyMax * 0.33
+
+-- Return a table with the difficulty string, meter, and color presented to the player for a given steps
 local GetDifficulty = function(steps)
-	return {THEME:GetString( "CustomDifficulty", steps:GetDifficulty():gsub("Difficulty_", "") ), steps:GetMeter(), DifficultyColor(steps:GetDifficulty())}
+	-- "Novice 10" is a misnomer. A BAD misnomer.
+	-- In Casual mode, I'm going to override the engine-provided difficulty names with ones that actually reflect the difficulty of the steps, instead of the difficulty slot the steps are in
+	local difficulty
+	local meter = steps:GetMeter()
+	if meter >= difficultyHard then
+		difficulty = "Difficulty_Hard"
+	elseif meter >= difficultyMedium then
+		difficulty = "Difficulty_Medium"
+	else
+		difficulty = "Difficulty_Beginner"
+	end
+	return {THEME:GetString( "CustomDifficulty", difficulty:gsub("Difficulty_", "") ), steps:GetMeter(), DifficultyNameColor(difficulty)}
 end
 
 -- ------------------------------------------------------
@@ -45,30 +61,6 @@ local OptionRows = {
 			GAMESTATE:SetCurrentSteps(pn, self:Values()[index])
 		end
 	},
-	-- ------------------------------------------------------
-	--[[{
-		Name = "Speed",
-		HelpText = THEME:GetString("ScreenSelectMusicCasual", "SelectSpeedMod"),
-		Choices = function()
-			return {
-				THEME:GetString("ScreenSelectMusicCasual", "Normal"),
-				THEME:GetString("ScreenSelectMusicCasual", "MoreSpace"),
-				THEME:GetString("ScreenSelectMusicCasual", "LessSpace"),
-			}
-		end,
-		Values = function() return {210, 300, 125} end,
-		OnLoad=function(actor, pn, choices, values)
-			local index = 1
-			local cmod = GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred"):CMod()
-			if cmod then index = FindInTable(cmod,values) or 1 end
-			actor:set_info_set(choices, index)
-		end,
-		OnSave=function(self, pn, choice, choices, values)
-			local index = FindInTable(choice, choices)
-			local player_options = GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred")
-			player_options:CMod(values[index])
-		end,
-	},]]
 }
 -- ------------------------------------------------------
 

@@ -64,12 +64,23 @@ function PlayerColor( pn )
 	return Color.White
 end
 
+-- Get a color representing a difficulty (aligns with the selected color in SL, used only in pro mode)
 function DifficultyColor( difficulty )
 	if (difficulty == nil or difficulty == "Difficulty_Edit") then return color("#B4B7BA") end
 
 	local index = GetDifficultyIndex(difficulty)
 	local clr = SL.Global.ActiveColorIndex + (index-2)
 	return GetHexColor(clr)
+end
+
+-- Get a color representing a difficulty name (used in Casual mode)
+function DifficultyNameColor( difficulty )
+	if difficulty == "Difficulty_Beginner" then return color("#AEFA44")
+	elseif difficulty == "Difficulty_Easy" then return color("#FFFF00")
+	elseif difficulty == "Difficulty_Medium" then return color("#FF7D00")
+	elseif difficulty == "Difficulty_Hard" then return color("#FF2C23")
+	elseif difficulty == "Difficulty_Challenge" then return color("#C1006F")
+	else return color("#B4B7BA") end -- Either an Edit or not a valid difficulty
 end
 
 function SortMenuColor(kind)
