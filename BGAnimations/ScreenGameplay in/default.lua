@@ -224,6 +224,6 @@ af[#af+1] = LoadFont("_upheaval_underline 80px")..{
 	end
 }
 
-if SL.Global.GameMode == "Casual" and SL.Global.Stages.PlayedThisGame == 0 then af[#af+1] = LoadActor("./tutorial.lua") end
+if ShowTutorial() then af[#af+1] = LoadActor("./tutorial.lua") end
 
 return af

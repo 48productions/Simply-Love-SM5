@@ -762,3 +762,11 @@ GetDefaultSong=function()
         return song
     end
 end
+
+
+-- -----------------------------------------------------------------------
+-- Whether or not to show the gameplay tutorial just before a song starts
+
+ShowTutorial=function()
+	return SL.Global.GameMode == "Casual" and SL.Global.Stages.PlayedThisGame == 0
+end
