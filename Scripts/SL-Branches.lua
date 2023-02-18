@@ -34,7 +34,8 @@ Branch.AllowScreenSelectProfile = function()
 end
 
 Branch.AllowScreenSelectColor = function()
-	if ThemePrefs.Get("AllowScreenSelectColor") and not ThemePrefs.Get("RainbowMode") then
+	-- Skip ScreenSelectColor in Rainbow Mode, Potato Mode (the current SL color doesn't apply to either), or if it's been disabled in the option menu
+	if ThemePrefs.Get("AllowScreenSelectColor") and not ThemePrefs.Get("RainbowMode") and ThemePrefs.Get("VisualTheme") ~= "Potato" then
 		if AllowThonk() then return "ScreenSelectColorThonk" end
 		return "ScreenSelectColor"
 	else

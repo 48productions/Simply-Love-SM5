@@ -15,12 +15,12 @@ return Def.ActorFrame{
         end
     },
     Def.ActorFrame{
-        Condition=ThemePrefs.Get("VisualTheme") == "Potato",
         Def.Sprite{
-            Texture=THEME:GetPathG("", "_VisualStyles/Potato/SharedBackground-1"),
+            Texture=THEME:GetPathG("", "_VisualStyles/" .. ThemePrefs.Get("VisualTheme") .. "/SharedBackground-1"),
             InitCommand=function(self) 
                 self:cropto(_screen.w, 80):customtexturerect(0,0,5,0.5):texcoordvelocity(0, -0.02)
                 :diffusealpha(1):valign(0):fadebottom(0.3):diffusealpha(0.4)
+				if AllowThonk() then self:rainbow() end
             end,
         },
     },

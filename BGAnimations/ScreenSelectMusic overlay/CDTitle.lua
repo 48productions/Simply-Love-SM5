@@ -9,7 +9,7 @@ local t = Def.ActorFrame{
     OnCommand=function(self) self:sleep(1.25):smooth(0.5):diffusealpha(1) end,
     Def.Sprite {
         Name="CDTitle",
-        OnCommand=function(self) self:x(120):y(150):diffuseshift():effectperiod(5):effectcolor1(1,1,1,1):effectcolor2(1,1,1,0.5) end,
+        OnCommand=function(self) self:x(120):y(150):diffuseshift():effectperiod(5):effectcolor1(1,1,1,1):effectcolor2(1,1,1,0.5) if AllowThonk() then self:spin() end end,
         CurrentSongChangedMessageCommand=function(self) self:playcommand("Set") end,
         CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set") end,
         SetCommand=function(self)

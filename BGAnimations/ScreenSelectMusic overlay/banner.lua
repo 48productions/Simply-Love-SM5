@@ -58,7 +58,8 @@ local t = Def.ActorFrame{
 			banner = SCREENMAN:GetTopScreen():GetChild('Banner')
 			self:SetTarget(banner)
             if AllowThonk() then self:wag():effectmagnitude(0,0,1):effectclock("beat") end
-		end
+		end,
+		SongChosenMessageCommand=function(self) if AllowThonk() then self:decelerate(0.5):addrotationz(360) end end,
 	},
 
 	-- the MusicRate Quad and text

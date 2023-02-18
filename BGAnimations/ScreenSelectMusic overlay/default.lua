@@ -31,7 +31,7 @@ local t = Def.ActorFrame{
 
     -- Organization for all elements we need to zoom in for two part difficulty select, for convenience
     Def.ActorFrame{
-        InitCommand=function(self) self:x(_screen.cx - (IsUsingWideScreen() and 170 or 166)) end,
+        InitCommand=function(self) self:x(_screen.cx - (IsUsingWideScreen() and 170 or 166)) if AllowThonk() then self:thump():effectmagnitude(1,1.01,0):effectclock("beat"):effectperiod(1) end end,
         SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):zoom(1.2):xy(_screen.cx, -20) end,
         SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):zoom(1):xy(_screen.cx - (IsUsingWideScreen() and 170 or 166), 0) end,
         

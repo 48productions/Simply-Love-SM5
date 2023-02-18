@@ -378,6 +378,15 @@ function InitializeSimplyLove()
 	SL.P1:initialize()
 	SL.P2:initialize()
 	SL.Global:initialize()
+	
+	-- Force Potato Orange if we're using the potato visual theme
+	-- (The potato grahpics and backgrounds are designed with this SPECIFIC color in mind and won't look good otherwise)
+	if ThemePrefs.Get("VisualTheme") == "Potato" and SL.Global.ActiveColorIndex ~= 11 then
+		SL.Global.ActiveColorIndex = 11
+		ThemePrefs.Set("SimplyLoveColor", SL.Global.ActiveColorIndex)
+		ThemePrefs.Save()
+		MESSAGEMAN:Broadcast("ColorSelected")
+	end
 end
 
 -- TODO: remove this; it's for debugging purposes (Control+F2 to reload scripts) only
