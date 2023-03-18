@@ -86,7 +86,7 @@ af[#af+1] = Def.ActorFrame{
     
     -- Banner/jacket AF
     Def.ActorFrame{
-        Condition=not GAMESTATE:IsDemonstration(),
+        Condition=not GAMESTATE:IsDemonstration() and not GAMESTATE:IsCourseMode(),
         OnCommand=function(self)
             if SL.Global.GameMode=="Casual" then
                 self:xy(_screen.cx,_screen.cy-140):sleep(1.5):accelerate(0.5):y(0):diffusealpha(0)

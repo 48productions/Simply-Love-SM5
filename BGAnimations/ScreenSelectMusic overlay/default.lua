@@ -25,19 +25,20 @@ local t = Def.ActorFrame{
     Def.Quad{
         InitCommand=function(self) self:FullScreen():diffuse(color_black):diffusealpha(0) if AllowThonk() then self:rainbow():effectperiod(20) end end,
         SongChosenMessageCommand=function(self) self:finishtweening():decelerate(0.5):diffusealpha(0.5) end,
-        SongUnchosenMessageCommand=function(self) self:finishtweening():decelerate(0.5):diffusealpha(0) end,
+        SongUnchosenMessageCommand=function(self) self:finishtweening():decelerate(0.4):diffusealpha(0) end,
         OffCommand=function(self) self:finishtweening():decelerate(0.5):diffusealpha(1) end,
     },
 
     -- Organization for all elements we need to zoom in for two part difficulty select, for convenience
     Def.ActorFrame{
         InitCommand=function(self) self:x(_screen.cx - (IsUsingWideScreen() and 170 or 166)) if AllowThonk() then self:thump():effectmagnitude(1,1.01,0):effectclock("beat"):effectperiod(1) end end,
-        SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):zoom(1.2):xy(_screen.cx, -20) end,
-        SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):zoom(1):xy(_screen.cx - (IsUsingWideScreen() and 170 or 166), 0) end,
+        SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.3):x(_screen.cx):smooth(0.3):zoom(1.2):y(-20) end,
+        SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.4):zoom(1):xy(_screen.cx - (IsUsingWideScreen() and 170 or 166), 0) end,
         
+		-- Another two-part difficulty animation grouping
         Def.ActorFrame{
-            SongChosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(-20) end,
-            SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.5):y(20) end,
+            SongChosenMessageCommand=function(self) self:stoptweening():sleep(0.3):smooth(0.3):y(-20) end,
+            SongUnchosenMessageCommand=function(self) self:stoptweening():decelerate(0.4):y(20) end,
             OffCommand=function(self) self:stoptweening():decelerate(0.3):diffusealpha(0):addy(50) end,
             -- elements we need two of (one for each player) that draw underneath the StepsDisplayList
             -- this includes the stepartist boxes and the PaneDisplays (number of steps, jumps, holds, etc.)

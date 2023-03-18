@@ -51,7 +51,7 @@ return Def.Sprite{
 
 		if SongOrCourse then
 			local AllStepsOrTrails = (GAMESTATE:IsCourseMode() and SongOrCourse:GetAllTrails()) or SongUtil.GetPlayableSteps( SongOrCourse )
-			local StepsToDisplay = GetStepsToDisplay(AllStepsOrTrails)
+			local StepsToDisplay = GetStepsToDisplay(AllStepsOrTrails)[1]
 			local CurrentStepsOrTrail = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player) or GAMESTATE:GetCurrentSteps(player)
 
 

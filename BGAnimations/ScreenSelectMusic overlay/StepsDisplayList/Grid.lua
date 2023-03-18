@@ -40,8 +40,11 @@ local t = Def.ActorFrame{
 
 			if StepsOrTrails then
 
-				StepsToDisplay = GetStepsToDisplay(StepsOrTrails)
+				StepsAndIndexSplit = GetStepsToDisplay(StepsOrTrails)
+				StepsToDisplay = StepsAndIndexSplit[1]
+				ChartIndexSplit = StepsAndIndexSplit[2]
 
+				-- Set the difficulty meter and blocks
 				for RowNumber=1,num_rows do
 					if StepsToDisplay[RowNumber] then
 						-- if this particular song has a stepchart for this row, update the Meter
@@ -57,6 +60,11 @@ local t = Def.ActorFrame{
 
 					end
 				end
+
+        -- Set the chart list split actors
+        for i=1,3 do
+          self:GetChild("Grid"):GetChild("Split_"..i):visible(ChartIndexSplit[i])
+        end
 			end
 		else
 			StepsOrTrails, StepsToDisplay = nil, nil
@@ -143,6 +151,25 @@ for RowNumber=1,num_rows do
 	}
 end
 
+-- Chart list splits (there's more than 5 charts and we're hiding some)
+for i=1,3 do
+	Grid[#Grid+1]=Def.Quad{
+		Name="Split_"..i,
+		InitCommand=function(self)
+			local height = self:GetParent():GetChild("Blocks_"..1):GetHeight()
+			local width = self:GetParent():GetChild("Blocks_"..1):GetWidth()
+			self:visible(false):zoomto(286, height * 0.4):x(-2):diffuse(0,0,0,1)
+			if i == 1 then -- Split at top of list
+				self:y(height * BlockZoomY * 0.3):croptop(0.57):fadebottom(0.5)
+			elseif i == 2 then -- Split in middle
+				self:y(height * BlockZoomY * 3.5):fadetop(0.5):fadebottom(0.5)
+			else -- Split at bottom
+				self:y(height * BlockZoomY * 5.5):fadetop(0.57):cropbottom(0.5)
+			end
+		end,
+	}
+end
+
 t[#t+1] = Grid
 
 -- Rating scale info side panel
@@ -151,6 +178,13 @@ t[#t+1] = Def.ActorFrame{
         self:x(-150)
     end,
     
+	-- Rating scale text background
+	--[[Def.Quad{
+		InitCommand=function(self)
+			self:diffuse(color_slate):diffusealpha(0.7):zoomto(20, 96):x(0)
+		end,
+	},]]
+	
     -- Rating scale text
     LoadFont("_wendy small")..{
         InitCommand=function(self)
@@ -172,13 +206,28 @@ t[#t+1] = Def.ActorFrame{
             self:settext(THEME:GetString("ScreenSelectMusic", "ScaleNone"))
             self:diffuse(getSongTitleColor("")):diffusealpha(0.5)
         end,
-    }
+    },
 }
 
+-- Grid outline
+t[#t+1] = Def.ActorFrame{
+	Def.Quad{ -- Top
+		InitCommand=function(self)
+			self:diffuse(0.1,0.1,0.1,0.7):zoomto(320, 4):y(-46)
+		end,
+	},
+	Def.Quad{ -- Bottom
+		InitCommand=function(self)
+			self:diffuse(0.1,0.1,0.1,0.7):zoomto(320, 4):y(46)
+		end,
+	}
+}
 
 -- "Has Edit" Marker (next to steps list)
+-- This is hidden by the new step info pane and I'm not sure where to move it
+-- With the new chart split shadows, do we even need it any more? - 48
 --t[#t+1] = LoadActor( THEME:GetPathG("", "Has Edit (doubleres).png") )..{
-t[#t+1] = LoadActor("./editbubble (doubleres).png")..{
+--[[t[#t+1] = LoadActor("./editbubble (doubleres).png")..{
 	InitCommand=function(self)
 		self:visible(false):xy(-130, 60):zoom(0.375):bounce():effectclock("beatnooffset"):effectmagnitude(0, 1.5, 0):effectperiod(2):effectoffset( -10 * PREFSMAN:GetPreference("GlobalOffsetSeconds"))
 		if ThemePrefs.Get("RainbowMode") then self:diffuse(0,0,0,1) end
@@ -188,6 +237,6 @@ t[#t+1] = LoadActor("./editbubble (doubleres).png")..{
 		local stepstype = "StepsType_" .. GAMESTATE:GetCurrentGame():GetName():gsub("^%l", string.upper) .. "_" .. GAMESTATE:GetCurrentStyle():GetName():gsub("^%l", string.upper):gsub("Versus", "Single")
 		self:visible(song and song:HasEdits(stepstype) or false)
 	end
-}
+}]]
 
 return t

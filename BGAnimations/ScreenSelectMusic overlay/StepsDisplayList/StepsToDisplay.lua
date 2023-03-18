@@ -1,51 +1,48 @@
--- FIXME: The SM5 engine does supply a StepsDisplayList class for Lua, but its scoller-esque behavior
--- is mostly hardcoded, making it difficult to ALWAYS position easy charts at a specific y-value
--- and challenge charts at a different (but equally predictable) y-value.
---
--- I wrote this code back in April 2014 as part of bda06a0eee03a22b81b35dd12968b9d386a0fea7
--- to assist in organizing and displaying available stepcharts in ScreenSelectMusic in a
--- visually predictable fashion.  I noted then that songs with multiple edit charts caused
--- the custom steps list to "behave erratically" when both players were joined.  I imagine it
--- is still a problem.  "Tachyon Alpha/Delta Max" is probably a good test case.
---
--- This code should probably be ripped out and completely replaced at this point.
-------------------------------------------------------------
+-- Given the engine's list of charts available for a song,
+-- Returns a list of 5 charts to show in difficulty selection, and where charts in the list had to be hidden (if any)
+
+function findChartsToReturn(charts, firstIndex)
+  local frIndex = 1
+  local finalReturn = {}
+  for i=firstIndex, firstIndex+5 do
+		finalReturn[frIndex] = charts[i]
+		frIndex = frIndex + 1
+  end
+  return finalReturn
+end
 
 return function(AllAvailableSteps)
 
 	--gather any edit charts into a table
-	local edits = {}
-	local StepsToShow = {}
+	local charts = {}
 
 	for k,chart in ipairs(AllAvailableSteps) do
 
 		local difficulty = chart:GetDifficulty()
-		if GAMESTATE:IsCourseMode() then
-			local index = GetDifficultyIndex(difficulty)
-			StepsToShow[index] = chart
-		else
-			if chart:IsAnEdit() then
-				edits[#edits+1] = chart
-			else
-				local index = GetDifficultyIndex(difficulty)
-				StepsToShow[index] = chart
-			end
+		--  Unlike SM5, Outfox supports multiple charts of the same difficulty (and several new difficulty slots)
+		--  We'll populate a big ol list of charts to show, only placing charts of a certain difficulty after their intended difficulty slot
+		-- (challenge charts only appear after the 5th slot, etc)
+		-- We'll then take a selection (or two) of that list later to actually show to the player
+		local index = GetDifficultyIndex(difficulty)
+		if #charts < index then -- The last chart in the list is before the minimum slot for this difficulty 
+				charts[index] = chart -- Add this chart at the position for its difficulty 
+		else -- The last chart in the list is after the minimum slot for this difficulty
+			charts[#charts+1] = chart -- Add this chart to the end of the chart list
 		end
 	end
 
-	-- if there are no edits we can safely bail now
-	if #edits == 0 then return StepsToShow end
+	-- if there are 5 or fewer charts we can safely bail now
+	if #charts <= 5 then return {charts, {false, false, false}} end
 
 
+	--THERE ARE ~~EDITS~~ CHARTS, OH NO!
+	--"LOGIC" BELOW
 
-	--THERE ARE EDITS, OH NO!
-	--HORRIBLE HANDLING/LOGIC BELOW
-
-	for k,edit in ipairs(edits) do
-		StepsToShow[5+k] = edit
-	end
-
+	-- We want to scroll as far "up" in the chart list as we can, while still showing the charts the players have selected
+	-- This way, the lower difficulties get consistent positioning and the displayed chart list only scrolls one chart at a time when the player scrolls down the list
 	local currentStepsP1, currentStepsP2
+	local firstChartToShow = 1 -- What we need to find (in most cases) is what chart index should be in the first slot
+	local chartIndexSplit = {false, false, false} -- If there's more than 5 charts to display, we need to hide something. To visually show this in the chart list later, store where in the list charts are hidden (if any)
 	local finalReturn = {}
 
 	if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
@@ -65,47 +62,27 @@ return function(AllAvailableSteps)
 			currentSteps = currentStepsP2
 		end
 
-		-- if the current chart is an edit
-		if currentSteps:IsAnEdit() then
+		local currentIndex
 
-			local currentIndex
-
-			-- We've used GAMESTATE:GetCurrentSteps(pn) to get the current chart
-			-- use a for loop to match that "current chart" against each chart
-			-- in our charts table; we want the index of the current chart
-			for k,chart in pairs(StepsToShow) do
-				if chart:GetChartName()==currentSteps:GetChartName() then
-					currentIndex = tonumber(k)
-				end
+		-- We've used GAMESTATE:GetCurrentSteps(pn) to get the current chart
+		-- use a for loop to match that "current chart" against each chart
+		-- in our charts table; we want the index of the current chart
+		for k,chart in pairs(charts) do
+			if chart:GetChartName()==currentSteps:GetChartName() then
+				currentIndex = tonumber(k)
 			end
-
-			local frIndex = 5
-
-			-- "i" will decrement here
-			-- if there is one edit chart, it will assign charts to finalReturn like
-			-- [5]Edit, [4]Challenge, [3]Hard, [2]Medium, [1]Easy
-			--
-			-- if there are two edit charts, it will assign charts to finalReturn like
-			-- [5]Edit, [4]Edit, [3]Challenge, [2]Hard, [1]Medium
-			-- and so on
-			for i=currentIndex, currentIndex-4, -1 do
-				finalReturn[frIndex] = StepsToShow[i]
-				frIndex = frIndex - 1
-			end
-
-		-- else we are somewhere in the normal five difficulties
-		-- and are, for all intents and purposes, uninterested in any edits for now
-		-- so remove all edits from the table we're returning
-		else
-
-			for k,chart in pairs(StepsToShow) do
-				if chart:IsAnEdit() then
-					StepsToShow[k] = nil
-				end
-			end
-
-			return StepsToShow
 		end
+
+		-- Check if the player has selected a chart index > 5, and scroll down however much is needed to get the selected chart into the last slot
+		if currentIndex > 5 then
+			firstChartToShow = currentIndex - 4
+			chartIndexSplit[1] = true
+		else -- Player has selected one of the first 5 charts, all we need to do here is flag that there are charts hidden after index 5
+			chartIndexSplit[3] = true
+		end
+		finalReturn = findChartsToReturn(charts, firstChartToShow)
+    
+			
 
 
 	-- elseif both players are joined
@@ -114,23 +91,11 @@ return function(AllAvailableSteps)
 	-- we'll have to hide SOMETHING...
 	elseif (currentStepsP1 and currentStepsP2) then
 
-		if not currentStepsP1:IsAnEdit() and not currentStepsP2:IsAnEdit() then
-			for k,chart in pairs(StepsToShow) do
-				if chart:IsAnEdit() then
-					StepsToShow[k] = nil
-				end
-			end
-			return StepsToShow
-		end
-
-
 		local currentIndexP1, currentIndexP2
 
-		-- how broad is the range of charts for this song?
-		-- (where beginner=1 and edit=6+)
-		-- and how far apart are P1 and P2 currently?
+		-- how far apart are P1 and P2 currently?
 
-		for k,chart in pairs(StepsToShow) do
+		for k,chart in pairs(charts) do
 
 			if chart == currentStepsP1 then
 				currentIndexP1 = k
@@ -154,27 +119,46 @@ return function(AllAvailableSteps)
 				lesserIndex = currentIndexP1
 			end
 
+			-- We can't fit both P1 and P2's chart in the list without hiding charts between the two
 			if difference > 4 then
 
-				local frIndex=1
+				-- The first 3 charts should be the lower selected chart and the two charts after it
+				local frIndex = 1
 				for i=lesserIndex, lesserIndex+2 do
-					finalReturn[frIndex] = StepsToShow[i]
+					finalReturn[frIndex] = charts[i]
 					frIndex = frIndex + 1
 				end
+				-- The last two charts should be the higher selected chart and the chart before it
 				for i=greaterIndex-1, greaterIndex do
-					finalReturn[frIndex] = StepsToShow[i]
+					finalReturn[frIndex] = charts[i]
 					frIndex = frIndex + 1
 				end
 
-			else
-				local frIndex = 5
-				for i=greaterIndex, greaterIndex-4, -1 do
-					finalReturn[frIndex] = StepsToShow[i]
-					frIndex = frIndex - 1
+				-- Next, find out where we're hiding charts so chartIndexSplit can be set
+				chartIndexSplit[2] = true -- We're always hiding after slot 3 at this point
+				if lesserIndex > 1 then -- Hiding charts before the first shown chart
+					chartIndexSplit[1] = true
 				end
+				if greaterIndex < #charts then -- Hiding charts after the last shown chart
+					chartIndexSplit[3] = true
+				end
+
+			else -- We can fit both P1 and P2's chart in the list while only hiding charts at the top/bottom!
+				-- Handle this similarly to single player play, where we scroll down as much as needed if the greater chart index is > 5
+				if greaterIndex > 5 then
+					firstChartToShow = greaterIndex - 4
+					chartIndexSplit[1] = true
+					-- Check if we're ALSO hiding charts after the charts we're showing
+					if greaterIndex < #charts then
+						chartIndexSplit[3] = true
+					end
+				else --  Within the first 5 charts - flag that there are charts hidden after index 5
+					chartIndexSplit[3] = true
+				end
+				finalReturn = findChartsToReturn(charts, firstChartToShow)
 			end
 		end
 	end
 
-	return finalReturn
+	return {finalReturn, chartIndexSplit}
 end

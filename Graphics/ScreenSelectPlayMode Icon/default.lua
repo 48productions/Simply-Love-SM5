@@ -36,7 +36,6 @@ t[#t+1] = LoadActor("beginner-icon.png")..{
     OffCommand=function(self) self:linear(0.2):diffusealpha(0) end
 }
 
-
 --Icon
 t[#t+1] = LoadActor("icon-" .. text .. ".png")..{
     Name="Icon",
@@ -47,6 +46,16 @@ t[#t+1] = LoadActor("icon-" .. text .. ".png")..{
     OffCommand=function(self) self:linear(0.2):diffusealpha(0) end
 }
 
+-- Casual mode USB warning
+--[[t[#t+1] = LoadFont("Common normal")..{
+	Name="CasualUSBWarning",
+    Condition=text == "Casual", --Only show on the casual mode selection
+	Text=ScreenString("CasualUSBWarning"),
+    OnCommand=function(self) self:diffuse(0.9, 0.3, 0.3, 0):zoom(5) end,
+    GainFocusCommand=function(self) if GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then self:stoptweening():decelerate(0.1):zoom(05):diffusealpha(1):effectmagnitude(-2, 5, 0) end end, -- Don't show this unless there's a reason to
+	LoseFocusCommand=function(self) self:stoptweening():decelerate(0.1):zoom(0.35):diffusealpha(0):effectmagnitude(0, 0, 0) end,
+    OffCommand=function(self) self:linear(0.2):diffusealpha(0) end
+}]]
 
 -- Mode title
 t[#t+1] = LoadFont("_upheaval_underline 80px")..{
@@ -67,11 +76,21 @@ t[#t+1] = Def.BitmapText{
 	Font="Common Normal",
 	InitCommand=function(self)
 		self:zoom(0.825):valign(-0.8):y(60)
-        self:settext(THEME:GetString("ScreenSelectPlayMode", text .. (AllowThonk() and "DescriptionAlt" or "Description")))
+        self:settext(THEME:GetString("ScreenSelectPlayMode", text .. (AllowThonk() and "DescriptionAlt" or (text == "Casual" and GAMESTATE:IsAnyHumanPlayerUsingMemoryCard())and "DescriptionUSBWarning" or "Description")))
 	end,
     OnCommand=function(self) self:diffusealpha(0):sleep(0.17):linear(0.2):diffusealpha(1) end,
-    GainFocusCommand=function(self) self:stoptweening():linear(0.1):zoom(1.05):diffuse(color("#FFFFFF")) end,
-	LoseFocusCommand=function(self) self:stoptweening():linear(0.1):zoom(0.7):diffuse(color("#666666")) end,
+	StorageDevicesChangedMessageCommand=function(self)
+		self:settext(THEME:GetString("ScreenSelectPlayMode", text .. (AllowThonk() and "DescriptionAlt" or (text == "Casual" and GAMESTATE:IsAnyHumanPlayerUsingMemoryCard())and "DescriptionUSBWarning" or "Description")))
+		if text == "Casual" and GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then self:AddAttribute(22, {Length = -1, Diffuse = color("#FF3333")}) else self:ClearAttributes() end
+	end,
+    GainFocusCommand=function(self)
+		self:stoptweening():linear(0.1):zoom(1.05):diffuse(color("#FFFFFF"))
+		if text == "Casual" and GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then self:AddAttribute(22, {Length = -1, Diffuse = color("#FF3333")}) end
+	end,
+	LoseFocusCommand=function(self)
+		self:stoptweening():linear(0.1):zoom(0.7):diffuse(color("#666666"))
+		if text == "Casual" and GAMESTATE:IsAnyHumanPlayerUsingMemoryCard() then self:AddAttribute(22, {Length = -1, Diffuse = color("#AA6666")}) end
+	end,
 	OffCommand=function(self) self:linear(0.2):diffusealpha(0) end
 }
 
