@@ -44,6 +44,7 @@ local t = Def.ActorFrame{
 	-- ----------------------------------------
 	-- Actorframe for Artist, BPM, and Song length
 	Def.ActorFrame{
+		InitCommand=function(self) if AllowThonk() then self:wag():effectclock("bgm"):effectmagnitude(0,0,4) end end,
 
 		-- background for Artist, BPM, and Song Length
 		Def.Quad{

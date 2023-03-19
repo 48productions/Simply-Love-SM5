@@ -94,6 +94,7 @@ local song_mt = {
 
 				-- AF for Banner and blinking Quad
 				Def.ActorFrame{
+					OnCommand=function(subself) if AllowThonk() then subself:bob():effectclock("bgm"):effectmagnitude(10,0,0):effectoffset(0.1 * self.index) end end,
 					GainFocusCommand=function(subself) subself:y(10) end,
 					LoseFocusCommand=function(subself) subself:y(0) end,
 					SlideToTopCommand=function(subself) subself:y(0) end,

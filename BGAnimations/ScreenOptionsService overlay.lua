@@ -15,7 +15,7 @@ local InputHandler = function(event)
 	return false
 end
 
-return Def.Actor{
+return Def.ActorFrame{
 	OnCommand=function(self) SCREENMAN:GetTopScreen():AddInputCallback( InputHandler ) end,
 	BeginCommand=function(self)
 		ThemePrefs.Save()
@@ -31,5 +31,13 @@ return Def.Actor{
 		if SCREENMAN:GetTopScreen():AllAreOnLastRow() and not ThonkAndRTTOkay() then
 			SCREENMAN:SetNewScreen("ScreenOptionsService")
 		end
-	end
+	end,
+	
+	-- Info string
+	LoadFont("Common Normal")..{
+		Text=("%s %s  -  %s %s %s  %s:%s\n%s  %s,  built %s"):format(THEME:GetThemeDisplayName(), GetThemeVersion(), MonthToLocalizedString(MonthOfYear()), DayOfMonth(), Year(), Hour(), Minute(), ProductFamily(), ProductVersion(), VersionDate()),
+		InitCommand=function(self)
+			self:xy(30, _screen.h-58):halign(0):zoom(0.8):shadowlength(1):diffuse(0.8, 0.8, 0.8, 1)
+		end,
+	}
 }
