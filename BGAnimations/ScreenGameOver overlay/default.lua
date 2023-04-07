@@ -7,7 +7,12 @@ local logo_tween_time = 0.5 -- Time for the falling text animation
 local logo_tween_offset = 0.13
 
 local t = Def.ActorFrame{
-    OnCommand=function(self) self:propagate(true):queuecommand("AnimateLogo") end,
+    OnCommand=function(self)
+		self:propagate(true):queuecommand("AnimateLogo")
+		if ANNOUNCER:GetCurrentAnnouncer() == "Spud" then -- Easter egg announcer is enabled - this should probably be disabled. Not happy with this implementation - 48
+			ANNOUNCER:SetCurrentAnnouncer("")
+		end
+	end,
     
     --"Thanks for playing"/USB reminder text
     LoadFont("_upheaval_underline 80px")..{

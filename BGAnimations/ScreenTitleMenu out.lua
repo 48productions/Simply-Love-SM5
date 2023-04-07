@@ -2,7 +2,15 @@ local color1 = GetHexColor(SL.Global.ActiveColorIndex-1)
 local color2 = GetHexColor(SL.Global.ActiveColorIndex)
 local style = ThemePrefs.Get("VisualTheme")
 
-local t = Def.ActorFrame{ OffCommand=function(self) self:linear(1) end }
+local t = Def.ActorFrame{
+	OffCommand=function(self)
+		self:linear(1)
+		if AllowThonk() and ANNOUNCER:DoesAnnouncerExist("Spud") then
+			ANNOUNCER:SetCurrentAnnouncer("Spud")
+			SOUND:PlayAnnouncer("title start")
+		end
+	end
+}
 
 -- centers
 t[#t+1] = Def.ActorFrame {

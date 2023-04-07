@@ -186,6 +186,7 @@ t.Handler = function(event)
 					for pn in ivalues(Players) do
 						UnhideOptionRows(pn)
 					end
+					SOUND:PlayAnnouncer("select music comment general")
 				end
 
 			-- back out of the current wheel to the previous wheel

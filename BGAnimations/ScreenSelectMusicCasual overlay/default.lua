@@ -51,6 +51,7 @@ local t = Def.ActorFrame {
 	end,
 	OnCommand=function(self)
 		if PREFSMAN:GetPreference("MenuTimer") then self:queuecommand("Listen") end
+		if AllowThonk() then SOUND:PlayAnnouncer("select music intro") end
 	end,
 	ListenCommand=function(self)
 		local topscreen = SCREENMAN:GetTopScreen()

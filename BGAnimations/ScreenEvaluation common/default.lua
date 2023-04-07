@@ -1,5 +1,6 @@
 local Players = GAMESTATE:GetHumanPlayers()
 local NumPanes = SL.Global.GameMode=="Casual" and 1 or 6
+local bestGrade = 20
 
 -- Start by loading actors that would be the same whether 1 or 2 players are joined.
 local t = Def.ActorFrame{
@@ -126,7 +127,23 @@ for player in ivalues(Players) do
 
 	-- add lower ActorFrame to the primary ActorFrame
 	t[#t+1] = lower
+	
+	local playerStats = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
+	local grade = tonumber(string.sub(playerStats:GetGrade(), 11, 12))
+	if grade and grade < bestGrade then bestGrade = grade end
 end
 
+-- Janky announcer support:
+-- Can't figure out how the SM grade announcer calls are supposed to work (doesn't play the default files nor files with the SL-specific grades)
+-- Only need this for april fools so minimum effort, maximum meme
+if AllowThonk() then
+	if bestGrade <= 4 then -- Star.
+		SOUND:PlayAnnouncer("evaluation hot")
+	elseif bestGrade <= 10 then -- A- - S
+		SOUND:PlayAnnouncer("evaluation good")
+	else -- Everything else uses the bad announcer calls lol
+		SOUND:PlayAnnouncer("evaluation bad")
+	end
+end
 
 return t
