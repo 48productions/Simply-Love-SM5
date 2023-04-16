@@ -353,44 +353,90 @@ local Overrides = {
 		Values = { "MeasureCounterLeft", "MeasureCounterUp", "HideRestCounts" },
 	},
 	-------------------------------------------------------------------------
-	WorstTimingWindow = {
+	VisualDelay = {
+		Choices = function()
+			local first	= -100
+			local last 	= 100
+			local step 	= 1
+			return stringify( range(first, last, step), "%gms")
+		end,
+		ExportOnChange = true,
+		LayoutType = "ShowOneInRow",
+		SaveSelections = function(self, list, pn)
+			local mods, playeroptions = GetModsAndPlayerOptions(pn)
+
+			for i=1,#self.Choices do
+				if list[i] then
+					mods.VisualDelay = self.Choices[i]
+				end
+			end
+			playeroptions:VisualDelay( mods.VisualDelay:gsub("ms","")/1000 )
+		end
+	},
+	-------------------------------------------------------------------------
+	TimingWindows = {
+		Values = function()
+			return {
+				{true,true,true,true,true},
+				{true,true,true,true,false},
+				{true,true,true,false,false},
+				{false,false,true,true,true},
+			}
+		end,
 		Choices = function()
 			local tns = "TapNoteScore" .. (SL.Global.GameMode=="ITG" and "" or SL.Global.GameMode)
 			local t = {THEME:GetString("SLPlayerOptions","None")}
 			-- assume pluralization via terminal s
 			t[2] = THEME:GetString(tns,"W5").."s"
 			t[3] = THEME:GetString(tns,"W4").."s + "..t[2]
-			t[4] = THEME:GetString("SLPlayerOptions","All")
+			t[4] = THEME:GetString(tns,"W1").."s + "..THEME:GetString(tns,"W2").."s"
 			return t
 		end,
-		OneChoiceForAllPlayers = true,
 		LoadSelections = function(self, list, pn)
-			local worst = SL.Global.ActiveModifiers.WorstTimingWindow
-			if 	worst==5 then list[1] = true
-			elseif 	worst==4 then list[2] = true
-			elseif 	worst==3 then list[3] = true
-			elseif 	worst==0 then list[4] = true
+			local mods, playeroptions = GetModsAndPlayerOptions(pn)
+
+			-- First determine the set of actual enabled windows.
+			local windows = {true,true,true,true,true}
+			local disabledWindows = playeroptions:GetDisabledTimingWindows()
+			for w in ivalues(disabledWindows) do
+				windows[tonumber(ToEnumShortString(w):sub(-1))] = false
+			end
+
+			-- Compare them to any of our available selections
+			local matched = false
+			for i=1,#list do
+				local all_match = true
+				for w,window in ipairs(windows) do
+					if window ~= self.Values[i][w] then all_match = false; break end
+				end
+				if all_match then
+					matched = true
+					list[i] = true
+					mods.TimingWindows = windows
+					break
+				end
+			end
+
+			-- It's possible one may have manipulated the available windows through playeroptions elsewhere.
+			-- If the TimingWindows set via LoadSelections is not one of our valid choices then default
+			-- to a known value (all windows enabled).
+			if not matched then
+				mods.TimingWindows = {true,true,true,true,true}
+				playeroptions:ResetDisabledTimingWindows()
+				list[1] = true
 			end
 			return list
 		end,
 		SaveSelections = function(self, list, pn)
-			local gmods = SL.Global.ActiveModifiers
-
-			if 	list[1] then gmods.WorstTimingWindow=5
-			elseif 	list[2] then gmods.WorstTimingWindow=4
-			elseif 	list[3] then gmods.WorstTimingWindow=3
-			elseif 	list[4] then gmods.WorstTimingWindow=0
-			end
-
-			-- loop 5 times to set the 5 TimingWindows appropriately
-			for i=1,5 do
-				if i <= gmods.WorstTimingWindow then
-					PREFSMAN:SetPreference("TimingWindowSecondsW"..i, SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..i])
-				else
-					if PREFSMAN:PreferenceExists("TimingWindowSecondsW"..gmods.WorstTimingWindow) then
-						PREFSMAN:SetPreference("TimingWindowSecondsW"..i, SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..gmods.WorstTimingWindow])
-					else
-						PREFSMAN:SetPreference("TimingWindowSecondsW"..i, -math.abs(math.random(math.floor(math.pi))))
+			local mods, playeroptions = GetModsAndPlayerOptions(pn)
+			for i=1,#list do
+				if list[i] then
+					mods.TimingWindows = self.Values[i]
+					playeroptions:ResetDisabledTimingWindows()
+					for i,enabled in ipairs(mods.TimingWindows) do
+						if not enabled then
+							playeroptions:DisableTimingWindow("TimingWindow_W"..i)
+						end
 					end
 				end
 			end

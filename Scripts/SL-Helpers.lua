@@ -176,15 +176,31 @@ CurrentGameIsSupported = function()
 end
 
 -- -----------------------------------------------------------------------
+-- get timing window in milliseconds
+
+GetTimingWindow = function(n, mode)
+	local prefs = SL.Preferences[mode or SL.Global.GameMode]
+	local scale = PREFSMAN:GetPreference("TimingWindowScale")
+	return prefs["TimingWindowSecondsW"..n] * scale + prefs.TimingWindowAdd
+end
+
+-- -----------------------------------------------------------------------
 -- determines which timing_window an offset value (number) belongs to
 -- used by the judgment scatter plot and offset histogram in ScreenEvaluation
 
 DetermineTimingWindow = function(offset)
-	for i=1,5 do
-		if math.abs(offset) < SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..i] + SL.Preferences[SL.Global.GameMode]["TimingWindowAdd"] then
+	for i=1,NumJudgmentsAvailable() do
+		if math.abs(offset) <= GetTimingWindow(i) then
 			return i
 		end
 	end
+	return 5
+end
+
+-- -----------------------------------------------------------------------
+-- return number of available judgments
+
+NumJudgmentsAvailable = function()
 	return 5
 end
 
@@ -384,35 +400,141 @@ end
 
 -- -----------------------------------------------------------------------
 
+-- FailType is a PlayerOption that can be set using SM5's PlayerOptions interface.
+-- If you wanted, you could set FailTyper per-player, prior to Gameplay like
+--
+-- GAMESTATE:GetPlayerState(PLAYER_1):GetPlayerOptions("ModsLevel_Preferred"):FailSetting("FailType_ImmediateContinue")
+-- GAMESTATE:GetPlayerState(PLAYER_2):GetPlayerOptions("ModsLevel_Preferred"):FailSetting("FailType_Off")
+--
+-- and then P1 and P2 would have different Fail settings during gameplay.
+--
+-- That sounds kind of chaotic, particularly with saving Machine HighScores, so Simply Love
+-- enforces the same FailType for both players and allows machine operators to set a
+-- "default FailType" within Advanced Options in the Operator Menu.
+--
+-- This "default FailType" is sort of handled by the engine, but not in a way that is
+-- necessarily clear to me.  Whatever the history there was, it is lost to me now.
+--
+-- The engine's FailType enum has the following four values:
+-- 'FailType_Immediate', 'FailType_ImmediateContinue', 'FailType_EndOfSong', and 'FailType_Off'
+--
+-- The conf-based OptionRow for "DefaultFailType" presents these^ as the following hardcoded English strings:
+-- 'Immediate', 'ImmediateContinue', 'EndOfSong', and 'Off'
+--
+-- and whichever the machine operator chooses gets saved as a different hardcoded English string in
+-- the DefaultModifiers Preference for the current game:
+-- '', 'FailImmediateContinue', 'FailAtEnd', or 'FailOff'
+
+-- It is worth pointing out that a default FailType of "FailType_Immediate" is saved to the DefaultModifiers
+-- Preference as an empty string!
+--
+-- so this:
+-- DefaultModifiers=FailOff, Overhead, Cel
+-- would result in the engine applying FailType_Off to players when they join the game
+--
+-- while this:
+-- DefaultModifiers=Overhead, Cel
+-- would result in the engine applying FailType_Immediate to players when they join the game
+--
+-- Anyway, this is all convoluted enough that I wrote this global helper function to find the default
+-- FailType setting in the current game's DefaultModifiers Preference and return it as an enum value
+-- the PlayerOptions interface can accept.
+--
+-- Keeping track of the logical flow of which preference overrides which metrics
+-- and attempting to extrapolate how that will play out over time in a community
+-- where players expect to be able to modify the code that drives gameplay is so
+-- convoluted that it seems unreasonable to expect any player to follow along.
+--
+-- I can barely follow along.
+--
+-- I'm pretty sure ZP Theart was wailing about such project bitrot in Lost Souls in Endless Time.
+
+GetDefaultFailType = function()
+	local default_mods = PREFSMAN:GetPreference("DefaultModifiers")
+
+	local default_fail = ""
+	local fail_strings = {}
+
+	-- -------------------------------------------------------------------
+	-- these mappings just recreate the if/else chain in PlayerOptions.cpp
+	fail_strings.failarcade            = "FailType_Immediate"
+	fail_strings.failimmediate         = "FailType_Immediate"
+	fail_strings.failendofsong         = "FailType_ImmediateContinue"
+	fail_strings.failimmediatecontinue = "FailType_ImmediateContinue"
+	fail_strings.failatend             = "FailType_EndOfSong"
+	fail_strings.failoff               = "FailType_Off"
+
+	-- handle the "faildefault" string differently than the SM5 engine
+	-- PlayerOptions.cpp will lookup GAMESTATE's DefaultPlayerOptions
+	-- which applies, in sequence:
+	--    DefaultModifiers from Preferences.ini
+	--    DefaultModifers from [Common] in metrics.ini
+	--    DefaultNoteSkinName from [Common] in metrics.ini
+	--
+	-- SM5.1's _fallback theme does not currently specify any FailType
+	-- in DefaultModifiers under [Common] in its metrics.ini
+	--
+	-- This suggests that if a non-standard failstring (like "FailASDF")
+	-- is found, the _fallback theme won't enforce anything, but the engine
+	-- will enforce FailType_Immediate.  Brief testing seems to align with this
+	-- theory, but I haven't dug through enough of the src to *know*.
+	--
+	-- So, anyway, if Simply Love finds "faildefault" as a DefaultModifier in
+	-- Simply Love UserPrefs.ini, I'll go with "FailType_ImmediateContinue.
+	-- ImmediateContinue will be Simply Love's default.
+	fail_strings.faildefault           = "FailType_ImmediateContinue"
+	-- -------------------------------------------------------------------
+
+	for mod in string.gmatch(default_mods, "%w+") do
+		if mod:lower():find("fail") then
+			-- we found something matches "fail", so set our default_fail variable
+			-- and keep looking; don't break from the loop immediately.
+			-- I don't know if it's possible to have multiple FailType
+			-- strings saved in a single DefaultModifiers string...
+			default_fail = mod:lower()
+		end
+	end
+
+	-- return the appropriate Enum string or "FailType_Immediate" if nothing was parsed out of DefaultModifiers
+	return fail_strings[default_fail] or "FailType_Immediate"
+end
+
+-- -----------------------------------------------------------------------
+
 SetGameModePreferences = function()
 	-- apply the preferences associated with this GameMode
 	for key,val in pairs(SL.Preferences[SL.Global.GameMode]) do
 		PREFSMAN:SetPreference(key, val)
 	end
 
-	-- If we're switching to Casual mode,
-	-- we want to reduce the number of judgments,
-	-- so turn Decents and WayOffs off now.
-	if SL.Global.GameMode == "Casual" then
-		SL.Global.ActiveModifiers.WorstTimingWindow = 3
-
-	-- Otherwise, we want all TimingWindows enabled by default.
-	else
- 		SL.Global.ActiveModifiers.WorstTimingWindow = 5
-	end
-
 	-- loop through human players and apply whatever mods need to be set now
 	for player in ivalues(GAMESTATE:GetHumanPlayers()) do
-		-- Now that we've set the SL table for WorstTimingWindow appropriately,
-		-- use it to apply WorstTimingWindow as a mod.
-		local OptRow = CustomOptionRow( "WorstTimingWindow" )
-		OptRow:LoadSelections( OptRow.Choices, player )
+		local pn = ToEnumShortString(player)
+		-- If we're switching to Casual mode,
+		-- we want to reduce the number of judgments,
+		-- so turn Decents and WayOffs off now.
+		if SL.Global.GameMode == "Casual" then
+			SL[pn].ActiveModifiers.TimingWindows = {true,true,true,false,false}
+		end
+
+		-- Now that we've set the SL table for TimingWindows appropriately,
+		-- use it to apply TimingWindows.
+		local TW_OptRow = CustomOptionRow( "TimingWindows" )
+		TW_OptRow:LoadSelections( TW_OptRow.Choices, player )
+
+
+		local player_modslevel = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred")
 
 		-- using PREFSMAN to set the preference for MinTNSToHideNotes apparently isn't
 		-- enough when switching gamemodes because MinTNSToHideNotes is also a PlayerOption.
 		-- so, set the PlayerOption version of it now, too, to ensure that arrows disappear
 		-- at the appropriate judgments during gameplay for this gamemode.
-		GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred"):MinTNSToHideNotes(SL.Preferences[SL.Global.GameMode].MinTNSToHideNotes)
+		player_modslevel:MinTNSToHideNotes(SL.Preferences[SL.Global.GameMode].MinTNSToHideNotes)
+
+		-- FailSetting is also a modifier that can be set per-player per-stage in SM5, but I'm
+		-- opting to enforce it in Simply Love using what the machine operator sets
+		-- as the default FailType in Advanced Options in the operator menu
+		player_modslevel:FailSetting( GetDefaultFailType() )
 	end
 
 	-- these are the prefixes that are prepended to each custom Stats.xml, resulting in
@@ -497,6 +619,8 @@ end
 -- account for the possibility that emojis shouldn't be diffused to Color.Black
 
 DiffuseEmojis = function(bmt, text)
+	text = text or bmt:GetText()
+	
 	-- loop through each char in the string, checking for emojis; if any are found
 	-- don't diffuse that char to be any specific color by selectively diffusing it to be {1,1,1,1}
 	for i=1, text:utf8len() do
@@ -641,6 +765,202 @@ GetComboFonts = function()
 
 	if has_wendy_cursed then table.insert(fonts, "Wendy (Cursed)") end
 	return fonts
+end
+
+
+-- -----------------------------------------------------------------------
+IsHumanPlayer = function(player)
+	return GAMESTATE:GetPlayerState(player):GetPlayerController() == "PlayerController_Human"
+end
+
+-- -----------------------------------------------------------------------
+IsAutoplay = function(player)
+	return GAMESTATE:GetPlayerState(player):GetPlayerController() == "PlayerController_Autoplay"
+end
+
+-- -----------------------------------------------------------------------
+-- Helper function to determine if a TNS falls within the W0 window.
+-- Params are the params received from the JudgmentMessageCommand.
+-- Returns true/false
+IsW0Judgment = function(params, player)
+	if params.Player ~= player then return false end
+	if params.HoldNoteScore then return false end
+	
+	-- Only check/update FA+ count if we received a TNS in the top window.
+	if params.TapNoteScore == "TapNoteScore_W1" and SL.Global.GameMode == "ITG"  then
+		local prefs = SL.Preferences["FA+"]
+		local scale = PREFSMAN:GetPreference("TimingWindowScale")
+		local W0 = prefs["TimingWindowSecondsW1"] * scale + prefs["TimingWindowAdd"]
+
+		local offset = math.abs(params.TapNoteOffset)
+		if offset <= W0 then
+			return true
+		end
+	end
+	return false
+end
+
+-- -----------------------------------------------------------------------
+-- Gets the fully populated judgment counts for a player.
+-- This includes the FA+ window (W0). Decents/WayOffs (W4/W5) will only exist in the
+-- resultant table if the windows were active.
+--
+-- Should NOT be used in casual mode.
+--
+-- Returns a table with the following keys:
+-- {
+--             "W0" -> the fantasticPlus count
+--             "W1" -> the fantastic count
+--             "W2" -> the excellent count
+--             "W3" -> the great count
+--             "W4" -> the decent count (may not exist if window is disabled)
+--             "W5" -> the way off count (may not exist if window is disabled)
+--           "Miss" -> the miss count
+--     "totalSteps" -> the total number of steps in the chart (including hold heads)
+--          "Holds" -> total number of holds held
+--     "totalHolds" -> total number of holds in the chart
+--          "Mines" -> total number of mines hit
+--     "totalMines" -> total number of mines in the chart
+--          "Rolls" -> total number of rolls held
+--     "totalRolls" -> total number of rolls in the chart
+-- }
+GetExJudgmentCounts = function(player)
+	local pn = ToEnumShortString(player)
+	local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
+	local StepsOrTrail = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player)) or GAMESTATE:GetCurrentSteps(player)
+
+	local counts = {}
+
+	local TNS = { "W1", "W2", "W3", "W4", "W5", "Miss" }
+	
+	if SL.Global.GameMode == "FA+" then
+		for window in ivalues(TNS) do
+			adjusted_window = window
+			-- In FA+ mode, we need to shift the windows up 1 so that the key we're using is accurate.
+			-- E.g. W1 window becomes W0, W2 becomes W1, etc.
+			if window ~= "Miss" then
+				adjusted_window = "W"..(tonumber(window:sub(-1))-1)
+			end
+			
+			-- Get the count.
+			local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
+			-- For the last window (Decent) in FA+ mode...
+			if window == "W5" then
+				-- Only populate if the window is still active.
+				if SL[pn].ActiveModifiers.TimingWindows[5] then
+					counts[adjusted_window] = number
+				end
+			else
+				counts[adjusted_window] = number
+			end
+		end
+	elseif SL.Global.GameMode == "ITG" then
+		for window in ivalues(TNS) do
+			-- Get the count.
+			local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
+			-- We need to extract the W0 count in ITG mode.
+			if window == "W1" then
+				local faPlus = SL[pn].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].ex_counts.W0_total
+				-- Subtract white count from blue count
+				number = number - faPlus
+				-- Populate the two numbers.
+				counts["W0"] = faPlus
+				counts["W1"] = number
+			else
+				if ((window ~= "W4" and window ~= "W5") or
+						-- Only populate decent and way off windows if they're active.
+						(window == "W4" and SL[pn].ActiveModifiers.TimingWindows[4]) or
+						(window == "W5" and SL[pn].ActiveModifiers.TimingWindows[5])) then
+					counts[window] = number
+				end
+			end
+		end
+	end
+	counts["totalSteps"] = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_TapsAndHolds" )
+	
+	local RadarCategory = { "Holds", "Mines", "Rolls" }
+
+	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred")
+
+	for RCType in ivalues(RadarCategory) do
+		local number = stats:GetRadarActual():GetValue( "RadarCategory_"..RCType )
+		local possible = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_"..RCType )
+
+		if RCType == "Mines" then
+			-- NoMines still report the total number of mines that exist in a chart, even if they weren't played in the chart.
+			-- If NoMines was set, report 0 for the number of mines as the chart actually didn't have any.
+			-- TODO(teejusb): Track AvoidMine in the future. This is fine for now as ITL compares serverside.
+			if po:NoMines() then
+				counts[RCType] = 0
+				counts["total"..RCType] = 0
+			else
+				-- We want to keep track of mines hit.
+				counts[RCType] = possible - number
+				counts["total"..RCType] = possible
+			end
+		else
+			counts[RCType] = number
+			counts["total"..RCType] = possible
+		end
+	end
+
+	return counts
+end
+
+-- -----------------------------------------------------------------------
+-- Calculate the EX score given for a given player.
+--
+-- The ex_counts default to those computed in BGAnimations/ScreenGameplay underlay/TrackExScoreJudgments.lua
+-- They are computed from the HoldNoteScore and TapNotScore from the JudgmentMessageCommands.
+-- We look for the following keys: 
+-- {
+--             "W0" -> the fantasticPlus count
+--             "W1" -> the fantastic count
+--             "W2" -> the excellent count
+--             "W3" -> the great count
+--             "W4" -> the decent count
+--             "W5" -> the way off count
+--           "Miss" -> the miss count
+--           "Held" -> the number of holds/rolds held
+--          "LetGo" -> the number of holds/rolds dropped
+--        "HitMine" -> total number of mines hit
+-- }
+CalculateExScore = function(player, ex_counts)
+	-- No EX scores in Casual mode, just return some dummy number early.
+	if SL.Global.GameMode == "Casual" then return 0 end
+	local StepsOrTrail = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player)) or GAMESTATE:GetCurrentSteps(player)
+
+	local totalSteps = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_TapsAndHolds" )
+	local totalHolds = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Holds" )
+	local totalRolls = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Rolls" )
+
+	local total_possible = totalSteps * SL.ExWeights["W0"] + (totalHolds + totalRolls) * SL.ExWeights["Held"]
+
+	local total_points = 0
+
+	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred")
+
+	-- If mines are disabled, they should still be accounted for in EX Scoring based on the weight assigned to it.
+	-- Stamina community does often play with no-mines on, but because EX scoring is more timing centric where mines
+	-- generally have a negative weight, it's a better experience to make sure the EX score reflects that.
+	if po:NoMines() then
+		local totalMines = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Mines" )
+		total_points = total_points + totalMines * SL.ExWeights["HitMine"];
+	end
+
+	local keys = { "W0", "W1", "W2", "W3", "W4", "W5", "Miss", "Held", "LetGo", "HitMine" }
+	local counts = ex_counts or SL[ToEnumShortString(player)].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].ex_counts
+	-- Just for validation, but shouldn't happen in normal gameplay.
+	if counts == nil then return 0 end
+
+	for key in ivalues(keys) do
+		local value = counts[key]
+		if value ~= nil then		
+			total_points = total_points + value * SL.ExWeights[key]
+		end
+	end
+
+	return math.max(0, math.floor(total_points/total_possible * 10000) / 100)
 end
 
 -- -----------------------------------------------------------------------

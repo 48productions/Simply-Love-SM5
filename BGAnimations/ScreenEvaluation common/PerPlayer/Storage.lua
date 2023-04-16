@@ -38,5 +38,7 @@ return Def.Actor{
 		storage.difficultyMeter = pss:GetPlayedSteps()[1]:GetMeter()
 		storage.stepartist = pss:GetPlayedSteps()[1]:GetAuthorCredit()
 		storage.steps = GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player) or GAMESTATE:GetCurrentSteps(player)
+		
+		storage.timingwindows = SL[pn].ActiveModifiers.TimingWindows
 	end
 }

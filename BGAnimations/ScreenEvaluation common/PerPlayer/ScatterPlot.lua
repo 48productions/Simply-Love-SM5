@@ -8,8 +8,10 @@ local player = args.player
 local GraphWidth = args.GraphWidth
 local GraphHeight = args.GraphHeight
 
+local pn = ToEnumShortString(player)
+
 -- sequential_offsets gathered in ./BGAnimations/ScreenGameplay overlay/JudgmentOffsetTracking.lua
-local sequential_offsets = SL[ToEnumShortString(player)].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].sequential_offsets
+local sequential_offsets = SL[pn].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].sequential_offsets
 
 -- a table to store the AMV's vertices
 local verts= {}
@@ -23,8 +25,14 @@ local Offset, CurrentSecond, TimingWindow, x, y, c, r, g, b
 -- ---------------------------------------------
 -- if players have disabled W4 or W4+W5, there will be a smaller pool
 -- of judgments that could have possibly been earned
-local num_judgments_available = SL.Global.ActiveModifiers.WorstTimingWindow
-local worst_window = SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..(num_judgments_available > 0 and num_judgments_available or 5)]
+local worst_window = GetTimingWindow(NumJudgmentsAvailable())
+local windows = SL[pn].ActiveModifiers.TimingWindows
+for i=NumJudgmentsAvailable(),1,-1 do
+	if windows[i] then
+		worst_window = GetTimingWindow(i)
+		break
+	end
+end
 
 -- ---------------------------------------------
 

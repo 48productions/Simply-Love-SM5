@@ -1,6 +1,6 @@
 # Simply Spud
 
-(StepMania 5/Project Outfox theme, formerly "Simply Potato")
+(ITGMania theme, formerly "Simply Potato")
 
 [![Simply Spud v1.0 Trailer](https://imgur.com/8nUFos1.png)](https://www.youtube.com/watch?v=-I_RcxNFP84)
 
@@ -26,29 +26,29 @@ A fork of Simply Love SM5, it adds more of flair and polish while sharing some o
 
 ## Installation
 
-This theme is designed to be used with any of the following:
+Theme compatibility is as follows:
 
-* [Project Outfox (recommended)](https://projectoutfox.com/downloads)
-* [StepMania 5.1 beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2)
-* [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12)
+* ✔ [ITGMania](https://www.itgmania.com/)
+* ❌ [Project Outfox (formerly StepMania 5.3)](https://www.itgmania.com/)
+* ❌ [StepMania 5.1 beta](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2)
+* ❌ [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12)
 
+This theme will ONLY work on ITGMania, as other engines do not yet support the network functions needed for GrooveStats integration.
 
-1. Install one of the supported StepMania/Outfox versions, above
+1. Install ITGMania
+
 2. Either [grab the latest release](https://github.com/48productions/Simply-Potato-SM5/releases), or click the green "Code" button at the top right of this page, then "Download ZIP" for the most recent version.
 
-3. Unzip the theme into the *Themes* folder (StepMania 5.x) or the *Appearance/Themes* folder (Outfox).
+3. Unzip the theme into the *Themes* folder.
 
-4. Launch the game and switch to this theme. How to do this depends on your current theme, but is generally in the *Settings* menu under the *Apperance* category.
+4. Launch the game and switch to this theme. How to do this depends on your current theme, but is generally in the *Settings* menu under the *Apperance* category. **Restart your game** to ensure it works correctly!
 
-
-Though still supported, Simply Spud is not frequently tested with non-Outfox game versions.
 
 ---
 
 ## Changes from Simply Love SM5
 
 Current major changes:
-  * Supports Outfox (formerly StepMania 5.3, for improved performance and new features)
   * Overhauled aesthetics - nearly every screen has more animation and stylistic flair
   * Overhauled play experience to reduce stumbling points for new players
    * [Improved style selection](https://i.imgur.com/9VP89ps.png) - Casual and ITG mode are now Beginner and Pro mode. FA+/StomperZ are still available in Pro mode.

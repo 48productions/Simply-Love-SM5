@@ -130,7 +130,7 @@ OperatorMenuOptionRows.Theme = function()
 						-- if the user is switching to some other version of SL they have installed
 						-- don't bother them with the ResetPreferences prompt; just switch to that theme
 						-- try a simple check first
-						if self.Choices[i]:match("Simply Love")	then
+						if self.Choices[i]:match("Simply Spud")	then
 							THEME:SetTheme( self.Choices[i] )
 							return
 						end
@@ -138,7 +138,7 @@ OperatorMenuOptionRows.Theme = function()
 						-- if not, attempt a more roundabout check by peeking into the new theme's ThemeInfo.ini
 						if FILEMAN:DoesFileExist("/Themes/"..self.Choices[i].."/ThemeInfo.ini") then
 							local info = IniFile.ReadFile("/Themes/"..self.Choices[i].."/ThemeInfo.ini")
-							if info and info.ThemeInfo and info.ThemeInfo.DisplayName and info.ThemeInfo.DisplayName:match("Simply Love") then
+							if info and info.ThemeInfo and info.ThemeInfo.DisplayName and info.ThemeInfo.DisplayName:match("Simply Spud") then
 								THEME:SetTheme( self.Choices[i] )
 								return
 							end

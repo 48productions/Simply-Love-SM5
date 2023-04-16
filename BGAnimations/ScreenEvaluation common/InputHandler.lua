@@ -19,7 +19,6 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 		 	table.insert(panes[pn], af:GetChild(pn.."_AF_Lower"):GetChild("Pane"..i))
 		end
 	end
-
 	active_pane[pn] = #panes[pn]
 end
 

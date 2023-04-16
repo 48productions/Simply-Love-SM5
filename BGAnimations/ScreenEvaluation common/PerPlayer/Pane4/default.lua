@@ -14,11 +14,30 @@ local abbreviations = {
 	StomperZ = { "Perf", "Gr", "Good", "Hit", "" }
 }
 
+local colors = {}
+for w=NumJudgmentsAvailable(),1,-1 do
+	if SL[pn].ActiveModifiers.TimingWindows[w]==true then
+		colors[w] = DeepCopy(SL.JudgmentColors[SL.Global.GameMode][w])
+	else
+		abbreviations[SL.Global.GameMode][w] = abbreviations[SL.Global.GameMode][w+1]
+		colors[w] = DeepCopy(colors[w+1] or SL.JudgmentColors[SL.Global.GameMode][w+1])
+	end
+end
+
 -- ---------------------------------------------
--- if players have disabled W4 or W4+W5, there will be a smaller pool
+-- if players have disabled W5 or W4+W5, there will be a smaller range
 -- of judgments that could have possibly been earned
-local num_judgments_available = SL.Global.ActiveModifiers.WorstTimingWindow
-local worst_window = SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..(num_judgments_available > 0 and num_judgments_available or 5)]
+local num_judgments_available = NumJudgmentsAvailable()
+local worst_window = GetTimingWindow(num_judgments_available)
+local windows = SL[pn].ActiveModifiers.TimingWindows
+
+for i=NumJudgmentsAvailable(),1,-1 do
+	if windows[i]==true then
+		num_judgments_available = i
+		worst_window = GetTimingWindow(i)
+		break
+	end
+end
 
 -- ---------------------------------------------
 -- sequential_offsets is a table of all timing offsets in the order they were earned.

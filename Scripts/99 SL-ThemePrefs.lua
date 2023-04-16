@@ -80,12 +80,12 @@ local SL_CustomPrefs =
 	{
 		Default = "Potato",
 		 -- emojis are our lingua franca for the 21st century
-		Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔", "🥔" },
+		Choices = { "❤", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔", "🥔" },
 		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato" },
 	},
 	MenuSong = {
 		Default = "Potato",
-		Choices = { "♡ | feel", "↖ | cloud break", "🐻 | crystalis", "🦆 | Xuxa VRC6 cover", "😺 | Cosmic Cat (bounced mix)", "🎃 | Spooky Scary Chiptunes", "🌈 | Mystical Wheelbarrow Journey", "⭐| Shooting Star faux-VRC6 cover", "🤔 | Brain Power", "🥔 | tbd", "🎄 | holiday cheer", "💜 | 20, November (vrc6)", "🤫 | Silent (No Music)" },
+		Choices = { "❤ | feel", "↖ | cloud break", "🐻 | crystalis", "🦆 | Xuxa VRC6 cover", "😺 | Cosmic Cat (bounced mix)", "🎃 | Spooky Scary Chiptunes", "🌈 | Mystical Wheelbarrow Journey", "⭐| Shooting Star faux-VRC6 cover", "🤔 | Brain Power", "🥔 | tbd", "🎄 | holiday cheer", "💜 | 20, November (vrc6)", "🤫 | Silent (No Music)" },
 		Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Potato", "Christmas", "Nov20", "Silent" },
 	},
 	RainbowMode = {
@@ -245,6 +245,13 @@ local SL_CustomPrefs =
 		Choices = range(0, 22, 1),
 		Values = range(0, 22, 1),
 	},
+	-- - - - - - - - - - - - - - - - - - - -
+	--- Enable or disable GrooveStats integration
+	EnableGrooveStats = {
+		Default = false,
+		Choices =  { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+		Values  = { true, false }
+	},
 }
 
 -- We need to InitAll() now so that ./Scripts/SL_Init.lua can use
@@ -257,10 +264,10 @@ ThemePrefs.InitAll(SL_CustomPrefs)
 
 local file = IniFile.ReadFile("Save/ThemePrefs.ini")
 
--- If a [Simply Love] section is found in ./Save/ThemePrefs.ini
-if file["Simply Love"] then
+-- If a [Simply-Potato-SM5] section is found in ./Save/ThemePrefs.ini
+if file["Simply-Potato-SM5"] then
 	-- loop through key/value pairs retrieved and do some basic validation
-	for k,v in pairs( file["Simply Love"] ) do
+	for k,v in pairs( file["Simply-Potato-SM5"] ) do
 		if SL_CustomPrefs[k] then
 			-- if we reach here, the setting exists in both the master definition as well as the user's ThemePrefs.ini
 			-- so perform some rudimentary validation; check for both type mismatch and presence in SL_CustomPrefs
@@ -282,6 +289,6 @@ if file["Simply Love"] then
 	end
 end
 
--- call Save() now; this will create a [Simply Love] section
+-- call Save() now; this will create a [Simply-Potato-SM5] section
 -- in ./Save/ThemePrefs.ini if one was not found
 ThemePrefs.Save()

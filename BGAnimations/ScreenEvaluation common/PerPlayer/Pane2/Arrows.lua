@@ -41,7 +41,7 @@ local af = Def.ActorFrame{
 	InitCommand=function(self) self:xy(-104, _screen.cy-40) end
 }
 
-local gmods = SL.Global.ActiveModifiers
+local gmods = SL[pn].ActiveModifiers
 
 for i,column in ipairs( columns[game] ) do
 
@@ -58,7 +58,7 @@ for i,column in ipairs( columns[game] ) do
 	-- for each possible judgment
 	for j, judgment in ipairs(rows) do
 		-- don't add rows for TimingWindows that were turned off, but always add Miss
-		if j <= gmods.WorstTimingWindow or j==#rows then
+		if gmods.TimingWindows[j] or j==#rows then
 			-- add a BitmapText actor to be the number for this column
 			af[#af+1] = LoadFont("Common Normal")..{
 				Text=SL[pn].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].column_judgments[i][judgment],

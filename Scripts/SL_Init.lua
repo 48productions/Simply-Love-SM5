@@ -11,6 +11,7 @@ local PlayerDefaults = {
 				NoteSkin = nil,
 				Mini = "0%",
 				BackgroundFilter = "Off",
+				VisualDelay = "0ms",
 
 				HideTargets = false,
 				HideSongBG = false,
@@ -37,12 +38,36 @@ local PlayerDefaults = {
                 
                 PlayerSeenModfileWarning = false,
                 MaxNewsSeen = 0,
+				
+				TimingWindows = {true, true, true, true, true},
+				ShowFaPlusWindow = false,
+				ShowEXScore = false,
+				ShowFaPlusPane = true,
 			}
+			-- TODO(teejusb): Rename "Streams" as the data contains more information than that.
 			self.Streams = {
-				SongDir = nil,
-				StepsType = nil,
-				Difficulty = nil,
-				Measures = nil,
+				-- Chart identifiers for caching purposes.
+				Filename = "",
+				StepsType = "",
+				Difficulty = "",
+				Description = "",
+
+				-- Information parsed out from the chart.
+				NotesPerMeasure = {},
+				PeakNPS = 0,
+				NPSperMeasure = {},
+				columnCues = {},
+				Hash = '',
+
+				Crossovers = 0,
+				Footswitches = 0,
+				Sideswitches = 0,
+				Jacks = 0,
+				Brackets = 0,
+
+				-- Data for measure counter. Populated in ./ScreenGameplay in/MeasureCounterAndMods.lua.
+				-- Uses the notesThreshold option.
+				Measures = {},
 			}
 			self.NoteDensity = {
 				Peak = nil
@@ -55,6 +80,10 @@ local PlayerDefaults = {
 				Stats = {}
 			}
 			self.PlayerOptionsString = nil
+			-- The Groovestats API key loaded for this player
+			self.ApiKey = ""
+			-- Whether or not the player is playing on pad.
+			self.IsPadPlayer = false
 		end
 	}
 }
@@ -94,13 +123,15 @@ local GlobalDefaults = {
 			self.TimeAtSessionStart = nil
 
 			self.GameplayReloadCheck = false
+			-- How long to wait before displaying a "cue"
+			self.ColumnCueMinTime = 1.5
 			
 			self.MissComboFail = false
 		end,
 
 		-- These values outside initialize() won't be reset each game cycle,
 		-- but are rather manipulated as needed by the theme.
-		ActiveColorIndex = ThemePrefs.Get("SimplyLoveColor") or 1,
+		ActiveColorIndex = ThemePrefs.Get("SimplyLoveColor") or 11,
 	}
 }
 
@@ -366,7 +397,50 @@ SL = {
 			LifePercentChangeHeld=0,
 			LifePercentChangeHitMine=-0.04,
 		},
-	}
+	},
+	ExWeights = {
+		-- W0 is not necessarily a "real" window.
+		-- In ITG mode it is emulated based off the value of TimingWindowW1 defined
+		-- for FA+ mode.
+		W0=3.5,
+		W1=3,
+		W2=2,
+		W3=1,
+		W4=0,
+		W5=0,
+		Miss=0,
+		LetGo=0,
+		Held=1,
+		HitMine=-1
+	},
+	-- Fields used to determine whether or not we can connect to the
+	-- GrooveStats services.
+	GrooveStats = {
+		-- Whether we're connected to the internet or not.
+		-- Determined once on boot in ScreenSystemLayer.
+		IsConnected = false,
+
+		-- Available GrooveStats services. Subject to change while
+		-- StepMania is running.
+		GetScores = false,
+		Leaderboard = false,
+		AutoSubmit = false,
+
+		-- ************* CURRENT QR VERSION *************
+		-- * Update whenever we change relevant QR code *
+		-- *  and when GrooveStats backend is also      *
+		-- *   updated to properly consume this value.  *
+		-- **********************************************
+		ChartHashVersion = 3,
+
+		-- We want to cache the some of the requests/responses to prevent making the
+		-- same request multiple times in a small timeframe.
+		-- Each entry is keyed with some string hash which maps to a table with the
+		-- following keys:
+		--   Response: string, the JSON-ified response to cache
+		--   Timestamp: number, when the request was made
+		RequestCache = {},
+	},
 }
 
 
@@ -378,15 +452,6 @@ function InitializeSimplyLove()
 	SL.P1:initialize()
 	SL.P2:initialize()
 	SL.Global:initialize()
-	
-	-- Force Potato Orange if we're using the potato visual theme
-	-- (The potato grahpics and backgrounds are designed with this SPECIFIC color in mind and won't look good otherwise)
-	if ThemePrefs.Get("VisualTheme") == "Potato" and SL.Global.ActiveColorIndex ~= 11 then
-		SL.Global.ActiveColorIndex = 11
-		ThemePrefs.Set("SimplyLoveColor", SL.Global.ActiveColorIndex)
-		ThemePrefs.Save()
-		MESSAGEMAN:Broadcast("ColorSelected")
-	end
 end
 
 -- TODO: remove this; it's for debugging purposes (Control+F2 to reload scripts) only
