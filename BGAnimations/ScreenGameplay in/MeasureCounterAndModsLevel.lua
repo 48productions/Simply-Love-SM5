@@ -13,13 +13,11 @@ return function(SongNumberInCourse)
 		local mods = SL[pn].ActiveModifiers
 		if mods.MeasureCounter and mods.MeasureCounter ~= "None" then
 
-			local song_dir, steps
+			local steps = nil
 			if GAMESTATE:IsCourseMode() then
 				local trail = GAMESTATE:GetCurrentTrail(player):GetTrailEntries()[SongNumberInCourse+1]
-				song_dir = trail:GetSong():GetSongDir()
 				steps = trail:GetSteps()
 			else
-				song_dir = GAMESTATE:GetCurrentSong():GetSongDir()
 				steps = GAMESTATE:GetCurrentSteps(player)
 			end
 
@@ -28,16 +26,13 @@ return function(SongNumberInCourse)
 			local notes_per_measure = tonumber(mods.MeasureCounter:match("%d+"))
 			local threshold_to_be_stream = 2
 
-			-- if any of these don't match what we're currently looking for...
-			if SL[pn].Streams.SongDir ~= song_dir or SL[pn].Streams.StepsType ~= step_type or SL[pn].Streams.Difficulty ~= difficulty then
+			-- This will parse out and set all the required info for the chart in the SL.Streams cache,
+			-- The function will only do work iff we're parsing a chart different than what's in the cache.
+			ParseChartInfo(steps, pn)
 
-				-- ...then parse the simfile, given the current parameters
-				SL[pn].Streams.Measures = GetStreams(song_dir, steps_type, difficulty, notes_per_measure, threshold_to_be_stream)
-				-- and set these so we can check again next time.
-				SL[pn].Streams.SongDir = song_dir
-				SL[pn].Streams.StepsType = steps_type
-				SL[pn].Streams.Difficulty = difficulty
-			end
+			-- Set the actual stream information for the player based on their selected notes threshold.
+			local notesThreshold = tonumber(mods.MeasureCounter:match("%d+"))
+			SL[pn].Streams.Measures = GetStreamSequences(SL[pn].Streams.NotesPerMeasure, notesThreshold)
 		end
 	end
 end

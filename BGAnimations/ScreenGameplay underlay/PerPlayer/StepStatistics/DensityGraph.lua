@@ -1,4 +1,5 @@
 local player = ...
+local pn = ToEnumShortString(player)
 
 local LifeBaseSampleRate = 0.25
 local LifeLineThickness = 2
@@ -78,13 +79,15 @@ local histogram_amv = Scrolling_NPS_Histogram(player, width, height)..{
 
 -- PeakNPS text
 local text = LoadFont("Common Normal")..{
-	PeakNPSUpdatedMessageCommand=function(self, params)
-		if params.PeakNPS == nil then
+	PeakNPSUpdatedMessageCommand=function(self)
+		local peak = GAMESTATE:Env()[pn.."PeakNPS"]
+		
+		if peak == nil then
 			self:settext("")
 			return
 		end
 
-		self:settext( THEME:GetString("ScreenGameplay", "PeakNPS") .. ": " .. round(params.PeakNPS * SL.Global.ActiveModifiers.MusicRate,2) )
+		self:settext( THEME:GetString("ScreenGameplay", "PeakNPS") .. ": " .. round(peak * SL.Global.ActiveModifiers.MusicRate,2) )
 		self:x( width - self:GetWidth()/2 - 2 )
 			:y( -self:GetHeight()/2 - 2 )
 			:zoom(0.9)
