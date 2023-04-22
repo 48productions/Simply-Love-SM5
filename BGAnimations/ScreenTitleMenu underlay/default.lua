@@ -77,7 +77,14 @@ local af = Def.ActorFrame{
         InitCommand=function(self) self:zoomto(_screen.w,_screen.h):diffuse(0,0,0,1) end,
         AnimateLogoCommand=function(self) self:sleep(logo_tween_offset * 7.5 + logo_tween_time):decelerate(0.75):diffuse(1,1,1,0.05):decelerate(3):diffusealpha(0) end,
         OffCommand=function(self) self:finishtweening() end,
-    }
+    },
+	
+	-- Secret cheat code to enable thonk mode at any time
+	CodeMessageCommand=function(self, params)
+		if params.Name == "EnableThonk" then
+			setenv("ForceThonk", true) -- Set an environment variable to allow thonk
+		end
+	end
 }
 
 -- decorative arrows, now using the editor noteskin!

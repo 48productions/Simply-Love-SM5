@@ -313,7 +313,7 @@ end
 
 -- Scare the thonk out of anyone who dares enable Easter Eggs on April 1st - 48
 function AllowThonk()
- return ThemePrefs.Get("VisualTheme") == "Thonk" or AllowAF()
+ return ThemePrefs.Get("VisualTheme") == "Thonk" or AllowAF() or getenv("ForceThonk") == true
 end
 
 --Allow april fools day shenanigans

@@ -31,7 +31,7 @@ af[#af+1] = Def.Quad{
     end,
 	BackgroundImageChangedMessageCommand=function(self)
 		THEME:ReloadMetrics()
-		SL.Global.ActiveColorIndex = ThemePrefs.Get("VisualTheme") == "Potato" and 3 or ThemePrefs.Get("SimplyLoveColor")
+		SL.Global.ActiveColorIndex = ThemePrefs.Get("VisualTheme") == "Potato" and 11 or ThemePrefs.Get("SimplyLoveColor") -- Reload the current color from file (or force potato color in potato mode)
 		self:linear(1)
         if ThemePrefs.Get("VisualTheme") == "Potato" or ThemePrefs.Get("VisualTheme") == "Thonk" then
             self:diffuseupperleft(color("#912c00")):diffuselowerright(color("#912c00"))

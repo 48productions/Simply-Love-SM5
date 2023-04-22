@@ -9,11 +9,13 @@ local logo_tween_offset = 0.13
 local t = Def.ActorFrame{
     OnCommand=function(self)
 		self:propagate(true):queuecommand("AnimateLogo")
-		if ANNOUNCER:GetCurrentAnnouncer() == "Spud" then -- Easter egg announcer is enabled - this should probably be disabled. Not happy with this implementation - 48
-			ANNOUNCER:SetCurrentAnnouncer("")
-		end
 	end,
     
+	-- Check if we forced thonk mode via the title screen pad code for this set, and disable it if so
+	OffCommand=function(self)
+		if getenv("ForceThonk") == true then ANNOUNCER:SetCurrentAnnouncer("") setenv("ForceThonk", false) end
+	end,
+	
     --"Thanks for playing"/USB reminder text
     LoadFont("_upheaval_underline 80px")..{
 		Text=ScreenString("ThanksForPlaying"),
