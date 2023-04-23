@@ -1,5 +1,16 @@
 local appearDelay = 2.5
 
+local noteskin = PREFSMAN:GetPreference("EditorNoteSkinP1") -- uses the editor noteskin because "default noteskin" isn't a real preference
+-- TODO: give this its own theme preference???
+
+-- Fall back to the "default" noteskin if the above noteskin can't be found (surprisingly easy to run into when switching between game modes, etc)
+if not NOTESKIN:DoesNoteSkinExist(noteskin) then
+    noteskin = "default"
+    
+    -- If "default" isn't a valid noteskin, all hope is lost in the world. Retreat!
+    if not NOTESKIN:DoesNoteSkinExist(noteskin) then return Def.Actor{} end
+end
+
 return Def.ActorFrame{
     InitCommand=function(self)
         self:Center():diffusealpha(0)
@@ -49,7 +60,7 @@ return Def.ActorFrame{
     },
     
     -- Correct Outline
-    NOTESKIN:LoadActorForNoteSkin("Left", "Receptor", "outfox-itg")..{
+    NOTESKIN:LoadActorForNoteSkin("Left", "Receptor", noteskin)..{
         InitCommand=function(self)
             self:xy(-135, 70):diffusealpha(0)
         end,
@@ -59,7 +70,7 @@ return Def.ActorFrame{
     },
     
     -- Correct Tap
-    NOTESKIN:LoadActorForNoteSkin("Left", "Tap Note", "outfox-itg")..{
+    NOTESKIN:LoadActorForNoteSkin("Left", "Tap Note", noteskin)..{
         InitCommand=function(self)
             self:xy(-135, 70):addy(100):diffusealpha(0):zoom(0.9)
         end,
@@ -78,7 +89,7 @@ return Def.ActorFrame{
     },
     
     -- Incorrect Outline
-    NOTESKIN:LoadActorForNoteSkin("Right", "Receptor", "outfox-itg")..{
+    NOTESKIN:LoadActorForNoteSkin("Right", "Receptor", noteskin)..{
         InitCommand=function(self)
             self:xy(135, 70):diffusealpha(0)
         end,
@@ -88,7 +99,7 @@ return Def.ActorFrame{
     },
     
     -- Incorrect Tap
-    NOTESKIN:LoadActorForNoteSkin("Right", "Tap Note", "outfox-itg")..{
+    NOTESKIN:LoadActorForNoteSkin("Right", "Tap Note", noteskin)..{
         InitCommand=function(self)
             self:xy(135, 70):addy(100):diffusealpha(0):zoom(0.9)
         end,

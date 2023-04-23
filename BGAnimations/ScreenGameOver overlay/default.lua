@@ -10,7 +10,6 @@ local t = Def.ActorFrame{
 	InitCommand=function(self)
 		-- Check if we forced thonk mode via the title screen pad code for this set, and disable it if so
 		if getenv("ForceThonk") == true then
-			SOUND:PlayAnnouncer("storytime")
 			ANNOUNCER:SetCurrentAnnouncer("")
 			setenv("ForceThonk", false)
 		end
