@@ -7,13 +7,16 @@ local logo_tween_time = 0.5 -- Time for the falling text animation
 local logo_tween_offset = 0.13
 
 local t = Def.ActorFrame{
+	InitCommand=function(self)
+		-- Check if we forced thonk mode via the title screen pad code for this set, and disable it if so
+		if getenv("ForceThonk") == true then
+			SOUND:PlayAnnouncer("storytime")
+			ANNOUNCER:SetCurrentAnnouncer("")
+			setenv("ForceThonk", false)
+		end
+	end,
     OnCommand=function(self)
 		self:propagate(true):queuecommand("AnimateLogo")
-	end,
-    
-	-- Check if we forced thonk mode via the title screen pad code for this set, and disable it if so
-	OffCommand=function(self)
-		if getenv("ForceThonk") == true then ANNOUNCER:SetCurrentAnnouncer("") setenv("ForceThonk", false) end
 	end,
 	
     --"Thanks for playing"/USB reminder text

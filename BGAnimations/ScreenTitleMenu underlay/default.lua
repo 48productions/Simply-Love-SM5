@@ -79,12 +79,18 @@ local af = Def.ActorFrame{
         OffCommand=function(self) self:finishtweening() end,
     },
 	
-	-- Secret cheat code to enable thonk mode at any time
-	CodeMessageCommand=function(self, params)
-		if params.Name == "EnableThonk" then
-			setenv("ForceThonk", true) -- Set an environment variable to allow thonk
-		end
-	end
+	
+	
+	Def.Sound{
+		File=THEME:GetPathS("", "_unlock.ogg"),
+		-- Secret cheat code to enable thonk mode at any time
+		CodeMessageCommand=function(self, params)
+			if params.Name == "EnableThonk" then
+				setenv("ForceThonk", true) -- Set an environment variable to allow thonk
+				self:play()
+			end
+		end,
+	},
 }
 
 -- decorative arrows, now using the editor noteskin!
