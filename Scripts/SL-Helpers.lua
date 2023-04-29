@@ -1065,7 +1065,7 @@ end
 
 GetDefaultSong=function()
     
-    -- Default song list doesn't exist yet, try loading the default songs (needs to happen at least once on startup
+    -- Default song list doesn't exist yet, try loading the default songs (needs to happen at least once on startup)
     if default_songs == nil or #default_songs == 0 then
         RefreshDefaultSongs()
         
@@ -1077,9 +1077,12 @@ GetDefaultSong=function()
         
     -- Should've found at least one (maybe more) valid songs
     else
-        local song = default_songs[math.random(1, #default_songs)]
-        --SM(song)
-        return song
+		if #default_songs == 1 then
+			return default_songs[1]
+		else
+			local song = default_songs[math.random(1, #default_songs)]
+			return song
+		end
     end
 end
 

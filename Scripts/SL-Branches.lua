@@ -135,6 +135,12 @@ Branch.SSMCancel = function()
 		return Branch.AllowScreenEvalSummary()
 	end
 
+	-- Check if we forced thonk mode via the title screen pad code for this set, and disable it if so
+	if getenv("ForceThonk") == true then
+		ANNOUNCER:SetCurrentAnnouncer("")
+		setenv("ForceThonk", false)
+	end
+
 	return Branch.TitleMenu()
 end
 

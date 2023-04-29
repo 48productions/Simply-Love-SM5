@@ -309,7 +309,18 @@ for key, item in pairs(HighScoreItems) do
 		LoadFont("Common Normal")..{
 			Condition=item.labelx ~= nil,
 			Name="HighScoreLabel",
-			OnCommand=function(self) self:xy(item.labelx, item.y):zoom(textZoom * 0.7):diffuse(color_slate2):horizalign(center):settext(Screen.String(key)) end
+			OnCommand=function(self)
+				self:xy(item.labelx, item.y):zoom(textZoom * 0.7):diffuse(color_slate2):horizalign(center)
+				if key == "Rival1HighScore" then -- The Rival 1 label is our GrooveStats status display, we may need to show a message if GrooveStats won't work for this player
+					if not SL.GrooveStats.IsConnected then -- Check if GS is not connected (probably disabled)
+						self:settext(THEME:GetString("ScreenSelectMusic", "GSDisabled"))
+					elseif SL[pn].ApiKey == "" then -- Check if the player doesn't have an API key (not configured for online)
+						self:settext(THEME:GetString("ScreenSelectMusic", "GSNoAccount"))
+					end
+				else
+					self:settext(Screen.String(key))
+				end
+			end
 		},
 		-- Score
 		LoadFont("Common Normal")..{

@@ -53,6 +53,32 @@ local GetMachineTag = function(gsEntry)
 	return ""
 end
 
+-- Convenience function to return the SongOrCourse and StepsOrTrail for a
+-- for a player.
+local GetSongAndSteps = function(player)
+	local SongOrCourse = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse()) or GAMESTATE:GetCurrentSong()
+	local StepsOrTrail = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player)) or GAMESTATE:GetCurrentSteps(player)
+	return SongOrCourse, StepsOrTrail
+end
+
+-- Gets the score for a given song from a given profile
+local GetScoreFromProfile = function(profile, SongOrCourse, StepsOrTrail)
+	-- if we don't have everything we need, return nil
+	if not (profile and SongOrCourse and StepsOrTrail) then return nil end
+
+	return profile:GetHighScoreList(SongOrCourse, StepsOrTrail):GetHighScores()[1]
+end
+
+-- Gets the score from a player's profile for the current song
+local GetScoreForPlayer = function(player)
+	local highScore
+	if PROFILEMAN:IsPersistentProfile(player) then
+		local SongOrCourse, StepsOrTrail = GetSongAndSteps(player)
+		highScore = GetScoreFromProfile(PROFILEMAN:GetProfile(player), SongOrCourse, StepsOrTrail)
+	end
+	return highScore
+end
+
 -- Callback function for when the request for scores on a song has been returned
 local GetScoresRequestProcessor = function(res, params)
 	local master = params.master
@@ -83,7 +109,7 @@ local GetScoresRequestProcessor = function(res, params)
 		local playerScore = playerScoreAF:GetChild("HighScore")
 		local playerName = playerScoreAF:GetChild("HighScoreName")
 
-		local loadingText = paneDisplay:GetChild("Rival1HighScore"):GetChild("HighScoreLabel") -- Temp
+		local loadingText = paneDisplay:GetChild("Rival1HighScore"):GetChild("HighScoreLabel")
 
 		local playerStr = "player"..i
 		local rivalNum = 1

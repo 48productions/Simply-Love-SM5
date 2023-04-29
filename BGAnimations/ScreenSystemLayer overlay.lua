@@ -183,6 +183,16 @@ t[#t+1] = Def.ActorFrame{
 		end
 	end,
 
+	-- Might not be the best place for this...
+	StorageDevicesChangedMessageCommand=function(self)
+		for i = 1,2 do
+			-- If a player is using a memory card and unplugs their drive, clear their API key!
+			if MEMCARDMAN:GetCardState("PlayerNumber_P"..i) ~= "MemoryCardState_ready" and PROFILEMAN:ProfileWasLoadedFromMemoryCard("PlayerNumber_P"..i) then
+				SL['P'..i].ApiKey = ""
+			end
+		end
+	end,
+
 	LoadFont("Common Normal")..{
 		Name="GrooveStats",
 		Text="     GrooveStats",
