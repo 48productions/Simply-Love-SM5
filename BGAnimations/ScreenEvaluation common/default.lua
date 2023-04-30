@@ -36,6 +36,8 @@ local t = Def.ActorFrame{
 
 	-- help text that appears if we're in Casual gamemode
 	LoadActor("./CasualHelpText.lua")
+	
+	
 }
 
 
@@ -133,9 +135,19 @@ for player in ivalues(Players) do
 	if grade and grade < bestGrade then bestGrade = grade end
 end
 
+-- -----------------------------------------------------------------------
+
+-- The actor that will automatically upload scores to GrooveStats.
+-- This is only added in "dance" mode and if the service is available.
+-- Since this actor also spawns the event overlay it must go on top of everything else
+t[#t+1] = LoadActor("./AutoSubmitScore.lua")
+
+
+-- -----------------------------------------------------------------------
+
 -- Janky announcer support:
 -- Can't figure out how the SM grade announcer calls are supposed to work (doesn't play the default files nor files with the SL-specific grades)
--- Only need this for april fools so minimum effort, maximum meme
+-- Only need this for the spud-specific april fools announcer so minimum effort, maximum meme
 if AllowThonk() then
 	if bestGrade <= 4 then -- Star.
 		SOUND:PlayAnnouncer("evaluation hot")

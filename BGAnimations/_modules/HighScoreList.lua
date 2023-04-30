@@ -1,4 +1,4 @@
-local af = Def.ActorFrame{}
+local af = Def.ActorFrame{Name="HighScoreList"}
 
 -- ---------------------------------------------
 -- setup involving optional arguments that might have been passed in via a key/value table
@@ -23,7 +23,7 @@ local StepsOrTrail = args.StepsOrTrail or ((args.RoundsAgo==nil or args.RoundsAg
 if not (SongOrCourse and StepsOrTrail) then return af end
 
 local Font = args.Font or "Common Normal"
-local row_height = 22 -- sigh
+local row_height = args.RowHeight or 22
 
 -- ---------------------------------------------
 -- setup that can occur now that the arguments have been handled
@@ -107,14 +107,13 @@ end
 
 -- ---------------------------------------------
 
-
 for i=lower,upper do
 
 	local row_index = i-lower
 	local score, name, date
 	local numbers = {}
 
-	if HighScores[i] then
+	if HighScores[i] and not args.HideScores then
 		score = FormatPercentScore(HighScores[i]:GetPercentDP())
 		name = HighScores[i]:GetName()
 		date = HighScores[i]:GetDate()
@@ -130,7 +129,7 @@ for i=lower,upper do
 		date	= "----------"
 	end
 
-	local row = Def.ActorFrame{}
+	local row = Def.ActorFrame{Name="HighScoreEntry"..(row_index+1)}
 
 	-- if we wanted to compare a player's performance against the list of highscores we are returning
 	if args.RoundsAgo then
@@ -146,21 +145,25 @@ for i=lower,upper do
 	end
 
 	row[#row+1] = LoadFont(Font)..{
+		Name="Rank",
 		Text=i..". ",
 		InitCommand=function(self) self:horizalign(right):xy(-120, row_index*row_height) end
 	}
 
 	row[#row+1] = LoadFont(Font)..{
+		Name="Name",
 		Text=name,
 		InitCommand=function(self) self:horizalign(left):xy(-110, row_index*row_height) end
 	}
 
 	row[#row+1] = LoadFont(Font)..{
+		Name="Score",
 		Text=score,
 		InitCommand=function(self) self:horizalign(left):xy(-24, row_index*row_height) end
 	}
 
 	row[#row+1] = LoadFont(Font)..{
+		Name="Date",
 		Text=date,
 		InitCommand=function(self) self:horizalign(left):xy(50, row_index*row_height) end
 	}
