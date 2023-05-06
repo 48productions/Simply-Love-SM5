@@ -54,7 +54,7 @@ local t = Def.ActorFrame {
 		Name="SortMenu",
 
 		-- Always ensure player input is directed back to the engine when initializing SelectMusic.
-		InitCommand=function(self) self:y(-_screen.h + sortmenu.h):queuecommand("DirectInputToEngine") end,
+		InitCommand=function(self) self:y(-_screen.h + sortmenu.h - 20):queuecommand("DirectInputToEngine") end,
 		-- Always ensure player input is directed back to the engine when leaving SelectMusic.
 		OffCommand=function(self) self:playcommand("DirectInputToEngine"):visible(false) end,
 
@@ -65,7 +65,7 @@ local t = Def.ActorFrame {
 
 
 		ShowSortMenuCommand=function(self) self:decelerate(0.3):y(0) end,
-		HideSortMenuCommand=function(self) self:decelerate(0.3):y(-_screen.h + sortmenu.h) end,
+		HideSortMenuCommand=function(self) self:decelerate(0.3):y(-_screen.h + sortmenu.h - 20) end,
 
 		SongChosenMessageCommand=function(self) songChosen = 2 end,
 		SongUnchosenMessageCommand=function(self) songChosen = 1 end,

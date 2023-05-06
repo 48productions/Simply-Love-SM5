@@ -68,7 +68,7 @@ return function(AllAvailableSteps)
 		-- use a for loop to match that "current chart" against each chart
 		-- in our charts table; we want the index of the current chart
 		for k,chart in pairs(charts) do
-			if chart:GetChartName()==currentSteps:GetChartName() then
+			if chart == currentSteps then
 				currentIndex = tonumber(k)
 			end
 		end

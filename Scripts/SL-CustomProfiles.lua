@@ -46,6 +46,8 @@ local profile_whitelist = {
 	PlayerSeenModfileWarning = "boolean",
     MaxNewsSeen = "number",
 	
+	VisualDelay = "string",
+	
 	PlayerOptionsString = "string"
 }
 
