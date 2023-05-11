@@ -441,6 +441,9 @@ SL = {
 		--   Timestamp: number, when the request was made
 		RequestCache = {},
 	},
+	
+	-- Timeout for the "force thonk mode" code on the title screen
+	ThonkTimeout = 0,
 }
 
 

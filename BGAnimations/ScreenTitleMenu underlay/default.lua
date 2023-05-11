@@ -71,7 +71,7 @@ local af = Def.ActorFrame{
 	end,
     OnCommand=function(self) self:propagate(true):queuecommand("AnimateLogo") end, -- Workaround for a bug where input is eaten until this OnCommand finishes (sorry, Squirrel ;_;)
 	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
-    
+	
     --Background cover for the intro animation
     Def.Quad{
         InitCommand=function(self) self:zoomto(_screen.w,_screen.h):diffuse(0,0,0,1) end,
@@ -80,14 +80,23 @@ local af = Def.ActorFrame{
     },
 	
 	
-	
+	-- Thonk code okay sound
 	Def.Sound{
 		File=THEME:GetPathS("", "_unlock.ogg"),
 		-- Secret cheat code to enable thonk mode at any time
 		CodeMessageCommand=function(self, params)
-			if params.Name == "EnableThonk" then
-				setenv("ForceThonk", true) -- Set an environment variable to allow thonk
-				self:play()
+			-- Triggering thonk mode via the pad code sets a timeout
+			-- If this timeout is active, this code cannot be entered again until the timeout expires (ROUGHLY 6ish hours later in the day, but is inconsistent for style points and ease of implementation)
+			-- This prevents players from spamming thonk mode and the associated meme announcer, if present, all day in a public venue
+			if params.Name == "EnableThonk" then -- First, did we even enter the thonk mode code?
+				--SM((SL.ThonkTimeout + 6)..Hour())
+				if (SL.ThonkTimeout + 6) < Hour() then -- Next check the timeout
+					setenv("ForceThonk", true) -- Set an environment variable to allow thonk
+					self:play()
+				else
+					SM("Recharging...")
+				end
+				SL.ThonkTimeout = Hour() -- Peak game design: Reset the timeout even if the code failed lol
 			end
 		end,
 	},
