@@ -4,7 +4,7 @@ local bestGrade = 20
 
 -- Start by loading actors that would be the same whether 1 or 2 players are joined.
 local t = Def.ActorFrame{
-
+	Name="ScreenEval Common",
 	-- add a lua-based InputCalllback to this screen so that we can navigate
 	-- through multiple panes of information; pass a reference to this ActorFrame
 	-- and the number of panes there are to InputHandler.lua
