@@ -130,7 +130,7 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 
 		-- If only one player is joined, we then need to update both panes with only
 		-- one players' data.
-		--[[local side = i
+		local side = i
 		if data and GAMESTATE:GetNumSidesJoined() == 1 then
 			if data["player1"] then
 				side = 1
@@ -138,7 +138,7 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 				side = 2
 			end
 			playerStr = "player"..side
-		end]]
+		end
 
 		if highScorePane and QRPane then
 			if data and data[playerStr] then
@@ -189,11 +189,11 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 					end
 
 					-- Only display the overlay on the sides that are actually joined.
-					if ToEnumShortString("PLAYER_P"..i) == "P"..side and (data[playerStr]["rpg"] or data[playerStr]["itl"]) then
+					--[[if ToEnumShortString("PLAYER_P"..i) == "P"..side and (data[playerStr]["rpg"] or data[playerStr]["itl"]) then
 						local eventAf = overlay:GetChild("AutoSubmitMaster"):GetChild("EventOverlay"):GetChild("P"..i.."EventAf")
 						eventAf:playcommand("Show", {data=data[playerStr]})
 						shouldDisplayOverlay = true
-					end
+					end]]
 
 					local upperPane = overlay:GetChild("P"..side.."_AF_Upper")
 					if upperPane then
@@ -244,10 +244,10 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 		end
 	end
 
-	if shouldDisplayOverlay then
+	--[[if shouldDisplayOverlay then
 		overlay:GetChild("AutoSubmitMaster"):GetChild("EventOverlay"):visible(true)
 		overlay:queuecommand("DirectInputToEventOverlayHandler")
-	end
+	end]]
 
 	-- Spud doesn't support this yet - 48
 	--[[if ThemePrefs.Get("AutoDownloadUnlocks") then
