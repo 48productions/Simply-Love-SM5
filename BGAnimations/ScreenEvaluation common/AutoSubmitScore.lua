@@ -125,8 +125,11 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 		local entryNum = 1
 		local rivalNum = 1
 		-- Pane 3 is the groovestats highscores pane.
-		local highScorePane = overlay:GetChild("P"..i.."_AF_Lower"):GetChild("Pane3")
-		local QRPane = overlay:GetChild("P"..i.."_AF_Lower"):GetChild("Pane6")
+		local lowerPane = overlay:GetChild("P"..i.."_AF_Lower")
+		if lowerPane then
+			local highScorePane = lowerPane:GetChild("Pane3")
+			local QRPane = lowerPane:GetChild("Pane6")
+		end
 
 		-- If only one player is joined, we then need to update both panes with only
 		-- one players' data.
