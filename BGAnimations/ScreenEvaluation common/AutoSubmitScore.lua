@@ -124,12 +124,6 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 		local playerStr = "player"..i
 		local entryNum = 1
 		local rivalNum = 1
-		-- Pane 3 is the groovestats highscores pane.
-		local lowerPane = overlay:GetChild("P"..i.."_AF_Lower")
-		if lowerPane then
-			local highScorePane = lowerPane:GetChild("Pane3")
-			local QRPane = lowerPane:GetChild("Pane6")
-		end
 
 		-- If only one player is joined, we then need to update both panes with only
 		-- one players' data.
@@ -143,104 +137,110 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 			playerStr = "player"..side
 		end
 
-		if highScorePane and QRPane then
-			if data and data[playerStr] then
-				-- And then also ensure that the chart hash matches the currently parsed one.
-				-- It's better to just not display anything than display the wrong scores.
-				if SL["P"..side].Streams.Hash == data[playerStr]["chartHash"] then
-					local personalRank = nil
-					if not data[playerStr]["isRanked"] then
-						QRPane:GetChild("QRCode"):queuecommand("Hide")
-						QRPane:GetChild("HelpText"):settext("This chart is not ranked on GrooveStats.")
-						if i == 1 and P1SubmitText then
-							P1SubmitText:queuecommand("ChartNotRanked")
-						elseif i == 2 and P2SubmitText then
-							P2SubmitText:queuecommand("ChartNotRanked")
-						end
-					elseif data[playerStr]["gsLeaderboard"] then
-						for gsEntry in ivalues(data[playerStr]["gsLeaderboard"]) do
-							local entry = highScorePane:GetChild("HighScoreList"):GetChild("HighScoreEntry"..entryNum)
-							entry:stoptweening()
-							entry:diffuse(Color.White)
-							SetEntryText(
-								gsEntry["rank"]..".",
-								GetMachineTag(gsEntry),
-								string.format("%.2f%%", gsEntry["score"]/100),
-								ParseGroovestatsDate(gsEntry["date"]),
-								entry
-							)
-							if gsEntry["isRival"] then
-								entry:diffuse(color("#BD94FF"))
-								rivalNum = rivalNum + 1
-							elseif gsEntry["isSelf"] then
-								entry:diffuse(color("#A1FF94"))
-								personalRank = gsEntry["rank"]
+		-- Pane 3 is the groovestats highscores pane.
+		local lowerPane = overlay:GetChild("P"..i.."_AF_Lower")
+		if lowerPane then
+			local highScorePane = lowerPane:GetChild("Pane3")
+			local QRPane = lowerPane:GetChild("Pane6")
+			if highScorePane and QRPane then
+				if data and data[playerStr] then
+					-- And then also ensure that the chart hash matches the currently parsed one.
+					-- It's better to just not display anything than display the wrong scores.
+					if SL["P"..side].Streams.Hash == data[playerStr]["chartHash"] then
+						local personalRank = nil
+						if not data[playerStr]["isRanked"] then
+							QRPane:GetChild("QRCode"):queuecommand("Hide")
+							QRPane:GetChild("HelpText"):settext("This chart is not ranked on GrooveStats.")
+							if i == 1 and P1SubmitText then
+								P1SubmitText:queuecommand("ChartNotRanked")
+							elseif i == 2 and P2SubmitText then
+								P2SubmitText:queuecommand("ChartNotRanked")
 							end
+						elseif data[playerStr]["gsLeaderboard"] then
+							for gsEntry in ivalues(data[playerStr]["gsLeaderboard"]) do
+								local entry = highScorePane:GetChild("HighScoreList"):GetChild("HighScoreEntry"..entryNum)
+								entry:stoptweening()
+								entry:diffuse(Color.White)
+								SetEntryText(
+									gsEntry["rank"]..".",
+									GetMachineTag(gsEntry),
+									string.format("%.2f%%", gsEntry["score"]/100),
+									ParseGroovestatsDate(gsEntry["date"]),
+									entry
+								)
+								if gsEntry["isRival"] then
+									entry:diffuse(color("#BD94FF"))
+									rivalNum = rivalNum + 1
+								elseif gsEntry["isSelf"] then
+									entry:diffuse(color("#A1FF94"))
+									personalRank = gsEntry["rank"]
+								end
 
-							if gsEntry["isFail"] then
-								entry:GetChild("Score"):diffuse(Color.Red)
+								if gsEntry["isFail"] then
+									entry:GetChild("Score"):diffuse(Color.Red)
+								end
+								entryNum = entryNum + 1
 							end
-							entryNum = entryNum + 1
-						end
-						QRPane:GetChild("QRCode"):queuecommand("Hide")
-						QRPane:GetChild("HelpText"):settext("Score has already been submitted :)")
-						if i == 1 and P1SubmitText then
-							P1SubmitText:queuecommand("Submit")
-						elseif i == 2 and P2SubmitText then
-							P2SubmitText:queuecommand("Submit")
-						end
-					end
-
-					-- Only display the overlay on the sides that are actually joined.
-					--[[if ToEnumShortString("PLAYER_P"..i) == "P"..side and (data[playerStr]["rpg"] or data[playerStr]["itl"]) then
-						local eventAf = overlay:GetChild("AutoSubmitMaster"):GetChild("EventOverlay"):GetChild("P"..i.."EventAf")
-						eventAf:playcommand("Show", {data=data[playerStr]})
-						shouldDisplayOverlay = true
-					end]]
-
-					local upperPane = overlay:GetChild("P"..side.."_AF_Upper")
-					if upperPane then
-						if data[playerStr]["result"] == "score-added" or data[playerStr]["result"] == "improved" then
-							local recordText = overlay:GetChild("AutoSubmitMaster"):GetChild("P"..side.."RecordText")
-							local GSIcon = overlay:GetChild("AutoSubmitMaster"):GetChild("P"..side.."GrooveStats_Logo")
-
-							recordText:visible(true)
-							GSIcon:visible(true)
-							recordText:diffuseshift():effectcolor1(Color.White):effectcolor2(Color.Yellow):effectperiod(3)
-							if personalRank == 1 then
-								recordText:settext("World Record!")
-							else
-								recordText:settext("Personal Best!")
+							QRPane:GetChild("QRCode"):queuecommand("Hide")
+							QRPane:GetChild("HelpText"):settext("Score has already been submitted :)")
+							if i == 1 and P1SubmitText then
+								P1SubmitText:queuecommand("Submit")
+							elseif i == 2 and P2SubmitText then
+								P2SubmitText:queuecommand("Submit")
 							end
-							local recordTextXStart = recordText:GetX() - recordText:GetWidth()*recordText:GetZoom()/2
-							local GSIconWidth = GSIcon:GetWidth()*GSIcon:GetZoom()
-							-- This will automatically adjust based on the length of the recordText length.
-							GSIcon:xy(recordTextXStart - GSIconWidth/2, recordText:GetY())
+						end
+
+						-- Only display the overlay on the sides that are actually joined.
+						--[[if ToEnumShortString("PLAYER_P"..i) == "P"..side and (data[playerStr]["rpg"] or data[playerStr]["itl"]) then
+							local eventAf = overlay:GetChild("AutoSubmitMaster"):GetChild("EventOverlay"):GetChild("P"..i.."EventAf")
+							eventAf:playcommand("Show", {data=data[playerStr]})
+							shouldDisplayOverlay = true
+						end]]
+
+						local upperPane = overlay:GetChild("P"..side.."_AF_Upper")
+						if upperPane then
+							if data[playerStr]["result"] == "score-added" or data[playerStr]["result"] == "improved" then
+								local recordText = overlay:GetChild("AutoSubmitMaster"):GetChild("P"..side.."RecordText")
+								local GSIcon = overlay:GetChild("AutoSubmitMaster"):GetChild("P"..side.."GrooveStats_Logo")
+
+								recordText:visible(true)
+								GSIcon:visible(true)
+								recordText:diffuseshift():effectcolor1(Color.White):effectcolor2(Color.Yellow):effectperiod(3)
+								if personalRank == 1 then
+									recordText:settext("World Record!")
+								else
+									recordText:settext("Personal Best!")
+								end
+								local recordTextXStart = recordText:GetX() - recordText:GetWidth()*recordText:GetZoom()/2
+								local GSIconWidth = GSIcon:GetWidth()*GSIcon:GetZoom()
+								-- This will automatically adjust based on the length of the recordText length.
+								GSIcon:xy(recordTextXStart - GSIconWidth/2, recordText:GetY())
+							end
 						end
 					end
 				end
-			end
 
-			-- Empty out any remaining entries on a successful response.
-			-- For failed responses we fallback to the scores available in the machine.
-			if res["status"] == "success" then
-				for j=entryNum, NumEntries do
-					local entry = highScorePane:GetChild("HighScoreList"):GetChild("HighScoreEntry"..j)
-					entry:stoptweening()
-					-- We didn't get any scores if i is still == 1.
-					if j == 1 then
-						if data and data[playerStr] then
-							if data[playerStr]["isRanked"] then
-								SetEntryText("", "No Scores", "", "", entry)
+				-- Empty out any remaining entries on a successful response.
+				-- For failed responses we fallback to the scores available in the machine.
+				if res["status"] == "success" then
+					for j=entryNum, NumEntries do
+						local entry = highScorePane:GetChild("HighScoreList"):GetChild("HighScoreEntry"..j)
+						entry:stoptweening()
+						-- We didn't get any scores if i is still == 1.
+						if j == 1 then
+							if data and data[playerStr] then
+								if data[playerStr]["isRanked"] then
+									SetEntryText("", "No Scores", "", "", entry)
+								else
+									SetEntryText("", "Chart Not Ranked", "", "", entry)
+								end
 							else
-								SetEntryText("", "Chart Not Ranked", "", "", entry)
+								SetEntryText("", "No Scores", "", "", entry)
 							end
 						else
-							SetEntryText("", "No Scores", "", "", entry)
+							-- Empty out the remaining rows.
+							SetEntryText("---", "----", "------", "----------", entry)
 						end
-					else
-						-- Empty out the remaining rows.
-						SetEntryText("---", "----", "------", "----------", entry)
 					end
 				end
 			end
@@ -252,7 +252,7 @@ local AutoSubmitRequestProcessor = function(res, overlay)
 		overlay:queuecommand("DirectInputToEventOverlayHandler")
 	end]]
 
-	-- Spud doesn't support this yet - 48
+	-- Spud doesn't support this - 48
 	--[[if ThemePrefs.Get("AutoDownloadUnlocks") then
 		-- This will only download if the expected data exists.
 		AttemptDownloads(res)
@@ -280,38 +280,52 @@ local af = Def.ActorFrame {
 					local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 					local submitForPlayer = false
 
-					if valid and not stats:GetFailed() and SL[pn].IsPadPlayer then
-						local percentDP = stats:GetPercentDancePoints()
-						local score = tonumber(("%.0f"):format(percentDP * 10000))
+					if SL[pn].ApiKey ~= "" then
+						if valid then
+							if not stats:GetFailed() then
+								if SL[pn].IsPadPlayer then
+									local percentDP = stats:GetPercentDancePoints()
+									local score = tonumber(("%.0f"):format(percentDP * 10000))
 
-						local profileName = ""
-						if PROFILEMAN:IsPersistentProfile(player) and PROFILEMAN:GetProfile(player) then
-							profileName = PROFILEMAN:GetProfile(player):GetDisplayName()
+									local profileName = ""
+									if PROFILEMAN:IsPersistentProfile(player) and PROFILEMAN:GetProfile(player) then
+										profileName = PROFILEMAN:GetProfile(player):GetDisplayName()
+									end
+
+									if SL[pn].Streams.Hash ~= "" then
+										query["chartHashP"..i] = SL[pn].Streams.Hash
+										headers["x-api-key-player-"..i] = SL[pn].ApiKey
+
+										body["player"..i] = {
+											rate=rate,
+											score=score,
+											judgmentCounts=GetJudgmentCounts(player),
+											usedCmod=(GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred"):CMod() ~= nil),
+											comment=CreateCommentString(player),
+										}
+										sendRequest = true
+										submitForPlayer = true
+									end
+								else -- Not a pad player
+									self:GetParent():GetChild("P"..i.."SubmitText"):settext("Auto-Submit disabled by your GrooveStats.ini file")
+								end
+							else -- Stage was failed
+								self:GetParent():GetChild("P"..i.."SubmitText"):settext("Auto-Submit disabled (Song Failed)")
+							end
+						else -- Not GrooveStats valid
+							self:GetParent():GetChild("P"..i.."SubmitText"):settext("Score invalid for Auto-Submit (See QR Code Pane)")
 						end
+					end -- No API Key (don't show a message here, the player probably doesn't even know of/care about GrooveStats)
 
-						if SL[pn].ApiKey ~= "" and SL[pn].Streams.Hash ~= "" then
-							query["chartHashP"..i] = SL[pn].Streams.Hash
-							headers["x-api-key-player-"..i] = SL[pn].ApiKey
-
-							body["player"..i] = {
-								rate=rate,
-								score=score,
-								judgmentCounts=GetJudgmentCounts(player),
-								usedCmod=(GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred"):CMod() ~= nil),
-								comment=CreateCommentString(player),
-							}
-							sendRequest = true
-							submitForPlayer = true
-						end
-					end
-
-					if not submitForPlayer then
+					--[[if not submitForPlayer then
 						-- Hide the submit text if we're not submitting a score for a player.
 						-- For example in versus, if one player fails and the other passes, we
 						-- want to show that the first player score won't be submitted.
+						
+						-- Telling the player why is more important than failing silently - 48
 						local submitText = self:GetParent():GetChild("P"..i.."SubmitText")
 						submitText:visible(false)
-					end
+					end]]
 				end
 			end
 			-- Only send the request if it's applicable.
@@ -344,7 +358,7 @@ af[#af+1] = LoadFont("Common Normal").. {
 	Name="P1SubmitText",
 	Text="",
 	InitCommand=function(self)
-		self:xy(_screen.w * 0.25, _screen.h - 15)
+		self:xy(_screen.w * 0.32, _screen.h - 15)
 		self:diffuse(textColor)
 		self:shadowlength(shadowLength)
 		self:zoom(0.8)
@@ -369,7 +383,7 @@ af[#af+1] = LoadFont("Common Normal").. {
 	Name="P2SubmitText",
 	Text="",
 	InitCommand=function(self)
-		self:xy(_screen.w * 0.75, _screen.h - 15)
+		self:xy(_screen.w * 0.68, _screen.h - 15)
 		self:diffuse(textColor)
 		self:shadowlength(shadowLength)
 		self:zoom(0.8)
@@ -404,7 +418,7 @@ af[#af+1] = LoadFont("Common Bold")..{
 	InitCommand=function(self)
 		local x = _screen.cx - 225
 		self:zoom(0.225)
-		self:xy(x,40)
+		self:xy(x,42)
 		self:visible(false)
 	end,
 }
@@ -423,7 +437,7 @@ af[#af+1] = LoadFont("Common Bold")..{
 	InitCommand=function(self)
 		local x = _screen.cx + 225
 		self:zoom(0.225)
-		self:xy(x,40)
+		self:xy(x,42)
 		self:visible(false)
 	end,
 }
