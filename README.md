@@ -10,11 +10,11 @@
 
 ## About
 
-Simply Spud is a StepMania/Outfox theme that focues on:
+Simply Spud is an ITGMania theme that focues on:
  * A balance of simplicity and stylistic flair
  * An intuitive menu design for casual players, with useful features for pro players
 
-A fork of Simply Love SM5, it adds more of flair and polish while sharing some of the original's simplistic charm and most of its core features for pro players. Other modifications were made to reduce stumbling points for new players
+While Simply Love SM5 (which this theme is based on) strives to include many useful features for veteran dance game players (and does a great job at doing this!), Simply Spud is focused on being accessible and easy to use for new players. An emphasis was especially placed on being ready for use at public arcades, conventions, etc. Though not as feature rich as Simply Love, Spud retains many of its core features for the players that use them.
 
 
 ## Screenshots
@@ -39,9 +39,9 @@ This theme will ONLY work on ITGMania, as other engines do not yet support the n
 
 2. Either [grab the latest release](https://github.com/48productions/Simply-Potato-SM5/releases), or click the green "Code" button at the top right of this page, then "Download ZIP" for the most recent version.
 
-3. Unzip the theme into the *Themes* folder.
+3. Unzip the theme into ITGMania's *Themes* folder.
 
-4. Launch the game and switch to this theme. How to do this depends on your current theme, but is generally in the *Settings* menu under the *Apperance* category. **Restart your game** to ensure it works correctly!
+5. Launch the game and switch to this theme. How to do this depends on your current theme, but is generally in the *Settings* menu under the *Apperance* category. **Restart your game** to ensure it works correctly!
 
 
 ---
