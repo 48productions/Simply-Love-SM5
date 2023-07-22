@@ -36,7 +36,7 @@ PaneItems[THEME:GetString("RadarCategory","Taps")] = {
 	-- "rc" is RadarCategory
 	rc = 'RadarCategory_TapsAndHolds',
     data = {
-		x = 100,
+		x = 96,
 		y = -2
 	}
 }
@@ -44,7 +44,7 @@ PaneItems[THEME:GetString("RadarCategory","Taps")] = {
 PaneItems[THEME:GetString("RadarCategory","Jumps")] = {
 	rc = 'RadarCategory_Jumps',
 	data = {
-		x = 100,
+		x = 96,
 		y = 12
 	}
 }
@@ -52,7 +52,7 @@ PaneItems[THEME:GetString("RadarCategory","Jumps")] = {
 PaneItems[THEME:GetString("RadarCategory","Holds")] = {
 	rc = 'RadarCategory_Holds',
 	data = {
-		x = 100,
+		x = 96,
 		y = 26,
 	}
 }
@@ -268,7 +268,7 @@ for key, item in pairs(PaneItems) do
 		--},
 		--  numerical value
 		LoadFont("Common Normal")..{
-			InitCommand=function(self) self:zoom(textZoom * 0.8):xy(item.data.x, item.data.y):diffuse(Color.Black) end,
+			InitCommand=function(self) self:zoom(textZoom * 0.8):xy(item.data.x, item.data.y):diffuse(Color.Black):maxwidth(60) end,
 			OnCommand=function(self) self:playcommand("Set") end,
 			SetCommand=function(self)
 				local SongOrCourse = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse()) or GAMESTATE:GetCurrentSong()

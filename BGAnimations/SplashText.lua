@@ -86,11 +86,7 @@ local SplashList = {
 	"Locally grown,\nfreshly baked!",
 	"Just add pudding!",
 	"Now even more\ncursed!",
-    "Stay Safe!", --Good heck this is still a thing? - 48 (1/23/2021)
-    "Seriously,\nStay Safe!!!!",
-    "Wash your hands!",
-    "Seriously,\nwash your hands!",
-    "Dancing solo\nencouraged!",
+    "Stay Safe!",
     "Sick dance solos\nstrongly encouraged!",
 	"It's finally here!", --SimplySpud cab arrived at the arcade - 4/1/2020. The Idaho scene finally has a decent 4 panel cab :D
 	"Smashing arrows\nsince 2018!",
@@ -118,6 +114,10 @@ local SplashList = {
     "Certified\nFresh Songs!",
     "am i a cool girl",
     "\"Let's me Show you a\ntrue CURSECAB\"",
+	"Press X to pet the\nNanase plushie",
+	"this text is getting\non my nerves",
+	"NUH-UH!",
+	"Have some fun with Miku!",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
   	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020 and 2021, cancelled by corona
     "\"I swear if you put your drink on this\narcade machine I'll summon those\nkids from that birthday party over\nthere to scream next to you while\nyou play your next set.\"",
