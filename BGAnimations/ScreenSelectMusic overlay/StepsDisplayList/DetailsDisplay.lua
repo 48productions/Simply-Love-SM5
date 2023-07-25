@@ -1,7 +1,8 @@
 local player = ...
 local pn = ToEnumShortString(player)
 local textZoom = 0.75
-local text_table, marquee_index
+local credit_text_table, credit_text_index
+local hs_text_table, hs_text_index
 
 -- Returns the name and score of the highest score a profile has on the current song/chart
 local GetNameAndScore = function(profile)
@@ -118,6 +119,9 @@ local af = Def.ActorFrame{
 		-- Update the machine high score
 		-- The label text should be set to "Machine" here as well, since it might've gotten set by default.lua to display a world record instead
 		local machine_score_af = self:GetChild("MachineHighScore")
+		machine_score_af:stoptweening() -- If we're bouncing between showing the machine and world best, stop
+		hs_text_table = {{machine_score, machine_name}, {nil, nil}}
+		hs_text_index = 1
 		machine_score_af:GetChild("HighScore"):settext(machine_score)
 		machine_score_af:GetChild("HighScoreName"):settext(machine_name):diffuse({0,0,0,1})
 		machine_score_af:GetChild("HighScoreLabel"):settext(THEME:GetString("ScreenSelectMusic", "MachineHighScore"))
@@ -131,6 +135,7 @@ local af = Def.ActorFrame{
 			local player_score_af = self:GetChild("PlayerHighScore")
 			player_score_af:GetChild("HighScore"):settext(player_score)
 			player_score_af:GetChild("HighScoreName"):settext(player_name):diffuse({0,0,0,1})
+			player_score_af:GetChild("HighScoreLabel"):settext(THEME:GetString("ScreenSelectMusic", "PlayerHighScore"))
 
 			DiffuseEmojis(self, player_name)
 		end
@@ -203,13 +208,13 @@ local af = Def.ActorFrame{
 			self:stoptweening()
 
 			if SongOrCourse and StepsOrCourse then
-				text_table = GetStepsCredit(player)
+				credit_text_table = GetStepsCredit(player)
                 --SM(player)
-                --SM(text_table)
-				marquee_index = 0
+                --SM(credit_text_table)
+				credit_text_index = 0
 
-				-- only queue a marquee if there are things in the text_table to display
-				if #text_table > 0 then
+				-- only queue a marquee if there are things in the credit_text_table to display
+				if #credit_text_table > 0 then
 					self:queuecommand("Marquee")
 				else
 					-- no credit information was specified in the simfile for this stepchart, so just set to an empty string
@@ -222,10 +227,10 @@ local af = Def.ActorFrame{
 			end
 		end,
 		MarqueeCommand=function(self)
-			-- increment the marquee_index, and keep it in bounds
-			marquee_index = (marquee_index % #text_table) + 1
+			-- increment the credit_text_index, and keep it in bounds
+			credit_text_index = (credit_text_index % #credit_text_table) + 1
 			-- retrieve the text we want to display
-			local text = text_table[marquee_index]
+			local text = credit_text_table[credit_text_index]
 
 			-- set this BitmapText actor to display that text
 			self:settext( text )
@@ -234,7 +239,7 @@ local af = Def.ActorFrame{
 			DiffuseEmojis(self, text)
 
 			-- sleep 2 seconds before queueing the next Marquee command to do this again
-			if #text_table > 1 then
+			if #credit_text_table > 1 then
 				self:sleep(2):queuecommand("Marquee")
 			end
 		end,
@@ -305,6 +310,28 @@ for key, item in pairs(HighScoreItems) do
 				self:visible(PROFILEMAN:IsPersistentProfile(player))
 			end
 		end,
+		
+		-- The machine high score label/score should switch between machine and world best, if we have data for both
+		-- This command is played by default.lua when a world high score is returned, and we swap back and forth in an infinite loop until the current song or chart is changed
+		MarqueeCommand=function(self, params)
+			if params[1] ~= nil then -- We have a new world high score data to store
+				hs_text_table[2] = params
+			end
+			
+			hs_text_index = hs_text_index + 1
+			if hs_text_index >= 3 then -- Show the machine best
+				hs_text_index = 1
+				self:GetChild("HighScoreLabel"):settext(THEME:GetString("ScreenSelectMusic", "MachineHighScore"))
+			else -- Show the world best
+				self:GetChild("HighScoreLabel"):settext(THEME:GetString("ScreenSelectMusic", "WorldHighScore"))
+			end
+			--SM(hs_text_table)
+			self:GetChild("HighScore"):settext(hs_text_table[hs_text_index][1])
+			self:GetChild("HighScoreName"):settext(hs_text_table[hs_text_index][2])
+			
+			self:sleep(2):queuecommand("Marquee")
+		end,
+		
 		-- Label (Personal, Machine, etc)
 		LoadFont("Common Normal")..{
 			Condition=item.labelx ~= nil,

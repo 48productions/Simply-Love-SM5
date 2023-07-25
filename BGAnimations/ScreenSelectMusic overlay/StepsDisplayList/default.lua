@@ -108,6 +108,7 @@ local GetScoresRequestProcessor = function(res, params)
 		local playerScoreAF = paneDisplay:GetChild("PlayerHighScore")
 		local playerScore = playerScoreAF:GetChild("HighScore")
 		local playerName = playerScoreAF:GetChild("HighScoreName")
+		local playerLabel = playerScoreAF:GetChild("HighScoreLabel")
 
 		local loadingText = paneDisplay:GetChild("Rival1HighScore"):GetChild("HighScoreLabel")
 
@@ -123,13 +124,14 @@ local GetScoresRequestProcessor = function(res, params)
 			if SL["P"..i].Streams.Hash == data[playerStr]["chartHash"] then
 				for gsEntry in ivalues(data[playerStr]["gsLeaderboard"]) do
 					if gsEntry["rank"] == 1 then
-						SetNameAndScore(
+						--[[SetNameAndScore(
 							GetMachineTag(gsEntry),
 							string.format("%.2f%%", gsEntry["score"]/100),
 							machineName,
 							machineScore
 						)
-						machineLabel:settext(THEME:GetString("ScreenSelectMusic", "WorldHighScore"))
+						machineLabel:settext(THEME:GetString("ScreenSelectMusic", "WorldHighScore"))]]
+						machineScoreAF:playcommand("Marquee", {string.format("%.2f%%", gsEntry["score"]/100), GetMachineTag(gsEntry)}) -- Tell the machine score actors to start flipping between showing the world and machine best scores
 						worldRecordSet = true
 					end
 
@@ -149,6 +151,7 @@ local GetScoresRequestProcessor = function(res, params)
 								playerName,
 								playerScore
 							)
+							playerLabel:settext(THEME:GetString("ScreenSelectMusic", "PlayerHighScoreGS")) -- And tell the player we've done this, too
 							personalRecordSet = true
 						end
 					end
