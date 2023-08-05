@@ -409,7 +409,7 @@ af[#af+1] = Def.Sprite{
 	Name="P1GrooveStats_Logo",
 	InitCommand=function(self)
 		self:zoom(0.2)
-		self:visible(true)
+		self:visible(false)
 	end,
 }
 
@@ -419,7 +419,7 @@ af[#af+1] = LoadFont("Common Bold")..{
 		local x = _screen.cx - 225
 		self:zoom(0.225)
 		self:xy(x,42)
-		self:visible(true)
+		self:visible(false)
 	end,
 }
 
