@@ -44,4 +44,17 @@ else
 	}
 end
 
+af[#af+1] = Def.BitmapText{
+	Text="Click!",
+	Font="Common normal",
+	InitCommand=function(self)
+		self:diffusealpha(0):Center()
+	end,
+	LeftClickMessageCommand=function(self)
+		local rawPos = {INPUTFILTER:GetMouseX(), INPUTFILTER:GetMouseY()}
+		--SM(SCREEN_RIGHT..rawPos[1])
+		self:stoptweening():xy(rawPos[1], rawPos[2]):diffusealpha(0.5):decelerate(0.3):diffusealpha(0)
+	end,
+}
+
 return af

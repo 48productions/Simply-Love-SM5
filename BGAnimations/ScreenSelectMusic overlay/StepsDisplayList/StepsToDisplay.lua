@@ -15,7 +15,7 @@ return function(AllAvailableSteps)
 
 	--gather any edit charts into a table
 	local charts = {}
-
+	local chartMaxIndex = 0
 	for k,chart in ipairs(AllAvailableSteps) do
 
 		local difficulty = chart:GetDifficulty()
@@ -24,15 +24,17 @@ return function(AllAvailableSteps)
 		-- (challenge charts only appear after the 5th slot, etc)
 		-- We'll then take a selection (or two) of that list later to actually show to the player
 		local index = GetDifficultyIndex(difficulty)
-		if #charts < index then -- The last chart in the list is before the minimum slot for this difficulty 
-				charts[index] = chart -- Add this chart at the position for its difficulty 
+		if chartMaxIndex < index then -- The last chart in the list is before the minimum slot for this difficulty 
+			charts[index] = chart -- Add this chart at the position for its difficulty 
+			chartMaxIndex = index -- Update the highest slot taken by a chart
 		else -- The last chart in the list is after the minimum slot for this difficulty
-			charts[#charts+1] = chart -- Add this chart to the end of the chart list
+			charts[chartMaxIndex+1] = chart -- Add this chart to the end of the chart list
+			chartMaxIndex = chartMaxIndex+1 -- Update the highest slot taken by a chart
 		end
 	end
 
 	-- if there are 5 or fewer charts we can safely bail now
-	if #charts <= 5 then return {charts, {false, false, false}} end
+	if chartMaxIndex <= 5 then return {charts, {false, false, false}} end
 
 
 	--THERE ARE ~~EDITS~~ CHARTS, OH NO!
