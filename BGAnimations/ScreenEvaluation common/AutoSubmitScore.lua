@@ -305,6 +305,7 @@ local af = Def.ActorFrame {
 										}
 										sendRequest = true
 										submitForPlayer = true
+										self:GetParent():GetChild("P"..i.."SubmitText"):settext("Submitting ...")
 									end
 								else -- Not a pad player
 									self:GetParent():GetChild("P"..i.."SubmitText"):settext("Auto-Submit disabled by your GrooveStats.ini file")
@@ -330,10 +331,6 @@ local af = Def.ActorFrame {
 			end
 			-- Only send the request if it's applicable.
 			if sendRequest then
-				-- Unjoined players won't have the text displayed.
-				self:GetParent():GetChild("P1SubmitText"):settext("Submitting ...")
-				self:GetParent():GetChild("P2SubmitText"):settext("Submitting ...")
-
 				self:playcommand("MakeGrooveStatsRequest", {
 					endpoint="score-submit.php?"..NETWORK:EncodeQueryParameters(query),
 					method="POST",

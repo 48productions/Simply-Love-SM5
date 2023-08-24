@@ -111,9 +111,21 @@ local af = Def.ActorFrame{
         end
     end,
     
-	
+	-- The current song/course has changed, clear the high score fields
+	-- (SetCommand can't be used here like it can be with the steps details since it would cause BOTH players' charts to be reparsed if either player changes difficulty)
+	CurrentSongChangedMessageCommand=function(self) self:playcommand("SetLocalScores") end,
+	CurrentCourseChangedMessageCommand=function(self) self:playcommand("SetLocalScores") end,
 	-- Current steps have changed - update the personal/machine high scores, clear the rival scores, and queue this chart to be parsed
 	["CurrentSteps"..pn.."ChangedMessageCommand"]=function(self)
+		self:playcommand("SetLocalScores") -- Set the local machine/personal scores for this player
+		self:stoptweening()
+		self:sleep(0.4) -- Wait a bit, then parse the current chart (in turn pulling GrooveStats scores) if we haven't immediately changed charts again
+		self:queuecommand("ParseChart")
+	end,
+	
+	-- Whenever the current song (or this player's selected chart) is changed, clear the old high score details and fill in personal/machine high Scores
+	-- GrooveStats scores are filled into the machine (world) and rival slots once chart parsing completes
+	SetLocalScoresCommand=function(self)
 		local machine_score, machine_name = GetNameAndScore( PROFILEMAN:GetMachineProfile() )
 
 		-- Update the machine high score
@@ -146,10 +158,6 @@ local af = Def.ActorFrame{
 			score_af:GetChild("HighScore"):settext("??.??%")
 			score_af:GetChild("HighScoreName"):settext("----"):diffuse({0,0,0,1})
 		end
-		--self:queuecommand("Hide")
-		self:stoptweening()
-		self:sleep(0.4) -- Wait a bit, then parse the current chart if we haven't immediately changed charts again
-		self:queuecommand("ParseChart")
 	end,
 	
 	ParseChartCommand=function(self)

@@ -242,13 +242,13 @@ SL = {
 			AllowW1="AllowW1_Everywhere",
 			SubSortByNumSteps=1,
 
-			TimingWindowSecondsW1=0.011000,
+			TimingWindowSecondsW1=0.013500,
 			TimingWindowSecondsW2=0.021500,
 			TimingWindowSecondsW3=0.043000,
 			TimingWindowSecondsW4=0.102000,
 			TimingWindowSecondsW5=0.135000,
 			TimingWindowSecondsHold=0.320000,
-			TimingWindowSecondsMine=0.065000,
+			TimingWindowSecondsMine=0.070000,
 			TimingWindowSecondsRoll=0.350000,
 		},
 		StomperZ = {

@@ -118,6 +118,7 @@ local SplashList = {
 	"this text is getting\non my nerves",
 	"NUH-UH!",
 	"Have some fun with Miku!",
+	"bro, it''s broke.\nya can't play it",
     "\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States.\"",
   	--"\"Despite many people believing Idaho\nis a fictional location, it borders the\nstates of Washington and Oregon in the\nUnited States. Its most famous feature\nis being home to Nanahira's first US appearance.\"", --Rest in piece Anime Oasis 2020 and 2021, cancelled by corona
     "\"I swear if you put your drink on this\narcade machine I'll summon those\nkids from that birthday party over\nthere to scream next to you while\nyou play your next set.\"",
