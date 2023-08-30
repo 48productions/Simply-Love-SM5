@@ -34,6 +34,7 @@ local PlayerDefaults = {
 				LifeMeterType = "Standard",
 				MissBecauseHeld = false,
 				NPSGraphAtTop = false,
+				JudgmentTilt = false,
 				Vocalization = "None",
                 
                 PlayerSeenModfileWarning = false,

@@ -338,7 +338,7 @@ local Overrides = {
 	GameplayExtras = {
 		SelectType = "SelectMultiple",
 		Values = function()
-			local vals = { "ColumnFlashOnMiss", "SubtractiveScoring", "Pacemaker", "MissBecauseHeld", "NPSGraphAtTop" }
+			local vals = { "ColumnFlashOnMiss", "SubtractiveScoring", "Pacemaker", "MissBecauseHeld", "NPSGraphAtTop", "JudgmentTilt" }
 			if SL.Global.GameMode == "StomperZ" then table.remove(vals, 5) end
 			return vals
 		end,
