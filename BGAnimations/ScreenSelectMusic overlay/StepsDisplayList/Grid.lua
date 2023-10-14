@@ -103,6 +103,12 @@ Grid[#Grid+1] = Def.Sprite{
 		self:zoomto(width * num_columns_max * GridZoomX, height * num_rows * BlockZoomY)
 		self:y( 3 * height * BlockZoomY )
 		self:customtexturerect(0, 0, num_columns, num_rows)
+		
+		if GAMESTATE:GetCurrentSong() then -- If we've scrolled over a song, show the grid. Otherwise, hide it to make room for the pack description
+			self:finishtweening():smooth(0.1):diffusealpha(1)
+		else
+			self:finishtweening():smooth(0.1):diffusealpha(0)
+		end
     end
 }
 
@@ -124,11 +130,11 @@ for RowNumber=1,num_rows do
 			-- the engine's Steps::TidyUpData() method ensures that difficulty meters are positive
 			-- (and does not seem to enforce any upper bound that I can see)
 			self:customtexturerect(0, 0, num_columns, 1)
-			self:cropright( 1 - (params.Meter * (1/num_columns)) )
+			self:stoptweening():smooth(0.1):cropright( 1 - (params.Meter * (1/num_columns)) )
 			self:diffuse( DifficultyColor(params.Difficulty) )
 		end,
 		UnsetCommand=function(self)
-			self:customtexturerect(0,0,0,0)
+			self:stoptweening():smooth(0.1):cropright(1):diffusealpha(0)
 		end
 	}
 
@@ -144,10 +150,10 @@ for RowNumber=1,num_rows do
 		end,
 		SetCommand=function(self, params)
 			-- diffuse and set each chart's difficulty meter
-			self:diffuse( DifficultyColor(params.Difficulty) )
+			self:stoptweening():smooth(0.1):diffuse( DifficultyColor(params.Difficulty) )
 			self:settext(params.Meter)
 		end,
-		UnsetCommand=function(self) self:settext(""):diffuse(color_slate3) end,
+		UnsetCommand=function(self) self:stoptweening():smooth(0.1):diffusealpha(0) end,
 	}
 end
 
@@ -194,17 +200,16 @@ t[#t+1] = Def.ActorFrame{
         UpdateRatingScaleCommand=function(self)
             local song = GAMESTATE:GetCurrentSong()
             if song then
-                self:diffuse(getSongTitleColor(song:GetGroupName())):diffusealpha(0.6)
+                self:stoptweening():smooth(0.1):diffuse(getSongTitleColor(song:GetGroupName())):diffusealpha(0.6)
             
                 local ratingType = group_rating_types[song:GetGroupName()]
                 if ratingType == 1 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleDDR")) return
                 elseif ratingType == 2 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleITG")) return
-                elseif ratingType == 3 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleMods")) return end
-            end
-            
-            -- No song selected or group doesn't have rating info
-            self:settext(THEME:GetString("ScreenSelectMusic", "ScaleNone"))
-            self:diffuse(getSongTitleColor("")):diffusealpha(0.5)
+                elseif ratingType == 3 then self:settext(THEME:GetString("ScreenSelectMusic", "ScaleMods")) return
+				else self:settext(THEME:GetString("ScreenSelectMusic", "ScaleNone")) end -- No rating info
+            else -- No song selected
+				self:stoptweening():smooth(0.1):diffusealpha(0)
+			end
         end,
     },
 }

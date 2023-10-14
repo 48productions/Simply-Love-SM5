@@ -117,13 +117,17 @@ end
 group_descriptions = {} -- A string description of each group, or 0 if missing
 group_ratings = {} -- A string rating scale for each group, or 0 if missing
 group_rating_types = {} -- An int of what type of rating scale we're using. 0 = Missing, 1 = DDR/X/New, 2=ITG/Old, 3 = Mods group
+group_tags = {} -- A table of tables with tags we've applied to groups
 
 reloadGroupInfo = function()
     for _,group in ipairs(SONGMAN:GetSongGroupNames()) do
         local desc = 0
-        local rates = 0
+        local rates = nil
         local rates_type = 0
         local file = nil
+		local split
+		local tags = nil
+		local tags_table = {}
         
         -- open info.ini if it exists
         if FILEMAN:DoesFileExist("./Songs/"..group.."/info.ini") then
@@ -147,12 +151,24 @@ reloadGroupInfo = function()
                     end
                 end
             end
+			
+			-- Tags can specify either one or two tags, separated by a comma
+			if file.GroupInfo.Tags then
+				tags = file.GroupInfo.Tags
+				split, _ = tags:find(",")
+				if split then -- If we found a comma there's two tags. Parse both.
+					tags_table[0] = tags:sub(0, split - 1)
+					tags_table[1] = tags:sub(split + 1)
+				else -- No comma = one tag
+					tags_table[0] = tags
+				end
+			end
         end
         -- copy to the arrays, leaving a 0 in place of nil or empty strings
         group_descriptions[group] = desc ~= "" and desc or 0
         group_ratings[group] = rates ~= "" and rates or 0
         group_rating_types[group] = group:match("%[Mods%]") and 3 or rates_type -- Set the rating info type based on clues above, but let [Mods] groups override this
-        
+        group_tags[group] = tags_table
     end
 end
 

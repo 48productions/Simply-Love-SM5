@@ -38,7 +38,7 @@ return Def.Sprite{
 		if params.Player == player then self:visible(false) end
 	end,
 
-	OnCommand=function(self) self:playcommand("Set"):sleep(1.4):decelerate(0.2):diffusealpha(1) end,
+	OnCommand=function(self) self:playcommand("Set") end,
 	CurrentSongChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	CurrentCourseChangedMessageCommand=function(self) self:queuecommand("Set") end,
 	CurrentStepsP1ChangedMessageCommand=function(self) self:queuecommand("Set") end,
@@ -62,6 +62,9 @@ return Def.Sprite{
 					break
 				end
 			end
+			self:stoptweening():smooth(0.05):diffusealpha(1)
+		else
+			self:stoptweening():smooth(0.05):diffusealpha(0)
 		end
 
 		-- keep within reasonable limits because Edit charts are a thing

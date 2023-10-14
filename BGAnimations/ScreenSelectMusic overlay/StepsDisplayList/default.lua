@@ -14,6 +14,7 @@ if GAMESTATE:IsCourseMode() then
 	af[#af+1] = LoadActor("./CourseContentsList.lua")
 else
 	af[#af+1] = LoadActor("./Grid.lua")
+	af[#af+1] = LoadActor("./PackDescription.lua")
 end
 
 for player in ivalues({PLAYER_1, PLAYER_2}) do
