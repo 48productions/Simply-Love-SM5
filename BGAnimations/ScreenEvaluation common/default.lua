@@ -73,6 +73,9 @@ for player in ivalues(Players) do
 
 		-- Record Texts (Machine and/or Personal)
 		LoadActor("./PerPlayer/RecordTexts.lua", player),
+		
+		-- "Progression"
+		LoadActor("./PerPlayer/PotatoCounter.lua", player),
 	}
 
 	-- the lower half of ScreenEvaluation

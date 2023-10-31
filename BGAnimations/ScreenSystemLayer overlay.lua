@@ -1,16 +1,25 @@
 -- This is mostly copy/pasted directly from SM5's _fallback theme with
 -- very minor modifications.
 
+-- Player 1/2 Side Text (shows username, "Insert USB" prompt, or Credits Text)
 local function CreditsText( pn )
 	return LoadFont("Common Normal") .. {
 		InitCommand=function(self)
-			self:visible(false)
-			self:name("Credits" .. PlayerNumberToString(pn))
+			self:visible(false):maxwidth(200)
+			self:name("Credits" .. PlayerNumberToString(pn)):shadowlength(1)
 			ActorUtil.LoadAllCommandsAndSetXY(self,Var "LoadingScreen")
 		end,
 		UpdateTextCommand=function(self)
 			local str = ScreenSystemLayerHelpers.GetCreditsMessage(pn)
 			self:settext(str)
+			
+			-- If this player is using a profile, they need a name color
+			local profile = PROFILEMAN:GetProfile(pn)
+			local nameColors = {Color.White, Color.White}
+			if profile then
+				nameColors = GetPlayerLevelColor(profile:GetTotalDancePoints())
+			end
+			self:diffuseleftedge(color(nameColors[1])):diffuserightedge(color(nameColors[2]))
 		end,
 		UpdateVisibleCommand=function(self)
 			local screen = SCREENMAN:GetTopScreen()
