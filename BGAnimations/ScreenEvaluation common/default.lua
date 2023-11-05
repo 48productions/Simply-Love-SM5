@@ -103,10 +103,10 @@ for player in ivalues(Players) do
 			-- and need more space to accommodate more columns of arrows;  these commands
 			-- are queued as needed from the InputHandler
 			ShrinkCommand=function(self)
-				self:zoomto(300,180):x(0)
+				self:stoptweening():smooth(0.1):zoomto(300,180):x(0)
 			end,
 			ExpandCommand=function(self)
-				self:zoomto(520,180):x(3)
+				self:stoptweening():smooth(0.1):zoomto(520,180):x(3)
 			end
 		},
 

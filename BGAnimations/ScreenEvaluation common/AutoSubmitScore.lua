@@ -359,7 +359,7 @@ af[#af+1] = LoadFont("Common Normal").. {
 		self:diffuse(textColor)
 		self:shadowlength(shadowLength)
 		self:zoom(0.8)
-		self:visible(GAMESTATE:IsSideJoined(PLAYER_1))
+		self:visible(GAMESTATE:IsSideJoined(PLAYER_1) and SL["P1"].ApiKey ~= "")
 	end,
 	ChartNotRankedCommand=function(self)
 		self:settext("Chart Not Ranked")
@@ -384,7 +384,7 @@ af[#af+1] = LoadFont("Common Normal").. {
 		self:diffuse(textColor)
 		self:shadowlength(shadowLength)
 		self:zoom(0.8)
-		self:visible(GAMESTATE:IsSideJoined(PLAYER_2))
+		self:visible(GAMESTATE:IsSideJoined(PLAYER_2) and SL["P2"].ApiKey ~= "")
 	end,
 	ChartNotRankedCommand=function(self)
 		self:settext("Chart Not Ranked")
