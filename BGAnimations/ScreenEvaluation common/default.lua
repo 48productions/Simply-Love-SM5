@@ -65,11 +65,17 @@ for player in ivalues(Players) do
 		-- nice
 		LoadActor("./PerPlayer/nice.lua", player),
 
-		-- stepartist
-		LoadActor("./PerPlayer/StepArtist.lua", player),
-
-		-- difficulty text and meter
-		LoadActor("./PerPlayer/Difficulty.lua", player),
+		-- Group stepartist and difficulty for animating
+		Def.ActorFrame{
+			InitCommand=function(self) self:y(40):diffusealpha(0) end,
+			OnCommand=function(self) self:sleep(0.8):bounceend(0.5):y(0):diffusealpha(1) end,
+			
+			-- stepartist
+			LoadActor("./PerPlayer/StepArtist.lua", player),
+		
+			-- difficulty text and meter
+			LoadActor("./PerPlayer/Difficulty.lua", player),
+		},
 
 		-- Record Texts (Machine and/or Personal)
 		LoadActor("./PerPlayer/RecordTexts.lua", player),
@@ -97,6 +103,19 @@ for player in ivalues(Players) do
 				self:diffuse(color_slate2):y(_screen.cy+34):zoomto( 300,180 )
 				if ThemePrefs.Get("RainbowMode") then
 					self:diffusealpha(0.9)
+				end
+				if player == PLAYER_1 then
+					self:cropleft(1)
+				else
+					self:cropright(1)
+				end
+			end,
+			OnCommand=function(self)
+				self:sleep(0.5):decelerate(0.3)
+				if player == PLAYER_1 then
+					self:cropleft(0)
+				else
+					self:cropright(0)
 				end
 			end,
 			-- this background Quad may need to shrink and expand if we're playing double

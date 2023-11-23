@@ -72,7 +72,7 @@ for i=1, #TapNoteScores.Types do
 				--end
                 
                 if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * i) end
-                self:sleep(0.3 + 0.07 * i):smooth(0.1):diffusealpha(1)
+                self:sleep(1 + 0.07 * i):smooth(0.1):diffusealpha(1)
 			end
 		}
 	end
@@ -92,7 +92,7 @@ for index, label in ipairs(RadarCategories) do
 			self:x( (player == PLAYER_1 and -160) or 90 )
 			self:y((index-1)*28 + 41)
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
-            self:diffusealpha(0):sleep(0.3 + 0.07 * index):smooth(0.1):diffusealpha(1)
+            self:diffusealpha(0):sleep(1 + 0.07 * index):smooth(0.1):diffusealpha(1)
 		end
 	}
 end

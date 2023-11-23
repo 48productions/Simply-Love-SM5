@@ -2,6 +2,8 @@ local player = ...
 local pn = ToEnumShortString(player)
 local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 
+local startDelay = 1.2
+
 local TapNoteScores = {
 	Types = { 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' },
 	-- x values for P1 and P2
@@ -58,7 +60,7 @@ for i=1,#TapNoteScores.Types do
 			self:y((i-1)*35 -20)
 			self:diffusealpha(0)
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * i) end
-            self:sleep(0.8 + 0.07 * i):queuecommand("StartRolling")
+            self:sleep(startDelay + 0.08 * i):queuecommand("StartRolling")
 		end,
         StartRollingCommand=function(self)
             self:targetnumber(number):smooth(0.1):diffusealpha(1)
@@ -82,7 +84,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 			self:y((index-1)*35 + 53)
 			self:x( RadarCategories.x[pn] ):diffusealpha(0)
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
-            self:sleep(0.8 + 0.07 * (index)):queuecommand("StartRolling")
+            self:sleep(startDelay + 0.08 * (index)):queuecommand("StartRolling")
 		end,
         StartRollingCommand=function(self)
             self:targetnumber(performance):smooth(0.1):diffusealpha(1)
@@ -97,7 +99,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 			self:y((index-1)*35 + 53)
 			self:x( ((player == PLAYER_1) and -168) or 230 )
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
-            self:diffusealpha(0):sleep(0.8 + 0.07 * (index)):smooth(0.1):diffusealpha(1)
+            self:diffusealpha(0):sleep(startDelay + 0.08 * (index)):smooth(0.1):diffusealpha(1)
 		end
 	}
 
@@ -111,7 +113,7 @@ for index, RCType in ipairs(RadarCategories.Types) do
 			local leadingZeroAttr = { Length=3-tonumber(tostring(possible):len()), Diffuse=color("#5A6166") }
 			self:AddAttribute(0, leadingZeroAttr )
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
-            self:diffusealpha(0):sleep(0.8 + 0.07 * (index)):smooth(0.1):diffusealpha(1)
+            self:diffusealpha(0):sleep(startDelay + 0.08 * (index)):smooth(0.1):diffusealpha(1)
 		end,
 	}
 end

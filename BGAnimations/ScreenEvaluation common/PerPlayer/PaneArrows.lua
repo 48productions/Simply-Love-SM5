@@ -5,7 +5,8 @@ if SL.Global.GameMode == "Casual" then return Def.Actor{} end
 
 return Def.ActorFrame{
     Name="PaneArrowsAF",
-    InitCommand=function(self) self:y(_screen.cy+60) end,
+    InitCommand=function(self) self:y(_screen.cy+60):diffusealpha(0) end,
+	OnCommand=function(self) self:sleep(3.3):smooth(0.4):diffusealpha(1) end,
     Def.Sprite{
         Name="ArrowLeft",
         Texture=THEME:GetPathG("", "EditMenu Left.png"),

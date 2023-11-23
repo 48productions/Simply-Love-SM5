@@ -49,12 +49,14 @@ if SL.Global.GameMode ~= "Casual" then
 		OnCommand=function(self) self:y(_screen.cy+200.5) end,
 
 		Def.Quad{
-			InitCommand=function(self) self:diffuse(color_slate2):zoomto(300, 26) end
+			InitCommand=function(self) self:diffuse(color_slate2):zoomto(300, 26):cropbottom(1) end,
+			OnCommand=function(self) self:sleep(1):decelerate(0.1):cropbottom(0) end,
 		},
 
 		LoadFont("Common Normal")..{
 			Text=optionslist,
-			InitCommand=function(self) self:zoom(font_zoom):xy(-140,-5):align(0,0):vertspacing(-6):_wrapwidthpixels(290 / font_zoom):maxwidth(400) end
+			InitCommand=function(self) self:zoom(font_zoom):xy(-140,-5):align(0,0):vertspacing(-6):_wrapwidthpixels(290 / font_zoom):maxwidth(400):diffusealpha(0) end,
+			OnCommand=function(self) self:sleep(1.5):smooth(0.2):diffusealpha(1) end,
 		}
 	}
 end
