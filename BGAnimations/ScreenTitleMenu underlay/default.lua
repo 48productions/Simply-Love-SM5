@@ -72,6 +72,8 @@ local af = Def.ActorFrame{
     OnCommand=function(self) self:propagate(true):queuecommand("AnimateLogo") end, -- Workaround for a bug where input is eaten until this OnCommand finishes (sorry, Squirrel ;_;)
 	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
 	
+	LoadActor(THEME:GetPathG("","BigArrow.lua")),
+	
     --Background cover for the intro animation
     Def.Quad{
         InitCommand=function(self) self:zoomto(_screen.w,_screen.h):diffuse(0,0,0,1) end,
