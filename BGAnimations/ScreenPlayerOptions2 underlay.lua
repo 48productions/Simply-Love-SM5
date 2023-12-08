@@ -67,7 +67,7 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			InitCommand=function(self) self:diffusealpha(0) end,
 			OptionRowChangedMessageCommand=function(self)
 				local row_num = SCREENMAN:GetTopScreen():GetCurrentRowIndex(player)
-				self:stoptweening():smooth(0.2):diffusealpha((row_num >= 2 and row_num <= 8) and 1 or 0) -- Only show the notefield when the player is highlighting options that update it (the engine options can't properly do this)
+				self:stoptweening():smooth(0.2):diffusealpha((row_num >= 2 and row_num <= 9) and 1 or 0) -- Only show the notefield when the player is highlighting options that update it (the engine options can't properly do this)
 			end,
 			
 			-- Background quad 2 ("Background" option)

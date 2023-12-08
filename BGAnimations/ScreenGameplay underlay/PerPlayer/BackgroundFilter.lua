@@ -11,7 +11,6 @@ local FilterAlpha = {
 return Def.ActorFrame{
     -- Check if we got a Full Combo as the OffCommand plays, play an animation if we did
     InitCommand=function(self) self:xy(GetNotefieldX(player), _screen.cy ) end,
-    --OnCommand=function(self) self:sleep(3):playcommand("ComboFlash", SL.JudgmentColors[SL.Global.GameMode][1]) end, -- Debug: Force the FC animation in the OnCommand
     OffCommand=function(self) self:queuecommand("CheckCombo") end,
     CheckComboCommand=function(self)
         local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
@@ -34,7 +33,13 @@ return Def.ActorFrame{
             self:diffuse(Color.Black)
                 :diffusealpha( FilterAlpha[mods.BackgroundFilter] or 0 )
                 :zoomto( GetNotefieldWidth(player), _screen.h )
+			if not SL.Global.GameplayReloadCheck then
+				self:cropbottom(1)
+			end
         end,
+		OnCommand=function(self)
+			self:sleep(2):decelerate(0.5):cropbottom(0)
+		end,
         ComboFlashCommand=function(self, FlashColor)
             self:fadeleft(1):faderight(1):accelerate(0.25):diffuse( FlashColor ):fadeleft(0.1):faderight(0.1)
                 :accelerate(0.5):faderight(1):fadeleft(1)
