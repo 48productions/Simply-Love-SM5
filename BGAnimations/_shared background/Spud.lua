@@ -23,26 +23,28 @@ local t = Def.ActorFrame {
 }
 
 -- Scrolling sprites
-for i=1,3 do
-	t[#t+1] = Def.Sprite {
-		Texture=THEME:GetPathG("", file..i..".png"),
-		OnCommand=function(self)
-			self:zoom(0.45):Center()
-			:customtexturerect(0,0,1,1):texcoordvelocity(anim_data.texcoordvelocity[i][1], anim_data.texcoordvelocity[i][2])
-			
-			if ThemePrefs.Get("VisualTheme") ~= "Potato" and ThemePrefs.Get("VisualTheme") ~= "Thonk" then -- Recolor sprites based on the current color, but only in non-potato modes
-				self:diffuse(GetHexColor(SL.Global.ActiveColorIndex))
+if not HolidayCheer() then
+	for i=1,3 do
+		t[#t+1] = Def.Sprite {
+			Texture=THEME:GetPathG("", file..i..".png"),
+			OnCommand=function(self)
+				self:zoom(0.45):Center()
+				:customtexturerect(0,0,1,1):texcoordvelocity(anim_data.texcoordvelocity[i][1], anim_data.texcoordvelocity[i][2])
+				
+				if ThemePrefs.Get("VisualTheme") ~= "Potato" and ThemePrefs.Get("VisualTheme") ~= "Thonk" then -- Recolor sprites based on the current color, but only in non-potato modes
+					self:diffuse(GetHexColor(SL.Global.ActiveColorIndex))
+				end
+				self:diffusealpha(anim_data.diffusealpha[i])
+			end,
+			ColorSelectedMessageCommand=function(self)
+				if ThemePrefs.Get("VisualTheme") ~= "Potato" and ThemePrefs.Get("VisualTheme") ~= "Thonk" then -- Recolor sprites based on the current color, but only in non-potato modes
+					self:linear(0.5)
+					:diffuse(GetHexColor(SL.Global.ActiveColorIndex))
+					:diffusealpha(anim_data.diffusealpha[i])
+				end
 			end
-			self:diffusealpha(anim_data.diffusealpha[i])
-		end,
-		ColorSelectedMessageCommand=function(self)
-			if ThemePrefs.Get("VisualTheme") ~= "Potato" and ThemePrefs.Get("VisualTheme") ~= "Thonk" then -- Recolor sprites based on the current color, but only in non-potato modes
-				self:linear(0.5)
-				:diffuse(GetHexColor(SL.Global.ActiveColorIndex))
-				:diffusealpha(anim_data.diffusealpha[i])
-			end
-		end
-	}
+		}
+	end
 end
 
 -- Accent image

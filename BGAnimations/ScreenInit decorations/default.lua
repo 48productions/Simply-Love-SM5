@@ -1,7 +1,24 @@
 local af = Def.ActorFrame{ InitCommand=function(self) self:Center() end }
 
+local SetThemeColor = function(color)
+	SL.Global.ActiveColorIndex = color
+	ThemePrefs.Set("SimplyLoveColor", color)
+	ThemePrefs.Save()
+	MESSAGEMAN:Broadcast("ColorSelected")
+end
 
+-- Fetch (and enforce) the correct simply love color if we're in potato (or thonk) mode
+-- This should be 11, or 5 during Holiday Cheer
+-- (This *probably* can't be in SL_Init, where the color is initially set, because I'm not sure if everything needed for this check will be fully loaded
 local slc = SL.Global.ActiveColorIndex
+if ThemePrefs.Get("VisualTheme") == "Potato" or ThemePrefs.Get("VisualTheme") == "Thonk" then
+	if HolidayCheer() then
+		if slc ~= 5 then SetThemeColor(5) end
+	else
+		if slc ~= 11 then SetThemeColor(11) end
+	end
+end
+
 
 -- semitransparent black quad as background for 7 decorative arrows
 af[#af+1] = Def.Quad{

@@ -6,6 +6,7 @@ local index = args[2]
 
 
 local _zoom = WideScale(0.435,0.525)
+local _shadow = 1
 local _game = GAMESTATE:GetCurrentGame():GetName()
 
 local drawNinePanelPad = function(color, xoffset)
@@ -14,136 +15,158 @@ local drawNinePanelPad = function(color, xoffset)
 
 		InitCommand=function(self) self:x(xoffset) end,
 
-		-- first row
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(_zoom * self:GetWidth() * -1)
-				self:y(_zoom * self:GetHeight() * -2)
+		-- Split the pad into two actorframes, and apply affects to each to affect alternating panels
+		-- Pad AF 1
+		Def.ActorFrame {
+			PulseCommand=function(self) self:diffuseramp():effectcolor1(0.7,0.7,0.7,1):effectcolor2(1,1,1,1):effectclock("bgm"):effectperiod(2) end,
+			StopPulsingCommand=function(self) self:stopeffect() end,
+			
+			-- first row
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(_zoom * self:GetWidth() * -1)
+					self:y(_zoom * self:GetHeight() * -2)
 
-				if _game == "pump" or _game == "techno" or (_game == "dance" and choiceName == "solo") then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
+					if _game == "pump" or _game == "techno" or (_game == "dance" and choiceName == "solo") then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
 				end
-			end
+			},
+
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(_zoom * self:GetWidth())
+					self:y(_zoom * self:GetHeight() * -2)
+
+					if _game == "pump" or _game == "techno" or (_game == "dance" and choiceName == "solo") then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
+				end
+			},
+
+
+			-- second row
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(0)
+					self:y(_zoom * self:GetHeight() * -1)
+
+					if _game == "pump" then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
+				end
+			},
+
+
+
+			-- third row
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(_zoom * self:GetWidth() * -1)
+					self:y(0)
+
+					if _game == "pump" or _game == "techno" then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
+				end
+			},
+
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(_zoom * self:GetWidth())
+					self:y(0)
+
+					if _game == "pump" or _game == "techno" then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
+				end
+			}
 		},
+		
+		
+		
+		-- Pad AF 2
+		Def.ActorFrame {
+			PulseCommand=function(self) self:diffuseramp():effectcolor1(0.7,0.7,0.7,1):effectcolor2(1,1,1,1):effectclock("bgm"):effectoffset(1):effectperiod(2) end,
+			StopPulsingCommand=function(self) self:stopeffect() end,
+			
+			-- first row
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(0)
+					self:y(_zoom * self:GetHeight() * -2)
 
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(0)
-				self:y(_zoom * self:GetHeight() * -2)
-
-				if _game == "dance" or _game == "techno" then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
+					if _game == "dance" or _game == "techno" then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
 				end
-			end
-		},
+			},
+			
+			
+			
+			-- second row
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(_zoom * self:GetWidth() * -1)
+					self:y(_zoom * self:GetHeight() * -1)
 
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(_zoom * self:GetWidth())
-				self:y(_zoom * self:GetHeight() * -2)
-
-				if _game == "pump" or _game == "techno" or (_game == "dance" and choiceName == "solo") then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
+					if _game == "dance" or _game == "techno" then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
 				end
-			end
-		},
+			},
 
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(_zoom * self:GetWidth())
+					self:y(_zoom * self:GetHeight() * -1)
 
-		-- second row
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(_zoom * self:GetWidth() * -1)
-				self:y(_zoom * self:GetHeight() * -1)
-
-				if _game == "dance" or _game == "techno" then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
+					if _game == "dance" or _game == "techno" then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
 				end
-			end
-		},
+			},
+			
+			
+			
+			-- third row
+			LoadActor("rounded-square.png")..{
+				InitCommand=function(self)
+					self:zoom(_zoom):shadowlength(_shadow)
+					self:x(0)
+					self:y(0)
 
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(0)
-				self:y(_zoom * self:GetHeight() * -1)
-
-				if _game == "pump" then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
+					if _game == "dance" or _game == "techno" then
+						self:diffuse(color)
+					else
+						self:diffuse(0.2,0.2,0.2,1)
+					end
 				end
-			end
-		},
-
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(_zoom * self:GetWidth())
-				self:y(_zoom * self:GetHeight() * -1)
-
-				if _game == "dance" or _game == "techno" then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
-				end
-			end
-		},
-
-
-
-		-- third row
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(_zoom * self:GetWidth() * -1)
-				self:y(0)
-
-				if _game == "pump" or _game == "techno" then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
-				end
-			end
-		},
-
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(0)
-				self:y(0)
-
-				if _game == "dance" or _game == "techno" then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
-				end
-			end
-		},
-
-		LoadActor("rounded-square.png")..{
-			InitCommand=function(self)
-				self:zoom(_zoom)
-				self:x(_zoom * self:GetWidth())
-				self:y(0)
-
-				if _game == "pump" or _game == "techno" then
-					self:diffuse(color)
-				else
-					self:diffuse(0.2,0.2,0.2,1)
-				end
-			end
+			},
 		}
 	}
 end
@@ -167,7 +190,7 @@ local af = Def.ActorFrame{
 		self:diffusealpha(0)
 	end,
 	GainFocusCommand=function(self)
-		self:linear(0.125):zoom(1):diffusealpha(1)
+		self:linear(0.125):zoom(1):diffusealpha(1):playcommand("Pulse")
 		if ThemePrefs.Get("VisualTheme")=="Gay" and not HolidayCheer() then
 			self:effectmagnitude(0,4,0)
 		else
@@ -175,7 +198,7 @@ local af = Def.ActorFrame{
         end
 	end,
 	LoseFocusCommand=function(self)
-		self:linear(0.125):zoom(0.5):effectmagnitude(0,0,0):diffusealpha(self.Enabled and 0.6 or 0.25)
+		self:linear(0.125):zoom(0.5):effectmagnitude(0,0,0):diffusealpha(self.Enabled and 0.6 or 0.25):playcommand("StopPulsing")
 	end,
 	EnableCommand=function(self)
         self:smooth(0.2)

@@ -16,13 +16,22 @@ else
     file = "_VisualStyles/" .. ThemePrefs.Get("VisualTheme") .. "/SharedBackground-"
 end
 
+-- In Potato (or Thonk) mode, the theme color is forced to orange and the background changes to a cool gradient
+-- Additionally, this also makes holiday cheer force the theme color to blue and the background changes to an even cooler gradient
+local usePotatoBG = ThemePrefs.Get("VisualTheme") == "Potato" or ThemePrefs.Get("VisualTheme") == "Thonk"
+
 -- a simple Quad to serve as the backdrop
 af[#af+1] = Def.Quad{
 	InitCommand=function(self)
         self:FullScreen():Center()
-        if ThemePrefs.Get("VisualTheme") == "Potato" or ThemePrefs.Get("VisualTheme") == "Thonk" then
-            self:diffuseupperleft(color("#912c00")):diffuselowerright(color("#912c00"))
-                :diffuseupperright(color("#a65900")):diffuselowerleft(color("#a65900"))
+        if usePotatoBG then
+			if HolidayCheer() then
+				self:diffuseupperleft(color("#0f00f6")):diffuselowerright(color("#5a62dc"))
+					:diffuseupperright(color("#71d0ff")):diffuselowerleft(color("#e322ea"))
+			else
+				self:diffuseupperleft(color("#912c00")):diffuselowerright(color("#912c00"))
+					:diffuseupperright(color("#a65900")):diffuselowerleft(color("#a65900"))
+			end
         else
 			self:diffuseupperright(GetHexColor(SL.Global.ActiveColorIndex+2)):diffuseupperleft(GetHexColor(SL.Global.ActiveColorIndex+2))
 				:diffuselowerleft(GetHexColor(SL.Global.ActiveColorIndex+1)):diffuselowerright(GetHexColor(SL.Global.ActiveColorIndex+1))
@@ -31,11 +40,16 @@ af[#af+1] = Def.Quad{
     end,
 	BackgroundImageChangedMessageCommand=function(self)
 		THEME:ReloadMetrics()
-		SL.Global.ActiveColorIndex = ThemePrefs.Get("VisualTheme") == "Potato" and 11 or ThemePrefs.Get("SimplyLoveColor") -- Reload the current color from file (or force potato color in potato mode)
+		SL.Global.ActiveColorIndex = usePotatoBG and (HolidayCheer() and 5 or 11) or ThemePrefs.Get("SimplyLoveColor") -- Reload the current color from file (or force potato color in potato mode)
 		self:linear(1)
-        if ThemePrefs.Get("VisualTheme") == "Potato" or ThemePrefs.Get("VisualTheme") == "Thonk" then
-            self:diffuseupperleft(color("#912c00")):diffuselowerright(color("#912c00"))
-                :diffuseupperright(color("#a65900")):diffuselowerleft(color("#a65900"))
+        if usePotatoBG then
+            if HolidayCheer() then
+				self:diffuseupperleft(color("#0f00f6")):diffuselowerright(color("#5a62dc"))
+					:diffuseupperright(color("#71d0ff")):diffuselowerleft(color("#e322ea"))
+			else
+				self:diffuseupperleft(color("#912c00")):diffuselowerright(color("#912c00"))
+					:diffuseupperright(color("#a65900")):diffuselowerleft(color("#a65900"))
+			end
         else
 			self:diffuseupperright(GetHexColor(SL.Global.ActiveColorIndex+2)):diffuseupperleft(GetHexColor(SL.Global.ActiveColorIndex+2))
 				:diffuselowerleft(GetHexColor(SL.Global.ActiveColorIndex+1)):diffuselowerright(GetHexColor(SL.Global.ActiveColorIndex+1))
@@ -43,7 +57,7 @@ af[#af+1] = Def.Quad{
         end
 	end,
 	ColorSelectedMessageCommand=function(self)
-		if ThemePrefs.Get("VisualTheme") ~= "Potato" and ThemePrefs.Get("VisualTheme") ~= "Thonk" then -- Recolor background based on the current color, but only in non-potato modes
+		if not usePotatoBG then -- Recolor background based on the current color, but only in non-potato modes
 			self:linear(0.5)
 				:diffuseupperright(GetHexColor(SL.Global.ActiveColorIndex+2)):diffuseupperleft(GetHexColor(SL.Global.ActiveColorIndex+2))
 				:diffuselowerleft(GetHexColor(SL.Global.ActiveColorIndex+1)):diffuselowerright(GetHexColor(SL.Global.ActiveColorIndex+1))

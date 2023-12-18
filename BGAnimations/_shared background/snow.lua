@@ -14,7 +14,7 @@ local max_vx = 7
 local min_vy = 35
 local max_vy = 55
 -- try to keep it SFW
-local path_to_texture = THEME:GetPathB("","_shared background/snowflake.png")
+local path_to_texture = THEME:GetPathB("","_shared background/snowflake (doubleres).png")
 
 -----------------
 -- Taro wrote the original version of this code, dbk2 h*cked it up from there
@@ -77,6 +77,7 @@ for i=1,num_particles do
 			self:x( math.random( -40, math.floor(_screen.w)+40 ) )
 			self:y( math.random( -40, math.floor(_screen.h)+40 ) )
 			self:zoomto( _t.size, _t.size )
+			self:spin():effectmagnitude(0, 0, math.random(-10, 10))
 
 			if ThemePrefs.Get("VisualTheme") == "Gay" then self:effectoffset( math.random() ):rainbow() end
 		end

@@ -130,7 +130,7 @@ local SL_CustomPrefs =
 	SimplyLoveColor =
 	{
 		-- a nice potato-orange, by default
-		Default = 10,
+		Default = 11,
 		Choices = { 1,2,3,4,5,6,7,8,9,10,11,12 },
 		Values = { 1,2,3,4,5,6,7,8,9,10,11,12 }
 	},

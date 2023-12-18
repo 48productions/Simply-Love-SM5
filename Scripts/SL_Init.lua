@@ -148,14 +148,14 @@ SL = {
 		"#FF003C",
 		"#C1006F",
 		"#8200A1",
-		"#413AD0",
-		"#0073FF",
-		"#00ADC0",
-		"#5CE087",
-		"#AEFA44",
-		"#FFFF00",
-		"#FFBE00",
-		"#FF7D00"
+		"#5856D8", -- Deep blue
+		"#0073FF", -- Less deep blue
+		"#00ADC0", -- Cyan
+		"#5CE087", -- Sea green
+		"#AEFA44", -- Yellow-green
+		"#FFFF00", -- Yellow
+		"#FFBE00", -- Fairly orange
+		"#FF7D00" -- Potato orange
 	},
 	JudgmentColors = {
 		Casual = {
