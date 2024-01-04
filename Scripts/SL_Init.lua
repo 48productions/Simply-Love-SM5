@@ -57,7 +57,7 @@ local PlayerDefaults = {
 				NotesPerMeasure = {},
 				PeakNPS = 0,
 				NPSperMeasure = {},
-				columnCues = {},
+				ColumnCues = {},
 				Hash = '',
 
 				Crossovers = 0,

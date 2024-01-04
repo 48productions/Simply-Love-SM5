@@ -362,7 +362,7 @@ af[#af+1] = LoadFont("Common Normal").. {
 		self:visible(GAMESTATE:IsSideJoined(PLAYER_1) and SL["P1"].ApiKey ~= "")
 	end,
 	ChartNotRankedCommand=function(self)
-		self:settext("Chart Not Ranked")
+		self:settext("Submitted (Chart Not Ranked)")
 	end,
 	SubmitCommand=function(self)
 		self:settext("Submitted!")
@@ -387,7 +387,7 @@ af[#af+1] = LoadFont("Common Normal").. {
 		self:visible(GAMESTATE:IsSideJoined(PLAYER_2) and SL["P2"].ApiKey ~= "")
 	end,
 	ChartNotRankedCommand=function(self)
-		self:settext("Chart Not Ranked")
+		self:settext("Submitted (Chart Not Ranked)")
 	end,
 	SubmitCommand=function(self)
 		self:settext("Submitted!")
@@ -410,12 +410,13 @@ af[#af+1] = Def.Sprite{
 	end,
 }
 
-af[#af+1] = LoadFont("Common Bold")..{
+af[#af+1] = LoadFont("_wendy small")..{
 	Name="P1RecordText",
+	Text="Personal Best!",
 	InitCommand=function(self)
 		local x = _screen.cx - 225
 		self:zoom(0.225)
-		self:xy(x,42)
+		self:xy(x,40)
 		self:visible(false)
 	end,
 }
@@ -429,12 +430,12 @@ af[#af+1] = Def.Sprite{
 	end,
 }
 
-af[#af+1] = LoadFont("Common Bold")..{
+af[#af+1] = LoadFont("_wendy small")..{
 	Name="P2RecordText",
 	InitCommand=function(self)
 		local x = _screen.cx + 225
 		self:zoom(0.225)
-		self:xy(x,42)
+		self:xy(x,40)
 		self:visible(false)
 	end,
 }
