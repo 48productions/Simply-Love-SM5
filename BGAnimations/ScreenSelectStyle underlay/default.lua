@@ -16,8 +16,8 @@ local choices = {
 		name="versus",
 		x=_screen.cx,
 		pads = {
-			{color=GetHexColor(SL.Global.ActiveColorIndex), offset=-WideScale(42,51)},
-			{color=GetHexColor(SL.Global.ActiveColorIndex+3), offset= WideScale(42,51)}
+			{color=GetHexColor(SL.Global.ActiveColorIndex), offset=-WideScale(52,59)},
+			{color=GetHexColor(SL.Global.ActiveColorIndex+3), offset= WideScale(52,59)}
 		}
 	},
 	{
