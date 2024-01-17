@@ -51,6 +51,8 @@ local t = Def.ActorFrame{
 
 local windows = SL[pn].ActiveModifiers.TimingWindows
 
+local showEX = SL.Global.GameMode == "FA+"
+
 --  labels: W1 ---> Miss
 for i=1, #TapNoteScores.Types do
 	-- no need to add BitmapText actors for TimingWindows that were turned off
@@ -87,10 +89,10 @@ for index, label in ipairs(RadarCategories) do
 	t[#t+1] = LoadFont("Common Normal")..{
 		-- lua ternary operators are adorable -ian5v
 		Text=(nice and (performance == 69 or possible == 69)) and 'nice' or label,
-		InitCommand=function(self) self:zoom(0.833):horizalign(right) end,
+		InitCommand=function(self) self:zoom(0.833):horizalign(right):zoomy(showEX and 0.7 or 0.833) end,
 		BeginCommand=function(self)
 			self:x( (player == PLAYER_1 and -160) or 90 )
-			self:y((index-1)*28 + 41)
+			self:y(showEX and ((index-1)*22.4 + 68) or ((index-1)*28 + 41))
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
             self:diffusealpha(0):sleep(1 + 0.07 * index):smooth(0.1):diffusealpha(1)
 		end

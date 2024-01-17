@@ -27,6 +27,8 @@ local t = Def.ActorFrame{
 	end
 }
 
+local showEX = SL.Global.GameMode == "FA+"
+
 -- do "regular" TapNotes first
 for i=1,#TapNoteScores.Types do
 	local window = TapNoteScores.Types[i]
@@ -79,9 +81,9 @@ for index, RCType in ipairs(RadarCategories.Types) do
 	-- player performace value
 	t[#t+1] = Def.RollingNumbers{
 		Font="_ScreenEvaluation numbers",
-		InitCommand=function(self) self:zoom(0.5):horizalign(right):Load("RollingNumbersEvaluationB") end,
+		InitCommand=function(self) self:zoom(0.5):zoomy(showEX and 0.4 or 0.5):horizalign(right):Load("RollingNumbersEvaluationB") end,
 		BeginCommand=function(self)
-			self:y((index-1)*35 + 53)
+			self:y(showEX and ((index-1)*27 + 88) or ((index-1)*35 + 53))
 			self:x( RadarCategories.x[pn] ):diffusealpha(0)
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
             self:sleep(startDelay + 0.08 * (index)):queuecommand("StartRolling")
@@ -94,9 +96,9 @@ for index, RCType in ipairs(RadarCategories.Types) do
 	--  slash
 	t[#t+1] = LoadFont("Common Normal")..{
 		Text="/",
-		InitCommand=function(self) self:diffuse(color("#5A6166")):zoom(1.25):horizalign(right) end,
+		InitCommand=function(self) self:diffuse(color("#5A6166")):zoom(1.25):zoomy(showEX and 1.15 or 1.25):horizalign(right) end,
 		BeginCommand=function(self)
-			self:y((index-1)*35 + 53)
+			self:y(showEX and ((index-1)*27 + 87) or ((index-1)*35 + 53))
 			self:x( ((player == PLAYER_1) and -168) or 230 )
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * index) end
             self:diffusealpha(0):sleep(startDelay + 0.08 * (index)):smooth(0.1):diffusealpha(1)
@@ -105,9 +107,9 @@ for index, RCType in ipairs(RadarCategories.Types) do
 
 	-- possible value
 	t[#t+1] = LoadFont("_ScreenEvaluation numbers")..{
-		InitCommand=function(self) self:zoom(0.5):horizalign(right) end,
+		InitCommand=function(self) self:zoom(0.5):zoomy(showEX and 0.4 or 0.5):horizalign(right) end,
 		BeginCommand=function(self)
-			self:y((index-1)*35 + 53)
+			self:y(showEX and ((index-1)*27 + 88) or ((index-1)*35 + 53))
 			self:x( ((player == PLAYER_1) and -114) or 286 )
 			self:settext(("%03.0f"):format(possible))
 			local leadingZeroAttr = { Length=3-tonumber(tostring(possible):len()), Diffuse=color("#5A6166") }
