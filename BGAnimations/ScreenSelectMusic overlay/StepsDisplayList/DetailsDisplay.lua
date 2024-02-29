@@ -362,6 +362,8 @@ for key, item in pairs(HighScoreItems) do
 			Name="HighScoreName",
 			InitCommand=function(self) self:xy(item.scorex+2, item.y+10):zoom(textZoom * 0.8):diffuse(Color.Black):horizalign(left):maxwidth(40) end
 		},
+		
+		OffCommand=function(self) self:stoptweening() end
 	}
 end
 
