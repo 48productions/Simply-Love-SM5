@@ -40,6 +40,8 @@ local profile_whitelist = {
 	MissBecauseHeld = "boolean",
 	NPSGraphAtTop = "boolean",
 	JudgmentTilt = "boolean",
+	
+	ShowFaPlusWindow = "boolean",
 
 	Vocalization = "string",
 	ReceptorArrowsPosition = "string",

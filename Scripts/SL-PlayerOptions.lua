@@ -448,6 +448,73 @@ local Overrides = {
 		end
 	},
 	-------------------------------------------------------------------------
+	FaPlus = {
+		SelectType = "SelectMultiple",
+		Values = function()
+			-- 1. Still allow the player to toggle the FA+ window during gameplay in Tournament Mode since
+			--    some might find it distracting. We should still display it in step stats if it's enabled
+			--    though.
+			-- 2. EX score/ITG score is forced in Tournament Mode so remove the option.
+			-- 3. FA Plus Pane should always be shown in Tournament Mode to prevent issues with
+			--    potentially crucial information.
+			--[[if ThemePrefs.Get("EnableTournamentMode") then
+				return { "ShowFaPlusWindow" }
+			end
+
+			if SL.Global.GameMode == "FA+" then
+				return { "ShowEXScore" }
+			end]]
+
+			--return { "ShowFaPlusWindow", "ShowEXScore", "ShowFaPlusPane" }
+			return { "ShowFaPlusWindow" }
+		end,
+		LoadSelections = function(self, list, pn)
+			local mods = SL[ToEnumShortString(pn)].ActiveModifiers
+			--[[if ThemePrefs.Get("EnableTournamentMode") then
+				list[1] = mods.ShowFaPlusWindow or false
+				return list
+			end
+
+			if SL.Global.GameMode == "FA+" then
+				list[1] = mods.ShowEXScore or false
+				return list
+			end]]		
+
+			list[1] = mods.ShowFaPlusWindow or false
+			--[[list[2] = mods.ShowEXScore or false
+			list[3] = mods.ShowFaPlusPane and true]]
+			return list
+		end,
+		SaveSelections = function(self, list, pn)
+			local sl_pn = SL[ToEnumShortString(pn)]
+			local mods = sl_pn.ActiveModifiers
+
+			--[[if ThemePrefs.Get("EnableTournamentMode") then
+				mods.ShowFaPlusWindow = list[1]
+				mods.ShowEXScore = ThemePrefs.Get("ScoringSystem") == "EX"
+				mods.ShowFaPlusPane = true
+				-- Default to FA+ pane in Tournament Mode
+				sl_pn.EvalPanePrimary = 2
+				return
+			end
+
+			if SL.Global.GameMode == "FA+" then
+				-- always disable in FA+ mode since it's handled engine side.
+				mods.ShowFaPlusWindow = false
+				mods.ShowEXScore = list[1]
+				-- the main score pane is already the FA+ pane
+				mods.ShowFaPlusPane = false
+				return
+			end]]
+
+			mods.ShowFaPlusWindow = list[1]
+			--mods.ShowEXScore = list[2]
+			--mods.ShowFaPlusPane = list[3]
+			-- Default to FA+ pane if either options are active.
+			--sl_pn.EvalPanePrimary = ((list[1] or list[2]) and list[3]) and 2 or 1
+		end
+	},
+	-------------------------------------------------------------------------
 	Vocalization = {
 		Choices = function()
 			-- Allow users to arbitrarily add new vocalizations to ./Simply Love/Other/Vocalize/
