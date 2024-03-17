@@ -137,7 +137,15 @@ local t = Def.ActorFrame {
 				--{"SortBy", "Genre"},
 				{"SortBy", "BPM"},
 				{"SortBy", "Length"},
+				{"SortBy", "Meter"},
 			}
+
+			-- Loop through players and add their TopGrades to the wheel options if they've a profile
+			for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+				if (PROFILEMAN:IsPersistentProfile(player)) then
+					table.insert(wheel_options, {"SortBy", "Top".. ToEnumShortString(player).."Grades" })
+				end
+			end
 
 			-- the engine's MusicWheel has distinct items in the SortOrder enum for double
 			if style == "double" then
@@ -175,14 +183,6 @@ local t = Def.ActorFrame {
 				-- elseif style == "versus" then
 				--	table.insert(wheel_options, {"ChangeStyle", "Routine"})
 				end
-			end
-
-			-- Allow players to switch out to a different SL GameMode if no stages have been played yet,
-			-- but don't add the current SL GameMode as a choice. If a player is already in FA+, don't
-			-- present a choice that would allow them to switch to FA+.
-			if SL.Global.Stages.PlayedThisGame == 0 then
-				if SL.Global.GameMode ~= "ITG"      then table.insert(wheel_options, {"ChangeMode", "ITG"}) end
-				if SL.Global.GameMode ~= "FA+"      then table.insert(wheel_options, {"ChangeMode", "FA+"}) end
 			end
 
 			-- allow players to switch to a TestInput overlay if the current game has visual assets to support it
