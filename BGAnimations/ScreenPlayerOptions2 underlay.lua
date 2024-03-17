@@ -108,7 +108,7 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			},
 			
 			-- Judge font
-			LoadActor( GetJudgmentGraphicPath(SL.Global.GameMode, judgment_font) )..{
+			LoadActor( GetJudgmentGraphicPath(judgment_font) )..{
 				Condition=judgment_font ~= "None",
 				InitCommand=function(self) self:zoom(noteZoom * 0.8):y(-10):animate(false) end,
 				RefreshCommand=function(self, params) self:rotationz(params.ActiveMods.JudgmentTilt and -10 or 0) end,

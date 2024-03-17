@@ -663,12 +663,11 @@ end
 function StripSpriteHints(filename)
 	-- handle common cases here, gory details in /src/RageBitmapTexture.cpp
 	-- hopefully nobody is putting stuff in brackets/parens for non-hint purposes...
-	return filename:gsub(" %d+x%d+", ""):gsub(" %b()", ""):gsub(".png", ""):gsub(" %b[]", "")
+	return filename:gsub(" %d+x%d+", ""):gsub(" %(doubleres%)", ""):gsub(".png", "")
 end
 
-function GetJudgmentGraphics(mode)
-	--if mode == 'Casual' then mode = 'ITG' end
-	local path = THEME:GetPathG('', '_judgments/' .. mode)
+function GetJudgmentGraphics()
+	local path = THEME:GetPathG('', '_judgments')
 	local files = FILEMAN:GetDirListing(path .. '/')
 	-- in 5.3, check for "gamewide" custom judgments
 	local files2
@@ -678,7 +677,7 @@ function GetJudgmentGraphics(mode)
 	local judgment_graphics = {}
 
 	for i,filename in ipairs(files) do
-
+		Trace(i..filename)
 		-- Filter out files that aren't judgment graphics
 		-- e.g. hidden system files like .DS_Store
 		if FilenameIsMultiFrameSprite(filename) then
@@ -713,10 +712,10 @@ function GetJudgmentGraphics(mode)
 end
 
 -- because it may not be inside the theme now!
-function GetJudgmentGraphicPath(mode, name)
+function GetJudgmentGraphicPath(name)
 	local FiveThreePath = "/Appearance/Judgments/" .. name
 	-- GetPathG() throws a warning dialog if the file doesn't exist, so we have to do this instead
-	local ThemePath = "/" .. THEME:GetCurrentThemeDirectory() .. "/Graphics/_judgments/" .. mode .. "/" .. name
+	local ThemePath = "/" .. THEME:GetCurrentThemeDirectory() .. "/Graphics/_judgments/" .. name
 	if FILEMAN:DoesFileExist(FiveThreePath) then return FiveThreePath
 	elseif FILEMAN:DoesFileExist(ThemePath) then return ThemePath
 	end

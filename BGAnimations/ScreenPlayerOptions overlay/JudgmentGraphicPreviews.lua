@@ -24,11 +24,11 @@ local animframes12= {
 	{Frame = 11, Delay = delay}
 }
 
-for judgment_filename in ivalues( GetJudgmentGraphics(SL.Global.GameMode) ) do
+for judgment_filename in ivalues( GetJudgmentGraphics() ) do
 	if judgment_filename ~= "None" then
-		t[#t+1] = LoadActor( GetJudgmentGraphicPath(SL.Global.GameMode, judgment_filename) )..{
+		t[#t+1] = LoadActor( GetJudgmentGraphicPath(judgment_filename) )..{
 			Name="JudgmentGraphic_"..StripSpriteHints(judgment_filename),
-			InitCommand=function(self) self:visible(false):SetStateProperties(judgment_filename:match("2x6") and animframes12 or animframes6) end
+			InitCommand=function(self) self:visible(false):animate(true)--[[:SetStateProperties(judgment_filename:match("2x6") and animframes12 or animframes6)]] end
 		}
 	else
 		t[#t+1] = Def.Actor{ Name="JudgmentGraphic_None", InitCommand=function(self) self:visible(false) end }
