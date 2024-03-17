@@ -15,10 +15,19 @@ end
 --Values above 0 means the user wants to be shown or told they are nice.
 local nice = ThemePrefs.Get("nice") > 0 and SL.Global.GameMode ~= "Casual"
 
+local showFAPlus = SL[pn].ActiveModifiers.ShowFaPlusWindow
+local showEX = showFAPlus
+
 -- Iterating through the enum isn't worthwhile because the sequencing is so bizarre...
 local TapNoteScores = {}
 TapNoteScores.Types = { 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' }
 TapNoteScores.Names = map(getStringFromTheme, TapNoteScores.Types)
+
+-- Add W0 to this table if needed
+if showFAPlus then
+	table.insert(TapNoteScores.Types, 1, 'W0')
+	table.insert(TapNoteScores.Names, 1, THEME:GetString("TapNoteScoreFA+", "W1"))
+end
 
 local RadarCategories = {
 	THEME:GetString("ScreenEvaluation", 'Holds'),
@@ -34,12 +43,6 @@ local EnglishRadarCategories = {
 	[THEME:GetString("ScreenEvaluation", 'Rolls')] = "Rolls",
 }
 
-local scores_table = {}
-for index, window in ipairs(TapNoteScores.Types) do
-	local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
-	scores_table[window] = number
-end
-
 local t = Def.ActorFrame{
 	InitCommand=function(self) self:xy(50, _screen.cy-24) end,
 	OnCommand=function(self)
@@ -49,9 +52,8 @@ local t = Def.ActorFrame{
 	end
 }
 
-local windows = SL[pn].ActiveModifiers.TimingWindows
-
-local showEX = SL.Global.GameMode == "FA+"
+local windows = table.copy(SL[pn].ActiveModifiers.TimingWindows)
+if showFAPlus then table.insert(windows, 1, windows[1]) end -- If FA+ is enabled, add in an extra value to account for the extra window, here
 
 --  labels: W1 ---> Miss
 for i=1, #TapNoteScores.Types do
@@ -59,20 +61,17 @@ for i=1, #TapNoteScores.Types do
 	if windows[i] or i==#TapNoteScores.Types then
 
 		local window = TapNoteScores.Types[i]
-		local label = getStringFromTheme( window )
+		local label = TapNoteScores.Names[i]
 
 		t[#t+1] = LoadFont("Common Normal")..{
-			Text=(nice and scores_table[window] == 69) and 'NICE' or label:upper(),
+			Text=label:upper(),
 			InitCommand=function(self) self:zoom(0.833):horizalign(right):maxwidth(76) end,
 			BeginCommand=function(self)
 				self:x( (player == PLAYER_1 and 28) or -28 )
-				self:y((i-1)*28 -16)
+				self:y(showFAPlus and ((i-1)*24.8 -17) or ((i-1)*28 -13))
 
-				-- diffuse the JudgmentLabels the appropriate colors for the current GameMode
-				--if SL.Global.GameMode ~= "ITG" then
-					self:diffuse( SL.JudgmentColors[SL.Global.GameMode][i] ):diffusealpha(0)
-				--end
-                
+				-- diffuse the JudgmentLabels the appropriate colors for the current FA+ setting
+				self:diffuse( SL.JudgmentColors[showFAPlus and 'FA+' or 'ITG'][i] ):diffusealpha(0)
                 if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * i) end
                 self:sleep(1 + 0.07 * i):smooth(0.1):diffusealpha(1)
 			end

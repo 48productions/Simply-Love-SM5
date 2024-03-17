@@ -4,8 +4,12 @@ local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 
 local startDelay = 1.2
 
+
+local showFAPlus = SL[pn].ActiveModifiers.ShowFaPlusWindow
+local showEX = showFAPlus
+
 local TapNoteScores = {
-	Types = { 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' },
+	Types = showFAPlus and { 'W0', 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' } or { 'W1', 'W2', 'W3', 'W4', 'W5', 'Miss' },
 	-- x values for P1 and P2
 	x = { P1=64, P2=94 }
 }
@@ -16,6 +20,7 @@ local RadarCategories = {
 	x = { P1=-180, P2=218 }
 }
 
+local counts = GetExJudgmentCounts(player)
 
 local t = Def.ActorFrame{
 	InitCommand=function(self)self:zoom(0.8):xy(90,_screen.cy-24) end,
@@ -27,12 +32,13 @@ local t = Def.ActorFrame{
 	end
 }
 
-local showEX = SL.Global.GameMode == "FA+"
+local windows = table.copy(SL[pn].ActiveModifiers.TimingWindows)
+if showFAPlus then table.insert(windows, 1, windows[1]) end -- If FA+ is enabled, add in an extra value to account for the extra window, here
 
 -- do "regular" TapNotes first
 for i=1,#TapNoteScores.Types do
 	local window = TapNoteScores.Types[i]
-	local number = pss:GetTapNoteScores( "TapNoteScore_"..window )
+	local number = showFAPlus and (counts[window] or 0) or pss:GetTapNoteScores( "TapNoteScore_"..window )
 
 	-- actual numbers
 	t[#t+1] = Def.RollingNumbers{
@@ -47,7 +53,7 @@ for i=1,#TapNoteScores.Types do
 			-- if some TimingWindows were turned off, the leading 0s should not
 			-- be colored any differently than the (lack of) JudgmentNumber,
 			-- so load a unique Metric group.
-			if SL[pn].ActiveModifiers.TimingWindows[i]==false and i ~= #TapNoteScores.Types then
+			if windows[i]==false and i ~= #TapNoteScores.Types then
 				self:Load("RollingNumbersEvaluationNoDecentsWayOffs")
 				self:diffuse(color("#444444"))
 
@@ -59,7 +65,7 @@ for i=1,#TapNoteScores.Types do
 		end,
 		BeginCommand=function(self)
 			self:x( TapNoteScores.x[pn] )
-			self:y((i-1)*35 -20)
+			self:y(showFAPlus and ((i-1)*31 -20) or ((i-1)*35 -16))
 			self:diffusealpha(0)
             if AllowThonk() then self:bob():effectmagnitude(1.5,0,0):effectoffset(0.2 * i) end
             self:sleep(startDelay + 0.08 * i):queuecommand("StartRolling")

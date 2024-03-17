@@ -180,6 +180,7 @@ SL = {
 			color("#e29c18"),	-- gold
 			color("#66c955"),	-- green
 			color("#5b2b8e"),	-- purple
+			color("#c9855e"),	-- peach?
 			color("#ff0000")	-- red
 		},
 		StomperZ = {

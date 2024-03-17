@@ -206,6 +206,15 @@ function map(func, array)
 	return new_array
 end
 
+-- Returns a copy of a given table
+function table.copy(tbl)
+	local tbl2 = {}
+	for k, v in pairs(tbl) do
+		tbl2[k] = v
+	end
+	return tbl2
+end
+
 
 
 --Parses a string for a date, returns a table formatted as {year, month, day}

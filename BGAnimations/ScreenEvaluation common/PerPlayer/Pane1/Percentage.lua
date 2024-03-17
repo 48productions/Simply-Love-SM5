@@ -6,7 +6,7 @@ local percent = FormatPercentScore(PercentDP)
 -- Format the Percentage string, removing the % symbol
 percent = percent:gsub("%%", "")
 
-local showEX = SL.Global.GameMode == "FA+"
+local showEX = SL[ToEnumShortString(player)].ActiveModifiers.ShowFaPlusWindow
 
 return Def.ActorFrame{
 	Name="PercentageContainer"..ToEnumShortString(player),
