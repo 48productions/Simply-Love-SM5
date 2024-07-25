@@ -35,6 +35,7 @@ local profile_whitelist = {
 	HideRestCounts = "boolean",
 
 	ColumnFlashOnMiss = "boolean",
+	ColumnCues = "boolean",
 	SubtractiveScoring = "boolean",
 	Pacemaker = "boolean",
 	MissBecauseHeld = "boolean",

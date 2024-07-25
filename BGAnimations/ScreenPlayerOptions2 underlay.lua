@@ -78,7 +78,13 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 				end,
 				RefreshCommand=function(self, params) self:visible(not params.ActiveMods.HideSongBG) end,
 			},
-					
+			
+			-- Column Cue
+			Def.Quad{
+				InitCommand=function(self) self:zoomto(24, _screen.h * 0.31):xy(-45, 14):diffuse(0.3, 1, 1, 0.2) end,
+				RefreshCommand=function(self, params) self:visible(params.ActiveMods.ColumnCues) end
+			},
+			
 			-- Surround Lifebar
 			Def.Quad{
 				InitCommand=function(self) self:zoomto(_screen.cx * 0.195, _screen.h * 0.155):xy(-_screen.cx * 0.0975, _screen.h * 0.0775 + 14):diffuse(0.2,0.2,0.2,1):faderight(0.8) end,

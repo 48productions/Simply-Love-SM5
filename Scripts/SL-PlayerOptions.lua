@@ -338,7 +338,7 @@ local Overrides = {
 	GameplayExtras = {
 		SelectType = "SelectMultiple",
 		Values = function()
-			return { "ColumnFlashOnMiss", "SubtractiveScoring", "Pacemaker"}
+			return { "ColumnFlashOnMiss", "SubtractiveScoring", "Pacemaker", "ColumnCues"}
 		end,
 	},
 	-------------------------------------------------------------------------
