@@ -107,7 +107,7 @@ if mods.ColumnFlashOnMiss or mods.ColumnCues then
 
 				self:diffuse(0,0,0,0)
 					:x((ColumnIndex - (NumColumns/2 + 0.5)) * (width/NumColumns))
-					:y(80 + (reversed * 170))
+					:y(80 + (reversed * 200))
 					:vertalign(top)
 					:setsize(width/NumColumns, _screen.h - y_offset)
 				
@@ -130,7 +130,7 @@ if mods.ColumnFlashOnMiss or mods.ColumnCues then
 			InitCommand=function(self)
 				columnsCue[ColumnIndex] = self
 				self:x((ColumnIndex - (NumColumns/2 + 0.5)) * (width/NumColumns))
-					:y(80 + (reversed * 170))
+					:y(80 + (reversed * 200))
 					:GetChild("Flash"):diffuse(0,0,0,0):setsize(width/NumColumns, _screen.h - y_offset)
 				
 				-- Fade direction should correspond to reverse
@@ -178,7 +178,7 @@ if mods.ColumnFlashOnMiss or mods.ColumnCues then
 				Name="Timer",
 				Font="_Combo Fonts/" .. mods.ComboFont .. "/",
 				InitCommand=function(self)
-					self:y(80 - (reversed * 80)):zoom(0.5)
+					self:y(80 - (reversed * 110)):zoom(0.5)
 				end,
 				-- This is ran over and over to update the text for this break until there is no more break left
 				BreakCommand=function(self)

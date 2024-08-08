@@ -3,12 +3,7 @@ return Def.ActorFrame{
 
 	Def.Quad{
 		InitCommand=function(self)
-			self:zoomto(_screen.w, 32):vertalign(top):x(_screen.cx)
-			if ThemePrefs.Get("DarkMode") then
-				self:diffuse(header_dark)
-			else
-				self:diffuse(header_light)
-			end
+			self:zoomto(_screen.w, 32):vertalign(top):x(_screen.cx):diffuse(header_dark)
 		end,
 		ScreenChangedMessageCommand=function(self)
 			local topscreen = SCREENMAN:GetTopScreen():GetName()
@@ -19,13 +14,7 @@ return Def.ActorFrame{
 	},
     Def.Quad{
         InitCommand=function(self)
-			self:zoomto(_screen.w, 1):vertalign(top):xy(_screen.cx, 32)
-			if ThemePrefs.Get("DarkMode") then
-				self:diffuse(header_light)
-			else
-				self:diffuse(header_dark)
-			end
-            self:diffusealpha(0.6)
+			self:zoomto(_screen.w, 1):vertalign(top):xy(_screen.cx, 32):diffuse(header_light):diffusealpha(0.6)
 		end,
 		ScreenChangedMessageCommand=function(self)
 			local topscreen = SCREENMAN:GetTopScreen():GetName()

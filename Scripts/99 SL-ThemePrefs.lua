@@ -96,14 +96,6 @@ local SL_CustomPrefs =
 		},
 		Values 	= { true , false }
 	},
-	DarkMode = {
-		Default = false,
-		Choices = {
-			THEME:GetString("ThemePrefs", "On"),
-			THEME:GetString("ThemePrefs", "Off")
-		},
-		Values 	= { true , false }
-	},
 	-- - - - - - - - - - - - - - - - - - - -
 	-- Load the Mods Machine?
 	ModsMachine = {
