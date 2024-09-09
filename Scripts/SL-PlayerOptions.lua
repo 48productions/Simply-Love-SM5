@@ -358,6 +358,10 @@ local Overrides = {
 		Values = { "MeasureCounterLeft", "MeasureCounterUp", "HideRestCounts" },
 	},
 	-------------------------------------------------------------------------
+	MeasureLines = {
+		Values = { "Off", "Measure", "Quarter", "Eighth" },
+	},
+	-------------------------------------------------------------------------
 	VisualDelay = {
 		Choices = function()
 			local first	= -100

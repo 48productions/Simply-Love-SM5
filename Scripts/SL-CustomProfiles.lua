@@ -33,6 +33,8 @@ local profile_whitelist = {
 	MeasureCounterLeft = "boolean",
 	MeasureCounterUp = "boolean",
 	HideRestCounts = "boolean",
+	
+	MeasureLines = "string",
 
 	ColumnFlashOnMiss = "boolean",
 	ColumnCues = "boolean",

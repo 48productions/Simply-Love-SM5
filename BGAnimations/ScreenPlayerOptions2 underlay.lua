@@ -46,7 +46,7 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 	local judgment_font = active_mods.JudgmentGraphic
 
 	-- An ActorFrame for each player
-	af[#af+1] = Def.ActorFrame{
+	playerAF = Def.ActorFrame{
 		InitCommand=function(self)
 			notefield[ToEnumShortString(player)] = self
 			self:xy(_screen.w * 0.85, player == PLAYER_1 and _screen.h * 0.32 or _screen.h * 0.72):propagate(true)
@@ -62,12 +62,15 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			end,
 		},
 		
-		-- Illustrative notefield
-		Def.ActorFrame{
+		
+	}
+	
+	 -- Illustrative notefield
+	local notefieldAF = Def.ActorFrame{
 			InitCommand=function(self) self:diffusealpha(0) end,
 			OptionRowChangedMessageCommand=function(self)
 				local row_num = SCREENMAN:GetTopScreen():GetCurrentRowIndex(player)
-				self:stoptweening():smooth(0.2):diffusealpha((row_num >= 2 and row_num <= 9) and 1 or 0) -- Only show the notefield when the player is highlighting options that update it (the engine options can't properly do this)
+				self:stoptweening():smooth(0.2):diffusealpha((row_num >= 2 and row_num <= 10) and 1 or 0) -- Only show the notefield when the player is highlighting options that update it (the engine options can't properly do this)
 			end,
 			
 			-- Background quad 2 ("Background" option)
@@ -217,20 +220,69 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 					InitCommand=function(self) self:zoomto(8, 78):diffuse(0,0,0,1) end,
 				},
 			},
-					
-			-- Arrows
-			NOTESKIN:LoadActorForNoteSkin("Left", "Tap Note", poptions:NoteSkin())..{
-				InitCommand=function(self) self:x(-45):zoom(noteZoom) end,
-				RepositionCommand=function(self, params) self:y(calculateSCAR(params.POptions, 1) * 0.3) end,
-			},
-			NOTESKIN:LoadActorForNoteSkin("Left", "Tap Note", poptions:NoteSkin())..{
-				InitCommand=function(self) self:x(45):zoom(noteZoom):baserotationz(-90) end,
-				RepositionCommand=function(self, params) self:y(calculateSCAR(params.POptions, 4) * -0.3) end,
-			},
 			
 			-- The help text is handled by the engine ([ScreenPlayerOptions2] ExplanationPX in metrics)
+			
+			-- Help text background
+			Def.Quad{
+				InitCommand=function(self) self:zoomto(_screen.cx * 0.4, 40):y(70):fadetop(0.1):diffuse(0,0,0,0.5) end,
+			}
 		}
+	
+	-- Measure Lines
+	local lineAF = Def.ActorFrame{
+		InitCommand=function(self) self:diffusealpha(0.7) end,
+		
+		-- Top bar (measure)
+		Def.Quad{
+			InitCommand=function(self) self:zoomto(100, 2):y(-13.5) end,
+			RefreshCommand=function(self, params)
+				local opt = params.ActiveMods.MeasureLines
+				self:visible(opt == "Measure" or opt=="Quarter" or opt=="Eighth")
+			end,
+		},
+		
+		-- Bottom bar (4th)
+		Def.Quad{
+			InitCommand=function(self) self:zoomto(100, 1):y(54) end,
+			RefreshCommand=function(self, params)
+				local opt = params.ActiveMods.MeasureLines
+				self:visible(opt == "Quarter" or opt=="Eighth")
+			end,
+		},
 	}
+	
+	-- Middle bar (8th)
+
+	local lineAF2 = Def.ActorFrame{
+		RefreshCommand=function(self, params)
+			self:visible(params.ActiveMods.MeasureLines=="Eighth")
+		end,
+	}
+	-- This should be a dashed line, so add a bunch of quads
+	-- This doesn't feel ideal - 48
+	for i=1,9 do
+		lineAF2[#lineAF2+1] = Def.Quad{
+			InitCommand=function(self) self:zoomto(5, 1):xy(-57.5 + (i*10), 20.25) end,
+		}
+	end
+
+	lineAF[#lineAF+1] = lineAF2
+
+	notefieldAF[#notefieldAF+1] = lineAF
+
+	-- Arrows
+	notefieldAF[#notefieldAF+1] = NOTESKIN:LoadActorForNoteSkin("Left", "Tap Note", poptions:NoteSkin())..{
+		InitCommand=function(self) self:x(-45):zoom(noteZoom) end,
+		RepositionCommand=function(self, params) self:y(calculateSCAR(params.POptions, 1) * 0.3) end,
+	}
+	notefieldAF[#notefieldAF+1] = NOTESKIN:LoadActorForNoteSkin("Left", "Tap Note", poptions:NoteSkin())..{
+		InitCommand=function(self) self:x(45):zoom(noteZoom):baserotationz(-90) end,
+		RepositionCommand=function(self, params) self:y(calculateSCAR(params.POptions, 4) * -0.45) end,
+	}
+	
+	playerAF[#playerAF+1] = notefieldAF
+	af[#af+1] = playerAF
 end
 
 return af
