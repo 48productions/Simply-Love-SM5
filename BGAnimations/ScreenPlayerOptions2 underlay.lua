@@ -277,7 +277,11 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 		RepositionCommand=function(self, params) self:y(calculateSCAR(params.POptions, 1) * 0.3) end,
 	}
 	notefieldAF[#notefieldAF+1] = NOTESKIN:LoadActorForNoteSkin("Left", "Tap Note", poptions:NoteSkin())..{
-		InitCommand=function(self) self:x(45):zoom(noteZoom):baserotationz(-90) end,
+		InitCommand=function(self)
+			local spacingX = NOTESKIN:GetMetricFForNoteSkin("Tap Note", "TapNoteNoteColorTextureCoordSpacingX", poptions:NoteSkin())
+			local spacingY = NOTESKIN:GetMetricFForNoteSkin("Tap Note", "TapNoteNoteColorTextureCoordSpacingY", poptions:NoteSkin())
+			self:x(45):zoom(noteZoom):baserotationz(-90):texturetranslate(spacingX, spacingY)
+		end,
 		RepositionCommand=function(self, params) self:y(calculateSCAR(params.POptions, 4) * -0.45) end,
 	}
 	
