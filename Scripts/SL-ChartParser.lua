@@ -820,6 +820,7 @@ ParseChartInfo = function(steps, pn)
 			SL[pn].Streams.NotesPerMeasure = {}
 			SL[pn].Streams.PeakNPS = 0
 			SL[pn].Streams.NPSperMeasure = {}
+			SL[pn].Streams.ColumnCues = {}
 			SL[pn].Streams.Hash = ''
 
 			SL[pn].Streams.Crossovers = 0
@@ -831,7 +832,7 @@ ParseChartInfo = function(steps, pn)
 			SL[pn].Streams.Filename = filename
 			SL[pn].Streams.StepsType = stepsType
 			SL[pn].Streams.Difficulty = difficulty
-			SL[pn].Streams.Description = description
+			--SL[pn].Streams.Description = description -- If parsing fails, don't set the description so we force a re-parse in the future (this ensures USB customs are parsed when we enter gameplay) - 48
 		end
 	end
 end

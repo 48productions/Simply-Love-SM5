@@ -9,26 +9,26 @@ return function(SongNumberInCourse)
 		SL[pn].PlayerOptionsString = GAMESTATE:GetPlayerState(player):GetPlayerOptionsString("ModsLevel_Preferred")
 
 
+		local steps = nil
+		if GAMESTATE:IsCourseMode() then
+			local trail = GAMESTATE:GetCurrentTrail(player):GetTrailEntries()[SongNumberInCourse+1]
+			steps = trail:GetSteps()
+		else
+			steps = GAMESTATE:GetCurrentSteps(player)
+		end
+
+		-- This will parse out and set all the required info for the chart in the SL.Streams cache,
+		-- The function will only do work iff we're parsing a chart different than what's in the cache.
+		ParseChartInfo(steps, pn)
+
 		-- Check if MeasureCounter is turned on.  We may need to parse the chart.
 		local mods = SL[pn].ActiveModifiers
 		if mods.MeasureCounter and mods.MeasureCounter ~= "None" then
-
-			local steps = nil
-			if GAMESTATE:IsCourseMode() then
-				local trail = GAMESTATE:GetCurrentTrail(player):GetTrailEntries()[SongNumberInCourse+1]
-				steps = trail:GetSteps()
-			else
-				steps = GAMESTATE:GetCurrentSteps(player)
-			end
 
 			local steps_type = ToEnumShortString( steps:GetStepsType() ):gsub("_", "-"):lower()
 			local difficulty = ToEnumShortString( steps:GetDifficulty() )
 			local notes_per_measure = tonumber(mods.MeasureCounter:match("%d+"))
 			local threshold_to_be_stream = 2
-
-			-- This will parse out and set all the required info for the chart in the SL.Streams cache,
-			-- The function will only do work iff we're parsing a chart different than what's in the cache.
-			ParseChartInfo(steps, pn)
 
 			-- Set the actual stream information for the player based on their selected notes threshold.
 			local notesThreshold = tonumber(mods.MeasureCounter:match("%d+"))

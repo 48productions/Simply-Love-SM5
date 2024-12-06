@@ -276,11 +276,11 @@ local t = Def.ActorFrame {
 			Font="_wendy small",
 			Text=ScreenString("Cancel"),
 			InitCommand=function(self)
-				--if PREFSMAN:GetPreference("ThreeKeyNavigation") then --The SimplyPotato cab is *hopefully* gonna have 3 key navigation with a select button, always show this text for now - 48
-				--	self:visible(false)
-				--else
+				if PREFSMAN:GetPreference("ThreeKeyNavigation") then
+					self:visible(false)
+				else
 					self:xy(_screen.cx, _screen.cy+100):zoom(0.3):diffuse(0.7,0.7,0.7,1)
-				--end
+				end
 			end
 		},
 

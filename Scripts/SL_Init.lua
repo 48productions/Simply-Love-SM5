@@ -27,6 +27,7 @@ local PlayerDefaults = {
 				MeasureCounter = "None",
 				MeasureCounterLeft = true,
 				MeasureCounterUp = false,
+				MeasureLines = "Quarter",
 				DataVisualizations = "Disabled",
 				TargetScore = 11,
 				ActionOnMissedTarget = "Nothing",

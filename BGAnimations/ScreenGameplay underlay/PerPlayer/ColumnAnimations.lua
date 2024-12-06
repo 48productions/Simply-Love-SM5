@@ -9,7 +9,7 @@ local columnsMiss = {}
 local columnsCue = {}
 
 local curCueIndex = 1
-local cueList = SL[ToEnumShortString(player)].Streams.ColumnCues
+local cueList = nil
 local breakLeft = {0, 0, 0, 0}
 
 
@@ -57,7 +57,7 @@ if mods.ColumnFlashOnMiss or mods.ColumnCues then
 	local width = style:GetWidth(player)
 
 	local af = Def.ActorFrame{
-		InitCommand=function(self)
+		CurrentSongChangedMessageCommand=function(self)
 			self:x( GetNotefieldX(player))
 			-- Via empirical observation/testing, it seems that 200% mini is the effective cap.
 			-- At 200% mini, arrows are effectively invisible; they reach a zoom_factor of 0.
@@ -67,18 +67,21 @@ if mods.ColumnFlashOnMiss or mods.ColumnCues then
 			-- a mini value like 150% to a zoom factor like 0.25
 			local zoom_factor = 1 - scale( mods.Mini:gsub("%%","")/100, 0, 2, 0, 1)
 			self:zoomx( zoom_factor )
+			cueList = SL[ToEnumShortString(player)].Streams.ColumnCues
 			
 			-- Start checking for column cues, if enabled
 			if mods.ColumnCues then
 				local cue = cueList[1]
-				local cueDuration = cue.duration / SL.Global.ActiveModifiers.MusicRate
-			
-				-- Play the first animation on the correct columns
-				for column in ivalues(cue.columns) do
-					columnsCue[column.colNum]:playcommand("FirstCue", {duration=cueDuration, isMine=column.isMine})
-				end
+				if cue then
+					local cueDuration = cue.duration / SL.Global.ActiveModifiers.MusicRate
 				
-				self:SetUpdateFunction(Update)
+					-- Play the first animation on the correct columns
+					for column in ivalues(cue.columns) do
+						columnsCue[column.colNum]:playcommand("FirstCue", {duration=cueDuration, isMine=column.isMine})
+					end
+					
+					self:SetUpdateFunction(Update)
+				end
 			end
 		end,
 		
